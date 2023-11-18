@@ -7,54 +7,28 @@ import {
   View,
   Text,
   TouchableOpacity,
-  ScrollView,
   StyleSheet
 } from 'react-native';
 
+import { getRandomElements, shuffleArray } from '../../utils/array';
+import { RouteProp } from '@react-navigation/native';
 
-function LearnScreen({
-  route, navigation
-}) {
+import { RootStackParamList } from "../../types";
 
-  const {
-    letters,
-    kata
-   } = route.params;
+type LearnScreenRouteProp = RouteProp<RootStackParamList, "Learn">;
+
+interface LearnScreenProps {
+  route: LearnScreenRouteProp;
+}
+
+
+function LearnScreen({route}: LearnScreenProps) {
+
+  const { letters, kata } = route.params;
 
   const [mode, setMode] = useState(0)
   const [index, setIndex] = useState(0)
   const [warnings, setWarnings] = useState([""])
-
-  function getRandomElements(array, currentIndex) {
-    const currentItem = array[currentIndex];
-
-    let tempArray = [...array];
-    tempArray.splice(currentIndex, 1);
-
-    let randomItems = [];
-    for (let i = 0; i < 4; i++) {
-      if (tempArray.length > 0) {
-        const randomIndex = Math.floor(Math.random() * tempArray.length);
-        randomItems.push(tempArray[randomIndex]);
-        tempArray.splice(randomIndex, 1);
-      }
-    }
-
-    return [currentItem, ...randomItems];
-  }
-
-  
-  const shuffleArray = (array) => {
-    let arrayCopy = array.slice();
-
-    for (let i = arrayCopy.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arrayCopy[i], arrayCopy[j]] = [arrayCopy[j], arrayCopy[i]];
-    }
-
-    return arrayCopy;
-  }
-
 
   const [answers, setAnswers] = useState(shuffleArray(getRandomElements(letters, index)))
 
@@ -131,7 +105,6 @@ const styles = StyleSheet.create({
     fontWeight: "600"
   },
   buttons_container: {
-    // flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     gap: 10,
@@ -150,10 +123,12 @@ const styles = StyleSheet.create({
     alignContent: "center"
   },
   buttonText: {
-    color: "#6C8CD5",
-    color: 'white',
     fontSize: 18,
     textAlign: 'center',
+    color: "white"
+  },
+  button_mode_active: {
+    backgroundColor: "green"
   },
   wrong_btn: {
     backgroundColor: "red"

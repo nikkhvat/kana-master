@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
-
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import React from 'react';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomeScreen from './pages/Home/Index.js';
-import LearnScreen from './pages/Learn/index.js';
+import HomeScreen from './pages/Home/Index';
+import LearnScreen from './pages/Learn/index';
+import { RootStackParamList } from './types';
 
-function App() {
-  const Stack = createNativeStackNavigator();
+const App = () => {
+  const Stack = createNativeStackNavigator<RootStackParamList>();
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Main" component={HomeScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Learn" component={LearnScreen} />
       </Stack.Navigator>
     </NavigationContainer>
