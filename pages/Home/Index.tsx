@@ -55,7 +55,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   }, [rows, selected]);
 
   const navigateToLearn = useCallback(() => {
-    navigation.navigate("Learn", {
+    navigation.navigate("SettingsLearn", {
       letters: shuffleArray(selectedLetters),
       kata: kata,
     });
@@ -63,32 +63,32 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text
-        onPress={() => setKata(kata === "ka" ? "hi" : "ka")}
-        style={styles.title}
-      >
-        {kata === "ka" ? "Katakana" : "Hiragana"}
-      </Text>
-      <Text
-        onPress={() => setKata(kata === "ka" ? "hi" : "ka")}
-        style={styles.link}
-      >
-        {kata === "ka" ? "Hiragana" : "Katakana"}
-      </Text>
-      <View style={styles.buttons_container}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setSelected({ rows: [], cols: [] })}
-        >
-          <Text style={styles.buttonText}>Unselect</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={navigateToLearn} style={styles.button}>
-          <Text style={styles.buttonText}>
-            learn ({selectedLetters.length > 0 ? selectedLetters.length : "all"})
-          </Text>
-        </TouchableOpacity>
-      </View>
       <ScrollView>
+        <Text
+          onPress={() => setKata(kata === "ka" ? "hi" : "ka")}
+          style={styles.title}
+        >
+          {kata === "ka" ? "Katakana" : "Hiragana"}
+        </Text>
+        <Text
+          onPress={() => setKata(kata === "ka" ? "hi" : "ka")}
+          style={styles.link}
+        >
+          {kata === "ka" ? "Hiragana" : "Katakana"}
+        </Text>
+        <View style={styles.buttons_container}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setSelected({ rows: [], cols: [] })}
+          >
+            <Text style={styles.buttonText}>Unselect</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={navigateToLearn} style={styles.button}>
+            <Text style={styles.buttonText}>
+              learn ({selectedLetters.length > 0 ? selectedLetters.length : "all"})
+            </Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.table}>
           <View style={styles.row_btns}>
             {[0, 1, 2, 3, 4, 5].map((cellIndex) => (
@@ -96,7 +96,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                 key={cellIndex}
                 style={[
                   styles.selectButton,
-                  styles.selectButtonLong,
                   cellIndex === 0 && styles.selectButtonSmall,
                 ]}
                 onPress={() => toggleSelection("cols", cellIndex - 1)}

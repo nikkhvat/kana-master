@@ -7,6 +7,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import HomeScreen from "./pages/Home/Index";
 import LearnScreen from "./pages/Learn/index";
 import SettingsScreen from "./pages/Settings/Index";
+import SettingsLearnScreen from "./pages/SettingsLearn";
+
 import { RootStackParamList } from "./types";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -17,7 +19,7 @@ function BottomTabNavigator() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
-          let iconName = "default-icon-name"; // Укажите имя иконки по умолчанию
+          let iconName = "home";
 
           if (route.name === "Home") {
             iconName = focused ? "home" : "home-outline";
@@ -44,6 +46,7 @@ const App = () => {
           component={BottomTabNavigator}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name="SettingsLearn" component={SettingsLearnScreen} />
         <Stack.Screen name="Learn" component={LearnScreen} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../types";
@@ -13,8 +13,8 @@ interface LearnScreenProps {
 }
 
 function LearnScreen({ route }: LearnScreenProps) {
-  const { letters, kata } = route.params;
-  const [mode, setMode] = useState(0);
+  const { letters, kata, mode } = route.params;
+
   const [index, setIndex] = useState(0);
   const [warnings, setWarnings] = useState<string[]>([]);
 
@@ -43,20 +43,6 @@ function LearnScreen({ route }: LearnScreenProps) {
     <View style={styles.container}>
       {!isEndOfLetters && (
         <>
-          <View style={styles.buttons_container}>
-            <TouchableOpacity
-              style={[styles.button, mode === 0 && styles.button_mode_active]}
-              onPress={() => setMode(0)}
-            >
-              <Text style={styles.buttonText}>Mode 1</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, mode === 1 && styles.button_mode_active]}
-              onPress={() => setMode(1)}
-            >
-              <Text style={styles.buttonText}>Mode 2</Text>
-            </TouchableOpacity>
-          </View>
           <Text style={styles.title}>
             {mode === 0 ? letters[index][kata] : letters[index].en}
           </Text>
