@@ -104,8 +104,8 @@ const letters: ILetter[][] = [
     { id: 66, ka: "パ", hi: "ぱ", en: "PA", ru: "ПА" },
     { id: 67, ka: "ピ", hi: "ぴ", en: "PI", ru: "ПИ" },
     { id: 68, ka: "プ", hi: "ぷ", en: "PU", ru: "ПУ" },
-    { id: 68, ka: "ペ", hi: "ぺ", en: "PE", ru: "ПЭ" },
-    { id: 69, ka: "ポ", hi: "ぽ", en: "PO", ru: "ПО" },
+    { id: 69, ka: "ペ", hi: "ぺ", en: "PE", ru: "ПЭ" },
+    { id: 70, ka: "ポ", hi: "ぽ", en: "PO", ru: "ПО" },
   ],
 ];
 

@@ -1,20 +1,15 @@
-import React, { useState } from "react";
-
-import letters from "../../utils/letters";
-
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
-
-import { allLetters, selectedLetters, shuffleArray } from "../../utils/array";
-
+import React, { useState, useCallback, useMemo } from "react";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types";
-
 import { styles } from "./styles";
+
+import {
+  allLetters as allLettersUtil,
+  selectedLetters as selectedLettersUtil,
+  shuffleArray,
+} from "../../utils/array";
+import letters from "../../utils/letters";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -22,31 +17,50 @@ interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
 }
 
-function HomeScreen({ navigation }: HomeScreenProps) {
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [selected, setSelected] = useState({ rows: [], cols: [] } as {
     rows: number[];
     cols: number[];
   });
-  const [kata, setKata] = useState("ka" as "ka" | "hi");
+  const [kata, setKata] = useState<"ka" | "hi">("ka");
 
-  const toggleSelection = (type: "cols" | "rows", index: number) => {
-    setSelected((prev) => ({
-      ...prev,
-      [type]: prev[type].includes(index)
-        ? prev[type].filter((i) => i !== index)
-        : [...prev[type], index],
-    }));
-  };
-
-  const rows = letters.map((item) =>
-    item[0].en !== "WA" && item[0].en !== "YA"
-      ? item
-      : item[0].en === "WA"
-      ? [item[0], 0, 0, 0, item[1]]
-      : [item[0], 0, item[1], 0, item[2]]
+  const toggleSelection = useCallback(
+    (type: "cols" | "rows", index: number) => {
+      setSelected((prev) => ({
+        ...prev,
+        [type]: prev[type].includes(index)
+          ? prev[type].filter((i) => i !== index)
+          : [...prev[type], index],
+      }));
+    },
+    []
   );
 
-   
+  const rows = useMemo(
+    () =>
+      letters.map((item) =>
+        item[0].en !== "WA" && item[0].en !== "YA"
+          ? item
+          : item[0].en === "WA"
+          ? [item[0], 0, 0, 0, item[1]]
+          : [item[0], 0, item[1], 0, item[2]]
+      ),
+    []
+  );
+
+  const selectedLetters = useMemo(() => {
+    return selectedLettersUtil(rows, selected).length > 0
+      ? selectedLettersUtil(rows, selected)
+      : allLettersUtil(rows);
+  }, [rows, selected]);
+
+  const navigateToLearn = useCallback(() => {
+    navigation.navigate("Learn", {
+      letters: shuffleArray(selectedLetters),
+      kata: kata,
+    });
+  }, [navigation, selectedLetters, kata]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
@@ -67,48 +81,31 @@ function HomeScreen({ navigation }: HomeScreenProps) {
         >
           <Text style={styles.buttonText}>Unselect</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("Learn", {
-              letters: shuffleArray(
-                selectedLetters(rows, selected).length > 0
-                  ? selectedLetters(rows, selected)
-                  : allLetters(rows)
-              ),
-              kata: kata,
-            })
-          }
-          style={styles.button}
-        >
+        <TouchableOpacity onPress={navigateToLearn} style={styles.button}>
           <Text style={styles.buttonText}>
             Start learn (
-            {selectedLetters(rows, selected).length > 0
-              ? selectedLetters(rows, selected).length
-              : "all"}
-            )
+            {selectedLetters.length > 0 ? selectedLetters.length : "all"})
           </Text>
         </TouchableOpacity>
       </View>
       <ScrollView>
         <View style={styles.table}>
           <View style={styles.row_btns}>
-            {[0, 1, 2, 3, 4, 5].map((cellIndex) => {
-              return (
-                <TouchableOpacity
-                  key={cellIndex}
-                  style={[
-                    styles.selectButton,
-                    styles.selectButtonLong,
-                    cellIndex == 0 && styles.selectButtonSmall,
-                  ]}
-                  onPress={() => toggleSelection("cols", cellIndex - 1)}
-                >
-                  <Text style={styles.selectButtonText}>
-                    {selected.cols.includes(cellIndex - 1) ? "-" : "+"}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
+            {[0, 1, 2, 3, 4, 5].map((cellIndex) => (
+              <TouchableOpacity
+                key={cellIndex}
+                style={[
+                  styles.selectButton,
+                  styles.selectButtonLong,
+                  cellIndex === 0 && styles.selectButtonSmall,
+                ]}
+                onPress={() => toggleSelection("cols", cellIndex - 1)}
+              >
+                <Text style={styles.selectButtonText}>
+                  {selected.cols.includes(cellIndex - 1) ? "-" : "+"}
+                </Text>
+              </TouchableOpacity>
+            ))}
           </View>
           {rows.map((row, rowIndex) => (
             <View key={rowIndex} style={styles.row}>
@@ -156,6 +153,6 @@ function HomeScreen({ navigation }: HomeScreenProps) {
       </ScrollView>
     </View>
   );
-}
+};
 
-export default HomeScreen;
+export default React.memo(HomeScreen);
