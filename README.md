@@ -35,7 +35,7 @@ To run the app locally, follow these steps:
 1. Clone the repository:
 
 ```sh
-git clone https://github.com/your-github-username/nihongo-kana-master.git
+git clone https://github.com/nikkhvat/nihongo-kana-master.git
 ```
 
 2. Install dependencies:
