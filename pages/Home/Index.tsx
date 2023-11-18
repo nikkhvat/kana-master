@@ -63,18 +63,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
+      <Text
+        onPress={() => setKata(kata === "ka" ? "hi" : "ka")}
+        style={styles.title}
+      >
         {kata === "ka" ? "Katakana" : "Hiragana"}
       </Text>
+      <Text
+        onPress={() => setKata(kata === "ka" ? "hi" : "ka")}
+        style={styles.link}
+      >
+        {kata === "ka" ? "Hiragana" : "Katakana"}
+      </Text>
       <View style={styles.buttons_container}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => setKata(kata === "ka" ? "hi" : "ka")}
-        >
-          <Text style={styles.buttonText}>
-            {kata === "ka" ? "Hiragana" : "Katakana"}
-          </Text>
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
           onPress={() => setSelected({ rows: [], cols: [] })}
@@ -83,8 +84,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity onPress={navigateToLearn} style={styles.button}>
           <Text style={styles.buttonText}>
-            Start learn (
-            {selectedLetters.length > 0 ? selectedLetters.length : "all"})
+            learn ({selectedLetters.length > 0 ? selectedLetters.length : "all"})
           </Text>
         </TouchableOpacity>
       </View>

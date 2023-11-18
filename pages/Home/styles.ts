@@ -2,37 +2,43 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
-    paddingTop: 20,
-    paddingBottom: 140,
-  },
-  buttons_container: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    gap: 10,
-    paddingBottom: 50,
-    padding: 10,
+    backgroundColor: "#ffffff",
   },
   title: {
     fontSize: 28,
     fontWeight: "bold",
+    marginLeft: 20,
+    marginTop: 20,
+  },
+  link: {
+    color: "#007bff",
+    marginLeft: 20,
     marginBottom: 20,
-    marginLeft: 10,
+  },
+  buttons_container: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 5,
+    paddingBottom: 45,
+    padding: 20,
   },
   button: {
     backgroundColor: "#007bff",
-    padding: 10,
-    height: 40,
+    padding: 8,
+    height: 34,
     borderRadius: 6,
     marginBottom: 20,
   },
   buttonText: {
     color: "white",
-    fontSize: 18,
+    fontSize: 14,
     textAlign: "center",
   },
   table: {
-    padding: 10,
+    padding: 20,
+    gap: 10
   },
   row: {
     flexDirection: "row",
@@ -42,22 +48,22 @@ export const styles = StyleSheet.create({
   row_btns: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
+    marginLeft: 0,
+    gap: 13
   },
   cell: {
     padding: 8,
-    margin: 5,
     borderRadius: 6,
     borderWidth: 1,
     borderColor: "#ccc",
-    width: 50,
+    width: 45,
     height: 50,
   },
   selectButtonLong: {
     padding: 8,
-    margin: 5,
-    width: 50,
-    height: 50,
+    width: 45,
+    height: 45,
   },
   selected: {
     backgroundColor: "#e0dcdc",
@@ -72,10 +78,10 @@ export const styles = StyleSheet.create({
     color: "black",
   },
   empty: {
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "white",
     borderRadius: 0,
     borderWidth: 0,
-    borderColor: "#f2f2f2",
+    borderColor: "white",
   },
   text: {
     fontSize: 18,
@@ -85,13 +91,12 @@ export const styles = StyleSheet.create({
   },
   selectButton: {
     backgroundColor: "#007bff",
-    width: 50,
+    width: 45,
     height: 50,
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
     padding: 8,
-    margin: 5,
     borderRadius: 6,
     borderWidth: 1,
     borderColor: "#007bff",
@@ -101,9 +106,9 @@ export const styles = StyleSheet.create({
     textAlign: "center",
   },
   selectButtonSmall: {
-    backgroundColor: "#f2f2f2",
-    borderColor: "#f2f2f2",
-    width: 50,
+    backgroundColor: "white",
+    borderColor: "white",
+    width: 45,
   },
 });
 
