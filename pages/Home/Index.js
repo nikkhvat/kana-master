@@ -237,10 +237,10 @@ const styles = StyleSheet.create({
     color: "black"
   },
   empty: {
-    backgroundColor: "white",
+    backgroundColor: "#f2f2f2",
     borderRadius: 0,
     borderWidth: 0,
-    borderColor: 'white',
+    borderColor: '#f2f2f2',
   },
   text: {
     fontSize: 18,
@@ -266,8 +266,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   selectButtonSmall: {
-    backgroundColor: 'white',
-    borderColor: "white",
+    backgroundColor: '#f2f2f2',
+    borderColor: "#f2f2f2",
     width: 50,
   }
 });

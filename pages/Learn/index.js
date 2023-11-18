@@ -21,6 +21,7 @@ function LearnScreen({
     kata
    } = route.params;
 
+  const [mode, setMode] = useState(0)
   const [index, setIndex] = useState(0)
   const [warnings, setWarnings] = useState([""])
 
@@ -61,9 +62,32 @@ function LearnScreen({
     setAnswers(shuffleArray(getRandomElements(letters, index)))
   }, [index])
 
+
   return (
     <View style={styles.container}>
-      {index < letters.length && <Text style={styles.title}>{letters[index]?.[kata]}</Text>}
+      {index < letters.length && <View style={styles.buttons_container}>
+          <TouchableOpacity
+            style = {[styles.button, mode == 0 && styles.button_mode_active]}
+            onPress = {
+              () => {
+                setMode(0)
+              }
+            }
+          >
+          <Text style={styles.buttonText}>Mode 1</Text>
+        </TouchableOpacity>
+          <TouchableOpacity
+            style = {[styles.button, mode == 1 && styles.button_mode_active]}
+            onPress = {
+              () => {
+                setMode(1)
+              }
+            }
+          >
+          <Text style={styles.buttonText}>Mode 2</Text>
+        </TouchableOpacity>
+      </View>}
+      {index < letters.length && <Text style={styles.title}>{mode === 0 ? letters[index][kata] : letters[index]["en"]}</Text>}
       {index < letters.length && <View style={styles.buttons_container}>
         {answers.map(item => {
           if (item?.en === undefined) return (<View>/</View>)
@@ -83,7 +107,11 @@ function LearnScreen({
               }
             }
           >
-            <Text style={styles.buttonText}>{item.en}</Text>
+            <Text style={styles.buttonText}>
+              {
+                mode === 0 ? item.en : item[kata]
+              }
+            </Text>
           </TouchableOpacity>
         })}
       </View>}
