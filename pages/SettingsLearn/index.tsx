@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, Alert } from "react-native";
+import { Text, View, TouchableOpacity, Alert, Button } from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../types";
 import { styles } from "./styles";
@@ -69,7 +69,6 @@ function SettingsLearnScreen({ route, navigation }: LearnScreenProps) {
           </Text>
         </TouchableOpacity>
       </View>
-
       <TouchableOpacity style={[styles.startTestBtn]} onPress={startTest}>
         <Text style={styles.buttonText}>Start test</Text>
       </TouchableOpacity>

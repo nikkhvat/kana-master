@@ -4,12 +4,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import HomeScreen from "./pages/Home/Index";
-import LearnScreen from "./pages/Learn/index";
-import SettingsScreen from "./pages/Settings/Index";
+import HomeScreen from "./pages/Home";
+import LearnScreen from "./pages/Learn";
+import SettingsScreen from "./pages/Settings";
 import SettingsLearnScreen from "./pages/SettingsLearn";
 
 import { RootStackParamList } from "./types";
+import LearnResultsScreen from "./pages/LearnResults";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -42,12 +43,13 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Home"
+          name="Root"
           component={BottomTabNavigator}
           options={{ headerShown: false }}
         />
         <Stack.Screen name="SettingsLearn" component={SettingsLearnScreen} />
         <Stack.Screen name="Learn" component={LearnScreen} />
+        <Stack.Screen name="LearnResults" component={LearnResultsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

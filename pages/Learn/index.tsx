@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../types";
@@ -17,6 +17,14 @@ function LearnScreen({ route }: LearnScreenProps) {
 
   const [index, setIndex] = useState(0);
   const [warnings, setWarnings] = useState<string[]>([]);
+  const [startTime, setStartTime] = useState<number>(Date.now());
+  const [testStartTime] = useState<number>(Date.now());
+  const [totalTime, setTotalTime] = useState<number>(0);
+  const [incorrectLetters, setIncorrectLetters] = useState<ILetter[]>([]);
+  const [correctAnswers, setCorrectAnswers] = useState<number>(0);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<number>(0);
+  const [fastestAnswer, setFastestAnswer] = useState<{ time: number; letter: ILetter | null }>({ time: Infinity, letter: null });
+  const [slowestAnswer, setSlowestAnswer] = useState<{ time: number; letter: ILetter | null }>({ time: 0, letter: null });
 
   const answers = useMemo(
     () => shuffleArray(getRandomElements(letters, index)),
@@ -25,19 +33,47 @@ function LearnScreen({ route }: LearnScreenProps) {
 
   const handleAnswerPress = useCallback(
     (item: ILetter) => {
+      const answerTime = Date.now() - startTime;
+      setTotalTime((prev) => prev + answerTime);
+      setStartTime(Date.now());
+
       if (letters[index].en === item.en) {
         setIndex((prev) => prev + 1);
+        setCorrectAnswers((prev) => prev + 1);
+
+        if (answerTime < fastestAnswer.time) {
+          setFastestAnswer({ time: answerTime, letter: letters[index] });
+        }
+
+        if (answerTime > slowestAnswer.time) {
+          setSlowestAnswer({ time: answerTime, letter: letters[index] });
+        }
       } else {
-        setWarnings((prev) => [
-          ...prev,
-          `${item.en}:${item.ka}-${letters[index].en}`,
-        ]);
+        setIncorrectAnswers((prev) => prev + 1);
+        setWarnings((prev) => [...prev, `${item.en}:${item.ka}-${letters[index].en}`]);
+        setIncorrectLetters((prev) => [...prev, letters[index]]);
       }
     },
-    [letters, index]
+    [letters, index, startTime, totalTime, fastestAnswer, slowestAnswer]
   );
 
   const isEndOfLetters = index === letters.length;
+
+  useEffect(() => {
+    if (isEndOfLetters) {
+      const averageTime = totalTime / (correctAnswers + incorrectAnswers);
+      const testDuration = Date.now() - testStartTime;
+
+      console.log("=====================");
+      console.log("Общее время теста:", testDuration, "мс");
+      console.log("Количество правильных ответов:", correctAnswers);
+      console.log("Количество неправильных ответов:", incorrectAnswers);
+      console.log("Самый быстрый ответ:", fastestAnswer.letter?.en, "время:", fastestAnswer.time);
+      console.log("Самый медленный ответ:", slowestAnswer.letter?.en, "время:", slowestAnswer.time);
+      console.log("Среднее время ответа:", averageTime.toFixed(2), "мс");
+      console.log("Неправильные иероглифы:", incorrectLetters.map(letter => letter.en).join(", "));
+    }
+  }, [isEndOfLetters, correctAnswers, incorrectAnswers, totalTime, fastestAnswer, slowestAnswer, incorrectLetters, testStartTime]);
 
   return (
     <View style={styles.container}>
