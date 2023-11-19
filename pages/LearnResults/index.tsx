@@ -3,10 +3,33 @@ import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../types";
 import { Text, View } from "react-native";
 import { styles } from "./styles";
+
 type LearnScreenRouteProp = RouteProp<RootStackParamList, "LearnResults">;
 
 interface LearnResultsScreenProps {
   route: LearnScreenRouteProp;
+}
+
+function formatTime(ms: number): string {
+  const minutes = Math.floor(ms / 60000);
+  const seconds = Math.floor((ms % 60000) / 1000);
+  const milliseconds = ms % 1000;
+
+  let formattedTime = "";
+
+  if (minutes > 0) {
+    formattedTime += `${minutes} мин. `;
+  }
+
+  if (seconds > 0 || minutes > 0) {
+    formattedTime += `${seconds} сек. `;
+  }
+
+  if (milliseconds > 0 && minutes === 0) {
+    formattedTime += `${milliseconds} мс`;
+  }
+
+  return formattedTime.trim();
 }
 
 function LearnResultsScreen({ route }: LearnResultsScreenProps) {
@@ -14,12 +37,14 @@ function LearnResultsScreen({ route }: LearnResultsScreenProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Results</Text>
-      <Text style={styles.item}>
-        Общее время теста: {(stat.testDuration / 1000).toFixed(2)} секунд
+      <Text style={styles.title}>
+        Results ({kata === "ka" ? "Катакана" : "Хиригана"})
       </Text>
       <Text style={styles.item}>
-        Среднее время ответа: {stat.averageTime.toFixed(2)} мс
+        Общее время теста: {formatTime(stat.testDuration)}
+      </Text>
+      <Text style={styles.item}>
+        Среднее время ответа: {formatTime(stat.averageTime)}
       </Text>
       <Text style={styles.item}>
         Количество правильных ответов: {stat.correctAnswers}
@@ -30,12 +55,12 @@ function LearnResultsScreen({ route }: LearnResultsScreenProps) {
       <Text style={styles.item}>
         Самый быстрый ответ: (
         {`${stat.fastestAnswer.letter?.[kata]} ${stat.fastestAnswer.letter?.en}`}
-        ) время: {stat.fastestAnswer.time} мс
+        ) время: {formatTime(stat.fastestAnswer.time)}
       </Text>
       <Text style={styles.item}>
         Самый медленный ответ: (
         {`${stat.slowestAnswer.letter?.[kata]} ${stat.slowestAnswer.letter?.en}`}
-        ) время: {stat.slowestAnswer.time} мс
+        ) время: {formatTime(stat.slowestAnswer.time)}
       </Text>
       <Text style={styles.item}>Неправильные иероглифы:</Text>
       <Text style={styles.item_letters}>
