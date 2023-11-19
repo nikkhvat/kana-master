@@ -5,14 +5,17 @@ import { RootStackParamList } from "../../types";
 import { styles } from "./styles";
 import { getRandomElements, shuffleArray } from "../../utils/array";
 import { ILetter } from "../../utils/letters";
+import { StackNavigationProp } from "@react-navigation/stack";
 
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Learn">;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, "Learn">;
 
 interface LearnScreenProps {
-  route: LearnScreenRouteProp;
+  route: LearnScreenRouteProp
+  navigation: HomeScreenNavigationProp
 }
 
-function LearnScreen({ route }: LearnScreenProps) {
+function LearnScreen({ route, navigation }: LearnScreenProps) {
   const { letters, kata, mode } = route.params;
 
   const [index, setIndex] = useState(0);
@@ -23,8 +26,14 @@ function LearnScreen({ route }: LearnScreenProps) {
   const [incorrectLetters, setIncorrectLetters] = useState<ILetter[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<number>(0);
   const [incorrectAnswers, setIncorrectAnswers] = useState<number>(0);
-  const [fastestAnswer, setFastestAnswer] = useState<{ time: number; letter: ILetter | null }>({ time: Infinity, letter: null });
-  const [slowestAnswer, setSlowestAnswer] = useState<{ time: number; letter: ILetter | null }>({ time: 0, letter: null });
+  const [fastestAnswer, setFastestAnswer] = useState<{
+    time: number;
+    letter: ILetter | null;
+  }>({ time: Infinity, letter: null });
+  const [slowestAnswer, setSlowestAnswer] = useState<{
+    time: number;
+    letter: ILetter | null;
+  }>({ time: 0, letter: null });
 
   const answers = useMemo(
     () => shuffleArray(getRandomElements(letters, index)),
@@ -50,7 +59,10 @@ function LearnScreen({ route }: LearnScreenProps) {
         }
       } else {
         setIncorrectAnswers((prev) => prev + 1);
-        setWarnings((prev) => [...prev, `${item.en}:${item.ka}-${letters[index].en}`]);
+        setWarnings((prev) => [
+          ...prev,
+          `${item.en}:${item.ka}-${letters[index].en}`,
+        ]);
         setIncorrectLetters((prev) => [...prev, letters[index]]);
       }
     },
@@ -71,9 +83,31 @@ function LearnScreen({ route }: LearnScreenProps) {
       console.log("Самый быстрый ответ:", fastestAnswer.letter?.en, "время:", fastestAnswer.time);
       console.log("Самый медленный ответ:", slowestAnswer.letter?.en, "время:", slowestAnswer.time);
       console.log("Среднее время ответа:", averageTime.toFixed(2), "мс");
-      console.log("Неправильные иероглифы:", incorrectLetters.map(letter => letter.en).join(", "));
+      console.log("Неправильные иероглифы:", incorrectLetters.map((letter) => letter.en).join(", "));
+
+      navigation.navigate("LearnResults", {
+        stat: {
+          testDuration,
+          correctAnswers,
+          incorrectAnswers,
+          fastestAnswer,
+          slowestAnswer,
+          averageTime,
+          incorrectLetters,
+        },
+        kata
+      });
     }
-  }, [isEndOfLetters, correctAnswers, incorrectAnswers, totalTime, fastestAnswer, slowestAnswer, incorrectLetters, testStartTime]);
+  }, [
+    isEndOfLetters,
+    correctAnswers,
+    incorrectAnswers,
+    totalTime,
+    fastestAnswer,
+    slowestAnswer,
+    incorrectLetters,
+    testStartTime,
+  ]);
 
   return (
     <View style={styles.container}>
