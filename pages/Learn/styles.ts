@@ -3,9 +3,23 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "space-between",
     alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#ffffff",
+    padding: 20
+  },
+  progressBarContainer: {
+    width: '100%',
+    height: 10,
+    backgroundColor: '#e0e0e0',
+    borderRadius: 10,
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  progressBar: {
+    height: '100%',
+    backgroundColor: '#007bff',
+    borderRadius: 10,
   },
   title: {
     fontSize: 146,
@@ -14,8 +28,8 @@ export const styles = StyleSheet.create({
   },
   buttons_container: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "space-between",
+    alignItems: "stretch",
     paddingBottom: 50,
     paddingHorizontal: 10,
   },

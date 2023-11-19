@@ -71,6 +71,8 @@ function LearnScreen({ route, navigation }: LearnScreenProps) {
 
   const isEndOfLetters = index === letters.length;
 
+  const progress = (index / letters.length) * 100;
+
   useEffect(() => {
     if (isEndOfLetters) {
       const averageTime = totalTime / (correctAnswers + incorrectAnswers);
@@ -113,6 +115,10 @@ function LearnScreen({ route, navigation }: LearnScreenProps) {
     <View style={styles.container}>
       {!isEndOfLetters && (
         <>
+          <View style={styles.progressBarContainer}>
+            <View style={[styles.progressBar, { width: `${progress}%` }]} />
+          </View>
+
           <Text style={styles.title}>
             {mode === 0 ? letters[index][kata] : letters[index].en}
           </Text>

@@ -47,9 +47,28 @@ const App = () => {
           component={BottomTabNavigator}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="SettingsLearn" component={SettingsLearnScreen} />
-        <Stack.Screen name="Learn" component={LearnScreen} />
-        <Stack.Screen name="LearnResults" component={LearnResultsScreen} />
+        <Stack.Screen
+          name="SettingsLearn"
+          component={SettingsLearnScreen}
+          options={{ title: "Start Learn" }}
+        />
+        <Stack.Screen
+          name="Learn"
+          component={LearnScreen}
+          options={{ 
+            headerBackVisible: false, 
+            gestureEnabled: false 
+          }}
+        />
+        <Stack.Screen
+          name="LearnResults"
+          component={LearnResultsScreen}
+          options={{
+            headerBackVisible: false,
+            gestureEnabled: false,
+            title: "Learn Results",
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
