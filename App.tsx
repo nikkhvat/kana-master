@@ -29,10 +29,14 @@ function BottomTabNavigator() {
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
-        }
+        },
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ title: "Kana" }}
+      />
       <Tab.Screen name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
@@ -66,7 +70,7 @@ const App = () => {
           options={{
             headerBackVisible: false,
             gestureEnabled: false,
-            title: "Learn Results",
+            title: "Results",
           }}
         />
       </Stack.Navigator>

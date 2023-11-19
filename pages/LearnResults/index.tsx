@@ -74,27 +74,27 @@ function LearnResultsScreen({ route, navigation }: LearnResultsScreenProps) {
         <View style={styles.itemContainer}>
           <Text style={styles.itemTitle}>Самый быстрый ответ:</Text>
           <Text style={styles.itemValue}>
-            {`${stat.fastestAnswer.letter?.[kata]} ${stat.fastestAnswer.letter?.en}`}
-            ) ({formatTime(stat.fastestAnswer.time)})
+            {`${stat.fastestAnswer.letter?.en} (${stat.fastestAnswer.letter?.[kata]}): ${formatTime(stat.fastestAnswer.time)}`}
           </Text>
         </View>
 
         <View style={styles.itemContainer}>
           <Text style={styles.itemTitle}>Самый медленный ответ:</Text>
           <Text style={styles.itemValue}>
-            {`${stat.slowestAnswer.letter?.[kata]} ${stat.slowestAnswer.letter?.en}`}
-            ) ({formatTime(stat.slowestAnswer.time)})
+            {`${stat.slowestAnswer.letter?.en} (${stat.slowestAnswer.letter?.[kata]}): ${formatTime(stat.slowestAnswer.time)}`}
           </Text>
         </View>
 
-        <View style={styles.itemContainer}>
-          <Text style={styles.itemTitle}>Неправильные иероглифы:</Text>
-          <Text style={styles.itemValue}>
-            {Array.from(new Set(stat.incorrectLetters))
-              .map((letter) => `${letter.en}(${letter?.[kata]})`)
-              .join(", ")}
-          </Text>
-        </View>
+        {stat.incorrectLetters.length !== 0 && (
+          <View style={styles.itemContainer}>
+            <Text style={styles.itemTitle}>Неправильные иероглифы:</Text>
+            <Text style={styles.itemValue}>
+              {Array.from(new Set(stat.incorrectLetters))
+                .map((letter) => `${letter.en}(${letter?.[kata]})`)
+                .join(", ")}
+            </Text>
+          </View>
+        )}
 
         <TouchableOpacity
           style={[styles.startTestBtn]}

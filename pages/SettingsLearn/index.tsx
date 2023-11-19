@@ -70,7 +70,7 @@ function SettingsLearnScreen({ route, navigation }: LearnScreenProps) {
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={[styles.startTestBtn]} onPress={startTest}>
-        <Text style={styles.buttonText}>Start test</Text>
+        <Text style={styles.buttonText}>Start learn</Text>
       </TouchableOpacity>
     </View>
   );
