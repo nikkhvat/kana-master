@@ -23,7 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   fontSize,
   customStyles,
 }) => {
-  const extraStyles = {};
+  const extraStyles: Record<string, string | number> = {};
 
   if (fontSize) extraStyles["fontSize"] = fontSize;
 
