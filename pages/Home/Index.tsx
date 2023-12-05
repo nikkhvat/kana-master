@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Dimensions } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types";
 import { styles } from "./styles";
@@ -10,6 +10,10 @@ import {
   shuffleArray,
 } from "../../utils/array";
 import letters from "../../utils/letters";
+import Learning from "./Learning";
+import Practice from "./Practice";
+import WordBuilding from "./WordBuilding";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -61,22 +65,62 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     });
   }, [navigation, selectedLetters, kata]);
 
+  enum Screen {
+    Learning,
+    Practice,
+    WordBuilding
+  }
+
+  const [screen, setScreen] = useState(Screen.Learning);
+
+  const screens = [
+    { title: "Learning", val: Screen.Learning },
+    { title: "Practice", val: Screen.Practice },
+    { title: "Word Game", val: Screen.WordBuilding },
+  ];
+  
+  const insets = useSafeAreaInsets();
+
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, paddingTop: insets.top }}>
+      <Text
+        onPress={() => setKata(kata === "ka" ? "hi" : "ka")}
+        style={styles.title}
+      >
+        Kana
+      </Text>
+      <View style={styles.header}>
+        {screens.map((item) => (
+          <View key={item.val}>
+            <Text
+              onPress={() => setScreen(item.val)}
+              style={
+                item.val === screen
+                  ? { ...styles.header_title, ...styles.header_title__active }
+                  : styles.header_title
+              }
+            >
+              {item.title}
+            </Text>
+            {item.val === screen && <View style={styles.header__line} />}
+          </View>
+        ))}
+      </View>
+
       <ScrollView>
-        <Text
-          onPress={() => setKata(kata === "ka" ? "hi" : "ka")}
-          style={styles.title}
-        >
-          {kata === "ka" ? "Katakana" : "Hiragana"}
-        </Text>
-        <Text
+        <View style={styles.content}>
+          {screen === Screen.Learning && <Learning />}
+          {screen === Screen.Practice && <Practice />}
+          {screen === Screen.WordBuilding && <WordBuilding />}
+        </View>
+
+        {/* <Text
           onPress={() => setKata(kata === "ka" ? "hi" : "ka")}
           style={styles.link}
         >
           {kata === "ka" ? "Hiragana" : "Katakana"}
-        </Text>
-        <View style={styles.buttons_container}>
+        </Text> */}
+        {/* <View style={styles.buttons_container}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => setSelected({ rows: [], cols: [] })}
@@ -88,8 +132,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
               learn ({selectedLetters.length > 0 ? selectedLetters.length : "all"})
             </Text>
           </TouchableOpacity>
-        </View>
-        <View style={styles.table}>
+        </View> */}
+        {/* <View style={styles.table}>
           <View style={styles.row_btns}>
             {[0, 1, 2, 3, 4, 5].map((cellIndex) => (
               <TouchableOpacity
@@ -148,7 +192,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
               })}
             </View>
           ))}
-        </View>
+        </View> */}
       </ScrollView>
     </View>
   );

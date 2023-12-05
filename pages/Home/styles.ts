@@ -1,15 +1,44 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  // new page
+  title: {
+    fontSize: 28,
+    fontWeight: "700",
+    marginLeft: 20,
+    marginTop: 20,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    height: 54,
+  },
+  header_title: {
+    color: "#BDBDBD",
+    fontSize: 15,
+    fontWeight: "700"
+  },
+  header_title__active: {
+    color: "#2A2A2A",
+  },
+  header__line: {
+    backgroundColor: "#2A2A2A",
+    height: 2,
+    width: 32,
+    position: "absolute",
+    top: -6,
+    left: 0,
+  },
+  content: {
+    paddingHorizontal: 20,
+    flex: 1,
+  },
+  // new page
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "600",
-    marginLeft: 20,
-    marginTop: 20,
   },
   link: {
     color: "#007aff",
