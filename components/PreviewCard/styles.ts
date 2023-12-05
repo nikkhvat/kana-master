@@ -3,7 +3,6 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     height: 240,
-    flex: 0.3,
     borderColor: "transparent",
     borderRadius: 20,
     overflow: 'hidden',
@@ -11,7 +10,8 @@ export const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     paddingBottom: 15,
-    position: "relative"
+    position: "relative",
+    marginTop: 20,
   },
   textView: {
     width: 315,

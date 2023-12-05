@@ -76,9 +76,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const screens = [
     { title: "Learning", val: Screen.Learning },
     { title: "Practice", val: Screen.Practice },
-    { title: "Word Game", val: Screen.WordBuilding },
+    { title: "Word game", val: Screen.WordBuilding },
   ];
-  
+
   const insets = useSafeAreaInsets();
 
   return (
@@ -106,21 +106,19 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
           </View>
         ))}
       </View>
+      <View style={styles.content}>
+        {screen === Screen.Learning && <Learning />}
+        {screen === Screen.Practice && <Practice />}
+        {screen === Screen.WordBuilding && <WordBuilding />}
+      </View>
 
-      <ScrollView>
-        <View style={styles.content}>
-          {screen === Screen.Learning && <Learning />}
-          {screen === Screen.Practice && <Practice />}
-          {screen === Screen.WordBuilding && <WordBuilding />}
-        </View>
-
-        {/* <Text
+      {/* <Text
           onPress={() => setKata(kata === "ka" ? "hi" : "ka")}
           style={styles.link}
         >
           {kata === "ka" ? "Hiragana" : "Katakana"}
         </Text> */}
-        {/* <View style={styles.buttons_container}>
+      {/* <View style={styles.buttons_container}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => setSelected({ rows: [], cols: [] })}
@@ -133,7 +131,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
         </View> */}
-        {/* <View style={styles.table}>
+      {/* <View style={styles.table}>
           <View style={styles.row_btns}>
             {[0, 1, 2, 3, 4, 5].map((cellIndex) => (
               <TouchableOpacity
@@ -193,7 +191,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             </View>
           ))}
         </View> */}
-      </ScrollView>
+      {/* <ScrollView></ScrollView> */}
     </View>
   );
 };

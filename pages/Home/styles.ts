@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
     marginLeft: 20,
     marginTop: 20,
+    marginBottom: 10,
   },
   header: {
     flexDirection: "row",
@@ -32,7 +33,6 @@ export const styles = StyleSheet.create({
     left: 0,
   },
   content: {
-    paddingHorizontal: 20,
     flex: 1,
   },
   // new page

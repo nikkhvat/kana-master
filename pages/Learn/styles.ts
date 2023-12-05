@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontSize: 146,
-    fontWeight: "600",
+    fontWeight: "700",
     marginBottom: 60
   },
   buttons_container: {

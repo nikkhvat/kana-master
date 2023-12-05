@@ -10,7 +10,7 @@ import { styles } from './styles';
 
 const Learning = (props: Props) => {
   return (
-    <View>
+    <View style={styles.content} >
       <PreviewCard
         imageSource={learningImage}
         title={"66"}
@@ -18,11 +18,7 @@ const Learning = (props: Props) => {
       />
 
       <View style={styles.container}>
-        <Button
-          title={"Learn"}
-          type={"general"}
-          fontSize={17}
-        />
+        <Button title={"Learn"} type={"general"} fontSize={17} />
       </View>
     </View>
   );
