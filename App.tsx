@@ -25,10 +25,12 @@ function BottomTabNavigator() {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName = "home";
 
-          if (route.name === "Home") {
-            iconName = focused ? "syllabary-hiragana" : "syllabary-hiragana";
-          } else if (route.name === "Settings") {
+          if (route.name === "Learning") {
+            iconName = focused ? "school-outline" : "school-outline";
+          } else if (route.name === "Profile") {
             iconName = focused ? "account-outline" : "account-outline";
+          } else if (route.name === "Kana") {
+            iconName = focused ? "syllabary-hiragana" : "syllabary-hiragana";
           }
 
           const newColor = color === "#8E8E8F" ? color : "#9A7861";
@@ -39,11 +41,20 @@ function BottomTabNavigator() {
       })}
     >
       <Tab.Screen
-        name="Home"
+        name="Learning"
+        component={HomeScreen}
+        options={{
+          title: "Learning",
+          headerTransparent: true,
+          headerTitle: "",
+        }}
+      />
+      <Tab.Screen
+        name="Kana"
         component={HomeScreen}
         options={{ title: "Kana", headerTransparent: true, headerTitle: "" }}
       />
-      <Tab.Screen name="Settings" component={SettingsScreen} />
+      <Tab.Screen name="Profile" component={SettingsScreen} />
     </Tab.Navigator>
   );
 }
