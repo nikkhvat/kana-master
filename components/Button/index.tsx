@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 
+import Ionicons from "react-native-vector-icons/MaterialCommunityIcons";
+
 import cx from "../../utils/cx";
 
 type ButtonProps = {
@@ -14,7 +16,8 @@ type ButtonProps = {
   type: "active" | "inactive" | "weak" | "general";
   onClick?: Function;
   fontSize?: number;
-  customStyles?: any
+  customStyles?: any;
+  image?: string | null;
 };
 
 
@@ -24,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({
   type,
   fontSize,
   customStyles,
+  image = null,
 }) => {
   const extraStyles: Record<string, string | number> = {};
 
@@ -39,11 +43,12 @@ const Button: React.FC<ButtonProps> = ({
       )}
       onPress={() => onClick?.()}
     >
-      <Text
-        style={cx(styles.text, styles[`text_${type}`], extraStyles)}
-      >
-        {title}
-      </Text>
+      {image === null && (
+        <Text style={cx(styles.text, styles[`text_${type}`], extraStyles)}>
+          {title}
+        </Text>
+      )}
+      {image !== null && <Ionicons name={image} size={24} color={"#2A2A2A"} />}
     </TouchableOpacity>
   );
 };

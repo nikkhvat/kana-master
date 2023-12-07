@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
   header_title: {
     color: "#BDBDBD",
     fontSize: 15,
-    fontWeight: "700"
+    fontWeight: "700",
   },
   header_title__active: {
     color: "#2A2A2A",

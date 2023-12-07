@@ -14,6 +14,7 @@ import { RootStackParamList } from "./types";
 import LearnResultsScreen from "./pages/LearnResults";
 
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import Kana from "./pages/Kana";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -51,7 +52,7 @@ function BottomTabNavigator() {
       />
       <Tab.Screen
         name="Kana"
-        component={HomeScreen}
+        component={Kana}
         options={{ title: "Kana", headerTransparent: true, headerTitle: "" }}
       />
       <Tab.Screen name="Profile" component={SettingsScreen} />
