@@ -19,6 +19,8 @@ import getImage from "../../utils/getSvgLatter";
 
 import { Audio } from "expo-av";
 import getScoundByLetter from "../../utils/sounds";
+import { RootStackParamList } from "../../types";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 const getImagePath = (key: string | undefined) => {
   const screenWidth = Dimensions.get("window").width;
@@ -31,22 +33,28 @@ const getImagePath = (key: string | undefined) => {
   return getImage(key, iamgeStyle);
 };
 
-export const Kana = () => {
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
+
+interface HomeScreenProps {
+  navigation: HomeScreenNavigationProp;
+}
+
+export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
 
   const handlePress = async (letter: string) => {
     try {
-
       const sound = getScoundByLetter(letter);
 
-      const { sound: playbackObject } = await Audio.Sound.createAsync(sound, { shouldPlay: true });
+      const { sound: playbackObject } = await Audio.Sound.createAsync(sound, {
+        shouldPlay: true,
+      });
 
-      playbackObject.playAsync()
-      } catch (error: any) { 
-        console.log(error.message); 
-      }
-  }
-
+      playbackObject.playAsync();
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
 
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState("Hiragana");
@@ -63,11 +71,13 @@ export const Kana = () => {
     []
   );
 
-  const [isModalVisible, setModalVisible] = useState(null as null | [ILetter, number, number]);
+  const [isModalVisible, setModalVisible] = useState(
+    null as null | [ILetter, number, number]
+  );
 
   const closeModal = () => {
     setModalVisible(null);
-  };  
+  };
 
   return (
     <View style={{ ...styles.container, paddingTop: insets.top }}>
@@ -109,7 +119,8 @@ export const Kana = () => {
                     key={`${rowIndex}-${cellIndex}`}
                     style={cx(styles.cell, cell === 0 && styles.empty)}
                     onPress={() => {
-                      if (typeof cell !== "number") setModalVisible([cell, rowIndex, cellIndex]);
+                      if (typeof cell !== "number")
+                        setModalVisible([cell, rowIndex, cellIndex]);
                     }}
                   >
                     <Text style={styles.text}>
@@ -144,7 +155,9 @@ export const Kana = () => {
           </View>
           <View style={styles.modalKanaNameContainer}>
             <Text style={styles.modalKanaTitle}>{activeTab}</Text>
-            <Text style={styles.modalKanaLetter}>{isModalVisible?.[0]?.en}</Text>
+            <Text style={styles.modalKanaLetter}>
+              {isModalVisible?.[0]?.en}
+            </Text>
 
             {getImagePath(`H-${isModalVisible?.[0]?.en}`)}
           </View>
@@ -160,6 +173,13 @@ export const Kana = () => {
               <Button
                 customStyles={styles.btn}
                 title={"Draw"}
+                onClick={() => {
+                  // * go to screen Draw
+                  navigation.navigate("DrawScreen", {
+                    letter: isModalVisible?.[0] ?? ({} as ILetter),
+                  });
+                  closeModal()
+                }}
                 type={"inactive"}
                 image={"gesture-tap-hold"}
               />
@@ -167,7 +187,9 @@ export const Kana = () => {
             <View style={styles.btns}>
               <Button
                 customStyles={styles.btn}
-                title={`${activeTab === "Hiragana" ? "Katakana" : "Hiragana"} →`}
+                title={`${
+                  activeTab === "Hiragana" ? "Katakana" : "Hiragana"
+                } →`}
                 onClick={() => {
                   setActiveTab(
                     activeTab === "Hiragana" ? "Katakana" : "Hiragana"
@@ -189,8 +211,8 @@ export const Kana = () => {
                 // Prev
                 console.log(letters[item][itemIn]);
 
-                if (itemIn === 0 && item === 0) return 
-                
+                if (itemIn === 0 && item === 0) return;
+
                 if (itemIn === 0) {
                   setModalVisible([
                     letters[item - 1][letters[item - 1].length - 1],
@@ -198,7 +220,11 @@ export const Kana = () => {
                     letters[item - 1].length - 1,
                   ]);
                 } else {
-                  setModalVisible([letters[item][itemIn - 1], item, itemIn - 1]);
+                  setModalVisible([
+                    letters[item][itemIn - 1],
+                    item,
+                    itemIn - 1,
+                  ]);
                 }
               }}
             />
@@ -211,9 +237,11 @@ export const Kana = () => {
                 const item = isModalVisible?.[1] ?? 0;
                 const itemIn = isModalVisible?.[2] ?? 0;
 
-                // ! 7 и 9 баг, там всего 3 и 2 соответвенно
-                // Prev
-                if (itemIn === letters[item].length - 1 && item === letters.length) return;
+                if (
+                  itemIn === letters[item].length - 1 &&
+                  item === letters.length
+                )
+                  return;
 
                 if (itemIn === letters[item].length - 1) {
                   setModalVisible([letters[item + 1][0], item + 1, 0]);

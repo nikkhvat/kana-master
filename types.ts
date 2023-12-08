@@ -22,4 +22,5 @@ export type RootStackParamList = {
   SettingsLearn: { letters: ILetter[]; kata: "hi" | "ka" };
   Learn: { letters: ILetter[]; kata: "hi" | "ka", mode: 1 | 0, isTime: 1 | 0 };
   LearnResults: { stat: IStat, kata: "hi" | "ka" };
+  DrawScreen: { letter: ILetter };
 };

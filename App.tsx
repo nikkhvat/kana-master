@@ -15,6 +15,7 @@ import LearnResultsScreen from "./pages/LearnResults";
 
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Kana from "./pages/Kana";
+import DrawScreen from "./pages/Draw";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -69,6 +70,11 @@ const App = () => {
             name="Root"
             component={BottomTabNavigator}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="DrawScreen"
+            component={DrawScreen}
+            options={{ title: "Start Learn" }}
           />
           <Stack.Screen
             name="SettingsLearn"
