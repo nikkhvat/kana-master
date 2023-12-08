@@ -63,7 +63,7 @@ export const Kana = () => {
     []
   );
 
-  const [isModalVisible, setModalVisible] = useState(null as null | ILetter);
+  const [isModalVisible, setModalVisible] = useState(null as null | [ILetter, number, number]);
 
   const closeModal = () => {
     setModalVisible(null);
@@ -109,7 +109,7 @@ export const Kana = () => {
                     key={`${rowIndex}-${cellIndex}`}
                     style={cx(styles.cell, cell === 0 && styles.empty)}
                     onPress={() => {
-                      if (typeof cell !== "number") setModalVisible(cell);
+                      if (typeof cell !== "number") setModalVisible([cell, rowIndex, cellIndex]);
                     }}
                   >
                     <Text style={styles.text}>
@@ -144,16 +144,16 @@ export const Kana = () => {
           </View>
           <View style={styles.modalKanaNameContainer}>
             <Text style={styles.modalKanaTitle}>{activeTab}</Text>
-            <Text style={styles.modalKanaLetter}>{isModalVisible?.en}</Text>
+            <Text style={styles.modalKanaLetter}>{isModalVisible?.[0]?.en}</Text>
 
-            {getImagePath(`H-${isModalVisible?.en}`)}
+            {getImagePath(`H-${isModalVisible?.[0]?.en}`)}
           </View>
           <View style={styles.btnsColumn}>
             <View style={styles.btns}>
               <Button
                 customStyles={styles.btn}
                 title={"Sound"}
-                onClick={() => handlePress(isModalVisible?.en as any)}
+                onClick={() => handlePress(isModalVisible?.[0]?.en as any)}
                 type={"inactive"}
                 image={"volume-high"}
               />
@@ -183,12 +183,48 @@ export const Kana = () => {
               title={"Sound"}
               type={"inactive"}
               image={"chevron-left"}
+              onClick={() => {
+                const item = isModalVisible?.[1] ?? 0;
+                const itemIn = isModalVisible?.[2] ?? 0;
+                // Prev
+                console.log(letters[item][itemIn]);
+
+                if (itemIn === 0 && item === 0) return 
+                
+                if (itemIn === 0) {
+                  setModalVisible([
+                    letters[item - 1][letters[item - 1].length - 1],
+                    item - 1,
+                    letters[item - 1].length - 1,
+                  ]);
+                } else {
+                  setModalVisible([letters[item][itemIn - 1], item, itemIn - 1]);
+                }
+              }}
             />
             <Button
               customStyles={styles.short_btn}
               title={"Draw"}
               type={"inactive"}
               image={"chevron-right"}
+              onClick={() => {
+                const item = isModalVisible?.[1] ?? 0;
+                const itemIn = isModalVisible?.[2] ?? 0;
+
+                // ! 7 и 9 баг, там всего 3 и 2 соответвенно
+                // Prev
+                if (itemIn === letters[item].length - 1 && item === letters.length) return;
+
+                if (itemIn === letters[item].length - 1) {
+                  setModalVisible([letters[item + 1][0], item + 1, 0]);
+                } else {
+                  setModalVisible([
+                    letters[item][itemIn + 1],
+                    item,
+                    itemIn + 1,
+                  ]);
+                }
+              }}
             />
           </View>
         </View>
