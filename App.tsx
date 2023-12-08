@@ -15,7 +15,7 @@ import LearnResultsScreen from "./pages/LearnResults";
 
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Kana from "./pages/Kana";
-import DrawScreen from "./pages/Draw";
+import DrawScreen from "./pages/Draw/index";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
