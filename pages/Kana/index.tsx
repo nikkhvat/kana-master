@@ -17,6 +17,9 @@ import Button from "../../components/Button";
 
 import getImage from "../../utils/getSvgLatter";
 
+import { Audio } from "expo-av";
+import getScoundByLetter from "../../utils/sounds";
+
 const getImagePath = (key: string | undefined) => {
   const screenWidth = Dimensions.get("window").width;
   
@@ -29,6 +32,22 @@ const getImagePath = (key: string | undefined) => {
 };
 
 export const Kana = () => {
+  Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+
+  const handlePress = async (letter: string) => {
+    try {
+
+      const sound = getScoundByLetter(letter);
+
+      const { sound: playbackObject } = await Audio.Sound.createAsync(sound, { shouldPlay: true });
+
+      playbackObject.playAsync()
+      } catch (error: any) { 
+        console.log(error.message); 
+      }
+  }
+
+
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState("Hiragana");
 
@@ -48,7 +67,7 @@ export const Kana = () => {
 
   const closeModal = () => {
     setModalVisible(null);
-  };
+  };  
 
   return (
     <View style={{ ...styles.container, paddingTop: insets.top }}>
@@ -69,7 +88,9 @@ export const Kana = () => {
               backgroundColor:
                 activeTab === "Katakana" ? "#FFF" : "transparent",
             })}
-            onPress={() => setActiveTab("Katakana")}
+            onPress={() => {
+              setActiveTab("Katakana");
+            }}
           >
             <Text style={styles.tabText}>Katakana</Text>
           </TouchableOpacity>
@@ -129,16 +150,46 @@ export const Kana = () => {
           </View>
           <View style={styles.btnsColumn}>
             <View style={styles.btns}>
-              <Button customStyles={styles.btn} title={"Sound"} type={"inactive"} image={"volume-high"} />
-              <Button customStyles={styles.btn} title={"Draw"} type={"inactive"} image={"gesture-tap-hold"} />
+              <Button
+                customStyles={styles.btn}
+                title={"Sound"}
+                onClick={() => handlePress(isModalVisible?.en as any)}
+                type={"inactive"}
+                image={"volume-high"}
+              />
+              <Button
+                customStyles={styles.btn}
+                title={"Draw"}
+                type={"inactive"}
+                image={"gesture-tap-hold"}
+              />
             </View>
             <View style={styles.btns}>
-              <Button customStyles={styles.btn} title={"Katakana →"} type={"inactive"} />
+              <Button
+                customStyles={styles.btn}
+                title={`${activeTab === "Hiragana" ? "Katakana" : "Hiragana"} →`}
+                onClick={() => {
+                  setActiveTab(
+                    activeTab === "Hiragana" ? "Katakana" : "Hiragana"
+                  );
+                }}
+                type={"inactive"}
+              />
             </View>
           </View>
           <View style={styles.btns}>
-            <Button customStyles={styles.short_btn} title={"Sound"} type={"inactive"} image={"chevron-left"} />
-            <Button customStyles={styles.short_btn} title={"Draw"} type={"inactive"} image={"chevron-right"} />
+            <Button
+              customStyles={styles.short_btn}
+              title={"Sound"}
+              type={"inactive"}
+              image={"chevron-left"}
+            />
+            <Button
+              customStyles={styles.short_btn}
+              title={"Draw"}
+              type={"inactive"}
+              image={"chevron-right"}
+            />
           </View>
         </View>
       </Modal>
