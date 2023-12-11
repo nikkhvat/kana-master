@@ -72,6 +72,9 @@ const letters: ILetter[][] = [
     { id: 44, ka: "ワ", hi: "わ", en: "WA", ru: "ВА" },
     { id: 45, ka: "ヲ", hi: "を", en: "WO", ru: "ВО" },
   ],
+];
+
+export const lettersDakuon = [
   [
     { id: 46, ka: "ガ", hi: "が", en: "GA", ru: "ГА" },
     { id: 47, ka: "ギ", hi: "ぎ", en: "GI", ru: "ГИ" },
@@ -107,7 +110,55 @@ const letters: ILetter[][] = [
     { id: 69, ka: "ペ", hi: "ぺ", en: "PE", ru: "ПЭ" },
     { id: 70, ka: "ポ", hi: "ぽ", en: "PO", ru: "ПО" },
   ],
-];
+]
+
+export const lettersHandakuon = [
+  [
+    { id: 71, ka: "ぱ", hi: "ぱ", en: "PA", ru: "ПА" },
+    { id: 72, ka: "ぴ", hi: "ぴ", en: "PI", ru: "ПИ" },
+    { id: 73, ka: "ぷ", hi: "ぷ", en: "PU", ru: "ПУ" },
+    { id: 74, ka: "ぺ", hi: "ぺ", en: "PE", ru: "ПЭ" },
+    { id: 75, ka: "ぽ", hi: "ぽ", en: "PO", ru: "ПО" },
+  ],
+]
+
+export const lettersYoon = [
+  [
+    { id: 76, ka: "きゃ", hi: "きゃ", en: "kya", ru: "kya" },
+    { id: 77, ka: "きゅ", hi: "きゅ", en: "kyu", ru: "kyu" },
+    { id: 78, ka: "きょ", hi: "きょ", en: "kyo", ru: "kyo" },
+  ],
+  [
+    { id: 79, ka: "しゃ", hi: "しゃ", en: "sha", ru: "sha" },
+    { id: 80, ka: "しゅ", hi: "しゅ", en: "shu", ru: "shu" },
+    { id: 81, ka: "しょ", hi: "しょ", en: "sho", ru: "sho" },
+  ],
+  [
+    { id: 82, ka: "ちゃ", hi: "ちゃ", en: "cha", ru: "cha" },
+    { id: 83, ka: "ちゅ", hi: "ちゅ", en: "chu", ru: "chu" },
+    { id: 84, ka: "ちょ", hi: "ちょ", en: "cho", ru: "cho" },
+  ],
+  [
+    { id: 85, ka: "にゃ", hi: "にゃ", en: "nya", ru: "nya" },
+    { id: 86, ka: "にゅ", hi: "にゅ", en: "nyu", ru: "nyu" },
+    { id: 87, ka: "にょ", hi: "にょ", en: "nyo", ru: "nyo" },
+  ],
+  [
+    { id: 88, ka: "ひゃ", hi: "ひゃ", en: "hya", ru: "hya" },
+    { id: 89, ka: "ひゅ", hi: "ひゅ", en: "hyu", ru: "hyu" },
+    { id: 90, ka: "ひょ", hi: "ひょ", en: "hyo", ru: "hyo" },
+  ],
+  [
+    { id: 91, ka: "みゃ", hi: "みゃ", en: "mya", ru: "mya" },
+    { id: 92, ka: "みゅ", hi: "みゅ", en: "myu", ru: "myu" },
+    { id: 93, ka: "みょ", hi: "みょ", en: "myo", ru: "myo" },
+  ],
+  [
+    { id: 94, ka: "りゃ", hi: "りゃ", en: "rya", ru: "rya" },
+    { id: 95, ka: "りゅ", hi: "りゅ", en: "ryu", ru: "ryu" },
+    { id: 96, ka: "りょ", hi: "りょ", en: "ryo", ru: "ryo" },
+  ],
+]
 
 
 export default letters;

@@ -12,7 +12,7 @@ import { StyleSheet } from "react-native";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import cx from "../../utils/cx";
-import letters, { ILetter } from "../../utils/letters";
+import letters, { ILetter, lettersDakuon, lettersHandakuon, lettersYoon } from "../../utils/letters";
 
 import Ionicons from "react-native-vector-icons/MaterialCommunityIcons";
 import Button from "../../components/Button";
@@ -77,6 +77,42 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
     []
   );
 
+  const rowsDokuon = useMemo(
+    () =>
+      lettersDakuon.map((item) =>
+        item[0].en !== "WA" && item[0].en !== "YA"
+          ? item
+          : item[0].en === "WA"
+            ? [item[0], 0, 0, 0, item[1]]
+            : [item[0], 0, item[1], 0, item[2]]
+      ),
+    []
+  );
+  
+  const rowsHandakuon = useMemo(
+    () =>
+      lettersHandakuon.map((item) =>
+        item[0].en !== "WA" && item[0].en !== "YA"
+          ? item
+          : item[0].en === "WA"
+            ? [item[0], 0, 0, 0, item[1]]
+            : [item[0], 0, item[1], 0, item[2]]
+      ),
+    []
+  );
+
+  const rowsYoon = useMemo(
+    () =>
+      lettersYoon.map((item) =>
+        item[0].en !== "WA" && item[0].en !== "YA"
+          ? item
+          : item[0].en === "WA"
+            ? [item[0], 0, 0, 0, item[1]]
+            : [item[0], 0, item[1], 0, item[2]]
+      ),
+    []
+  );
+
   const [isModalVisible, setModalVisible] = useState(
     null as null | [ILetter, number, number]
   );
@@ -135,9 +171,10 @@ const styles = StyleSheet.create({
   },
   table: {
     paddingHorizontal: 20,
-    paddingBottom: 180,
+    // paddingBottom: 180,
     paddingTop: 20,
     gap: 10,
+    marginBottom: 30
   },
   row: {
     flexDirection: "row",
@@ -160,6 +197,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  cell__long: {
+    width: 105
+  },
   empty: {
     backgroundColor: "transparent",
     borderRadius: 0,
@@ -174,6 +214,7 @@ const styles = StyleSheet.create({
   subtext: {
     fontSize: 13,
     color: colors.color4,
+    textTransform: "uppercase"
   },
   modalContainer: {
     flex: 1,
@@ -263,10 +304,10 @@ const styles = StyleSheet.create({
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.kanaNameContainer}>
-        <Text style={styles.kanaName}>Basic</Text>
-      </View>
       <ScrollView>
+        <View style={styles.kanaNameContainer}>
+          <Text style={styles.kanaName}>Basic</Text>
+        </View>
         <View style={styles.table}>
           {rows.map((row, rowIndex) => (
             <View key={rowIndex} style={styles.row}>
@@ -293,6 +334,94 @@ const styles = StyleSheet.create({
             </View>
           ))}
         </View>
+        <View style={styles.kanaNameContainer}>
+          <Text style={styles.kanaName}>Dakuon</Text>
+        </View>
+        <View style={styles.table}>
+          {rowsDokuon.map((row, rowIndex) => (
+            <View key={rowIndex} style={styles.row}>
+              {row.map((cell, cellIndex) => {
+                return (
+                  <TouchableOpacity
+                    key={`${rowIndex}-${cellIndex}`}
+                    style={cx(styles.cell, cell === 0 && styles.empty)}
+                    onPress={() => {
+                      if (typeof cell !== "number")
+                        setModalVisible([cell, rowIndex, cellIndex]);
+                    }}
+                  >
+                    <Text style={styles.text}>
+                      {typeof cell !== "number" &&
+                        cell?.[activeTab === "Hiragana" ? "hi" : "ka"]}
+                    </Text>
+                    <Text style={[styles.subtext]}>
+                      {typeof cell !== "number" && cell?.en}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          ))}
+        </View>
+        <View style={styles.kanaNameContainer}>
+          <Text style={styles.kanaName}>Handakuon</Text>
+        </View>
+        <View style={styles.table}>
+          {rowsHandakuon.map((row, rowIndex) => (
+            <View key={rowIndex} style={styles.row}>
+              {row.map((cell, cellIndex) => {
+                return (
+                  <TouchableOpacity
+                    key={`${rowIndex}-${cellIndex}`}
+                    style={cx(styles.cell, cell === 0 && styles.empty)}
+                    onPress={() => {
+                      if (typeof cell !== "number")
+                        setModalVisible([cell, rowIndex, cellIndex]);
+                    }}
+                  >
+                    <Text style={styles.text}>
+                      {typeof cell !== "number" &&
+                        cell?.[activeTab === "Hiragana" ? "hi" : "ka"]}
+                    </Text>
+                    <Text style={[styles.subtext]}>
+                      {typeof cell !== "number" && cell?.en}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          ))}
+        </View>
+        <View style={styles.kanaNameContainer}>
+          <Text style={styles.kanaName}>Yoon</Text>
+        </View>
+        <View style={styles.table}>
+          {rowsYoon.map((row, rowIndex) => (
+            <View key={rowIndex} style={styles.row}>
+              {row.map((cell, cellIndex) => {
+                return (
+                  <TouchableOpacity
+                    key={`${rowIndex}-${cellIndex}`}
+                    style={cx(styles.cell, styles.cell__long, cell === 0 && styles.empty)}
+                    onPress={() => {
+                      if (typeof cell !== "number")
+                        setModalVisible([cell, rowIndex, cellIndex]);
+                    }}
+                  >
+                    <Text style={styles.text}>
+                      {typeof cell !== "number" &&
+                        cell?.[activeTab === "Hiragana" ? "hi" : "ka"]}
+                    </Text>
+                    <Text style={[styles.subtext]}>
+                      {typeof cell !== "number" && cell?.en}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          ))}
+        </View>
+        <View style={{ marginBottom: 120 }}></View>
       </ScrollView>
       <Modal
         visible={isModalVisible === null ? false : true}

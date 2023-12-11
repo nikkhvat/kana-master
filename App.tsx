@@ -16,6 +16,8 @@ import LearnResultsScreen from "./pages/LearnResults";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Kana from "./pages/Kana";
 import DrawScreen from "./pages/Draw/index";
+
+import { Appearance } from "react-native";
 import { useColorScheme } from "react-native";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -106,24 +108,26 @@ const darkColors = {
   background: "#1F1F1F",
   card: "#1F1F1F",
   text: "#BDBDBD",
-  text__gray: "#969696",
-  text__active: "#FFFFFF",
-  border: "#ECECEC",
+  border: "#3A3A3A",
   notification: "red",
 };
 
 export type Colors = typeof lightColors;
 
 const App = () => {
-  const scheme = useColorScheme();
+  const scheme = Appearance.getColorScheme();
+  // const scheme = "dark" as "dark" | "light";
+
+  console.log("scheme", scheme);
+  
 
   return (
     <SafeAreaProvider>
       <NavigationContainer
         theme={
           scheme === "dark"
-            ? { dark: true, colors: lightColors }
-            : { dark: false, colors: darkColors }
+            ? { dark: true, colors: darkColors }
+            : { dark: false, colors: lightColors }
         }
       >
         <Stack.Navigator>
