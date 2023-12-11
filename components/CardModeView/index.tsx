@@ -1,7 +1,11 @@
 import React from "react";
 import { View, Text } from "react-native";
 import Button from "../Button";
-import { styles } from "./styles";
+
+import { StyleSheet } from "react-native";
+import { useTheme } from "@react-navigation/native";
+import { Colors } from "../../App";
+
 
 export type CardModeViewProp = {
   title: string;
@@ -19,6 +23,35 @@ const CardModeView: React.FC<CardModeViewProp> = ({
   btns,
   onButtonClick,
 }) => {
+  const colors = useTheme().colors as Colors;
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      marginTop: 30,
+    },
+    title: {
+      color: colors.color4,
+      fontSize: 17,
+      fontWeight: "700",
+      lineHeight: 22,
+      letterSpacing: -0.43,
+    },
+    buttonContainer: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      gap: 15,
+    },
+    column: {
+      flexDirection: "column",
+      justifyContent: "space-between",
+      flex: 1,
+    },
+    btn: {
+      flex: 1,
+    },
+  });
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>

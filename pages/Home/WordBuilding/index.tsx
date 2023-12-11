@@ -11,7 +11,6 @@ import Button from '../../../components/Button';
 type Props = {}
 
 const WordBuilding = (props: Props) => {
-
   const cardMode: CardModeViewProp["btns"] = [
     [
       { title: "Hira → Kata", key: "Hira2Kata", onCLick: () => {}, type: "active" },
@@ -101,7 +100,7 @@ const WordBuilding = (props: Props) => {
 
   return (
     <View>
-      <ScrollView style={{ paddingHorizontal: 20, marginBottom: 15 }}>
+      <ScrollView style={{ paddingHorizontal: 20 }}>
         <PreviewCard
           imageSource={learningImage}
           title={"44"}
@@ -150,7 +149,7 @@ const WordBuilding = (props: Props) => {
           }
         />
         <Button
-          customStyles={{ marginTop: 60 }}
+          customStyles={{ marginTop: 60, marginBottom: 15 }}
           title={"Start"}
           type={"general"}
           fontSize={17}

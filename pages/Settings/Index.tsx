@@ -1,49 +1,36 @@
-import React, { useState } from "react";
-import { Text, View, TouchableOpacity, Alert } from "react-native";
-import { styles } from "./styles";
+import { useTheme } from "@react-navigation/native";
+import React from "react";
+import { Text, View } from "react-native";
+
+import { StyleSheet } from "react-native";
+import { Colors } from "../../App";
+
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Settings: React.FC = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState("русский");
-  const [selectedTheme, setSelectedTheme] = useState("системное");
+  const colors = useTheme().colors as Colors;
 
-  const chooseLanguage = () => {
-    Alert.alert(
-      "Выберите язык",
-      "",
-      [
-        { text: "Русский", onPress: () => setSelectedLanguage("русский") },
-        { text: "Английский", onPress: () => setSelectedLanguage("английский") },
-        { text: "Отмена", onPress: () => {}, style: "cancel" },
-      ],
-      { cancelable: true }
-    );
-  };
+  const insets = useSafeAreaInsets();
 
-  const chooseTheme = () => {
-    Alert.alert(
-      "Выберите тему",
-      "",
-      [
-        { text: "Системное", onPress: () => setSelectedTheme("системное") },
-        { text: "Тёмная", onPress: () => setSelectedTheme("тёмная") },
-        { text: "Светлая", onPress: () => setSelectedTheme("светлая") },
-        { text: "Отмена", onPress: () => {}, style: "cancel" },
-      ],
-      { cancelable: true }
-    );
-  };
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: colors.color1,
+    },
+    title: {
+      fontSize: 28,
+      fontWeight: "bold",
+      marginTop: 20,
+      marginBottom: 10,
+      color: colors.color4,
+    },
+  });
+
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Настройки</Text>
-
-      <TouchableOpacity style={styles.option} onPress={chooseLanguage}>
-        <Text style={styles.optionText}>Язык: {selectedLanguage}</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.option} onPress={chooseTheme}>
-        <Text style={styles.optionText}>Тема приложения: {selectedTheme}</Text>
-      </TouchableOpacity>
+    <View style={{ ...styles.container, paddingTop: insets.top }}>
+      <Text style={styles.title}>Profile</Text>
     </View>
   );
 };

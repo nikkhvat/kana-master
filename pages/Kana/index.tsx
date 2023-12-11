@@ -7,7 +7,9 @@ import {
   Modal,
   Dimensions,
 } from "react-native";
-import { styles } from "./styles";
+
+import { StyleSheet } from "react-native";
+
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import cx from "../../utils/cx";
 import letters, { ILetter } from "../../utils/letters";
@@ -21,6 +23,8 @@ import { Audio } from "expo-av";
 import getScoundByLetter from "../../utils/sounds";
 import { RootStackParamList } from "../../types";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { Colors } from "../../App";
+import { useTheme } from "@react-navigation/native";
 
 const getImagePath = (key: string | undefined) => {
   const screenWidth = Dimensions.get("window").width;
@@ -40,6 +44,8 @@ interface HomeScreenProps {
 }
 
 export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
+  const colors = useTheme().colors as Colors;
+  
   Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
 
   const handlePress = async (letter: string) => {
@@ -77,7 +83,158 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const closeModal = () => {
     setModalVisible(null);
+  
   };
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 28,
+    fontWeight: "700",
+    marginLeft: 20,
+    marginTop: 20,
+    marginBottom: 10,
+    color: colors.color4,
+  },
+  content: {
+    paddingHorizontal: 20,
+  },
+  container: {
+    flexDirection: "column",
+    backgroundColor: colors.color1,
+  },
+  tabContainer: {
+    padding: 2,
+    flexDirection: "row",
+    width: "100%",
+    backgroundColor: colors.second_color4,
+    borderRadius: 12,
+    marginTop: 8,
+  },
+  tab: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 46,
+    borderRadius: 10,
+  },
+  tabText: {
+    fontSize: 15,
+    fontWeight: "400",
+    color: colors.color4,
+  },
+  kanaNameContainer: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderBottomColor: colors.color2,
+    borderBottomWidth: 1,
+  },
+  kanaName: {
+    color: colors.color4,
+    fontSize: 17,
+    fontWeight: "700",
+  },
+  table: {
+    paddingHorizontal: 20,
+    paddingBottom: 180,
+    paddingTop: 20,
+    gap: 10,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  row_btns: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  cell: {
+    padding: 8,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: colors.color2,
+    width: 60,
+    height: 60,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  empty: {
+    backgroundColor: "transparent",
+    borderRadius: 0,
+    borderWidth: 0,
+    borderColor: "transparent",
+  },
+  text: {
+    fontSize: 17,
+    color: colors.color4,
+    lineHeight: 22,
+  },
+  subtext: {
+    fontSize: 13,
+    color: colors.color4,
+  },
+  modalContainer: {
+    flex: 1,
+    margin: 0,
+    padding: 0,
+    backgroundColor: "blue",
+  },
+  modal: {
+    flex: 1,
+    paddingTop: 15,
+    justifyContent: "flex-start",
+    backgroundColor: colors.color1,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  modalKanaNameContainer: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingTop: 30,
+  },
+  modalKanaTitle: {
+    color: colors.color4,
+    fontSize: 17,
+    fontWeight: "700",
+  },
+  modalKanaLetter: {
+    color: colors.color4,
+    fontSize: 34,
+    fontWeight: "700",
+    marginTop: 15,
+  },
+  btnsColumn: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    gap: 0,
+  },
+  kanaImage: {},
+  btns: {
+    flex: 1,
+    paddingHorizontal: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 15,
+    marginTop: 15,
+  },
+  btn: {
+    flex: 1,
+    marginTop: 0,
+  },
+  short_btn: {
+    width: 50,
+  },
+});
+
 
   return (
     <View style={{ ...styles.container, paddingTop: insets.top }}>
@@ -87,7 +244,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
           <TouchableOpacity
             style={cx(styles.tab, {
               backgroundColor:
-                activeTab === "Hiragana" ? "#FFF" : "transparent",
+                activeTab === "Hiragana" ? colors.color1 : "transparent",
             })}
             onPress={() => setActiveTab("Hiragana")}
           >
@@ -96,7 +253,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
           <TouchableOpacity
             style={cx(styles.tab, {
               backgroundColor:
-                activeTab === "Katakana" ? "#FFF" : "transparent",
+                activeTab === "Katakana" ? colors.color1 : "transparent",
             })}
             onPress={() => {
               setActiveTab("Katakana");
@@ -150,7 +307,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
               onPress={closeModal}
               name={"close"}
               size={29}
-              color={"#2A2A2A"}
+              color={colors.color4}
             />
           </View>
           <View style={styles.modalKanaNameContainer}>
@@ -178,7 +335,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
                   navigation.navigate("DrawScreen", {
                     letter: isModalVisible?.[0] ?? ({} as ILetter),
                   });
-                  closeModal()
+                  closeModal();
                 }}
                 type={"inactive"}
                 image={"gesture-tap-hold"}
@@ -208,8 +365,6 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
               onClick={() => {
                 const item = isModalVisible?.[1] ?? 0;
                 const itemIn = isModalVisible?.[2] ?? 0;
-                // Prev
-                console.log(letters[item][itemIn]);
 
                 if (itemIn === 0 && item === 0) return;
 

@@ -7,7 +7,6 @@ import CardModeView, { CardModeViewProp } from '../../../components/CardModeView
 import Button from '../../../components/Button';
 
 const Practice = () => {
-
   const cardMode: CardModeViewProp["btns"] = [
     [
       { title: "Hira → Kata", key: "Hira2Kata", onCLick: () => {}, type: "active" },
@@ -95,7 +94,7 @@ const Practice = () => {
   
   return (
     <View>
-      <ScrollView style={{ paddingHorizontal: 20, marginBottom: 15 }}>
+      <ScrollView style={{ paddingHorizontal: 20 }}>
         <PreviewCard
           imageSource={learningImage}
           title={"66"}
@@ -146,7 +145,7 @@ const Practice = () => {
         />
 
         <Button
-          customStyles={{ marginTop: 60 }}
+          customStyles={{ marginTop: 60, marginBottom: 15 }}
           title={"Start"}
           type={"general"}
           fontSize={17}

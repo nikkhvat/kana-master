@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types";
-import { styles } from "./styles";
 
 import Learning from "./Learning";
 import Practice from "./Practice";
 import WordBuilding from "./WordBuilding";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import cx from "../../utils/cx";
+
+import { useTheme } from "@react-navigation/native";
+import { styles } from "../Draw";
+import { Colors } from "../../App";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -17,6 +20,8 @@ interface HomeScreenProps {
 }
 
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
+  const colors = useTheme().colors as Colors;
+
   enum Screen {
     Learning,
     Practice,
@@ -33,12 +38,56 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const insets = useSafeAreaInsets();
 
+  const styles = StyleSheet.create({
+    title: {
+      fontSize: 28,
+      fontWeight: "700",
+      marginLeft: 20,
+      marginTop: 20,
+      marginBottom: 10,
+      color: colors.color4,
+    },
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingHorizontal: 20,
+      height: 54,
+    },
+    header_title: {
+      color: colors.color3,
+      fontSize: 15,
+      fontWeight: "700",
+    },
+    header_title__active: {
+      color: colors.color4,
+    },
+    header__line: {
+      backgroundColor: colors.color4,
+      height: 2,
+      width: 32,
+      position: "absolute",
+      top: -6,
+      left: 0,
+    },
+    content: {
+      flex: 1,
+    },
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    }
+  });
+
   return (
     <View style={{ ...styles.container, paddingTop: insets.top }}>
       <Text style={styles.title}>Learning</Text>
       <View style={styles.header}>
         {screens.map((item) => (
-          <TouchableOpacity key={item.val} onPress={() => setScreen(item.val)}>
+          <TouchableOpacity
+            key={item.val}
+            onPress={() => setScreen(item.val)}
+          >
             <Text
               style={
                 item.val === screen
