@@ -23,11 +23,19 @@ import { Audio } from "expo-av";
 import getScoundByLetter from "../../utils/sounds";
 import { RootStackParamList } from "../../types";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Colors } from "../../App";
+import { Colors, darkColors } from "../../App";
 import { useTheme } from "@react-navigation/native";
 
 const getImagePath = (key: string | undefined) => {
   const screenWidth = Dimensions.get("window").width;
+  
+  const colors = useTheme().colors as Colors;
+
+  const THEME = colors.color1 === darkColors.color1 ? "DARK" : "LIGHT"
+
+  if (THEME === "DARK") {
+    key = key?.trim() + "-DARK"
+  }
   
   const iamgeStyle = {
     width: screenWidth - 24,
@@ -45,6 +53,8 @@ interface HomeScreenProps {
 
 export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   const colors = useTheme().colors as Colors;
+
+  const THEME = colors.color1 === darkColors.color1 ? "DARK" : "LIGHT"
   
   Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
 

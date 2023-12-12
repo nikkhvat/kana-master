@@ -92,7 +92,7 @@ const lightColors = {
   notification: "red",
 };
 
-const darkColors = {
+export const darkColors = {
   color1: "#1F1F1F",
   color2: "#3A3A3A",
   color3: "#969696",
@@ -119,7 +119,6 @@ const App = () => {
   // const scheme = "dark" as "dark" | "light";
 
   console.log("scheme", scheme);
-  
 
   return (
     <SafeAreaProvider>
