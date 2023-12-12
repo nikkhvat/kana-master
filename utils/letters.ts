@@ -102,14 +102,7 @@ export const lettersDakuon = [
     { id: 63, ka: "ブ", hi: "ぶ", en: "BU", ru: "БУ" },
     { id: 64, ka: "ベ", hi: "べ", en: "BE", ru: "БЭ" },
     { id: 65, ka: "ボ", hi: "ぼ", en: "BO", ru: "БО" },
-  ],
-  [
-    { id: 66, ka: "パ", hi: "ぱ", en: "PA", ru: "ПА" },
-    { id: 67, ka: "ピ", hi: "ぴ", en: "PI", ru: "ПИ" },
-    { id: 68, ka: "プ", hi: "ぷ", en: "PU", ru: "ПУ" },
-    { id: 69, ka: "ペ", hi: "ぺ", en: "PE", ru: "ПЭ" },
-    { id: 70, ka: "ポ", hi: "ぽ", en: "PO", ru: "ПО" },
-  ],
+  ]
 ]
 
 export const lettersHandakuon = [

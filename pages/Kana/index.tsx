@@ -34,7 +34,7 @@ const getImagePath = (key: string | undefined) => {
     height: screenWidth - 24,
   };
 
-  return getImage(key, iamgeStyle);
+  return getImage(key?.toUpperCase(), iamgeStyle);
 };
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
