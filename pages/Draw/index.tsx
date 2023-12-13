@@ -12,16 +12,13 @@ import {
 } from "react-native";
 import Svg, { Path } from "react-native-svg";
 
-// import Button from "../../components/Button";
-
 export const DrawScreen: React.FC = () => {
   const [paths, setPaths] = useState<string[]>([]);
   const currentPath = useRef("");
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
-  // Manually adjust these values as needed
-  const manualOffsetX = 0; // Adjust this for horizontal offset
-  const manualOffsetY = 300; // Adjust this for vertical offset
+  const manualOffsetX = 0;
+  const manualOffsetY = 300;
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { x, y } = event.nativeEvent.layout;

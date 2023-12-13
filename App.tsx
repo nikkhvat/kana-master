@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -18,7 +18,11 @@ import Kana from "./pages/Kana";
 import DrawScreen from "./pages/Draw/index";
 
 import { Appearance } from "react-native";
-import { useColorScheme } from "react-native";
+
+import { ThemeProvider } from 'styled-components'
+import { darkTheme } from "./themes/dark";
+import { lightTheme } from "./themes/light";
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -72,96 +76,67 @@ function BottomTabNavigator() {
   );
 }
 
-const lightColors = {
-  color1: "#FFFFFF",
-  color2: "#ECECEC",
-  color3: "#BDBDBD",
-  color4: "#2A2A2A",
-  color5: "#FFFFFF",
-  second_color1: "#F4817D",
-  second_color2: "#7ABC71",
-  second_color3: "#9A7861",
-  second_color4: "#F0EBE5",
-  second_color5: "#F6BF6C",
+export type Colors = typeof lightTheme;
 
-  primary: "#9A7861",
-  background: "#FFFFFF",
-  card: "#FFFFFF",
-  text: "#2A2A2A",
-  border: "#ECECEC",
-  notification: "red",
-};
+const dark = {
+  mode: "dark",
+  colors: darkTheme,
+}
 
-export const darkColors = {
-  color1: "#1F1F1F",
-  color2: "#3A3A3A",
-  color3: "#969696",
-  color4: "#FFFFFF",
-  color5: "#FFFFFF",
-  second_color1: "#EF625D",
-  second_color2: "#60BA53",
-  second_color3: "#C08D6B",
-  second_color4: "#393635",
-  second_color5: "#F0B153",
-
-  primary: "#9A7861",
-  background: "#1F1F1F",
-  card: "#1F1F1F",
-  text: "#BDBDBD",
-  border: "#3A3A3A",
-  notification: "red",
-};
-
-export type Colors = typeof lightColors;
+const light = {
+  mode: "light",
+  colors: lightTheme,
+}
 
 const App = () => {
   const scheme = Appearance.getColorScheme();
-  // const scheme = "dark" as "dark" | "light";
 
-  console.log("scheme", scheme);
+  const theme = scheme === 'dark' ? dark : light;
 
   return (
-    <SafeAreaProvider>
-      <NavigationContainer
-        theme={
-          scheme === "dark"
-            ? { dark: true, colors: darkColors }
-            : { dark: false, colors: lightColors }
-        }
-      >
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Root"
-            component={BottomTabNavigator}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="DrawScreen"
-            component={DrawScreen}
-            options={{ title: "Start Learn" }}
-          />
-          <Stack.Screen
-            name="SettingsLearn"
-            component={SettingsLearnScreen}
-            options={{ title: "Start Learn" }}
-          />
-          <Stack.Screen
-            name="Learn"
-            component={LearnScreen}
-            options={{ headerBackVisible: false, gestureEnabled: false }}
-          />
-          <Stack.Screen
-            name="LearnResults"
-            component={LearnResultsScreen}
-            options={{
-              headerBackVisible: false,
-              gestureEnabled: false,
-              title: "Results",
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <ThemeProvider theme={theme} >
+      <SafeAreaProvider>
+        <NavigationContainer
+          theme={
+            scheme === "dark"
+              ? { dark: true, colors: darkTheme }
+              : { dark: false, colors: lightTheme }
+          }
+        >
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Root"
+              component={BottomTabNavigator}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="DrawScreen"
+              component={DrawScreen}
+              options={{ title: "Start Learn" }}
+            />
+            <Stack.Screen
+              name="SettingsLearn"
+              component={SettingsLearnScreen}
+              options={{ title: "Start Learn" }}
+            />
+            <Stack.Screen
+              name="Learn"
+              component={LearnScreen}
+              options={{ headerBackVisible: false, gestureEnabled: false }}
+            />
+            <Stack.Screen
+              name="LearnResults"
+              component={LearnResultsScreen}
+              options={{
+                headerBackVisible: false,
+                gestureEnabled: false,
+                title: "Results",
+              }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </ThemeProvider>
   );
 };
 

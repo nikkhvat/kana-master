@@ -1,27 +1,61 @@
-import React from "react";
+import React from 'react';
+import styled from 'styled-components/native';
+import { TouchableOpacityProps, TextProps } from 'react-native';
+import Ionics from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useTheme, Theme } from '@react-navigation/native';
 
-import { StyleSheet } from "react-native";
-
-import {
-  Text,
-  TouchableOpacity,
-} from "react-native";
-
-import Ionicons from "react-native-vector-icons/MaterialCommunityIcons";
-
-import cx from "../../utils/cx";
-import { useTheme } from "@react-navigation/native";
 import { Colors } from "../../App";
 
-type ButtonProps = {
+interface ButtonProps extends TouchableOpacityProps {
   title: string;
-  type: "active" | "inactive" | "weak" | "general";
-  onClick?: Function;
+  type: 'active' | 'inactive' | 'weak' | 'general';
+  onClick?: () => void;
   fontSize?: number;
-  customStyles?: any;
   image?: string | null;
-};
+  customStyles?: any
+}
 
+interface StyledButtonProps extends TouchableOpacityProps {
+  type: 'active' | 'inactive' | 'weak' | 'general';
+}
+
+interface StyledTextProps extends TextProps {
+  fontSize?: number;
+  type: 'active' | 'inactive' | 'weak' | 'general';
+}
+
+
+const StyledButton = styled.TouchableOpacity<StyledButtonProps>`
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  height: 50px;
+  border-radius: 12px;
+  background-color: ${({ theme, type }) =>
+    type === 'active'
+      ? theme.colors.second_color3
+      : type === 'inactive'
+      ? 'transparent'
+      : type === 'weak'
+      ? theme.colors.second_color4
+      : theme.colors.color4};
+  border-color: ${({ theme, type }) => (type === 'inactive' ? theme.colors.color2 : 'transparent')};
+  border-style: solid;
+  border-width: ${({ type }) => (type === 'inactive' ? 1 : 0)}px;
+`;
+
+const StyledText = styled.Text<StyledTextProps>`
+  font-size: ${({ fontSize }) => (fontSize ? fontSize : 13)}px;
+  color: ${({ theme, type }) =>
+    type === 'active'
+      ? theme.colors.color5
+      : type === 'inactive'
+      ? theme.colors.color4
+      : type === 'weak'
+      ? theme.colors.color4
+      : theme.colors.color1};
+  font-weight: 700;
+`;
 
 const Button: React.FC<ButtonProps> = ({
   title,
@@ -30,74 +64,26 @@ const Button: React.FC<ButtonProps> = ({
   fontSize,
   customStyles,
   image = null,
+  ...props
 }) => {
-  const extraStyles: Record<string, string | number> = {};
-
-  const colors = useTheme().colors as Colors;
-
-  if (fontSize) extraStyles["fontSize"] = fontSize;
-
-  const styles = StyleSheet.create({
-    button: {
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 15,
-      height: 50,
-      borderRadius: 12,
-    },
-    button_active: {
-      backgroundColor: colors.second_color3,
-    },
-    button_inactive: {
-      backgroundColor: "transparent",
-      borderColor: colors.color2,
-      borderStyle: "solid",
-      borderWidth: 1,
-    },
-    button_weak: {
-      backgroundColor: colors.second_color4,
-    },
-    button_general: {
-      backgroundColor: colors.color4,
-    },
-    text: {
-      fontSize: 13,
-    },
-    text_active: {
-      color: colors.color5,
-      fontWeight: "700",
-    },
-    text_inactive: {
-      color: colors.color4,
-      fontWeight: "700",
-    },
-    text_weak: {
-      color: colors.color4,
-      fontWeight: "700",
-    },
-    text_general: {
-      color: colors.color1,
-      fontWeight: "700",
-    },
-  });
+  const theme = useTheme() as unknown as Colors;
 
   return (
-    <TouchableOpacity
-      style={cx(
-        styles.button,
-        styles[`button_${type}`],
-        extraStyles,
-        customStyles
-      )}
+    <StyledButton
       onPress={() => onClick?.()}
+      type={type}
+      style={customStyles}
+      theme={theme}
+      {...props}
     >
-      {image === null && (
-        <Text style={cx(styles.text, styles[`text_${type}`], extraStyles)}>
+      {image === null ? (
+        <StyledText fontSize={fontSize} type={type} theme={theme}>
           {title}
-        </Text>
+        </StyledText>
+      ) : (
+        <Ionics name={image} size={24} color={theme.color4} />
       )}
-      {image !== null && <Ionicons name={image} size={24} color={colors.color4} />}
-    </TouchableOpacity>
+    </StyledButton>
   );
 };
 

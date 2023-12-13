@@ -23,15 +23,16 @@ import { Audio } from "expo-av";
 import getScoundByLetter from "../../utils/sounds";
 import { RootStackParamList } from "../../types";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Colors, darkColors } from "../../App";
+import { Colors } from "../../App";
 import { useTheme } from "@react-navigation/native";
+import { darkTheme } from "../../themes/dark";
 
 const getImagePath = (key: string | undefined) => {
   const screenWidth = Dimensions.get("window").width;
   
   const colors = useTheme().colors as Colors;
 
-  const THEME = colors?.color1 === darkColors?.color1 ? "DARK" : "LIGHT"
+  const THEME = colors?.color1 === darkTheme?.color1 ? "DARK" : "LIGHT"
 
   if (THEME === "DARK") {
     key = key?.trim() + "-DARK"

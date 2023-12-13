@@ -1,37 +1,31 @@
-import { useTheme } from "@react-navigation/native";
 import React from "react";
-import { Text, View } from "react-native";
 
-import { StyleSheet } from "react-native";
-import { Colors } from "../../App";
+import styled from "styled-components/native"
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const Settings: React.FC = () => {
-  const colors = useTheme().colors as Colors;
+const Container = styled.View<{paddingTop: number}>`
+  flex: 1;
+  padding: 20px;
+  background-color: ${({ theme }) => theme.colors.color1};
+  padding-top: ${({ paddingTop }) => paddingTop + "px"};
+`
 
+const Title = styled.Text`
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  color: ${({ theme }) => theme.colors.color4 };
+`
+
+const Settings: React.FC = () => {
   const insets = useSafeAreaInsets();
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 20,
-      backgroundColor: colors.color1,
-    },
-    title: {
-      fontSize: 28,
-      fontWeight: "bold",
-      marginTop: 20,
-      marginBottom: 10,
-      color: colors.color4,
-    },
-  });
-
-
   return (
-    <View style={{ ...styles.container, paddingTop: insets.top }}>
-      <Text style={styles.title}>Profile</Text>
-    </View>
+    <Container paddingTop={insets.top} >
+      <Title>Profile</Title>
+    </Container>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ScrollView, Text, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 
 import learningImage from "../../../assets/preview/practice.png";
 import PreviewCard from '../../../components/PreviewCard';
@@ -7,29 +7,25 @@ import CardModeView, { CardModeViewProp } from '../../../components/CardModeView
 import Button from '../../../components/Button';
 
 const Practice = () => {
-  const cardMode: CardModeViewProp["btns"] = [
+  const cardMode: CardModeViewProp["buttons"] = [
     [
-      { title: "Hira → Kata", key: "Hira2Kata", onCLick: () => {}, type: "active" },
-      { title: "Hira → Romaji", key: "Hira2Romaji", onCLick: () => {}, type: "inactive" },
-      { title: "Romaji → Hira", key: "Romaji2Hira", onCLick: () => {}, type: "inactive" },
+      { title: "Hira → Kata", key: "hira2kata", onCLick: () => {}, type: "active" },
+      { title: "Hira → Romaji", key: "hira2romaji", onCLick: () => {}, type: "inactive" },
+      { title: "Romaji → Hira", key: "romaji2hira", onCLick: () => {}, type: "inactive" },
     ],
     [
-      { title: "Kata → Hira", key: "Kata2Hira", onCLick: () => {}, type: "inactive" },
-      { title: "Kata → Romaji", key: "Kata2Romaji", onCLick: () => {}, type: "inactive" },
-      { title: "Romaji → Kata", key: "Romaji2Kata", onCLick: () => {}, type: "inactive" },
-    ],
-  ];
-
-  const Mode: CardModeViewProp["btns"] = [
-    [
-      { title: "Choice", key: "Choice", onCLick: () => {}, type: "active" },
-    ],
-    [
-      { title: "Write", key: "Write", onCLick: () => {}, type: "inactive" },
+      { title: "Kata → Hira", key: "kata2hira", onCLick: () => {}, type: "inactive" },
+      { title: "Kata → Romaji", key: "kata2romaji", onCLick: () => {}, type: "inactive" },
+      { title: "Romaji → Kata", key: "romaji2kata", onCLick: () => {}, type: "inactive" },
     ],
   ];
 
-  const DifficultyLevel: CardModeViewProp["btns"] = [
+  const Mode: CardModeViewProp["buttons"] = [
+    [{ title: "Choice", key: "Choice", onCLick: () => {}, type: "active" }],
+    [{ title: "Write", key: "Write", onCLick: () => {}, type: "inactive" }],
+  ];
+
+  const DifficultyLevel: CardModeViewProp["buttons"] = [
     [{ title: "Time test", key: "Time test", onCLick: () => {}, type: "weak" }],
     [{ title: "One attempt", key: "One attempt", onCLick: () => {}, type: "inactive" }],
   ];
@@ -67,7 +63,6 @@ const Practice = () => {
     const newBtnArray = [...btnArray];
     const currentType = newBtnArray[indexGroup][indexButton].type;
 
-    // Проверяем, есть ли другие активные кнопки, кроме текущей
     const isActivePresentInOthers = newBtnArray.some((group, gIndex) =>
       group.some(
         (btn, bIndex) =>
@@ -75,7 +70,6 @@ const Practice = () => {
       )
     );
 
-    // Если mode равен "has_one" и текущая кнопка единственная активная, не меняем ее состояние
     if (
       mode === "has_one" &&
       currentType === active &&
@@ -84,7 +78,6 @@ const Practice = () => {
       return;
     }
 
-    // Обновляем состояние кнопки
     newBtnArray[indexGroup][indexButton].type =
       currentType === active ? "inactive" : active;
 
@@ -103,7 +96,7 @@ const Practice = () => {
 
         <CardModeView
           title={"Card mode"}
-          btns={cardModeState}
+          buttons={cardModeState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
               cardModeState,
@@ -117,7 +110,7 @@ const Practice = () => {
         />
         <CardModeView
           title={"Mode"}
-          btns={modeState}
+          buttons={modeState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
               modeState,
@@ -131,7 +124,7 @@ const Practice = () => {
         />
         <CardModeView
           title={"Difficulty level"}
-          btns={difficultyLevelState}
+          buttons={difficultyLevelState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
               difficultyLevelState,

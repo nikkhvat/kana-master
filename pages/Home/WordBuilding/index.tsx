@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ScrollView, Text, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 
 import learningImage from "../../../assets/preview/wordgame.png";
 import PreviewCard from '../../../components/PreviewCard';
@@ -7,11 +7,10 @@ import PreviewCard from '../../../components/PreviewCard';
 import CardModeView, { CardModeViewProp } from '../../../components/CardModeView';
 import Button from '../../../components/Button';
 
-
 type Props = {}
 
 const WordBuilding = (props: Props) => {
-  const cardMode: CardModeViewProp["btns"] = [
+  const cardMode: CardModeViewProp["buttons"] = [
     [
       { title: "Hira → Kata", key: "Hira2Kata", onCLick: () => {}, type: "active" },
       { title: "Hira → Romaji", key: "Hira2Romaji", onCLick: () => {}, type: "inactive" },
@@ -24,7 +23,7 @@ const WordBuilding = (props: Props) => {
     ],
   ];
 
-  const Mode: CardModeViewProp["btns"] = [
+  const Mode: CardModeViewProp["buttons"] = [
     [
       { title: "Choice", key: "Choice", onCLick: () => {}, type: "active" },
       { title: "Word building", key: "Word building", onCLick: () => {}, type: "inactive" },
@@ -35,7 +34,7 @@ const WordBuilding = (props: Props) => {
     ],
   ];
 
-  const DifficultyLevel: CardModeViewProp["btns"] = [
+  const DifficultyLevel: CardModeViewProp["buttons"] = [
     [{ title: "Time test", key: "Time test", onCLick: () => {}, type: "weak" }],
     [{ title: "One attempt", key: "One attempt", onCLick: () => {}, type: "inactive" }],
   ];
@@ -55,7 +54,6 @@ const WordBuilding = (props: Props) => {
     const newBtnArray = [...btnArray];
     const currentType = newBtnArray[indexGroup][indexButton].type;
 
-    // Проверяем, есть ли другие активные кнопки, кроме текущей
     const isActivePresentInOthers = newBtnArray.some((group, gIndex) =>
       group.some(
         (btn, bIndex) =>
@@ -63,7 +61,6 @@ const WordBuilding = (props: Props) => {
       )
     );
 
-    // Если mode равен "has_one" и текущая кнопка единственная активная, не меняем ее состояние
     if (
       mode === "has_one" &&
       currentType === active &&
@@ -72,7 +69,6 @@ const WordBuilding = (props: Props) => {
       return;
     }
 
-    // Обновляем состояние кнопки
     newBtnArray[indexGroup][indexButton].type =
       currentType === active ? "inactive" : active;
 
@@ -108,7 +104,7 @@ const WordBuilding = (props: Props) => {
         />
         <CardModeView
           title={"Card mode"}
-          btns={cardModeState}
+          buttons={cardModeState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
               cardModeState,
@@ -122,7 +118,7 @@ const WordBuilding = (props: Props) => {
         />
         <CardModeView
           title={"Mode"}
-          btns={modeState}
+          buttons={modeState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
               modeState,
@@ -136,7 +132,7 @@ const WordBuilding = (props: Props) => {
         />
         <CardModeView
           title={"Difficulty level"}
-          btns={difficultyLevelState}
+          buttons={difficultyLevelState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
               difficultyLevelState,

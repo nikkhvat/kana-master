@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types";
 
@@ -7,11 +7,54 @@ import Learning from "./Learning";
 import Practice from "./Practice";
 import WordBuilding from "./WordBuilding";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import cx from "../../utils/cx";
 
-import { useTheme } from "@react-navigation/native";
-import { styles } from "../Draw";
-import { Colors } from "../../App";
+import styled from 'styled-components/native';
+
+const Container = styled.View<{paddingTop: number }>`
+  flex: 1;
+  background-color: ${({theme}: any) => theme.colors.background};
+  padding-top: ${({ paddingTop }) => paddingTop + "px"};
+`
+
+const Title = styled.Text`
+  font-size: 28;
+  font-weight: 700;
+  margin-left: 20;
+  margin-top: 20;
+  margin-bottom: 10;
+  color: ${({ theme }) => theme.colors.color4};
+`
+
+const Header = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 54px;
+`
+
+const TabLine = styled.View`
+  background-color: ${({ theme }) => theme.colors.color4};
+  height: 2px;
+  width: 32px;
+  position: absolute;
+  top: -6px;
+  left: 0;
+`
+
+const Tab = styled.Text<{active: boolean }>`
+  font-size: 15px;
+  font-weight: 700;
+  color: ${({ active, theme }) => active 
+    ? theme.colors.color4 
+    : theme.colors.color3};
+  cursor: pointer;
+`
+
+const Content = styled.View`
+  flex: 1;
+`
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -19,9 +62,7 @@ interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
 }
 
-const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
-  const colors = useTheme().colors as Colors;
-
+const HomeScreen: React.FC<HomeScreenProps> = () => {
   enum Screen {
     Learning,
     Practice,
@@ -38,75 +79,23 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const insets = useSafeAreaInsets();
 
-  const styles = StyleSheet.create({
-    title: {
-      fontSize: 28,
-      fontWeight: "700",
-      marginLeft: 20,
-      marginTop: 20,
-      marginBottom: 10,
-      color: colors.color4,
-    },
-    header: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      paddingHorizontal: 20,
-      height: 54,
-    },
-    header_title: {
-      color: colors.color3,
-      fontSize: 15,
-      fontWeight: "700",
-    },
-    header_title__active: {
-      color: colors.color4,
-    },
-    header__line: {
-      backgroundColor: colors.color4,
-      height: 2,
-      width: 32,
-      position: "absolute",
-      top: -6,
-      left: 0,
-    },
-    content: {
-      flex: 1,
-    },
-    container: {
-      flex: 1,
-      backgroundColor: colors.background,
-    }
-  });
-
   return (
-    <View style={{ ...styles.container, paddingTop: insets.top }}>
-      <Text style={styles.title}>Learning</Text>
-      <View style={styles.header}>
+    <Container paddingTop={insets.top} >
+      <Title>Learning</Title>
+      <Header>
         {screens.map((item) => (
-          <TouchableOpacity
-            key={item.val}
-            onPress={() => setScreen(item.val)}
-          >
-            <Text
-              style={
-                item.val === screen
-                  ? cx(styles.header_title, styles.header_title__active)
-                  : styles.header_title
-              }
-            >
-              {item.title}
-            </Text>
-            {item.val === screen && <View style={styles.header__line} />}
+          <TouchableOpacity key={item.val} onPress={() => setScreen(item.val)} >
+            <Tab active={item.val === screen} >{item.title}</Tab>
+            {item.val === screen && <TabLine />}
           </TouchableOpacity>
         ))}
-      </View>
-      <View style={styles.content}>
+      </Header>
+      <Content>
         {screen === Screen.Learning && <Learning />}
         {screen === Screen.Practice && <Practice />}
         {screen === Screen.WordBuilding && <WordBuilding />}
-      </View>
-    </View>
+      </Content>
+    </Container>
   );
 };
 

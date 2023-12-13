@@ -1,26 +1,37 @@
 import React from 'react'
-import { View } from 'react-native'
 import PreviewCard from '../../../components/PreviewCard';
-
-type Props = {}
 
 import learningImage from "../../../assets/preview/learning.png";
 import Button from '../../../components/Button';
-import { styles } from './styles';
 
-const Learning = (props: Props) => {
+import styled from "styled-components/native"
+
+const Learning = () => {
+  const Container = styled.View`
+    padding-left: 20px;
+    padding-right: 20px;
+    flex: 1;
+  `
+
+  const Content = styled.View`
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 15px;
+  `
+
   return (
-    <View style={styles.content} >
+    <Container>
       <PreviewCard
         imageSource={learningImage}
         title={"66"}
         subtitle={"Hiragana / Katakana"}
       />
 
-      <View style={styles.container}>
+      <Content>
         <Button title={"Learn"} type={"general"} fontSize={17} />
-      </View>
-    </View>
+      </Content>
+    </Container>
   );
 }
 
