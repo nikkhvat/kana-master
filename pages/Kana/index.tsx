@@ -31,7 +31,7 @@ const getImagePath = (key: string | undefined) => {
   
   const colors = useTheme().colors as Colors;
 
-  const THEME = colors.color1 === darkColors.color1 ? "DARK" : "LIGHT"
+  const THEME = colors?.color1 === darkColors?.color1 ? "DARK" : "LIGHT"
 
   if (THEME === "DARK") {
     key = key?.trim() + "-DARK"
@@ -53,8 +53,6 @@ interface HomeScreenProps {
 
 export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   const colors = useTheme().colors as Colors;
-
-  const THEME = colors.color1 === darkColors.color1 ? "DARK" : "LIGHT"
   
   Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
 
@@ -286,6 +284,7 @@ const styles = StyleSheet.create({
   },
 });
 
+  const lettArrs = [rows, rowsDokuon, rowsHandakuon, rowsYoon]
 
   return (
     <View style={{ ...styles.container, paddingTop: insets.top }}>
