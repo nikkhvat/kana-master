@@ -1,3 +1,4 @@
+import { CardMode, DifficultyLevelType, PracticeScreenMode, TestMode } from "./shared/constants/test";
 import { ILetter } from "./utils/letters";
 
 interface IStat {
@@ -20,7 +21,12 @@ export type RootStackParamList = {
   Root: undefined;
   Home: undefined;
   SettingsLearn: { letters: ILetter[]; kata: "hi" | "ka" };
-  Learn: { letters: ILetter[]; kata: "hi" | "ka", mode: 1 | 0, isTime: 1 | 0 };
+  Practice: { 
+    keysCardModeState: CardMode[], 
+    keysModeState: TestMode[], 
+    keysDifficultyLevelState: DifficultyLevelType[]
+    mode: PracticeScreenMode.Testing | PracticeScreenMode.WordGame
+   };
   LearnResults: { stat: IStat, kata: "hi" | "ka" };
   DrawScreen: { letter: ILetter };
 };

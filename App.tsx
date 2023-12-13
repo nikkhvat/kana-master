@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionics from "react-native-vector-icons/MaterialCommunityIcons";
 
 import HomeScreen from "./pages/Home";
-import LearnScreen from "./pages/Learn";
+import LearnScreen from "./pages/Practice";
 import SettingsScreen from "./pages/Settings";
 import SettingsLearnScreen from "./pages/SettingsLearn";
 
@@ -120,9 +120,15 @@ const App = () => {
               options={{ title: "Start Learn" }}
             />
             <Stack.Screen
-              name="Learn"
+              name="Practice"
               component={LearnScreen}
-              options={{ headerBackVisible: false, gestureEnabled: false }}
+              options={{ 
+                title: "Learning", 
+                headerTransparent: true, 
+                gestureEnabled: false,
+                headerTitle: "",
+                headerBackVisible: false
+              }} 
             />
             <Stack.Screen
               name="LearnResults"

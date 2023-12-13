@@ -61,7 +61,7 @@ interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
 }
 
-const HomeScreen: React.FC<HomeScreenProps> = () => {
+const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   enum Screen {
     Learning,
     Practice,
@@ -91,8 +91,8 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       </Header>
       <Content>
         {screen === Screen.Learning && <Learning />}
-        {screen === Screen.Practice && <Practice />}
-        {screen === Screen.WordBuilding && <WordBuilding />}
+        {screen === Screen.Practice && <Practice navigation={navigation} />}
+        {screen === Screen.WordBuilding && <WordBuilding navigation={navigation} />}
       </Content>
     </Container>
   );

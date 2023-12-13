@@ -8,9 +8,8 @@ export type CardModeViewProp = {
   title: string;
   buttons: {
     title: string;
-    onCLick: Function;
     type: "active" | "inactive" | "weak" | "general";
-    key: string;
+    key: string | any;
   }[][];
   onButtonClick?: Function
 };

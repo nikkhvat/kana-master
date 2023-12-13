@@ -6,42 +6,43 @@ import PreviewCard from '../../../components/PreviewCard';
 
 import CardModeView, { CardModeViewProp } from '../../../components/CardModeView';
 import Button from '../../../components/Button';
+import { CardMode, PracticeScreenMode, TestMode } from '../../../shared/constants/test';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../../types';
 
-type Props = {}
+type WordBuildingNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
-const WordBuilding = (props: Props) => {
+interface WordBuildingProps {
+  navigation: WordBuildingNavigationProp;
+}
+
+const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
   const cardMode: CardModeViewProp["buttons"] = [
     [
-      { title: "Hira → Kata", key: "Hira2Kata", onCLick: () => {}, type: "active" },
-      { title: "Hira → Romaji", key: "Hira2Romaji", onCLick: () => {}, type: "inactive" },
-      { title: "Romaji → Hira", key: "Romaji2Hira", onCLick: () => {}, type: "inactive" },
+      { title: "Hira → Kata", key: CardMode.hiraganaToKatakana, type: "active" },
+      { title: "Hira → Romaji", key: CardMode.hiraganaToRomaji, type: "inactive" },
+      { title: "Romaji → Hira", key: CardMode.romajiToHiragana, type: "inactive" },
     ],
     [
-      { title: "Kata → Hira", key: "Kata2Hira", onCLick: () => {}, type: "inactive" },
-      { title: "Kata → Romaji", key: "Kata2Romaji", onCLick: () => {}, type: "inactive" },
-      { title: "Romaji → Kata", key: "Romaji2Kata", onCLick: () => {}, type: "inactive" },
+      { title: "Kata → Hira", key: CardMode.katakanaToHiragana, type: "inactive" },
+      { title: "Kata → Romaji", key: CardMode.katakanaToRomaji, type: "inactive" },
+      { title: "Romaji → Kata", key: CardMode.romajiToKatakana, type: "inactive" },
     ],
   ];
 
   const Mode: CardModeViewProp["buttons"] = [
     [
-      { title: "Choice", key: "Choice", onCLick: () => {}, type: "active" },
-      { title: "Word building", key: "Word building", onCLick: () => {}, type: "inactive" },
+      { title: "Choice", key: TestMode.Choice, type: "active" },
+      { title: "Word building", key: TestMode.WordBuilding, type: "inactive" },
     ],
     [
-      { title: "Write", key: "Write", onCLick: () => {}, type: "inactive" },
-      { title: "Find the pair", key: "Find the pair", onCLick: () => {}, type: "inactive" },
+      { title: "Write", key: TestMode.Write, type: "inactive" },
+      { title: "Find the pair", key: TestMode.FindPair, type: "inactive" },
     ],
-  ];
-
-  const DifficultyLevel: CardModeViewProp["buttons"] = [
-    [{ title: "Time test", key: "Time test", onCLick: () => {}, type: "weak" }],
-    [{ title: "One attempt", key: "One attempt", onCLick: () => {}, type: "inactive" }],
   ];
 
   const [cardModeState, setCardModeState] = useState(cardMode);
   const [modeState, setModeState] = useState(Mode);
-  const [difficultyLevelState, setDifficultyLevelState] = useState(DifficultyLevel);
 
   const toggleButtonState = (
     btnArray: typeof cardMode,
@@ -130,31 +131,22 @@ const WordBuilding = (props: Props) => {
             )
           }
         />
-        <CardModeView
-          title={"Difficulty level"}
-          buttons={difficultyLevelState}
-          onButtonClick={(groupIndex: number, btnIndex: number) =>
-            toggleButtonState(
-              difficultyLevelState,
-              setDifficultyLevelState,
-              groupIndex,
-              btnIndex,
-              "weak",
-              "no_one"
-            )
-          }
-        />
+      
         <Button
           customStyles={{ marginTop: 60, marginBottom: 15 }}
           title={"Start"}
           type={"general"}
           fontSize={17}
           onClick={() => {
-            const keys1 = getActiveFromArray(cardModeState, "active");
-            const keys2 = getActiveFromArray(modeState, "active");
-            const keys3 = getActiveFromArray(difficultyLevelState, "weak");
-            console.log("start test");
-            console.log(keys1, keys2, keys3);
+            const keysCardModeState = getActiveFromArray(cardModeState, "active");
+            const keysModeState = getActiveFromArray(modeState, "weak");
+
+            navigation.navigate("Practice", {
+              keysCardModeState,
+              keysModeState,
+              keysDifficultyLevelState: [],
+              mode: PracticeScreenMode.WordGame,
+            });
           }}
         />
       </ScrollView>

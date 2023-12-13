@@ -5,29 +5,33 @@ import learningImage from "../../../assets/preview/practice.png";
 import PreviewCard from '../../../components/PreviewCard';
 import CardModeView, { CardModeViewProp } from '../../../components/CardModeView';
 import Button from '../../../components/Button';
+import { CardMode, DifficultyLevelType, PracticeScreenMode, TestMode } from '../../../shared/constants/test';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../../types';
 
-const Practice = () => {
+type PracticeNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
+
+interface PracticeProps {
+  navigation: PracticeNavigationProp;
+}
+
+const Practice: React.FC<PracticeProps> = ({ navigation }) => {
   const cardMode: CardModeViewProp["buttons"] = [
     [
-      { title: "Hira → Kata", key: "hira2kata", onCLick: () => {}, type: "active" },
-      { title: "Hira → Romaji", key: "hira2romaji", onCLick: () => {}, type: "inactive" },
-      { title: "Romaji → Hira", key: "romaji2hira", onCLick: () => {}, type: "inactive" },
+      { title: "Hira → Kata", key: CardMode.hiraganaToKatakana, type: "active" },
+      { title: "Hira → Romaji", key: CardMode.hiraganaToRomaji, type: "inactive" },
+      { title: "Romaji → Hira", key: CardMode.romajiToHiragana, type: "inactive" },
     ],
     [
-      { title: "Kata → Hira", key: "kata2hira", onCLick: () => {}, type: "inactive" },
-      { title: "Kata → Romaji", key: "kata2romaji", onCLick: () => {}, type: "inactive" },
-      { title: "Romaji → Kata", key: "romaji2kata", onCLick: () => {}, type: "inactive" },
+      { title: "Kata → Hira", key: CardMode.katakanaToHiragana, type: "inactive" },
+      { title: "Kata → Romaji", key: CardMode.katakanaToRomaji, type: "inactive" },
+      { title: "Romaji → Kata", key: CardMode.romajiToKatakana, type: "inactive" },
     ],
-  ];
-
-  const Mode: CardModeViewProp["buttons"] = [
-    [{ title: "Choice", key: "Choice", onCLick: () => {}, type: "active" }],
-    [{ title: "Write", key: "Write", onCLick: () => {}, type: "inactive" }],
   ];
 
   const DifficultyLevel: CardModeViewProp["buttons"] = [
-    [{ title: "Time test", key: "Time test", onCLick: () => {}, type: "weak" }],
-    [{ title: "One attempt", key: "One attempt", onCLick: () => {}, type: "inactive" }],
+    [{ title: "Time test", key: DifficultyLevelType.TimeTest, type: "weak" }],
+    [{ title: "One attempt", key: DifficultyLevelType.OneAttempt, type: "inactive" }],
   ];
 
   const getActiveFromArray = (objects: any, active: string) => {
@@ -49,7 +53,6 @@ const Practice = () => {
   }
 
   const [cardModeState, setCardModeState] = useState(cardMode);
-  const [modeState, setModeState] = useState(Mode);
   const [difficultyLevelState, setDifficultyLevelState] = useState(DifficultyLevel);
   
   const toggleButtonState = (
@@ -108,20 +111,7 @@ const Practice = () => {
             )
           }
         />
-        <CardModeView
-          title={"Mode"}
-          buttons={modeState}
-          onButtonClick={(groupIndex: number, btnIndex: number) =>
-            toggleButtonState(
-              modeState,
-              setModeState,
-              groupIndex,
-              btnIndex,
-              "active",
-              "has_one"
-            )
-          }
-        />
+
         <CardModeView
           title={"Difficulty level"}
           buttons={difficultyLevelState}
@@ -143,11 +133,15 @@ const Practice = () => {
           type={"general"}
           fontSize={17}
           onClick={() => {
-            const keys1 = getActiveFromArray(cardModeState, "active");
-            const keys2 = getActiveFromArray(modeState, "active");
-            const keys3 = getActiveFromArray(difficultyLevelState, "weak");
-            console.log("start test");
-            console.log(keys1, keys2, keys3);
+            const keysCardModeState = getActiveFromArray(cardModeState, "active");
+            const keysDifficultyLevelState = getActiveFromArray(difficultyLevelState, "weak");
+
+            navigation.navigate("Practice", {
+              keysCardModeState,
+              keysModeState: [],
+              keysDifficultyLevelState,
+              mode: PracticeScreenMode.Testing,
+            });
           }}
         />
       </ScrollView>
