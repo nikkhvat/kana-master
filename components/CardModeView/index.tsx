@@ -31,7 +31,7 @@ const Title = styled.Text`
 const ButtonsContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  gap: 15;
+  gap: 15px;
 `
 
 const Column = styled.View`

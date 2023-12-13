@@ -49,7 +49,6 @@ const Tab = styled.Text<{active: boolean }>`
   color: ${({ active, theme }) => active 
     ? theme.colors.color4 
     : theme.colors.color3};
-  cursor: pointer;
 `
 
 const Content = styled.View`

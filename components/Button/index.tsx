@@ -45,7 +45,7 @@ const StyledButton = styled.TouchableOpacity<StyledButtonProps>`
 `;
 
 const StyledText = styled.Text<StyledTextProps>`
-  font-size: ${({ fontSize }) => (fontSize ? fontSize : 13)}px;
+  font-size: ${({ fontSize }) => (fontSize ? fontSize + "px" : 13 + "px")};
   color: ${({ theme, type }) =>
     type === 'active'
       ? theme.colors.color5

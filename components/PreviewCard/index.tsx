@@ -38,7 +38,7 @@ const Title = styled.Text`
 
 const SubTitle = styled.Text`
   color: ${({ theme }: any) => theme.colors.color3};
-  font-size: 13;
+  font-size: 13px;
 `
 
 const Button = styled.TouchableOpacity`
@@ -47,8 +47,8 @@ const Button = styled.TouchableOpacity`
   background-color: ${({theme}: any) => theme.colors.color4};
   border-radius: 40px;
   position: absolute;
-  right: 15;
-  top: -20;
+  right: 15px;
+  top: -20px;
   flex: 1;
   justify-content: center;
   align-items: center;
@@ -72,7 +72,7 @@ const PreviewCard: React.FC<PreviewCard> = ({
   onEdit,
 }) => {
   const colors = useTheme().colors as Colors;
-  
+
   return (
     <Container source={imageSource} resizeMode="cover" >
       <Content>
