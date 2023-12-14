@@ -72,7 +72,7 @@ const KanaTable: React.FC<KanaTableProps> = ({ data, kana, onClick, type }) => {
                   {typeof cell !== "number" &&
                     cell?.[kana === "Hiragana" ? "hi" : "ka"]}
                 </Symbol>
-                <SubText>{typeof cell !== "number" && cell?.en}</SubText>
+                <SubText>{typeof cell !== "number" && cell?.en.toUpperCase()}</SubText>
               </Cell>
             );
           })}
