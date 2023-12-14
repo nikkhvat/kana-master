@@ -17,11 +17,11 @@ const Container = styled.View<{paddingTop: number }>`
 `
 
 const Title = styled.Text`
-  font-size: 28;
+  font-size: 28px;
   font-weight: 700;
-  margin-left: 20;
-  margin-top: 20;
-  margin-bottom: 10;
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
   color: ${({ theme }) => theme.colors.color4};
 `
 

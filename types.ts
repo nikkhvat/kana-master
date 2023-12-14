@@ -20,13 +20,12 @@ interface IStat {
 export type RootStackParamList = {
   Root: undefined;
   Home: undefined;
-  SettingsLearn: { letters: ILetter[]; kata: "hi" | "ka" };
   Practice: { 
     keysCardModeState: CardMode[], 
     keysModeState: TestMode[], 
     keysDifficultyLevelState: DifficultyLevelType[]
     mode: PracticeScreenMode.Testing | PracticeScreenMode.WordGame
    };
-  LearnResults: { stat: IStat, kata: "hi" | "ka" };
+  Results: { stat: IStat, kata: "hi" | "ka" };
   DrawScreen: { letter: ILetter };
 };

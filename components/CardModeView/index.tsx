@@ -22,8 +22,8 @@ const Container = styled.View`
 const Title = styled.Text`
   font-size: 17px;
   font-weight: 700;
-  line-height: 22;
-  letter-spacing: -0.43;
+  line-height: 22px;
+  letter-spacing: -0.43px;
   color: ${({theme}: any) => theme.colors.color4};
 `
 

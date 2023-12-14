@@ -45,7 +45,7 @@ import wa from "../assets/sounds/wa.mp3"
 import ya from "../assets/sounds/ya.mp3"
 import yu from "../assets/sounds/yu.mp3"
 
-const getScoundByLetter = (letter: string) => {
+const getSoundByLetter = (letter: string) => {
   const key = letter.toLowerCase().trim()
 
   const sounds: any = {
@@ -104,4 +104,4 @@ const getScoundByLetter = (letter: string) => {
   return sounds[key]
 }
 
-export default getScoundByLetter;
+export default getSoundByLetter;

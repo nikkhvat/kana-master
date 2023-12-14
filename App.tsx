@@ -6,12 +6,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionics from "react-native-vector-icons/MaterialCommunityIcons";
 
 import HomeScreen from "./pages/Home";
-import LearnScreen from "./pages/Practice";
+import PracticeScreen from "./pages/Practice";
 import SettingsScreen from "./pages/Settings";
-import SettingsLearnScreen from "./pages/SettingsLearn";
 
 import { RootStackParamList } from "./types";
-import LearnResultsScreen from "./pages/LearnResults";
 
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Kana from "./pages/Kana";
@@ -22,6 +20,7 @@ import { Appearance } from "react-native";
 import { ThemeProvider } from 'styled-components'
 import { darkTheme } from "./themes/dark";
 import { lightTheme } from "./themes/light";
+import ResultsScreen from "./pages/Results";
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -94,51 +93,33 @@ const App = () => {
   const theme = scheme === 'dark' ? dark : light;
 
   return (
-    <ThemeProvider theme={theme} >
+    <ThemeProvider theme={theme}>
       <SafeAreaProvider>
-        <NavigationContainer
-          theme={
-            scheme === "dark"
-              ? { dark: true, colors: darkTheme }
-              : { dark: false, colors: lightTheme }
-          }
-        >
+        <NavigationContainer theme={ scheme === "dark" ? { dark: true, colors: darkTheme } : { dark: false, colors: lightTheme }} >
           <Stack.Navigator>
-            <Stack.Screen
-              name="Root"
-              component={BottomTabNavigator}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="DrawScreen"
-              component={DrawScreen}
-              options={{ title: "Start Learn" }}
-            />
-            <Stack.Screen
-              name="SettingsLearn"
-              component={SettingsLearnScreen}
-              options={{ title: "Start Learn" }}
-            />
+            <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+            <Stack.Screen name="DrawScreen" component={DrawScreen} options={{ title: "Start Learn" }} />
             <Stack.Screen
               name="Practice"
-              component={LearnScreen}
-              options={{ 
-                title: "Learning", 
-                headerTransparent: true, 
+              component={PracticeScreen}
+              options={{
+                title: "Learning",
+                headerTransparent: true,
                 gestureEnabled: false,
                 headerTitle: "",
-                headerBackVisible: false
-              }} 
-            />
-            <Stack.Screen
-              name="LearnResults"
-              component={LearnResultsScreen}
-              options={{
                 headerBackVisible: false,
-                gestureEnabled: false,
-                title: "Results",
               }}
             />
+            <Stack.Screen
+              name="Results"
+              component={ResultsScreen}
+              options={{
+                title: "Results",
+                headerTransparent: true,
+                gestureEnabled: false,
+                headerTitle: "",
+                headerBackVisible: false,
+              }} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaProvider>

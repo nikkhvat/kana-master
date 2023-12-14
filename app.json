@@ -1,15 +1,17 @@
 {
   "expo": {
-    "name": "nihongo_kana_master",
-    "slug": "nihongo_kana_master",
+    "name": "kana master",
+    "slug": "kanaMaster",
+    "privacy": "public",
     "version": "1.0.0",
     "orientation": "portrait",
+    "githubUrl": "https://github.com/nikkhvat/kana-master",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#1F1F1F"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -21,7 +23,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#1F1F1F"
       }
     },
     "web": {

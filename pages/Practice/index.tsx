@@ -42,6 +42,27 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
 
   const insets = useSafeAreaInsets();
 
+  const onFinish = () => {
+    navigation.navigate("Results", {
+      kata: "hi",
+      stat: {
+        testDuration: 0,
+        correctAnswers: 0,
+        incorrectAnswers: 0,
+        fastestAnswer: {
+          time: 0,
+          letter: null
+        },
+        slowestAnswer: {
+          time: 0,
+          letter: null
+        },
+        averageTime: 0,
+        incorrectLetters: []
+      }
+    });
+  }
+
   return (
     <Container paddingTop={insets.top}>
       <ProgressBar close={() => navigation.goBack()} current={5} all={22} />
@@ -64,16 +85,18 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
       /> */}
 
       {/* Select item */}
-      {/* <ShowSymbol symbol={"KA"} subtext={"Hiragana"} />
+      <ShowSymbol symbol={"KA"} subtext={"Hiragana"} />
 
       <SelectAnswers
         answers={[
-          { title: "か", type: "green" },
-          { title: "う", type: "transparent" },
-          { title: "け", type: "red" },
-          { title: "こ", type: "red" },
+          { title: "か", id: 1 },
+          { title: "う", id: 2 },
+          { title: "け", id: 3 },
+          { title: "こ", id: 4 },
         ]}
-      /> */}
+        onCompleted={onFinish}
+        trueAnswer={1}
+      />
     </Container>
   );
 }

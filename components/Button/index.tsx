@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { TouchableOpacityProps, TextProps } from 'react-native';
 import Ionics from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useTheme, Theme } from '@react-navigation/native';
+import { useTheme } from '@react-navigation/native';
 
 import { Colors } from "../../App";
 
@@ -66,7 +66,7 @@ const Button: React.FC<ButtonProps> = ({
   image = null,
   ...props
 }) => {
-  const theme = useTheme() as unknown as Colors;
+  const theme = useTheme() as unknown as {colors: Colors};
 
   return (
     <StyledButton
@@ -81,7 +81,7 @@ const Button: React.FC<ButtonProps> = ({
           {title}
         </StyledText>
       ) : (
-        <Ionics name={image} size={24} color={theme.color4} />
+        <Ionics name={image} size={24} color={theme.colors.color4} />
       )}
     </StyledButton>
   );
