@@ -94,9 +94,74 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   const rowsHandakuon = useMemo(() => lettersHandakuon.map((item) => item), []);
   const rowsYoon = useMemo(() => lettersYoon.map((item) => item), []);
 
-  const [isModalVisible, setModalVisible] = useState(null as null | [ILetter, number, number]);
+  const [isModalVisible, setModalVisible] = useState(null as null | [ILetter, number, number, string]);
 
   const closeModal = () => setModalVisible(null);  
+
+  const list = ["basic", "dokuon", "handakuon", "yoon"];
+  const listLetters = [rows, rowsDokuon, rowsHandakuon, rowsYoon]
+
+  function isLetter(item: any) {
+    return typeof item === 'object';
+  }
+
+  function findNext(isModalVisible: null | [ILetter, number, number, string]) {
+    if (!isModalVisible) return;
+
+    let [currentLetter, rowIndex, colIndex, listName] = isModalVisible;
+    let listIndex = list.indexOf(listName);
+
+    do {
+      colIndex++;
+      if (colIndex >= listLetters[listIndex][rowIndex].length) {
+        rowIndex++;
+        colIndex = 0;
+        if (rowIndex >= listLetters[listIndex].length) {
+          listIndex = (listIndex + 1) % list.length;
+          rowIndex = 0;
+        }
+      }
+    } while (!isLetter(listLetters[listIndex][rowIndex][colIndex]) && rowIndex < listLetters[listIndex].length);
+
+    return [listLetters[listIndex][rowIndex][colIndex], rowIndex, colIndex, list[listIndex]];
+  }
+
+  function findPrev(isModalVisible: null | [ILetter, number, number, string]) {
+    if (!isModalVisible) return;
+
+    let [currentLetter, rowIndex, colIndex, listName] = isModalVisible;
+    let listIndex = list.indexOf(listName);
+
+    do {
+      colIndex--;
+      if (colIndex < 0) {
+        rowIndex--;
+        if (rowIndex < 0) {
+          listIndex = (listIndex - 1 + list.length) % list.length;
+          rowIndex = listLetters[listIndex].length - 1;
+        }
+        colIndex = listLetters[listIndex][rowIndex].length - 1;
+      }
+    } while (!isLetter(listLetters[listIndex][rowIndex][colIndex]) && rowIndex >= 0);
+
+    return [listLetters[listIndex][rowIndex][colIndex], rowIndex, colIndex, list[listIndex]];
+  }
+
+  const prev = () => {
+    const res: any = findPrev(isModalVisible);
+
+    if (res !== undefined) {
+      setModalVisible(res);
+    }
+  }
+  
+  const next = () => {
+    const res: any = findNext(isModalVisible);
+
+    if (res !== undefined) {
+      setModalVisible(res);
+    }
+  }
 
   return (
     <Container paddingTop={insets.top}>
@@ -115,19 +180,19 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
         <NameContainer>
           <Name>Basic</Name>
         </NameContainer>
-        <KanaTable data={rows} kana={activeTab} onClick={setModalVisible} />
+        <KanaTable type="basic" data={rows} kana={activeTab} onClick={setModalVisible} />
         <NameContainer>
           <Name>Dakuon</Name>
         </NameContainer>
-        <KanaTable data={rowsDokuon} kana={activeTab} onClick={setModalVisible} />
+        <KanaTable type="dokuon" data={rowsDokuon} kana={activeTab} onClick={setModalVisible} />
         <NameContainer>
           <Name>Handakuon</Name>
         </NameContainer>
-        <KanaTable data={rowsHandakuon} kana={activeTab} onClick={setModalVisible} />
+        <KanaTable type="handakuon" data={rowsHandakuon} kana={activeTab} onClick={setModalVisible} />
         <NameContainer>
           <Name>Yoon</Name>
         </NameContainer>
-        <KanaTable data={rowsYoon} kana={activeTab} onClick={setModalVisible} />
+        <KanaTable type="yoon" data={rowsYoon} kana={activeTab} onClick={setModalVisible} />
         <View style={{ marginBottom: 120 }}></View>
       </ScrollView>
       {isModalVisible !== null && (
@@ -138,8 +203,8 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
           letter={isModalVisible[0]}
           closeModal={() => closeModal()}
           drawSymbol={() => {}}
-          prevLetter={() => {}}
-          nextLetter={() => {}}
+          prevLetter={() => prev()}
+          nextLetter={() => next()}
         />
       )}
     </Container>

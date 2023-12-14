@@ -49,9 +49,10 @@ interface KanaTableProps {
   data: (number | ILetter)[][];
   onClick?: Function;
   kana: string; 
+  type: string;
 }
 
-const KanaTable: React.FC<KanaTableProps> = ({ data, kana, onClick }) => {
+const KanaTable: React.FC<KanaTableProps> = ({ data, kana, onClick, type }) => {
   return (
     <Container>
       {data.map((row, rowIndex) => (
@@ -64,7 +65,7 @@ const KanaTable: React.FC<KanaTableProps> = ({ data, kana, onClick }) => {
                 isEmpty={cell === 0}
                 onPress={() => {
                   if (typeof cell !== "number")
-                    onClick?.([cell, rowIndex, cellIndex]);
+                    onClick?.([cell, rowIndex, cellIndex, type]);
                 }}
               >
                 <Symbol>

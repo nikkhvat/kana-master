@@ -143,7 +143,7 @@ const KanaModal: React.FC<KanaModalProp> = ({
         <TitleContainer>
           <Title>{kana}</Title>
           <SubTitle>{letter.en}</SubTitle>
-          {getImagePath(`H-${letter.en}`)}
+          {getImagePath(`${kana === "Hiragana" ? "H" : "K"}-${letter.en}`)}
         </TitleContainer>
 
         <ButtonContainer>
