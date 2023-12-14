@@ -25,6 +25,7 @@
     <td><img src="docs/image/2.png" /></td>
     <td><img src="docs/image/3.png" /></td>
     <td><img src="docs/image/4.png" /></td>
+    <td><img src="docs/image/5.png" /></td>
   </tr>
 </table>
 
