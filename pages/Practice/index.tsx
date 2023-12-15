@@ -11,11 +11,11 @@ import SelectAnswers from "../../components/Practice/SelectAnswers";
 import ShowSymbol from "../../components/Practice/ShowSymbol";
 
 import FindPair from "../../components/Practice/FindPair";
-import { CardMode, DifficultyLevelType, Kana, PracticeScreenMode } from "../../shared/constants/test";
+import { CardMode, DifficultyLevelType, Kana, PracticeScreenMode } from "../../shared/constants/kana";
 
 import letters, { ILetter } from "../../utils/letters";
 import { Text, View } from "react-native";
-import { generateRandomLetters, shuffleArray } from "../../shared/constants/utils/letters";
+import { generateRandomLetters, shuffleArray } from "../../shared/utils/letters";
 
 import useStats from "./useStats";
 import Timer from "../../components/Practice/Timer";

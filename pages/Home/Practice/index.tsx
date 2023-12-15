@@ -5,7 +5,7 @@ import learningImage from "../../../assets/preview/practice.png";
 import PreviewCard from '../../../components/PreviewCard';
 import CardModeView, { CardModeViewProp } from '../../../components/CardModeView';
 import Button from '../../../components/Button';
-import { CardMode, DifficultyLevelType, PracticeScreenMode, TestMode } from '../../../shared/constants/test';
+import { CardMode, DifficultyLevelType, PracticeScreenMode, TestMode } from '../../../shared/constants/kana';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../types';
 
