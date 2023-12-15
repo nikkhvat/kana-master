@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { CardMode, Kana } from '../../shared/constants/test';
+import { CardMode, Kana } from '../../shared/constants/kana';
 
 interface AnswerStats {
   time: number;

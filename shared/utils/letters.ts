@@ -1,4 +1,4 @@
-import { ILetter } from "../../../utils/letters";
+import { ILetter } from "../../utils/letters";
 
 
 export const shuffleArray = <T>(array: Array<T>): Array<T> => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 
 import styled from "styled-components/native";
-import { TEST_DELAY } from "../../../shared/constants/test";
+import { TEST_DELAY } from "../../../shared/constants/kana";
 
 const AnswersContainer = styled.View`
   flex-direction: column;

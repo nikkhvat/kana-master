@@ -6,7 +6,7 @@ import PreviewCard from '../../../components/PreviewCard';
 
 import CardModeView, { CardModeViewProp } from '../../../components/CardModeView';
 import Button from '../../../components/Button';
-import { CardMode, PracticeScreenMode, TestMode } from '../../../shared/constants/test';
+import { CardMode, PracticeScreenMode, TestMode } from '../../../shared/constants/kana';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../types';
 
