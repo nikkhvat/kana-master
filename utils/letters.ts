@@ -8,11 +8,11 @@ export interface ILetter {
 
 const letters: ILetter[][] = [
   [
-    { id: 1, ka: "ア", hi: "あ", en: "A", ru: "А " },
-    { id: 2, ka: "イ", hi: "い", en: "I", ru: "И " },
-    { id: 3, ka: "ウ", hi: "う", en: "U", ru: "У " },
-    { id: 4, ka: "エ", hi: "え", en: "E", ru: "Э " },
-    { id: 5, ka: "オ", hi: "お", en: "O", ru: "О " },
+    { id: 1, ka: "ア", hi: "あ", en: "A", ru: "А" },
+    { id: 2, ka: "イ", hi: "い", en: "I", ru: "И" },
+    { id: 3, ka: "ウ", hi: "う", en: "U", ru: "У" },
+    { id: 4, ka: "エ", hi: "え", en: "E", ru: "Э" },
+    { id: 5, ka: "オ", hi: "お", en: "O", ru: "О" },
   ],
   [
     { id: 6, ka: "カ", hi: "か", en: "KA", ru: "КА" },
@@ -22,18 +22,18 @@ const letters: ILetter[][] = [
     { id: 10, ka: "コ", hi: "こ", en: "KO", ru: "КО" },
   ],
   [
-    { id: 11, ka: "サ", hi: "さ", en: "SA ", ru: "CА" },
+    { id: 11, ka: "サ", hi: "さ", en: "SA", ru: "CА" },
     { id: 12, ka: "シ", hi: "し", en: "SHI", ru: "ШИ" },
-    { id: 13, ka: "ス", hi: "す", en: "SU ", ru: "СУ" },
-    { id: 14, ka: "セ", hi: "せ", en: "SE ", ru: "СЕ" },
-    { id: 15, ka: "ソ", hi: "そ", en: "SO ", ru: "СО" },
+    { id: 13, ka: "ス", hi: "す", en: "SU", ru: "СУ" },
+    { id: 14, ka: "セ", hi: "せ", en: "SE", ru: "СЕ" },
+    { id: 15, ka: "ソ", hi: "そ", en: "SO", ru: "СО" },
   ],
   [
     { id: 16, ka: "タ", hi: "た", en: "TA ", ru: "ТА" },
     { id: 17, ka: "チ", hi: "ち", en: "CHI", ru: "ЧИ" },
-    { id: 18, ka: "ツ", hi: "つ", en: "TSU ", ru: "ТУ" },
-    { id: 19, ka: "テ", hi: "て", en: "TE ", ru: "ТЭ" },
-    { id: 20, ka: "ト", hi: "と", en: "TO ", ru: "ТО" },
+    { id: 18, ka: "ツ", hi: "つ", en: "TSU", ru: "ТУ" },
+    { id: 19, ka: "テ", hi: "て", en: "TE", ru: "ТЭ" },
+    { id: 20, ka: "ト", hi: "と", en: "TO", ru: "ТО" },
   ],
   [
     { id: 21, ka: "ナ", hi: "な", en: "NA", ru: "НА" },

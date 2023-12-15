@@ -30,7 +30,7 @@ const Practice: React.FC<PracticeProps> = ({ navigation }) => {
   ];
 
   const DifficultyLevel: CardModeViewProp["buttons"] = [
-    [{ title: "Time test", key: DifficultyLevelType.TimeTest, type: "weak" }],
+    [{ title: "Time test", key: DifficultyLevelType.TimeTest, type: "inactive" }],
     [{ title: "One attempt", key: DifficultyLevelType.OneAttempt, type: "inactive" }],
   ];
 
@@ -95,6 +95,9 @@ const Practice: React.FC<PracticeProps> = ({ navigation }) => {
           imageSource={learningImage}
           title={"66"}
           subtitle={"Hiragana / Katakana"}
+          onEdit={() => {
+            navigation.navigate("ChooseAlphabet");
+          }}
         />
 
         <CardModeView
@@ -133,8 +136,14 @@ const Practice: React.FC<PracticeProps> = ({ navigation }) => {
           type={"general"}
           fontSize={17}
           onClick={() => {
-            const keysCardModeState = getActiveFromArray(cardModeState, "active");
-            const keysDifficultyLevelState = getActiveFromArray(difficultyLevelState, "weak");
+            const keysCardModeState = getActiveFromArray(
+              cardModeState,
+              "active"
+            );
+            const keysDifficultyLevelState = getActiveFromArray(
+              difficultyLevelState,
+              "weak"
+            );
 
             navigation.navigate("Practice", {
               keysCardModeState,

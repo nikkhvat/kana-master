@@ -2,8 +2,9 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { StatusBar } from "react-native";
 
-import Ionics from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import HomeScreen from "./pages/Home";
 import PracticeScreen from "./pages/Practice";
@@ -21,6 +22,7 @@ import { ThemeProvider } from 'styled-components'
 import { darkTheme } from "./themes/dark";
 import { lightTheme } from "./themes/light";
 import ResultsScreen from "./pages/Results";
+import ChooseAlphabet from "./pages/ChooseAlphabet";
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -41,7 +43,7 @@ function BottomTabNavigator() {
             iconName = focused ? "syllabary-hiragana" : "syllabary-hiragana";
           }
 
-          return <Ionics name={iconName} size={size} color={color} />;
+          return <Icon name={iconName} size={size} color={color} />;
         },
       })}
     >
@@ -95,10 +97,12 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <SafeAreaProvider>
+        <StatusBar barStyle={scheme === 'dark' ? 'light-content' : 'dark-content'} />
         <NavigationContainer theme={ scheme === "dark" ? { dark: true, colors: darkTheme } : { dark: false, colors: lightTheme }} >
           <Stack.Navigator>
             <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="DrawScreen" component={DrawScreen} options={{ title: "Start Learn" }} />
+            <Stack.Screen name="ChooseAlphabet" component={ChooseAlphabet} options={{ headerShown: false }} />
             <Stack.Screen
               name="Practice"
               component={PracticeScreen}

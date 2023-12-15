@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text } from "react-native";
 
 import styled from "styled-components/native";
+import { TEST_DELAY } from "../../../shared/constants/test";
 
 const AnswersContainer = styled.View`
   flex-direction: column;
@@ -48,10 +49,15 @@ const SelectAnswers: React.FC<SelectAnswersProp> = ({
   onCompleted 
 }) => {
   if (answers.length !== 4) return <Text>Answers to be 4</Text>
-
+  
   const [errors, setErrors] = useState([] as (string | number)[])
   const [corrected, setCorrected] = useState(null as string | number | null)
 
+  useEffect(() => {
+    setErrors([])
+    setCorrected(null)
+  }, [trueAnswer, answers]);
+  
   const pick = (id: number | string) => {
     if (corrected !== null) return
 
@@ -62,15 +68,15 @@ const SelectAnswers: React.FC<SelectAnswersProp> = ({
 
       setTimeout(() => {
         onError;
-      }, 150)
+      }, TEST_DELAY)
       return; 
     }
 
     setCorrected(id);
 
     setTimeout(() => {
-      onCompleted?.();
-    }, 150)
+      onCompleted?.(errors.length === 0);
+    }, TEST_DELAY)
 
   }
 

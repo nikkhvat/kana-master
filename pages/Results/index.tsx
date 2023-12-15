@@ -8,6 +8,7 @@ import styled from "styled-components/native";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CircleProgress from "../../components/CircleProgress";
+import { Text } from "react-native-svg";
 
 type LearnResultsNavigationProp = StackNavigationProp<RootStackParamList, "Results">;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, "Results">;
@@ -145,7 +146,7 @@ const DoneText = styled.Text`
 `;
 
 function ResultsScreen({ route, navigation }: LearnResultsScreenProps) {
-  const { stat, kata } = route.params;
+  const { stats } = route.params;
 
   const insets = useSafeAreaInsets();
 
@@ -159,13 +160,15 @@ function ResultsScreen({ route, navigation }: LearnResultsScreenProps) {
 
       <StatsCard>
         <StatsGraph>
-          <CircleProgress progress={49} />
+          <CircleProgress
+            progress={(stats.correctAnswers / stats.totalQuestions) * 100}
+          />
         </StatsGraph>
         <StatsDescription>
           <StatsTitle>Score</StatsTitle>
           <StatsSubText>
-            <StatsSubTitleLarge>17</StatsSubTitleLarge>
-            <StatsSubTitle>/ 20</StatsSubTitle>
+            <StatsSubTitleLarge>{stats.correctAnswers + 1}</StatsSubTitleLarge>
+            <StatsSubTitle>/ {stats.totalQuestions + 1}</StatsSubTitle>
           </StatsSubText>
           <StatsSubTime>33.3 sec (2.8 sec / question)</StatsSubTime>
         </StatsDescription>
@@ -176,23 +179,27 @@ function ResultsScreen({ route, navigation }: LearnResultsScreenProps) {
 
         <DetailsCard>
           <DetailsCardTitle>Alphabet:</DetailsCardTitle>
-          <DetailsCardValue>Hiragana</DetailsCardValue>
+          <DetailsCardValue>{stats.alphabets.join(", ")}</DetailsCardValue>
         </DetailsCard>
 
         <DetailsCard>
           <DetailsCardTitle>The fastest answer:</DetailsCardTitle>
-          <DetailsCardValue>A (あ): 428 sec.</DetailsCardValue>
+          <DetailsCardValue>
+            {stats.fastestAnswer?.letter}: {stats.fastestAnswer?.time} sec.
+          </DetailsCardValue>
         </DetailsCard>
 
         <DetailsCard>
           <DetailsCardTitle>The slowest answer:</DetailsCardTitle>
-          <DetailsCardValue>E (え): 14 sec. 740 ms.</DetailsCardValue>
+          <DetailsCardValue>
+            {stats.slowestAnswer?.letter}: {stats.slowestAnswer?.time} sec.
+          </DetailsCardValue>
         </DetailsCard>
 
-        <DetailsCard>
-          <DetailsCardTitle>Incorrect kans:</DetailsCardTitle>
-          <DetailsCardValue>E (え), KA (か), KI (き)</DetailsCardValue>
-        </DetailsCard>
+        {stats.incorrectAnswers.length !== 0 && <DetailsCard>
+          <DetailsCardTitle>Incorrect answers:</DetailsCardTitle>
+          <DetailsCardValue>{stats.incorrectAnswers.join(", ")}</DetailsCardValue>
+        </DetailsCard>}
 
         <DoneButton onPress={home}>
           <DoneText>Done</DoneText>

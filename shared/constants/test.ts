@@ -24,3 +24,11 @@ export enum PracticeScreenMode {
   Testing = "testing",
   WordGame = "word_game"
 }
+
+export enum Kana {
+  Hiragana = "Hiragana",
+  Katakana = "Katakana",
+  English = "English"
+}
+
+export const TEST_DELAY = 0

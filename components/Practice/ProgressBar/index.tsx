@@ -2,7 +2,8 @@ import React from "react";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import styled from 'styled-components/native';
+import styled, { useTheme } from 'styled-components/native';
+import { Colors } from "../../../App";
 
 const ProgressBarContainer = styled.View`
   width: 100%;
@@ -35,6 +36,8 @@ const ProgressBarClose = styled.TouchableOpacity`
   justify-content: row;
   justify-content: center;
   align-items: center;
+  margin-left: -15px;
+  padding: 10px;
 `
 
 const ProgressBarText = styled.Text`
@@ -55,6 +58,8 @@ interface ProgressBarProp {
 
 
 const ProgressBar: React.FC<ProgressBarProp> = ({close, current, all}) => {
+  const colors = useTheme().colors as Colors;
+
   return (
     <ProgressBarContainer>
       <ProgressBarLine>
@@ -62,7 +67,12 @@ const ProgressBar: React.FC<ProgressBarProp> = ({close, current, all}) => {
       </ProgressBarLine>
       <ProgressBarBottom>
         <ProgressBarClose onPress={() => close?.()}>
-          <Icon name="close" size={24} color={"#9A7861"} />
+          <Icon
+            onPress={() => close?.()}
+            name="close"
+            size={24}
+            color={colors.color3}
+          />
         </ProgressBarClose>
 
         <ProgressBarText>
