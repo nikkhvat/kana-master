@@ -7,9 +7,13 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import styled, { useTheme } from "styled-components/native";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { Colors } from "../../App";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types";
+import { useAppDispatch, useAppSelector } from "../../shared/store/hooks";
+import { RootState } from "../../shared/store/store";
+import { Colors } from "../../layout";
+import { Kana, KanaMode, KanaSection } from "../../shared/constants/kana";
+import { setKanaSelected } from "../../shared/store/features/kana/slice";
 
 const Container = styled.View<{ paddingTop: number }>`
   flex: 1;
@@ -170,6 +174,72 @@ interface ChooseAlphabetProps {
 }
 
 const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
+  const dispatch = useAppDispatch()
+
+  const SHOW_ALLOWED_WORDS = false
+  
+  const selected = useAppSelector((state: RootState) => state.kana.kanaSections)
+  const selectedLettersHiragana = useAppSelector((state: RootState) => state.kana.selectedLettersHiragana)
+  const selectedLettersKatakana = useAppSelector((state: RootState) => state.kana.selectedLettersKatakana)
+  const selectedLetters = useAppSelector((state: RootState) => state.kana.selectedLetters)
+
+  const IS_KANA_SELECTED =
+    selected.includes(KanaSection.BasicKatakana) &&
+    selected.includes(KanaSection.DakuonKatakana) &&
+    selected.includes(KanaSection.HandakuonKatakana) &&
+    selected.includes(KanaSection.YoonKatakana);
+
+  const IS_HIRA_SELECTED =
+    selected.includes(KanaSection.BasicHiragana) &&
+    selected.includes(KanaSection.DakuonHiragana) &&
+    selected.includes(KanaSection.HandakuonHiragana) &&
+    selected.includes(KanaSection.YoonHiragana);
+
+  const IS_BASIC = 
+    selected.includes(KanaSection.BasicHiragana) &&
+    selected.includes(KanaSection.BasicKatakana);
+  
+  const IS_DAKUON = 
+    selected.includes(KanaSection.DakuonHiragana) &&
+    selected.includes(KanaSection.DakuonKatakana);
+  
+  const IS_HANDAKUON = 
+    selected.includes(KanaSection.HandakuonHiragana) &&
+    selected.includes(KanaSection.HandakuonKatakana);
+  
+  const IS_YOON = 
+    selected.includes(KanaSection.YoonHiragana) &&
+    selected.includes(KanaSection.YoonKatakana);
+
+  const IS_BASIC_HIRA = selected.includes(KanaSection.BasicHiragana);
+  const IS_BASIC_KATA = selected.includes(KanaSection.BasicKatakana);
+  const IS_DAKUON_KATA = selected.includes(KanaSection.DakuonKatakana);
+  const IS_DAKUON_HIRA = selected.includes(KanaSection.DakuonHiragana);
+  const IS_HANDAKUON_KATA = selected.includes(KanaSection.HandakuonKatakana);
+  const IS_HANDAKUON_HIRA = selected.includes(KanaSection.HandakuonHiragana);
+  const IS_YOON_KATA = selected.includes(KanaSection.YoonKatakana);
+  const IS_YOON_HIRA = selected.includes(KanaSection.YoonHiragana);
+
+  const set = (
+    value:
+      | KanaSection.BasicHiragana
+      | KanaSection.BasicKatakana
+      | KanaSection.DakuonKatakana
+      | KanaSection.DakuonHiragana
+      | KanaSection.HandakuonKatakana
+      | KanaSection.HandakuonHiragana
+      | KanaSection.YoonKatakana
+      | KanaSection.YoonHiragana
+      | Kana.Hiragana
+      | Kana.Katakana
+      | KanaMode.Basic
+      | KanaMode.Dakuon
+      | KanaMode.Handakuon
+      | KanaMode.Yoon
+  ) => {
+    dispatch(setKanaSelected(value));
+  };
+
   const insets = useSafeAreaInsets();
 
   const colors = useTheme().colors as Colors;
@@ -187,25 +257,25 @@ const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
 
       <InfoContainer>
         <InfoBlock>
-          <InfoTitle>127</InfoTitle>
+          <InfoTitle>{selectedLetters}</InfoTitle>
           <InfoSubTitle>Entries in scope</InfoSubTitle>
         </InfoBlock>
-        <VerticalBorder />
-        <InfoBlock>
+        {SHOW_ALLOWED_WORDS && <VerticalBorder />}
+        {SHOW_ALLOWED_WORDS && <InfoBlock>
           <InfoTitle>24</InfoTitle>
           <InfoSubTitle>Avaleble words</InfoSubTitle>
-        </InfoBlock>
+        </InfoBlock>}
       </InfoContainer>
 
       <Scroll>
         <KanaStatContainer>
           <KanaCard>
             <KanaCardTitle>Hiragana</KanaCardTitle>
-            <KanaCardSubTitle>46</KanaCardSubTitle>
+            <KanaCardSubTitle>{selectedLettersHiragana}</KanaCardSubTitle>
           </KanaCard>
           <KanaCard>
             <KanaCardTitle>Katakana</KanaCardTitle>
-            <KanaCardSubTitle>20</KanaCardSubTitle>
+            <KanaCardSubTitle>{selectedLettersKatakana}</KanaCardSubTitle>
           </KanaCard>
         </KanaStatContainer>
 
@@ -214,55 +284,55 @@ const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
         <SelectionContainer>
           <SelectionRow>
             <SelectionButton empty></SelectionButton>
-            <SelectionButton selected type="text">
-              <SelectionText active>Hiragana</SelectionText>
+            <SelectionButton onPress={() => set(Kana.Hiragana)} selected={IS_HIRA_SELECTED} type="text">
+              <SelectionText active={IS_HIRA_SELECTED}>Hiragana</SelectionText>
             </SelectionButton>
-            <SelectionButton>
-              <SelectionText>Katakana</SelectionText>
-            </SelectionButton>
-          </SelectionRow>
-          <SelectionRow>
-            <SelectionButton>
-              <SelectionText>Basic</SelectionText>
-            </SelectionButton>
-            <SelectionButton selected>
-              <Icon name="check" size={24} color={colors.color4} />
-            </SelectionButton>
-            <SelectionButton>
-              <Icon name="close" size={24} color={colors.color4} />
+            <SelectionButton onPress={() => set(Kana.Katakana)} selected={IS_KANA_SELECTED} type="text">
+              <SelectionText active={IS_KANA_SELECTED}>Katakana</SelectionText>
             </SelectionButton>
           </SelectionRow>
           <SelectionRow>
-            <SelectionButton>
-              <SelectionText>Dakuon</SelectionText>
+            <SelectionButton onPress={() => set(KanaMode.Basic)} selected={IS_BASIC} type="text">
+              <SelectionText active={IS_BASIC}>Basic</SelectionText>
             </SelectionButton>
-            <SelectionButton selected>
-              <Icon name="check" size={24} color={colors.color4} />
+            <SelectionButton onPress={() => set(KanaSection.BasicHiragana)} selected={IS_BASIC_HIRA}>
+              <Icon name={IS_BASIC_HIRA ? "check" : "close"} size={24} color={colors.color4} />
             </SelectionButton>
-            <SelectionButton>
-              <Icon name="close" size={24} color={colors.color4} />
-            </SelectionButton>
-          </SelectionRow>
-          <SelectionRow>
-            <SelectionButton selected type="text">
-              <SelectionText active>Handakuon</SelectionText>
-            </SelectionButton>
-            <SelectionButton selected>
-              <Icon name="check" size={24} color={colors.color4} />
-            </SelectionButton>
-            <SelectionButton selected>
-              <Icon name="check" size={24} color={colors.color4} />
+            <SelectionButton onPress={() => set(KanaSection.BasicKatakana)} selected={IS_BASIC_KATA}>
+              <Icon name={IS_BASIC_KATA ? "check" : "close"} size={24} color={colors.color4} />
             </SelectionButton>
           </SelectionRow>
           <SelectionRow>
-            <SelectionButton>
-              <SelectionText>Yoon</SelectionText>
+            <SelectionButton onPress={() => set(KanaMode.Dakuon)} selected={IS_DAKUON} type="text">
+              <SelectionText active={IS_DAKUON}>Dakuon</SelectionText>
             </SelectionButton>
-            <SelectionButton>
-              <Icon name="close" size={24} color={colors.color4} />
+            <SelectionButton onPress={() => set(KanaSection.DakuonHiragana)} selected={IS_DAKUON_HIRA}>
+              <Icon name={IS_DAKUON_HIRA ? "check" : "close"} size={24} color={colors.color4} />
             </SelectionButton>
-            <SelectionButton>
-              <Icon name="close" size={24} color={colors.color4} />
+            <SelectionButton onPress={() => set(KanaSection.DakuonKatakana)} selected={IS_DAKUON_KATA}>
+              <Icon name={IS_DAKUON_KATA ? "check" : "close"} size={24} color={colors.color4} />
+            </SelectionButton>
+          </SelectionRow>
+          <SelectionRow>
+            <SelectionButton onPress={() => set(KanaMode.Handakuon)} selected={IS_HANDAKUON} type="text">
+              <SelectionText active={IS_HANDAKUON}>Handakuon</SelectionText>
+            </SelectionButton>
+            <SelectionButton onPress={() => set(KanaSection.HandakuonHiragana)} selected={IS_HANDAKUON_HIRA}>
+              <Icon name={IS_HANDAKUON_HIRA ? "check" : "close"} size={24} color={colors.color4} />
+            </SelectionButton>
+            <SelectionButton onPress={() => set(KanaSection.HandakuonKatakana)} selected={IS_HANDAKUON_KATA}>
+              <Icon name={IS_HANDAKUON_KATA ? "check" : "close"} size={24} color={colors.color4} />
+            </SelectionButton>
+          </SelectionRow>
+          <SelectionRow>
+            <SelectionButton onPress={() => set(KanaMode.Yoon)} selected={IS_YOON} type="text">
+              <SelectionText active={IS_YOON}>Yoon</SelectionText>
+            </SelectionButton>
+            <SelectionButton onPress={() => set(KanaSection.YoonHiragana)} selected={IS_YOON_HIRA}>
+              <Icon name={IS_YOON_HIRA ? "check" : "close"} size={24} color={colors.color4} />
+            </SelectionButton>
+            <SelectionButton onPress={() => set(KanaSection.YoonKatakana)} selected={IS_YOON_KATA}>
+              <Icon name={IS_YOON_KATA ? "check" : "close"} size={24} color={colors.color4} />
             </SelectionButton>
           </SelectionRow>
         </SelectionContainer>

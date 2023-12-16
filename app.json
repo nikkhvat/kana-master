@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "kana master",
-    "slug": "kanaMaster",
+    "slug": "kana-master",
     "privacy": "public",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,7 +18,8 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "userInterfaceStyle": "automatic"
+      "userInterfaceStyle": "automatic",
+      "bundleIdentifier": "pro.khvat.kanamaster"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +29,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0c96ff0c-f16f-48ba-ac2f-b768df7666c3"
+      }
+    },
+    "owner": "nikkhvat"
   }
 }

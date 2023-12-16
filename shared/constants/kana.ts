@@ -31,4 +31,43 @@ export enum Kana {
   English = "English"
 }
 
+export enum KanaSection {
+  BasicHiragana = "BasicHiragana",
+  BasicKatakana = "BasicKatakana",
+  DakuonHiragana = "DakuonHiragana",
+  DakuonKatakana = "DakuonKatakana",
+  HandakuonHiragana = "HandakuonHiragana",
+  HandakuonKatakana = "HandakuonKatakana",
+  YoonHiragana = "YoonHiragana",
+  YoonKatakana = "YoonKatakana",
+}
+
+export enum KanaMode {
+  Basic = "Basic",
+  Dakuon = "Dakuon",
+  Handakuon = "Handakuon",
+  Yoon = "Yoon",
+}
+
+export const LETTERS_COUNT = {
+  [KanaSection.BasicHiragana]: 45,
+  [KanaSection.BasicKatakana]: 45,
+
+  [KanaSection.DakuonHiragana]: 20,
+  [KanaSection.DakuonKatakana]: 20,
+
+  [KanaSection.HandakuonHiragana]: 5,
+  [KanaSection.HandakuonKatakana]: 5,
+
+  [KanaSection.YoonHiragana]: 21,
+  [KanaSection.YoonKatakana]: 21,
+}
+
+export const HIRA_SECTIONS = [KanaSection.BasicHiragana, KanaSection.DakuonHiragana, KanaSection.HandakuonHiragana, KanaSection.YoonHiragana];
+export const KATA_SECTIONS = [KanaSection.BasicKatakana, KanaSection.DakuonKatakana, KanaSection.HandakuonKatakana, KanaSection.YoonKatakana];
+export const BASIC_SECTIONS = [KanaSection.BasicHiragana, KanaSection.BasicKatakana];
+export const DAKUON_SECTIONS = [KanaSection.DakuonHiragana, KanaSection.DakuonKatakana];
+export const HANDAKUON_SECTIONS = [KanaSection.HandakuonHiragana, KanaSection.HandakuonKatakana];
+export const YOON_SECTIONS = [KanaSection.YoonHiragana, KanaSection.YoonKatakana];
+
 export const TEST_DELAY = 0

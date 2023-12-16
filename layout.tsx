@@ -8,7 +8,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import HomeScreen from "./pages/Home";
 import PracticeScreen from "./pages/Practice";
-import SettingsScreen from "./pages/Settings";
+import SettingsScreen from "./pages/Settings/Index";
 
 import { RootStackParamList } from "./types";
 
@@ -24,9 +24,7 @@ import { lightTheme } from "./themes/light";
 import ResultsScreen from "./pages/Results";
 import ChooseAlphabet from "./pages/ChooseAlphabet";
 
-import { Provider } from "react-redux";
-
-import { RootState, makeStore } from "./shared/store/store";
+import { RootState } from "./shared/store/store";
 import { useAppSelector } from "./shared/store/hooks";
 import { Theme } from "./shared/constants/profile";
 
