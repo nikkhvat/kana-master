@@ -1,19 +1,17 @@
 import React from "react";
 
-import { StyleSheet } from "react-native";
 import { ImageSourcePropType } from "react-native";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useTheme } from "@react-navigation/native";
 
-import { Colors } from "../../App";
-
 import styled from 'styled-components/native';
+import { Colors } from "../../layout";
+import { useAppSelector } from "../../shared/store/hooks";
+import { RootState } from "../../shared/store/store";
 
 type PreviewCard = {
   imageSource: ImageSourcePropType;
-  title: string,
-  subtitle: string,
   onEdit?: Function
 };
 
@@ -67,23 +65,24 @@ const Content = styled.View`
 
 const PreviewCard: React.FC<PreviewCard> = ({
   imageSource,
-  title,
-  subtitle,
   onEdit,
 }) => {
   const colors = useTheme().colors as Colors;
 
+  const selectedLettersHiragana = useAppSelector((state: RootState) => state.kana.selectedLettersHiragana)
+  const selectedLettersKatakana = useAppSelector((state: RootState) => state.kana.selectedLettersKatakana)
+
   return (
-    <Container source={imageSource} resizeMode="cover" >
+    <Container source={imageSource} resizeMode="cover">
       <Content>
-        <Title>{title}</Title>
-        <SubTitle>{subtitle}</SubTitle>
+        <Title>{selectedLettersHiragana + selectedLettersKatakana}</Title>
+        <SubTitle>
+          {selectedLettersHiragana ? "Hiragana" : " "}
+          {selectedLettersHiragana !== 0 && selectedLettersKatakana !== 0 ? " / " : ""}
+          {selectedLettersKatakana ? "Katakana" : " "}
+        </SubTitle>
         <Button onPress={() => onEdit?.()}>
-          <Icon
-            name={"square-edit-outline"}
-            size={24}
-            color={colors.color1}
-          />
+          <Icon name={"square-edit-outline"} size={24} color={colors.color1} />
         </Button>
       </Content>
     </Container>

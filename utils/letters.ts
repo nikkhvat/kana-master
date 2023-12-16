@@ -72,6 +72,9 @@ const letters: ILetter[][] = [
     { id: 44, ka: "ワ", hi: "わ", en: "WA", ru: "ВА" },
     { id: 45, ka: "ヲ", hi: "を", en: "WO", ru: "ВО" },
   ],
+  [
+    { id: 44, ka: "ワ", hi: "わ", en: "WA", ru: "ВА" },
+  ],
 ];
 
 export const lettersDakuon = [

@@ -100,8 +100,7 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
       <ScrollView style={{ paddingHorizontal: 20 }}>
         <PreviewCard
           imageSource={learningImage}
-          title={"44"}
-          subtitle={"Hiragana / Katakana"}
+          onEdit={() => navigation.navigate("ChooseAlphabet")}
         />
         <CardModeView
           title={"Card mode"}
@@ -131,14 +130,17 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
             )
           }
         />
-      
+
         <Button
           customStyles={{ marginTop: 60, marginBottom: 15 }}
           title={"Start"}
           type={"general"}
           fontSize={17}
           onClick={() => {
-            const keysCardModeState = getActiveFromArray(cardModeState, "active");
+            const keysCardModeState = getActiveFromArray(
+              cardModeState,
+              "active"
+            );
             const keysModeState = getActiveFromArray(modeState, "weak");
 
             navigation.navigate("Practice", {

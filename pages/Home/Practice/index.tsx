@@ -5,7 +5,7 @@ import learningImage from "../../../assets/preview/practice.png";
 import PreviewCard from '../../../components/PreviewCard';
 import CardModeView, { CardModeViewProp } from '../../../components/CardModeView';
 import Button from '../../../components/Button';
-import { CardMode, DifficultyLevelType, PracticeScreenMode, TestMode } from '../../../shared/constants/kana';
+import { CardMode, DifficultyLevelType, PracticeScreenMode } from '../../../shared/constants/kana';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../types';
 
@@ -93,11 +93,7 @@ const Practice: React.FC<PracticeProps> = ({ navigation }) => {
       <ScrollView style={{ paddingHorizontal: 20 }}>
         <PreviewCard
           imageSource={learningImage}
-          title={"66"}
-          subtitle={"Hiragana / Katakana"}
-          onEdit={() => {
-            navigation.navigate("ChooseAlphabet");
-          }}
+          onEdit={() => navigation.navigate("ChooseAlphabet")}
         />
 
         <CardModeView

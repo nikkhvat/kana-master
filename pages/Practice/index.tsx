@@ -55,8 +55,6 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
     keysDifficultyLevelState, 
     mode } = route.params;
 
-  console.log(keysDifficultyLevelState);
-
   const IS_TIMER = keysDifficultyLevelState.includes(DifficultyLevelType.TimeTest);
   const ONE_ATTEMPT = keysDifficultyLevelState.includes(DifficultyLevelType.OneAttempt);
   

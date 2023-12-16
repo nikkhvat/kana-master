@@ -10,6 +10,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import styled from 'styled-components/native';
 
+import {
+  GestureHandlerRootView,
+  PanGestureHandler,
+  State,
+} from "react-native-gesture-handler";
+
 const Container = styled.View<{paddingTop: number }>`
   flex: 1;
   background-color: ${({theme}: any) => theme.colors.background};
@@ -78,23 +84,42 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const insets = useSafeAreaInsets();
 
+  const onSwipeEnd = (event: any) => {
+    const { translationX } = event.nativeEvent;
+    if (translationX > 50 && screen > Screen.Learning) {
+      setScreen(screen - 1);
+    } else if (translationX < -50 && screen < Screen.WordBuilding) {
+      setScreen(screen + 1);
+    }
+  };
+
+
   return (
-    <Container paddingTop={insets.top} >
-      <Title>Learning</Title>
-      <Header>
-        {screens.map((item) => (
-          <TouchableOpacity key={item.val} onPress={() => setScreen(item.val)} >
-            <Tab active={item.val === screen} >{item.title}</Tab>
-            {item.val === screen && <TabLine />}
-          </TouchableOpacity>
-        ))}
-      </Header>
-      <Content>
-        {screen === Screen.Learning && <Learning />}
-        {screen === Screen.Practice && <Practice navigation={navigation} />}
-        {screen === Screen.WordBuilding && <WordBuilding navigation={navigation} />}
-      </Content>
-    </Container>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <PanGestureHandler onEnded={onSwipeEnd}>
+        <Container paddingTop={insets.top}>
+          <Title>Learning</Title>
+          <Header>
+            {screens.map((item) => (
+              <TouchableOpacity
+                key={item.val}
+                onPress={() => setScreen(item.val)}
+              >
+                <Tab active={item.val === screen}>{item.title}</Tab>
+                {item.val === screen && <TabLine />}
+              </TouchableOpacity>
+            ))}
+          </Header>
+          <Content>
+            {screen === Screen.Learning && <Learning navigation={navigation} />}
+            {screen === Screen.Practice && <Practice navigation={navigation} />}
+            {screen === Screen.WordBuilding && (
+              <WordBuilding navigation={navigation} />
+            )}
+          </Content>
+        </Container>
+      </PanGestureHandler>
+    </GestureHandlerRootView>
   );
 };
 
