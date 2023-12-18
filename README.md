@@ -1,4 +1,4 @@
-# Nihongo Kana Master
+# Kana Master
 
 ## Description
 
