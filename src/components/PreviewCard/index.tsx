@@ -1,22 +1,19 @@
-import React from "react";
+import React from 'react';
 
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { useTheme } from "@react-navigation/native";
-
+import { useTheme } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styled from 'styled-components/native';
 
-import { Colors } from "@/constants/app";
-
-import { useAppSelector } from "@/hooks/redux";
-import { RootState } from "@/store/store";
-
-import learningImage from "@/resources/preview/learning.png";
-import practiceImage from "@/resources/preview/practice.png";
-import wordgameImage from "@/resources/preview/wordgame.png";
+import { Colors } from '@/constants/app';
+import { useAppSelector } from '@/hooks/redux';
+import learningImage from '@/resources/preview/learning.png';
+import practiceImage from '@/resources/preview/practice.png';
+import wordgameImage from '@/resources/preview/wordgame.png';
+import { RootState } from '@/store/store';
 
 type PreviewCard = {
-  imageSource: "learning" | "practice" | "wordgame";
-  onEdit?: Function;
+  imageSource: 'learning' | 'practice' | 'wordgame';
+  onEdit?: () => void;
 };
 
 const Container = styled.ImageBackground`
@@ -30,23 +27,23 @@ const Container = styled.ImageBackground`
   padding-bottom: 15px;
   position: relative;
   margin-top: 20px;
-`
+`;
 
 const Title = styled.Text`
-  color: ${({ theme }: any) => theme.colors.color4};
+  color: ${({ theme }) => theme.colors.color4};
   font-size: 28px;
   font-weight: 700;
-`
+`;
 
 const SubTitle = styled.Text`
-  color: ${({ theme }: any) => theme.colors.color3};
+  color: ${({ theme }) => theme.colors.color3};
   font-size: 13px;
-`
+`;
 
 const Button = styled.TouchableOpacity`
   width: 40px;
   height: 40px;
-  background-color: ${({theme}: any) => theme.colors.color4};
+  background-color: ${({theme}) => theme.colors.color4};
   border-radius: 40px;
   position: absolute;
   right: 15px;
@@ -54,7 +51,7 @@ const Button = styled.TouchableOpacity`
   flex: 1;
   justify-content: center;
   align-items: center;
-`
+`;
 
 const Content = styled.View`
   width: 315px;
@@ -65,7 +62,7 @@ const Content = styled.View`
   justify-content: center;
   align-items: flex-start;
   padding: 15px;
-`
+`;
 
 const PreviewCard: React.FC<PreviewCard> = ({
   imageSource,
@@ -73,31 +70,29 @@ const PreviewCard: React.FC<PreviewCard> = ({
 }) => {
   const colors = useTheme().colors as Colors;
 
-  const selectedLettersHiragana = useAppSelector((state: RootState) => state.kana.selectedLettersHiragana)
-  const selectedLettersKatakana = useAppSelector((state: RootState) => state.kana.selectedLettersKatakana)
+  const selectedLettersHiragana = useAppSelector((state: RootState) => state.kana.selectedLettersHiragana);
+  const selectedLettersKatakana = useAppSelector((state: RootState) => state.kana.selectedLettersKatakana);
+
+  const preview =
+    imageSource === 'learning'
+      ? learningImage
+      : imageSource === 'practice'
+        ? practiceImage
+        : wordgameImage;
 
   return (
-    <Container
-      source={
-        imageSource === "learning"
-          ? learningImage
-          : imageSource === "practice"
-            ? practiceImage
-            : wordgameImage
-      }
-      resizeMode="cover"
-    >
+    <Container source={preview} resizeMode="cover">
       <Content>
         <Title>{selectedLettersHiragana + selectedLettersKatakana}</Title>
         <SubTitle>
-          {selectedLettersHiragana ? "Hiragana" : " "}
+          {selectedLettersHiragana ? 'Hiragana' : ' '}
           {selectedLettersHiragana !== 0 && selectedLettersKatakana !== 0
-            ? " / "
-            : ""}
-          {selectedLettersKatakana ? "Katakana" : " "}
+            ? ' / '
+            : ''}
+          {selectedLettersKatakana ? 'Katakana' : ' '}
         </SubTitle>
         <Button onPress={() => onEdit?.()}>
-          <Icon name={"square-edit-outline"} size={24} color={colors.color1} />
+          <Icon name={'square-edit-outline'} size={24} color={colors.color1} />
         </Button>
       </Content>
     </Container>

@@ -1,21 +1,17 @@
-import React from "react";
-import { Dimensions, Modal } from "react-native";
-import { ILetter } from "@/data/letters";
+import React from 'react';
 
-import Button from "@/components/Button";
-import { useTheme } from "styled-components";
-
-import { darkTheme } from "@/themes/dark";
-import getImage from "@/resources/svgs";
-
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
+import { Audio } from 'expo-av';
+import { Dimensions, Modal } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useTheme } from 'styled-components';
 import styled from 'styled-components/native';
-import getSound from "@/resources/sounds/index";
 
-import { Audio } from "expo-av";
-
-import { Colors } from "@/constants/app";
+import Button from '@/components/Button';
+import { Colors } from '@/constants/app';
+import { ILetter } from '@/data/letters';
+import getSound from '@/resources/sounds/index';
+import getImage from '@/resources/svgs';
+import { darkTheme } from '@/themes/dark';
 
 const Container = styled.View`
   flex: 1;
@@ -30,7 +26,7 @@ const Header = styled.View`
   align-items: center;
   padding-left: 20px;
   padding-right: 20px;
-`
+`;
 
 const TitleContainer = styled.View`
   flex-direction: column;
@@ -39,7 +35,7 @@ const TitleContainer = styled.View`
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 30px;
-`
+`;
 
 const Title = styled.Text`
   color: ${({ theme }) => theme.colors.color4};
@@ -59,7 +55,7 @@ const ButtonContainer = styled.View`
   flex-direction: column;
   justify-content: flex-start;
   gap: 0;
-`
+`;
 
 const Buttons = styled.View`
   flex: 1;
@@ -69,17 +65,17 @@ const Buttons = styled.View`
   justify-content: space-between;
   gap: 15px;
   margin-top: 15px;
-`
+`;
 
 interface KanaModalProp {
   show: boolean;
-  kana: string;
-  changeKata: Function;
+  kana: 'Hiragana' | 'Katakana';
   letter: ILetter;
-  closeModal: Function;
-  drawSymbol: Function;
-  prevLetter: Function;
-  nextLetter: Function;
+  changeKata: (val: 'Hiragana' | 'Katakana') => void;
+  closeModal: () => void;
+  drawSymbol: (letter: ILetter) => void;
+  prevLetter: () => void;
+  nextLetter: () => void;
 }
 
 const KanaModal: React.FC<KanaModalProp> = ({
@@ -94,15 +90,11 @@ const KanaModal: React.FC<KanaModalProp> = ({
 }) => {
   Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
 
-  const getImagePath = (key: string | undefined) => {
-    const screenWidth = Dimensions.get("window").width;
+  const getImagePath = (key: string | undefined, theme: 'DARK' | 'LIGHT') => {
+    const screenWidth = Dimensions.get('window').width;
 
-    const colors = useTheme().colors as Colors;
-
-    const THEME = colors?.color1 === darkTheme?.color1 ? "DARK" : "LIGHT";
-
-    if (THEME === "DARK") {
-      key = key?.trim() + "-DARK";
+    if (theme === 'DARK') {
+      key = key?.trim() + '-DARK';
     }
 
     return getImage(key?.toUpperCase(), {
@@ -113,6 +105,8 @@ const KanaModal: React.FC<KanaModalProp> = ({
 
   const colors = useTheme().colors as Colors;
 
+  const THEME = colors?.color1 === darkTheme?.color1 ? 'DARK' : 'LIGHT';
+
   const playSound = async (letter: ILetter) => {
     try {
       const sound = getSound(letter.en);
@@ -122,7 +116,9 @@ const KanaModal: React.FC<KanaModalProp> = ({
       });
 
       playbackObject.playAsync();
-    } catch (error: any) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -137,7 +133,7 @@ const KanaModal: React.FC<KanaModalProp> = ({
         <Header>
           <Icon
             onPress={() => closeModal()}
-            name={"close"}
+            name={'close'}
             size={29}
             color={colors.color4}
           />
@@ -145,36 +141,36 @@ const KanaModal: React.FC<KanaModalProp> = ({
         <TitleContainer>
           <Title>{kana}</Title>
           <SubTitle>{letter.en.toUpperCase()}</SubTitle>
-          {getImagePath(`${kana === "Hiragana" ? "H" : "K"}-${letter.en}`)}
+          {getImagePath(`${kana === 'Hiragana' ? 'H' : 'K'}-${letter.en}`, THEME)}
         </TitleContainer>
 
         <ButtonContainer>
           <Buttons>
             <Button
               customStyles={{ flex: 1, marginTop: 0 }}
-              title={"Sound"}
+              title={'Sound'}
               onClick={() => playSound(letter)}
-              type={"inactive"}
-              image={"volume-high"}
+              type={'inactive'}
+              image={'volume-high'}
             />
             <Button
               customStyles={{ flex: 1, marginTop: 0 }}
-              title={"Draw"}
+              title={'Draw'}
               onClick={() => {
                 drawSymbol(letter);
               }}
-              type={"inactive"}
-              image={"gesture-tap-hold"}
+              type={'inactive'}
+              image={'gesture-tap-hold'}
             />
           </Buttons>
           <Buttons>
             <Button
               customStyles={{ flex: 1, marginTop: 0 }}
-              title={`${kana === "Hiragana" ? "Katakana" : "Hiragana"} →`}
+              title={`${kana === 'Hiragana' ? 'Katakana' : 'Hiragana'} →`}
               onClick={() => {
-                changeKata(kana === "Hiragana" ? "Katakana" : "Hiragana");
+                changeKata(kana === 'Hiragana' ? 'Katakana' : 'Hiragana');
               }}
-              type={"inactive"}
+              type={'inactive'}
             />
           </Buttons>
         </ButtonContainer>
@@ -182,16 +178,16 @@ const KanaModal: React.FC<KanaModalProp> = ({
         <Buttons>
           <Button
             customStyles={{ width: 50 }}
-            title={"Sound"}
-            type={"inactive"}
-            image={"chevron-left"}
+            title={'Sound'}
+            type={'inactive'}
+            image={'chevron-left'}
             onClick={() => prevLetter()}
           />
           <Button
             customStyles={{ width: 50 }}
-            title={"Draw"}
-            type={"inactive"}
-            image={"chevron-right"}
+            title={'Draw'}
+            type={'inactive'}
+            image={'chevron-right'}
             onClick={() => nextLetter()}
           />
         </Buttons>

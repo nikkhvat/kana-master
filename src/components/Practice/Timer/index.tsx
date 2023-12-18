@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import styled, { useTheme } from "styled-components/native";
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import styled, { useTheme } from 'styled-components/native';
 
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { Colors } from "@/constants/app";
+import { Colors } from '@/constants/app';
 
 const Container = styled.View`
   width: 100%;
@@ -12,7 +12,7 @@ const Container = styled.View`
   justify-content: space-between;
   align-items: center;
   gap: 30px;
-`
+`;
 
 const TimerContainer = styled.View`
   flex: 1;
@@ -31,7 +31,7 @@ type TimerStrokeProp = {
 
 const TimerStroke = styled.View<TimerStrokeProp>`
   background-color: ${({ theme }) => theme.colors.second_color2};
-  width: ${({ width }) => width + "%"};
+  width: ${({ width }) => width + '%'};
   height: 10px;
   border-radius: 33px;
 `;
@@ -58,11 +58,11 @@ const Timer = () => {
         <TimerStroke width={75} />
       </TimerContainer>
       <TimerTextContainer>
-        <Icon name={"timer-outline"} size={24} color={colors.color4} />
+        <Icon name={'timer-outline'} size={24} color={colors.color4} />
         <TimerTime>00:04</TimerTime>
       </TimerTextContainer>
     </Container>
   );
-}
+};
 
 export default Timer;

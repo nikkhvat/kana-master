@@ -1,8 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-import { InitialState } from "./types";
-import { BASIC_SECTIONS, DAKUON_SECTIONS, HANDAKUON_SECTIONS, HIRA_SECTIONS, KATA_SECTIONS, Kana, KanaMode, KanaSection, LETTERS_COUNT, YOON_SECTIONS } from "../../../constants/kana";
-import { countLetters, isAllSelected, updateSections } from "../../../helpers/array";
+import { BASIC_SECTIONS, DAKUON_SECTIONS, HANDAKUON_SECTIONS, HIRA_SECTIONS, KATA_SECTIONS, Kana, KanaMode, KanaSection, LETTERS_COUNT, YOON_SECTIONS } from '../../../constants/kana';
+import { countLetters, isAllSelected, updateSections } from '../../../helpers/array';
+
+import { InitialState } from './types';
 
 const initialState: InitialState = {
   kanaSections: [
@@ -15,7 +16,7 @@ const initialState: InitialState = {
 };
 
 export const kanaSlice = createSlice({
-  name: "kana",
+  name: 'kana',
   initialState,
   reducers: {
     setKanaSelected: (state, action) => {
@@ -27,7 +28,7 @@ export const kanaSlice = createSlice({
         );
       }
 
-      const payloadMappings: any = {
+      const payloadMappings: Record<string, KanaSection[]> = {
         [Kana.Hiragana]: HIRA_SECTIONS,
         [Kana.Katakana]: KATA_SECTIONS,
         [KanaMode.Basic]: BASIC_SECTIONS,

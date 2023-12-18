@@ -1,6 +1,6 @@
-import { Stats } from "@/screens/Practice/hooks/useStats";
-import { CardMode, DifficultyLevelType, PracticeScreenMode, TestMode } from "@/constants/kana";
-import { ILetter } from "@/data/letters";
+import { CardMode, DifficultyLevelType, PracticeScreenMode, TestMode } from '@/constants/kana';
+import { ILetter } from '@/data/letters';
+import { Stats } from '@/screens/Practice/hooks/useStats';
 
 export type RootStackParamList = {
   Root: undefined;

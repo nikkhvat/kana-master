@@ -1,14 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 declare module '*.png' {
-  const value: any;
-  export default value;
+  const content: any;
+  export default content;
 }
 
 declare module '*.svg' {
-  const value: any;
-  export default value;
+  const content: React.FC<React.SVGProps<SVGSVGElement>>;
+  export default content;
 }
 
 declare module '*.mp3' {
-  const value: any;
-  export default value;
+  const content: any;
+  export default content;
 }

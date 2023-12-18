@@ -1,18 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-import { InitialState } from "./types";
-import { Theme } from "@/constants/profile";
+import { InitialState } from './types';
+
+import { Theme } from '@/constants/profile';
 
 const initialState: InitialState = {
   theme: Theme.Auto,
 };
 
 export const profileSlice = createSlice({
-  name: "profile",
+  name: 'profile',
   initialState,
   reducers: {
     setTheme: (state, action) => {
-      state.theme = action.payload
+      state.theme = action.payload;
     }
   },
 });

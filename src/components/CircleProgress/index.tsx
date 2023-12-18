@@ -1,10 +1,10 @@
-import React from "react";
-import { View } from "react-native";
-import { Svg, Circle } from "react-native-svg";
+import React from 'react';
 
-import styled, { useTheme } from "styled-components/native";
+import { View } from 'react-native';
+import { Svg, Circle } from 'react-native-svg';
+import styled, { useTheme } from 'styled-components/native';
 
-import { Colors } from "@/constants/app";
+import { Colors } from '@/constants/app';
 
 interface CircleProgressProp {
   progress: number
@@ -48,7 +48,7 @@ const CircleProgress: React.FC<CircleProgressProp> = ({ progress }) => {
           cx={50}
           cy={50}
           r={radius}
-          stroke={progress < 51 ? "#EF625D" : "#60BA53"}
+          stroke={progress < 51 ? '#EF625D' : '#60BA53'}
           strokeWidth={6}
           fill="transparent"
           strokeDasharray={circumference}

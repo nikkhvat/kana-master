@@ -1,21 +1,23 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from 'react';
+
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Audio } from 'expo-av';
 import {
   View,
   ScrollView,
-} from "react-native";
-
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import letters, { ILetter, lettersDakuon, lettersHandakuon, lettersYoon } from "../../data/letters";
-
-import { Audio } from "expo-av";
-import { RootStackParamList } from "@/types/navigationTypes";
-import { StackNavigationProp } from "@react-navigation/stack";
-
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
-import KanaTable from "@/components/KanaTable";
-import KanaModal from "@/components/KanaModal";
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
+import letters, { ILetter, lettersDakuon, lettersHandakuon, lettersYoon } from '../../data/letters';
+
+import KanaModal from '@/components/KanaModal';
+import KanaTable from '@/components/KanaTable';
+import { RootStackParamList } from '@/types/navigationTypes';
+
+
+
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
@@ -24,7 +26,7 @@ interface HomeScreenProps {
 const Container = styled.View<{ paddingTop: number }>`
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.color1};
-  padding-top: ${({ paddingTop }) => paddingTop + "px"};
+  padding-top: ${({ paddingTop }) => paddingTop + 'px'};
 `;
 
 const Title = styled.Text`
@@ -39,7 +41,7 @@ const Title = styled.Text`
 const Content = styled.View`
   padding-left: 20px;
   padding-right: 20px;
-`
+`;
 
 const Tabs = styled.View`
   padding: 2px;
@@ -59,7 +61,7 @@ const Tab = styled.TouchableOpacity<{ active: boolean }>`
   background-color: ${({ theme, active }) =>
     active
       ? theme.colors.color1
-      : "transparent"};
+      : 'transparent'};
 `;
 
 const TabText = styled.Text`
@@ -75,28 +77,28 @@ const NameContainer = styled.View`
   padding-bottom: 10px;
   border-color: ${({theme}) => theme.colors.color2};
   border-bottom-width: 1px;
-`
+`;
 
 const Name = styled.Text`
   color: ${({theme}) => theme.colors.color4};
   font-size: 17px;
   font-weight: 700;
-`
+`;
 
 export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
 
   const insets = useSafeAreaInsets();
-  const [activeTab, setActiveTab] = useState("Hiragana");
+  const [activeTab, setActiveTab] = useState<'Hiragana' | 'Katakana'>('Hiragana');
 
   const rows = useMemo(
     () =>
       letters.map((item) =>
-        item[0].en !== "WA" && item[0].en !== "YA" && item[0].en !== "N"
+        item[0].en !== 'WA' && item[0].en !== 'YA' && item[0].en !== 'N'
           ? item
-          : item[0].en === "WA"
+          : item[0].en === 'WA'
             ? [item[0], 0, 0, 0, item[1]]
-            : item[0].en === "N"
+            : item[0].en === 'N'
               ? [0, 0, item[0], 0, 0]
               : [(item[0], 0, item[1], 0, item[2])]
       ),
@@ -106,20 +108,21 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   const rowsHandakuon = useMemo(() => lettersHandakuon.map((item) => item), []);
   const rowsYoon = useMemo(() => lettersYoon.map((item) => item), []);
 
-  const [isModalVisible, setModalVisible] = useState(null as null | [ILetter, number, number, string]);
+  const [isModalVisible, setModalVisible] = useState(null as null | [(ILetter | number), number, number, string]);
 
   const closeModal = () => setModalVisible(null);  
 
-  const list = ["basic", "dokuon", "handakuon", "yoon"];
-  const listLetters = [rows, rowsDokuon, rowsHandakuon, rowsYoon]
+  const list = ['basic', 'dokuon', 'handakuon', 'yoon'];
+  const listLetters = [rows, rowsDokuon, rowsHandakuon, rowsYoon];
 
-  function isLetter(item: any) {
+  function isLetter(item: ILetter | number) {
     return typeof item === 'object';
   }
 
-  function findNext(isModalVisible: null | [ILetter, number, number, string]) {
-    if (!isModalVisible) return;
+  function findNext(isModalVisible: null | [(ILetter | number), number, number, string]): [(ILetter | number), number, number, string] | null {
+    if (!isModalVisible) return null;
 
+    // eslint-disable-next-line prefer-const
     let [currentLetter, rowIndex, colIndex, listName] = isModalVisible;
     let listIndex = list.indexOf(listName);
 
@@ -138,9 +141,12 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
     return [listLetters[listIndex][rowIndex][colIndex], rowIndex, colIndex, list[listIndex]];
   }
 
-  function findPrev(isModalVisible: null | [ILetter, number, number, string]) {
-    if (!isModalVisible) return;
+  function findPrev(
+    isModalVisible: null | [(ILetter | number), number, number, string]
+  ): [ILetter | number, number, number, string] | null {
+    if (!isModalVisible) return null;
 
+    // eslint-disable-next-line prefer-const
     let [currentLetter, rowIndex, colIndex, listName] = isModalVisible;
     let listIndex = list.indexOf(listName);
 
@@ -154,36 +160,50 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
         }
         colIndex = listLetters[listIndex][rowIndex].length - 1;
       }
-    } while (!isLetter(listLetters[listIndex][rowIndex][colIndex]) && rowIndex >= 0);
+    } while (
+      !isLetter(listLetters[listIndex][rowIndex][colIndex]) &&
+      rowIndex >= 0
+    );
 
-    return [listLetters[listIndex][rowIndex][colIndex], rowIndex, colIndex, list[listIndex]];
+    return [
+      listLetters[listIndex][rowIndex][colIndex],
+      rowIndex,
+      colIndex,
+      list[listIndex],
+    ];
   }
 
   const prev = () => {
-    const res: any = findPrev(isModalVisible);
+    const res = findPrev(isModalVisible);
 
     if (res !== undefined) {
       setModalVisible(res);
     }
-  }
+  };
   
   const next = () => {
-    const res: any = findNext(isModalVisible);
+    const res = findNext(isModalVisible);
 
     if (res !== undefined) {
       setModalVisible(res);
     }
-  }
+  };
 
   return (
     <Container paddingTop={insets.top}>
       <Title>Kana</Title>
       <Content>
         <Tabs>
-          <Tab active={activeTab === "Hiragana"} onPress={() => setActiveTab("Hiragana")} >
+          <Tab
+            active={activeTab === 'Hiragana'}
+            onPress={() => setActiveTab('Hiragana')}
+          >
             <TabText>Hiragana</TabText>
           </Tab>
-          <Tab active={activeTab === "Katakana"} onPress={() => setActiveTab("Katakana")} >
+          <Tab
+            active={activeTab === 'Katakana'}
+            onPress={() => setActiveTab('Katakana')}
+          >
             <TabText>Katakana</TabText>
           </Tab>
         </Tabs>
@@ -192,26 +212,46 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
         <NameContainer>
           <Name>Basic</Name>
         </NameContainer>
-        <KanaTable type="basic" data={rows} kana={activeTab} onClick={setModalVisible} />
+        <KanaTable
+          type="basic"
+          data={rows}
+          kana={activeTab}
+          onClick={setModalVisible}
+        />
         <NameContainer>
           <Name>Dakuon</Name>
         </NameContainer>
-        <KanaTable type="dokuon" data={rowsDokuon} kana={activeTab} onClick={setModalVisible} />
+        <KanaTable
+          type="dokuon"
+          data={rowsDokuon}
+          kana={activeTab}
+          onClick={setModalVisible}
+        />
         <NameContainer>
           <Name>Handakuon</Name>
         </NameContainer>
-        <KanaTable type="handakuon" data={rowsHandakuon} kana={activeTab} onClick={setModalVisible} />
+        <KanaTable
+          type="handakuon"
+          data={rowsHandakuon}
+          kana={activeTab}
+          onClick={setModalVisible}
+        />
         <NameContainer>
           <Name>Yoon</Name>
         </NameContainer>
-        <KanaTable type="yoon" data={rowsYoon} kana={activeTab} onClick={setModalVisible} />
+        <KanaTable
+          type="yoon"
+          data={rowsYoon}
+          kana={activeTab}
+          onClick={setModalVisible}
+        />
         <View style={{ marginBottom: 120 }}></View>
       </ScrollView>
-      {isModalVisible !== null && (
+      {isModalVisible !== null && typeof isModalVisible[0] !== 'number' && (
         <KanaModal
           show={isModalVisible === null ? false : true}
           kana={activeTab}
-          changeKata={(kata: string) => setActiveTab(kata)}
+          changeKata={(kata) => setActiveTab(kata)}
           letter={isModalVisible[0]}
           closeModal={() => closeModal()}
           drawSymbol={() => {}}

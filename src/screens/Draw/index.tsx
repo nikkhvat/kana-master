@@ -1,20 +1,20 @@
 
+import React, { useState, useRef } from 'react';
+
 import {
   StyleSheet,
-} from "react-native";
-
-import React, { useState, useRef } from "react";
+} from 'react-native';
 import {
   View,
   PanResponder,
   LayoutChangeEvent,
   Text,
-} from "react-native";
-import Svg, { Path } from "react-native-svg";
+} from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 
 export const DrawScreen: React.FC = () => {
   const [paths, setPaths] = useState<string[]>([]);
-  const currentPath = useRef("");
+  const currentPath = useRef('');
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
   const manualOffsetX = 0;
@@ -38,7 +38,7 @@ export const DrawScreen: React.FC = () => {
     },
     onPanResponderRelease: () => {
       setPaths((prevPaths) => [...prevPaths, currentPath.current]);
-      currentPath.current = "";
+      currentPath.current = '';
     },
   });
 
@@ -68,34 +68,34 @@ export const DrawScreen: React.FC = () => {
 
 export const styles = StyleSheet.create({
   btns: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center"
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   },
   title: {
-    color: "#2A2A2A",
+    color: '#2A2A2A',
     fontSize: 34,
     marginBottom: 30,
-    textAlign: "center"
+    textAlign: 'center'
   },
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   canvasContainer: {
     width: 345,
     height: 345,
-    borderColor: "#ECECEC",
+    borderColor: '#ECECEC',
     borderWidth: 1,
     borderRadius: 12,
-    backgroundColor: "red",
+    backgroundColor: 'red',
   },
   canvas: {
     width: 345,
     height: 345,
-    backgroundColor: "white",
-    borderColor: "#ECECEC",
+    backgroundColor: 'white',
+    borderColor: '#ECECEC',
     borderWidth: 1,
     borderRadius: 12,
   },

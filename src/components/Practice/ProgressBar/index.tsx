@@ -1,29 +1,28 @@
-import React from "react";
+import React from 'react';
 
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styled, { useTheme } from 'styled-components/native';
 
-import { Colors } from "@/constants/app";
+import { Colors } from '@/constants/app';
 
 const ProgressBarContainer = styled.View`
   width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`
+`;
 
 const ProgressBarLine = styled.View`
   width: 100%;
   height: 4px;
   background-color: ${({theme}) => theme.colors.color2 };
-`
+`;
 
 const ProgressBarLineActive = styled.View<{progress: number}>`
-  width: ${({progress}) => progress + "%"};
+  width: ${({progress}) => progress + '%'};
   height: 4px;
   background-color: ${({theme}) => theme.colors.color4};
-`
+`;
 
 const ProgressBarBottom = styled.View`
   width: 100%;
@@ -31,7 +30,7 @@ const ProgressBarBottom = styled.View`
   align-items: center;
   justify-content: space-between;
   margin-top: 6px;
-`
+`;
 
 const ProgressBarClose = styled.TouchableOpacity`
   justify-content: row;
@@ -39,7 +38,7 @@ const ProgressBarClose = styled.TouchableOpacity`
   align-items: center;
   margin-left: -15px;
   padding: 10px;
-`
+`;
 
 const ProgressBarText = styled.Text`
   color: ${({theme}) => theme.colors.color3};
@@ -49,10 +48,10 @@ const ProgressBarText = styled.Text`
   font-weight: 400;
   line-height: 22px;
   letter-spacing: -0.43px;
-`
+`;
 
 interface ProgressBarProp {
-  close?: Function
+  close?: () => void
   current: number
   all: number
 }
@@ -82,6 +81,6 @@ const ProgressBar: React.FC<ProgressBarProp> = ({close, current, all}) => {
       </ProgressBarBottom>
     </ProgressBarContainer>
   );
-}
+};
 
-export default ProgressBar
+export default ProgressBar;

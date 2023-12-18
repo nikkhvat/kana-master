@@ -1,9 +1,11 @@
-import React from "react";
-import { Provider } from "react-redux";
-import { makeStore } from "./src/store/store";
-import Layout from "./src/layout";
+import React from 'react';
 
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Provider } from 'react-redux';
+
+import Layout from '@/layout';
+import { makeStore } from '@/store/store';
+
 
 const App = () => {
   return (

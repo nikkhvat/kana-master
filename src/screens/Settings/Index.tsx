@@ -1,21 +1,21 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components/native"
+import { View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import styled from 'styled-components/native';
 
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Button from "@/components/Button";
-import { View } from "react-native";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { RootState } from "@/store/store";
-import { Theme } from "@/constants/profile";
-import { setTheme } from "@/store/features/profile/slice";
+import Button from '@/components/Button';
+import { Theme } from '@/constants/profile';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { setTheme } from '@/store/features/profile/slice';
+import { RootState } from '@/store/store';
 
 const Container = styled.View<{paddingTop: number}>`
   flex: 1;
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.color1};
-  padding-top: ${({ paddingTop }) => paddingTop + "px"};
-`
+  padding-top: ${({ paddingTop }) => paddingTop + 'px'};
+`;
 
 const Title = styled.Text`
   font-size: 28px;
@@ -23,7 +23,7 @@ const Title = styled.Text`
   margin-top: 20px;
   margin-bottom: 10px;
   color: ${({ theme }) => theme.colors.color4 };
-`
+`;
 
 const SectionTitle = styled.Text`
   margin-top: 30px;
@@ -39,18 +39,18 @@ const SectionButtons = styled.View`
   flex-wrap: wrap;
   align-items: center;
   gap: 15px;
-`
+`;
 
 const Settings: React.FC = () => {
   const insets = useSafeAreaInsets();
 
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
-  const theme = useAppSelector((state: RootState) => state.profile.theme)
+  const theme = useAppSelector((state: RootState) => state.profile.theme);
 
   const changeTheme = (theme: Theme) => {
     dispatch(setTheme(theme));
-  }
+  };
 
   return (
     <Container paddingTop={insets.top}>
@@ -60,9 +60,9 @@ const Settings: React.FC = () => {
 
       <Button
         customStyles={{ marginTop: 0 }}
-        title={`View statistics →`}
-        onClick={() => {console.log("to stats");}}
-        type={"inactive"}
+        title={'View statistics →'}
+        onClick={() => {}}
+        type={'inactive'}
       />
 
       <SectionTitle>Theme</SectionTitle>
@@ -70,23 +70,23 @@ const Settings: React.FC = () => {
       <SectionButtons>
         <Button
           customStyles={{ marginTop: 15, flex: 1}}
-          title={`Light`}
+          title={'Light'}
           onClick={() => changeTheme(Theme.Light)}
-          type={theme === Theme.Light ? "general" : "inactive"}
+          type={theme === Theme.Light ? 'general' : 'inactive'}
         />
         <Button
           customStyles={{ marginTop: 15, flex: 1}}
-          title={`Dark`}
+          title={'Dark'}
           onClick={() => changeTheme(Theme.Dark)}
-          type={theme === Theme.Dark ? "general" : "inactive"}
+          type={theme === Theme.Dark ? 'general' : 'inactive'}
         />
       </SectionButtons>
       <SectionButtons>
         <Button
           customStyles={{ flex: 1 }}
-          title={`Auto`}
+          title={'Auto'}
           onClick={() => changeTheme(Theme.Auto)}
-          type={theme === Theme.Auto ? "general" : "inactive"}
+          type={theme === Theme.Auto ? 'general' : 'inactive'}
         />
         <View style={{flex: 1}} ></View>
       </SectionButtons>
@@ -96,23 +96,23 @@ const Settings: React.FC = () => {
       <SectionButtons>
         <Button
           customStyles={{ marginTop: 15, flex: 1}}
-          title={`Русский`}
-          onClick={() => {console.log("to stats");}}
-          type={"general"}
+          title={'Русский'}
+          onClick={() => {}}
+          type={'general'}
         />
         <Button
           customStyles={{ marginTop: 15, flex: 1}}
-          title={`English`}
-          onClick={() => {console.log("to stats");}}
-          type={"inactive"}
+          title={'English'}
+          onClick={() => {}}
+          type={'inactive'}
         />
       </SectionButtons>
       <SectionButtons>
         <Button
           customStyles={{ flex: 1 }}
-          title={`Español`}
-          onClick={() => {console.log("to stats");}}
-          type={"inactive"}
+          title={'Español'}
+          onClick={() => {}}
+          type={'inactive'}
         />
         <View style={{flex: 1}} ></View>
       </SectionButtons>

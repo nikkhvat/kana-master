@@ -1,10 +1,11 @@
 import React from 'react';
-import styled from 'styled-components/native';
+
+import { useTheme } from '@react-navigation/native';
 import { TouchableOpacityProps, TextProps } from 'react-native';
 import Ionics from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useTheme } from '@react-navigation/native';
+import styled from 'styled-components/native';
 
-import { Colors } from "@/constants/app";
+import { Colors } from '@/constants/app';
 
 interface ButtonProps extends TouchableOpacityProps {
   title: string;
@@ -12,7 +13,7 @@ interface ButtonProps extends TouchableOpacityProps {
   onClick?: () => void;
   fontSize?: number;
   image?: string | null;
-  customStyles?: any
+  customStyles?: Record<string, string | number>
 }
 
 interface StyledButtonProps extends TouchableOpacityProps {
@@ -45,7 +46,7 @@ const StyledButton = styled.TouchableOpacity<StyledButtonProps>`
 `;
 
 const StyledText = styled.Text<StyledTextProps>`
-  font-size: ${({ fontSize }) => (fontSize ? fontSize + "px" : 13 + "px")};
+  font-size: ${({ fontSize }) => (fontSize ? fontSize + 'px' : 13 + 'px')};
   color: ${({ theme, type }) =>
     type === 'active'
       ? theme.colors.color5

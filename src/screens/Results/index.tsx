@@ -1,16 +1,15 @@
-import React from "react";
-import { RouteProp } from "@react-navigation/native";
-import { RootStackParamList } from "@/types/navigationTypes";
+import React from 'react';
 
-import { StackNavigationProp } from "@react-navigation/stack";
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import styled from 'styled-components/native';
 
-import styled from "styled-components/native";
+import CircleProgress from '@/components/CircleProgress';
+import { RootStackParamList } from '@/types/navigationTypes';
 
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import CircleProgress from "@/components/CircleProgress";
-
-type LearnResultsNavigationProp = StackNavigationProp<RootStackParamList, "Results">;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, "Results">;
+type LearnResultsNavigationProp = StackNavigationProp<RootStackParamList, 'Results'>;
+type LearnScreenRouteProp = RouteProp<RootStackParamList, 'Results'>;
 
 interface LearnResultsScreenProps {
   route: LearnScreenRouteProp;
@@ -20,13 +19,13 @@ interface LearnResultsScreenProps {
 const Container = styled.View<{ paddingTop: number }>`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.color1};
-  padding-top: ${({ paddingTop }) => paddingTop + "px"};
+  padding-top: ${({ paddingTop }) => paddingTop + 'px'};
   `;
 
 const Scroll = styled.ScrollView`
   padding: 20px;
   padding-top: 0;
-`
+`;
 
 const Title = styled.Text`
   font-size: 28px;
@@ -91,7 +90,7 @@ const StatsGraph = styled.View`
   border-radius: 100px;
 `;
 
-const StatsDescription = styled.View``
+const StatsDescription = styled.View``;
 
 const StatsTitle = styled.Text`
   color: ${({ theme }) => theme.colors.color4};
@@ -117,7 +116,7 @@ const StatsSubTitle = styled.Text`
 const StatsSubText = styled.View`
   flex-direction: row;
   align-items: center;
-`
+`;
 
 const StatsSubTime = styled.Text`
   color: ${({ theme }) => theme.colors.color3};
@@ -150,7 +149,7 @@ function ResultsScreen({ route, navigation }: LearnResultsScreenProps) {
   const insets = useSafeAreaInsets();
 
     const home = () => {
-      navigation.navigate("Root");
+      navigation.navigate('Root');
     };
 
   return (
@@ -178,7 +177,7 @@ function ResultsScreen({ route, navigation }: LearnResultsScreenProps) {
 
         <DetailsCard>
           <DetailsCardTitle>Alphabet:</DetailsCardTitle>
-          <DetailsCardValue>{stats.alphabets.join(", ")}</DetailsCardValue>
+          <DetailsCardValue>{stats.alphabets.join(', ')}</DetailsCardValue>
         </DetailsCard>
 
         <DetailsCard>
@@ -197,7 +196,7 @@ function ResultsScreen({ route, navigation }: LearnResultsScreenProps) {
 
         {stats.incorrectAnswers.length !== 0 && <DetailsCard>
           <DetailsCardTitle>Incorrect answers:</DetailsCardTitle>
-          <DetailsCardValue>{stats.incorrectAnswers.join(", ")}</DetailsCardValue>
+          <DetailsCardValue>{stats.incorrectAnswers.join(', ')}</DetailsCardValue>
         </DetailsCard>}
 
         <DoneButton onPress={home}>

@@ -1,7 +1,7 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
 
-import styled from "styled-components/native";
+import { View } from 'react-native';
+import styled from 'styled-components/native';
 
 const Symbol = styled.Text`
   color: ${({ theme }) => theme.colors.color4};
@@ -29,6 +29,6 @@ const ShowSymbol: React.FC<ShowSymbolProps> = ({symbol, subtext}) => {
       <SubText>{subtext}</SubText>
     </View>
   );
-}
+};
 
 export default ShowSymbol;

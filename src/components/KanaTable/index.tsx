@@ -1,7 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import styled from "styled-components/native";
-import { ILetter } from "@/data/letters";
+import styled from 'styled-components/native';
+
+import { ILetter } from '@/data/letters';
 
 const Container = styled.View`
   padding-left: 20px;
@@ -9,13 +10,13 @@ const Container = styled.View`
   padding-top: 20px;
   margin-bottom: 30px;
   gap: 10px;
-`
+`;
 
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-`
+`;
 
 type CellProp = {
   isEmpty: boolean;
@@ -25,10 +26,10 @@ type CellProp = {
 const Cell = styled.TouchableOpacity<CellProp>`
   padding: 8px;
   border-radius: 12px;
-  border-width: ${({ isEmpty }) => (isEmpty ? 0 : "1px")};
+  border-width: ${({ isEmpty }) => (isEmpty ? 0 : '1px')};
   border-color: ${({ theme, isEmpty }) =>
-    isEmpty ? "transparent" : theme.colors.color2};
-  width: ${({ isLong }) => isLong ? "105px" : "60px"};
+    isEmpty ? 'transparent' : theme.colors.color2};
+  width: ${({ isLong }) => isLong ? '105px' : '60px'};
   height: 60px;
   flex-direction: column;
   align-items: center;
@@ -47,8 +48,10 @@ const SubText = styled.Text`
 
 interface KanaTableProps {
   data: (number | ILetter)[][];
-  onClick?: Function;
-  kana: string; 
+  onClick?: (
+    data: [cell: ILetter, rowIndex: number, cellIndex: number, type: string]
+  ) => void;
+  kana: string;
   type: string;
 }
 
@@ -64,15 +67,15 @@ const KanaTable: React.FC<KanaTableProps> = ({ data, kana, onClick, type }) => {
                 key={`${rowIndex}-${cellIndex}`}
                 isEmpty={cell === 0}
                 onPress={() => {
-                  if (typeof cell !== "number")
+                  if (typeof cell !== 'number')
                     onClick?.([cell, rowIndex, cellIndex, type]);
                 }}
               >
                 <Symbol>
-                  {typeof cell !== "number" &&
-                    cell?.[kana === "Hiragana" ? "hi" : "ka"]}
+                  {typeof cell !== 'number' &&
+                    cell?.[kana === 'Hiragana' ? 'hi' : 'ka']}
                 </Symbol>
-                <SubText>{typeof cell !== "number" && cell?.en.toUpperCase()}</SubText>
+                <SubText>{typeof cell !== 'number' && cell?.en.toUpperCase()}</SubText>
               </Cell>
             );
           })}

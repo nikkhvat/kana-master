@@ -1,26 +1,25 @@
-import React from "react";
+import React from 'react';
 
-import Button from "@/components/Button";
 
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import styled, { useTheme } from "styled-components/native";
 
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "@/types/navigationTypes";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { RootState } from "@/store/store";
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import styled, { useTheme } from 'styled-components/native';
 
-import { Colors } from "@/constants/app";
-
-import { Kana, KanaMode, KanaSection } from "@/constants/kana";
-import { setKanaSelected } from "@/store/features/kana/slice";
+import Button from '@/components/Button';
+import { Colors } from '@/constants/app';
+import { Kana, KanaMode, KanaSection } from '@/constants/kana';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { setKanaSelected } from '@/store/features/kana/slice';
+import { RootState } from '@/store/store';
+import { RootStackParamList } from '@/types/navigationTypes';
 
 const Container = styled.View<{ paddingTop: number }>`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.color1};
-  padding-top: ${({ paddingTop }) => paddingTop + "px"};
+  padding-top: ${({ paddingTop }) => paddingTop + 'px'};
 `;
 
 const Header = styled.View`
@@ -56,7 +55,7 @@ const InfoBlock = styled.View`
   align-items: flex-start;
   justify-content: center;
   width: 40%;
-`
+`;
 
 const InfoTitle = styled.Text`
   color: ${({ theme }) => theme.colors.color4};
@@ -89,7 +88,7 @@ const KanaStatContainer = styled.View`
   align-items: center;
   gap: 10px;
   padding-top: 30px;
-`
+`;
 
 const KanaCard = styled.View`
   width: 108px;
@@ -138,12 +137,12 @@ const SelectionRow = styled.View`
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-`
+`;
 
 type SelectionButtonProp = {
   empty?: boolean;
   selected?: boolean
-  type?: "text" | "container"
+  type?: 'text' | 'container'
 };
 
 const SelectionButton = styled.TouchableOpacity<SelectionButtonProp>`
@@ -152,14 +151,14 @@ const SelectionButton = styled.TouchableOpacity<SelectionButtonProp>`
   justify-content: center;
   align-items: center;
   border-radius: 12px;
-  border-width: ${({ empty }) => (empty ? "0px" : "1px")};
+  border-width: ${({ empty }) => (empty ? '0px' : '1px')};
   border-color: ${({ theme }) => theme.colors.color2};
   background-color: ${({ theme, selected, type }) =>
     selected
-      ? type == "text"
+      ? type == 'text'
         ? theme.colors.second_color3
         : theme.colors.second_color4
-      : "transparent"};
+      : 'transparent'};
   flex: 1;
 `;
 
@@ -169,21 +168,21 @@ const SelectionText = styled.Text<{active?: boolean}>`
   font-weight: 700;
 `;
 
-type ChooseAlphabetNavigationProp = StackNavigationProp<RootStackParamList, "ChooseAlphabet">;
+type ChooseAlphabetNavigationProp = StackNavigationProp<RootStackParamList, 'ChooseAlphabet'>;
 
 interface ChooseAlphabetProps {
   navigation: ChooseAlphabetNavigationProp;
 }
 
 const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
 
-  const SHOW_ALLOWED_WORDS = false
+  const SHOW_ALLOWED_WORDS = false;
   
-  const selected = useAppSelector((state: RootState) => state.kana.kanaSections)
-  const selectedLettersHiragana = useAppSelector((state: RootState) => state.kana.selectedLettersHiragana)
-  const selectedLettersKatakana = useAppSelector((state: RootState) => state.kana.selectedLettersKatakana)
-  const selectedLetters = useAppSelector((state: RootState) => state.kana.selectedLetters)
+  const selected = useAppSelector((state: RootState) => state.kana.kanaSections);
+  const selectedLettersHiragana = useAppSelector((state: RootState) => state.kana.selectedLettersHiragana);
+  const selectedLettersKatakana = useAppSelector((state: RootState) => state.kana.selectedLettersKatakana);
+  const selectedLetters = useAppSelector((state: RootState) => state.kana.selectedLetters);
 
   const IS_KANA_SELECTED =
     selected.includes(KanaSection.BasicKatakana) &&
@@ -298,10 +297,10 @@ const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
               <SelectionText active={IS_BASIC}>Basic</SelectionText>
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.BasicHiragana)} selected={IS_BASIC_HIRA}>
-              <Icon name={IS_BASIC_HIRA ? "check" : "close"} size={24} color={colors.color4} />
+              <Icon name={IS_BASIC_HIRA ? 'check' : 'close'} size={24} color={colors.color4} />
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.BasicKatakana)} selected={IS_BASIC_KATA}>
-              <Icon name={IS_BASIC_KATA ? "check" : "close"} size={24} color={colors.color4} />
+              <Icon name={IS_BASIC_KATA ? 'check' : 'close'} size={24} color={colors.color4} />
             </SelectionButton>
           </SelectionRow>
           <SelectionRow>
@@ -309,10 +308,10 @@ const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
               <SelectionText active={IS_DAKUON}>Dakuon</SelectionText>
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.DakuonHiragana)} selected={IS_DAKUON_HIRA}>
-              <Icon name={IS_DAKUON_HIRA ? "check" : "close"} size={24} color={colors.color4} />
+              <Icon name={IS_DAKUON_HIRA ? 'check' : 'close'} size={24} color={colors.color4} />
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.DakuonKatakana)} selected={IS_DAKUON_KATA}>
-              <Icon name={IS_DAKUON_KATA ? "check" : "close"} size={24} color={colors.color4} />
+              <Icon name={IS_DAKUON_KATA ? 'check' : 'close'} size={24} color={colors.color4} />
             </SelectionButton>
           </SelectionRow>
           <SelectionRow>
@@ -320,10 +319,10 @@ const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
               <SelectionText active={IS_HANDAKUON}>Handakuon</SelectionText>
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.HandakuonHiragana)} selected={IS_HANDAKUON_HIRA}>
-              <Icon name={IS_HANDAKUON_HIRA ? "check" : "close"} size={24} color={colors.color4} />
+              <Icon name={IS_HANDAKUON_HIRA ? 'check' : 'close'} size={24} color={colors.color4} />
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.HandakuonKatakana)} selected={IS_HANDAKUON_KATA}>
-              <Icon name={IS_HANDAKUON_KATA ? "check" : "close"} size={24} color={colors.color4} />
+              <Icon name={IS_HANDAKUON_KATA ? 'check' : 'close'} size={24} color={colors.color4} />
             </SelectionButton>
           </SelectionRow>
           <SelectionRow>
@@ -331,18 +330,18 @@ const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
               <SelectionText active={IS_YOON}>Yoon</SelectionText>
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.YoonHiragana)} selected={IS_YOON_HIRA}>
-              <Icon name={IS_YOON_HIRA ? "check" : "close"} size={24} color={colors.color4} />
+              <Icon name={IS_YOON_HIRA ? 'check' : 'close'} size={24} color={colors.color4} />
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.YoonKatakana)} selected={IS_YOON_KATA}>
-              <Icon name={IS_YOON_KATA ? "check" : "close"} size={24} color={colors.color4} />
+              <Icon name={IS_YOON_KATA ? 'check' : 'close'} size={24} color={colors.color4} />
             </SelectionButton>
           </SelectionRow>
         </SelectionContainer>
 
         <Button
           customStyles={{ marginTop: 60, marginBottom: 15 }}
-          title={"Confirm"}
-          type={"general"}
+          title={'Confirm'}
+          type={'general'}
           fontSize={17}
           onClick={() => {
             navigation.goBack();

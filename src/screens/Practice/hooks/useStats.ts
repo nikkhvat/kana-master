@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+
 import { CardMode, Kana } from '@/constants/kana';
 
 interface AnswerStats {
@@ -27,12 +28,12 @@ const useStats = (extra: {
   const [fastestAnswer, setFastestAnswer] = useState<AnswerStats | null>(null);
   const [slowestAnswer, setSlowestAnswer] = useState<AnswerStats | null>(null);
   const [incorrectAnswers, setIncorrectAnswers] = useState<string[]>([]);
-  const [alphabets, setAlphabet] = useState<Kana[]>([])
+  const [alphabets, setAlphabet] = useState<Kana[]>([]);
 
   useEffect(() => {
-    if (!extra.cardModeState || !extra) return 
+    if (!extra.cardModeState || !extra) return; 
 
-    const data = []
+    const data = [];
 
     if (
         extra.cardModeState?.includes(CardMode.hiraganaToKatakana) ||
@@ -40,7 +41,7 @@ const useStats = (extra: {
         extra.cardModeState?.includes(CardMode.romajiToHiragana) ||
         extra.cardModeState?.includes(CardMode.katakanaToHiragana)
     ) {
-      data.push(Kana.Hiragana)
+      data.push(Kana.Hiragana);
     }
 
     if (
@@ -49,11 +50,11 @@ const useStats = (extra: {
         extra.cardModeState?.includes(CardMode.katakanaToRomaji) ||
         extra.cardModeState?.includes(CardMode.romajiToKatakana)
     ) {
-      data.push(Kana.Katakana)
+      data.push(Kana.Katakana);
     }
 
-    setAlphabet(data)
-  }, [])
+    setAlphabet(data);
+  }, []);
 
   const startTimer = useCallback(() => {
     setStartTime(new Date());

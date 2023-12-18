@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useState } from 'react';
 
-import styled from "styled-components/native";
+import styled from 'styled-components/native';
 
 const Container = styled.View`
   flex: 1;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-`
+`;
 
 const Question = styled.Text`
   color: ${({ theme }) => theme.colors.color4 };
@@ -22,7 +23,7 @@ const Question = styled.Text`
 const Pairs = styled.View`
   flex-direction: column;
   gap: 15px;
-`
+`;
 
 const Row = styled.View`
   height: 50px;
@@ -32,7 +33,7 @@ const Row = styled.View`
   gap: 15px;
 
   width: 100%;
-`
+`;
 
 interface ItemProp {
   isCorrect: boolean
@@ -55,7 +56,7 @@ const Item = styled.TouchableOpacity<ItemProp>`
   background-color: ${({ theme, isCorrect, isSelect, isError }) =>
     isCorrect ? theme.colors.second_color2
       : isError ? theme.colors.second_color1
-      : isSelect ? "transparent" : "transparent"};
+      : isSelect ? 'transparent' : 'transparent'};
   padding: 14px;
 `;
 
@@ -70,8 +71,8 @@ interface FindPairProps {
     id: number | string
   }[][]
   answers: (string | number)[][]
-  onCompleted?: Function
-  onError?: Function
+  onCompleted?: (hasError: boolean) => void
+  onError?: () => void
   title: string
 }
 
@@ -102,7 +103,7 @@ const FindPair: React.FC<FindPairProps> = ({
   };
 
   const isMatched = (id: string | number) => {
-    return matchedPairs.some((pair: any) => pair.includes(id));
+    return matchedPairs.some((pair) => pair.includes(id));
   };
 
   const isAlreadyMatched = (pair: Item) => {
@@ -127,7 +128,7 @@ const FindPair: React.FC<FindPairProps> = ({
         setErrorsPairs([selectedPair!.id, pair.id]);
         onError?.();
         setTimeout(() => {
-          setErrorsPairs((prev) => []);
+          setErrorsPairs(() => []);
         }, 500);
       }
       setSelectedPair(null);

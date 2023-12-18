@@ -1,7 +1,7 @@
-import { ILetter } from "@/data/letters";
+import { ILetter } from '@/data/letters';
 
 export const shuffleArray = <T>(array: Array<T>): Array<T> => {
-  let arrayCopy = array.slice();
+  const arrayCopy = array.slice();
 
   for (let i = arrayCopy.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -9,23 +9,23 @@ export const shuffleArray = <T>(array: Array<T>): Array<T> => {
   }
 
   return arrayCopy;
-}
+};
 
 export const areLettersEqual = (letter1: ILetter, letter2: ILetter): boolean => {
   return letter1.en === letter2.en && letter1.id === letter2.id;
-}
+};
 
 export const getRandomLetter = (letters: ILetter[][]): ILetter => {
   const flatArray = letters.flat();
 
   if (flatArray.length === 0) {
-    throw new Error("Array is empty");
+    throw new Error('Array is empty');
   }
 
   const randomIndex = Math.floor(Math.random() * flatArray.length);
 
   return flatArray[randomIndex];
-}
+};
 
 export const generateRandomLetters = (
   kana: ILetter[][], 
@@ -34,7 +34,7 @@ export const generateRandomLetters = (
   const letters: ILetter[] = [];
   
   while (letters.length < limit) {
-    const randomLetter = getRandomLetter(kana)
+    const randomLetter = getRandomLetter(kana);
     
     if (!letters.some(letter => letter.en.toUpperCase().trim() === randomLetter.en.toUpperCase().trim()) &&
       (!excludeLetter || randomLetter.en.toUpperCase().trim() !== excludeLetter.en.toUpperCase().trim())) {
@@ -43,7 +43,7 @@ export const generateRandomLetters = (
   }
 
   return letters;
-}
+};
 
 export const getColumn = (rows: (number | ILetter)[][], columnId: number): ILetter[] => {
   const array: ILetter[] = [];
@@ -52,7 +52,7 @@ export const getColumn = (rows: (number | ILetter)[][], columnId: number): ILett
     const row = rows[i];
     const item = row[columnId];
 
-    if (typeof item != "number") {
+    if (typeof item != 'number') {
       array.push(item);
     }
   }
@@ -66,7 +66,7 @@ export const getRow = (rows: (number | ILetter)[][], rowId: number): ILetter[] =
   for (let i = 0; i < rows[rowId].length; i++) {
     const item = rows[rowId][i];
 
-    if (typeof item !== "number") {
+    if (typeof item !== 'number') {
       array.push(item);
     }
   }

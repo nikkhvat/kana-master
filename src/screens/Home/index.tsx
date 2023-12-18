@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import { TouchableOpacity } from "react-native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "@/types/navigationTypes";
+import React, { useState } from 'react';
 
-import Learning from "./Learning";
-import Practice from "./Practice";
-import WordBuilding from "./WordBuilding";
-
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-
+import { StackNavigationProp } from '@react-navigation/stack';
+import { TouchableOpacity } from 'react-native';
+import { GestureHandlerRootView, HandlerStateChangeEvent, PanGestureHandler } from 'react-native-gesture-handler';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 
-import { GestureHandlerRootView, PanGestureHandler } from "react-native-gesture-handler";
+import Learning from './Learning';
+import Practice from './Practice';
+import WordBuilding from './WordBuilding';
+
+import { RootStackParamList } from '@/types/navigationTypes';
+
 
 type ContainerProps = {
   paddingTop: number;
@@ -19,8 +19,8 @@ type ContainerProps = {
 
 const Container = styled.View<ContainerProps>`
   flex: 1;
-  background-color: ${({ theme }: any) => theme.colors.background};
-  padding-top: ${({ paddingTop }) => paddingTop + "px"};
+  background-color: ${({ theme }) => theme.colors.background};
+  padding-top: ${({ paddingTop }) => paddingTop + 'px'};
 `;
 
 const Title = styled.Text`
@@ -30,7 +30,7 @@ const Title = styled.Text`
   margin-top: 20px;
   margin-bottom: 10px;
   color: ${({ theme }) => theme.colors.color4};
-`
+`;
 
 const Header = styled.View`
   flex-direction: row;
@@ -39,7 +39,7 @@ const Header = styled.View`
   padding-left: 20px;
   padding-right: 20px;
   height: 54px;
-`
+`;
 
 const TabLine = styled.View`
   background-color: ${({ theme }) => theme.colors.color4};
@@ -48,7 +48,7 @@ const TabLine = styled.View`
   position: absolute;
   top: 4px;
   left: 10px;
-`
+`;
 
 type TabProps = {
   active: boolean;
@@ -63,9 +63,9 @@ const Tab = styled.Text<TabProps>`
 
 const Content = styled.View`
   flex: 1;
-`
+`;
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
@@ -81,22 +81,26 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [screen, setScreen] = useState(Screen.Learning);
 
   const screens = [
-    { title: "Practice", val: Screen.Learning },
-    { title: "Testing", val: Screen.Practice },
-    { title: "Word game", val: Screen.WordBuilding },
+    { title: 'Practice', val: Screen.Learning },
+    { title: 'Testing', val: Screen.Practice },
+    { title: 'Word game', val: Screen.WordBuilding },
   ];
 
   const insets = useSafeAreaInsets();
 
-  const onSwipeEnd = (event: any) => {
+  const onSwipeEnd = (
+    event: HandlerStateChangeEvent<Record<string, unknown>>
+  ) => {
     const { translationX } = event.nativeEvent;
-    if (translationX > 50 && screen > Screen.Learning) {
-      setScreen(screen - 1);
-    } else if (translationX < -50 && screen < Screen.WordBuilding) {
-      setScreen(screen + 1);
+
+    if (typeof translationX === 'number') {
+      if (translationX > 50 && screen > Screen.Learning) {
+        setScreen(screen - 1);
+      } else if (translationX < -50 && screen < Screen.WordBuilding) {
+        setScreen(screen + 1);
+      }
     }
   };
-
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
