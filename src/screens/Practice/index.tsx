@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import * as Haptics from 'expo-haptics';
+import { useKeepAwake } from 'expo-keep-awake';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 
@@ -16,6 +18,7 @@ import { CardMode, DifficultyLevelType, Kana, PracticeScreenMode } from '@/const
 import letters, { ILetter } from '@/data/letters';
 import { generateRandomLetters, shuffleArray } from '@/helpers/letters';
 import { RootStackParamList } from '@/types/navigationTypes';
+
 
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Practice'>;
@@ -46,6 +49,8 @@ const Header = styled.View`
 
 
 function PracticeScreen({ route, navigation }: LearnScreenProps) {
+  useKeepAwake();
+
   const { 
     keysCardModeState, 
     keysModeState, 
@@ -141,12 +146,12 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
       setQuestions(shuffleArray(questions));
     }
   }, []);
-
   
-
   const onFinish = (trueSelected: boolean) => {
     const responseTime = 5;
     stats.recordAnswer(trueSelected, responseTime, questions[index].symbol);
+
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
     if (index === questions.length - 1) {
       const finalStats = stats.getStats();

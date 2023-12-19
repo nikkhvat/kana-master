@@ -1,5 +1,5 @@
 {
-  "name": "nihongo_kana_master",
+  "name": "kana_master",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -23,6 +23,8 @@
     "classnames": "^2.3.2",
     "expo": "~49.0.15",
     "expo-av": "~13.4.1",
+    "expo-haptics": "~12.4.0",
+    "expo-keep-awake": "~12.3.0",
     "expo-status-bar": "~1.6.0",
     "js-cookie": "^3.0.5",
     "react": "18.2.0",
