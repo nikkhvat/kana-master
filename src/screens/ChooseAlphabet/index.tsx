@@ -11,7 +11,7 @@ import styled, { useTheme } from "styled-components/native";
 import Button from "@/components/Button";
 import ChooseAlphabetModal from "@/components/ChooseAlphabetModal";
 import { Colors } from "@/constants/app";
-import { Kana, KanaMode, KanaSection } from "@/constants/kana";
+import { Kana, KanaMode, KanaSection, LETTERS_COUNT } from "@/constants/kana";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { setKanaSelected } from "@/store/features/kana/slice";
 import { RootState } from "@/store/store";
@@ -182,47 +182,50 @@ const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
 
   const SHOW_ALLOWED_WORDS = false;
   
-  const selected = useAppSelector((state: RootState) => state.kana.kanaSections);
+  const selected = useAppSelector((state: RootState) => state.kana.selected);
+
   const selectedLettersHiragana = useAppSelector((state: RootState) => state.kana.selectedLettersHiragana);
   const selectedLettersKatakana = useAppSelector((state: RootState) => state.kana.selectedLettersKatakana);
   const selectedLetters = useAppSelector((state: RootState) => state.kana.selectedLetters);
 
   const IS_KANA_SELECTED =
-    selected.includes(KanaSection.BasicKatakana) &&
-    selected.includes(KanaSection.DakuonKatakana) &&
-    selected.includes(KanaSection.HandakuonKatakana) &&
-    selected.includes(KanaSection.YoonKatakana);
-
+    selected.base.katakana.length === LETTERS_COUNT[KanaSection.BasicKatakana] &&
+    selected.dakuon.katakana.length === LETTERS_COUNT[KanaSection.DakuonKatakana] &&
+    selected.handakuon.katakana.length === LETTERS_COUNT[KanaSection.HandakuonKatakana] &&
+    selected.yoon.katakana.length === LETTERS_COUNT[KanaSection.YoonKatakana];
+  
   const IS_HIRA_SELECTED =
-    selected.includes(KanaSection.BasicHiragana) &&
-    selected.includes(KanaSection.DakuonHiragana) &&
-    selected.includes(KanaSection.HandakuonHiragana) &&
-    selected.includes(KanaSection.YoonHiragana);
+    selected.base.hiragana.length === LETTERS_COUNT[KanaSection.BasicHiragana] &&
+    selected.dakuon.hiragana.length === LETTERS_COUNT[KanaSection.DakuonHiragana] &&
+    selected.handakuon.hiragana.length === LETTERS_COUNT[KanaSection.HandakuonHiragana] &&
+    selected.yoon.hiragana.length === LETTERS_COUNT[KanaSection.YoonHiragana];
 
-  const IS_BASIC = 
-    selected.includes(KanaSection.BasicHiragana) &&
-    selected.includes(KanaSection.BasicKatakana);
+  const IS_BASIC =
+    selected.base.hiragana.length === LETTERS_COUNT[KanaSection.BasicHiragana] &&
+    selected.base.katakana.length === LETTERS_COUNT[KanaSection.BasicKatakana];
   
   const IS_DAKUON = 
-    selected.includes(KanaSection.DakuonHiragana) &&
-    selected.includes(KanaSection.DakuonKatakana);
+    selected.dakuon.hiragana.length === LETTERS_COUNT[KanaSection.DakuonHiragana] &&
+    selected.dakuon.katakana.length === LETTERS_COUNT[KanaSection.DakuonKatakana];
   
   const IS_HANDAKUON = 
-    selected.includes(KanaSection.HandakuonHiragana) &&
-    selected.includes(KanaSection.HandakuonKatakana);
+    selected.handakuon.hiragana.length === LETTERS_COUNT[KanaSection.HandakuonHiragana] &&
+    selected.handakuon.katakana.length === LETTERS_COUNT[KanaSection.HandakuonKatakana];
   
-  const IS_YOON = 
-    selected.includes(KanaSection.YoonHiragana) &&
-    selected.includes(KanaSection.YoonKatakana);
+  const IS_YOON =
+    selected.yoon.hiragana.length === LETTERS_COUNT[KanaSection.YoonHiragana] &&
+    selected.yoon.katakana.length === LETTERS_COUNT[KanaSection.YoonKatakana];
 
-  const IS_BASIC_HIRA = selected.includes(KanaSection.BasicHiragana);
-  const IS_BASIC_KATA = selected.includes(KanaSection.BasicKatakana);
-  const IS_DAKUON_KATA = selected.includes(KanaSection.DakuonKatakana);
-  const IS_DAKUON_HIRA = selected.includes(KanaSection.DakuonHiragana);
-  const IS_HANDAKUON_KATA = selected.includes(KanaSection.HandakuonKatakana);
-  const IS_HANDAKUON_HIRA = selected.includes(KanaSection.HandakuonHiragana);
-  const IS_YOON_KATA = selected.includes(KanaSection.YoonKatakana);
-  const IS_YOON_HIRA = selected.includes(KanaSection.YoonHiragana);
+  const IS_BASIC_HIRA = selected.base.hiragana.length === LETTERS_COUNT[KanaSection.BasicHiragana];
+  const IS_DAKUON_HIRA = selected.dakuon.hiragana.length === LETTERS_COUNT[KanaSection.DakuonHiragana];
+  const IS_HANDAKUON_HIRA = selected.handakuon.hiragana.length === LETTERS_COUNT[KanaSection.HandakuonHiragana];
+  const IS_YOON_HIRA = selected.yoon.hiragana.length === LETTERS_COUNT[KanaSection.YoonHiragana];
+  
+  const IS_BASIC_KATA = selected.base.katakana.length === LETTERS_COUNT[KanaSection.BasicKatakana];
+  const IS_DAKUON_KATA = selected.dakuon.katakana.length === LETTERS_COUNT[KanaSection.DakuonKatakana];
+  const IS_HANDAKUON_KATA = selected.handakuon.katakana.length === LETTERS_COUNT[KanaSection.HandakuonKatakana];
+  const IS_YOON_KATA = selected.yoon.katakana.length === LETTERS_COUNT[KanaSection.YoonKatakana];
+  
 
   const set = (
     value:

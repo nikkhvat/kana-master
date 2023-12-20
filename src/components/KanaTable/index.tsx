@@ -71,8 +71,15 @@ interface KanaTableProps {
   kana: string;
   type: string;
   isEditMode?: boolean;
-  onPlus?: (rowIndex: number, cellIndex?: number) => void;
-  fullSelected?: boolean
+  onPlus?: (
+    type: "row" | "cell",
+    index: number,
+    alphabet: "basic" | "dakuon" | "handakuon" | "yoon"
+  ) => void;
+  selectedLetters?: {
+    katakana: Array<string>;
+    hiragana: Array<string>;
+  };
 }
 
 const KanaTable: React.FC<KanaTableProps> = ({
@@ -82,8 +89,45 @@ const KanaTable: React.FC<KanaTableProps> = ({
   type,
   isEditMode,
   onPlus,
-  fullSelected
+  selectedLetters = {
+    katakana: [],
+    hiragana: [],
+  }
 }) => {
+
+  const isActiveRow = (row: (number | ILetter)[]): boolean => {
+    let isSelected = true;
+
+    for (let i = 0; i < row.length; i++) {
+      const item = row[i];
+      if (typeof item !== "number") {
+        if (!selectedLetters[kana === "Hiragana" ? "hiragana" : "katakana"].includes(item.en)) {
+          isSelected = false;
+        }
+      }
+    }
+
+    return isSelected;
+  };
+
+  const isActiveColumn = (column: (number | ILetter)[][], index: number): boolean => {
+    let isSelected = true;
+
+    for (let i = 0; i < column.length; i++) {
+      const items = column[i];
+
+      const elem = items?.[index];
+
+      if (typeof elem !== "number") {
+        if (!selectedLetters[kana === "Hiragana" ? "hiragana" : "katakana"].includes(elem.en)) {
+          isSelected = false;
+        }
+      }
+    }
+
+    return isSelected;
+  };
+
   return (
     <Container>
       {isEditMode && data.length > 1 && (
@@ -92,12 +136,18 @@ const KanaTable: React.FC<KanaTableProps> = ({
             return (
               <Cell
                 isPlus={true}
-                isActive={fullSelected}
+                isActive={isActiveColumn(data, cellIndex)}
                 isEditMode={isEditMode}
                 isLong={data[0].length === 3}
                 key={`plus_${cellIndex}`}
                 isEmpty={cell === 0}
-                onPress={() => onPlus?.(-1, cellIndex)}
+                onPress={() =>
+                  onPlus?.(
+                    "cell",
+                    cellIndex,
+                    type as "basic" | "dakuon" | "handakuon" | "yoon"
+                  )
+                }
               >
                 <Symbol>+</Symbol>
               </Cell>
@@ -111,13 +161,17 @@ const KanaTable: React.FC<KanaTableProps> = ({
           {isEditMode && (
             <Cell
               isPlus={true}
-              isActive={fullSelected}
+              isActive={isActiveRow(row)}
               isEditMode={isEditMode}
               isLong={false}
               key={`row-${rowIndex}`}
-              onPress={() => {
-                onPlus?.(rowIndex);
-              }}
+              onPress={() =>
+                onPlus?.(
+                  "row",
+                  rowIndex,
+                  type as "basic" | "dakuon" | "handakuon" | "yoon"
+                )
+              }
             >
               <Symbol>+</Symbol>
             </Cell>
@@ -126,7 +180,9 @@ const KanaTable: React.FC<KanaTableProps> = ({
             return (
               <Cell
                 isPlus={false}
-                isActive={fullSelected}
+                isActive={selectedLetters[
+                  kana === "Hiragana" ? "hiragana" : "katakana"
+                ].includes(typeof cell !== "number" ? cell.en : "-1")}
                 isEditMode={isEditMode}
                 isLong={row.length === 3}
                 key={`${rowIndex}-${cellIndex}`}

@@ -77,6 +77,8 @@ const letters: ILetter[][] = [
   ],
 ];
 
+export const baseArray = letters.flatMap(subArray => subArray.map(letter => letter.en));
+
 export const lettersDakuon = [
   [
     { id: 46, ka: "ガ", hi: "が", en: "GA", ru: "ГА" },
@@ -94,8 +96,8 @@ export const lettersDakuon = [
   ],
   [
     { id: 56, ka: "ダ", hi: "だ", en: "DA", ru: "ДА" },
-    { id: 57, ka: "ヂ", hi: "ぢ", en: "JI", ru: "ДЗИ" },
-    { id: 58, ka: "ヅ", hi: "づ", en: "ZU", ru: "ДЗУ" },
+    { id: 57, ka: "ヂ", hi: "ぢ", en: "DJI", ru: "ДЗИ" },
+    { id: 58, ka: "ヅ", hi: "づ", en: "DZU", ru: "ДЗУ" },
     { id: 59, ka: "デ", hi: "で", en: "DE", ru: "ДЭ" },
     { id: 60, ka: "ド", hi: "ど", en: "DO", ru: "ДО" },
   ],
@@ -108,6 +110,8 @@ export const lettersDakuon = [
   ]
 ];
 
+export const dakuonArray = lettersDakuon.flatMap(subArray => subArray.map(letter => letter.en));
+
 export const lettersHandakuon = [
   [
     { id: 71, ka: "ぱ", hi: "ぱ", en: "PA", ru: "ПА" },
@@ -117,6 +121,8 @@ export const lettersHandakuon = [
     { id: 75, ka: "ぽ", hi: "ぽ", en: "PO", ru: "ПО" },
   ],
 ];
+
+export const handakuonArray = lettersHandakuon.flatMap(subArray => subArray.map(letter => letter.en));
 
 export const lettersYoon = [
   [
@@ -155,6 +161,8 @@ export const lettersYoon = [
     { id: 96, ka: "りょ", hi: "りょ", en: "ryo", ru: "ryo" },
   ],
 ];
+
+export const yoonArray = lettersYoon.flatMap(subArray => subArray.map(letter => letter.en));
 
 
 export default letters;

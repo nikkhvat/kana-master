@@ -1,8 +1,44 @@
-import { KanaSection } from "../../../constants/kana";
+import { KanaSection } from "@/constants/kana";
+import { ILetter } from "@/data/letters";
 
 export interface InitialState {
-  kanaSections: KanaSection[]
   selectedLettersHiragana: number
   selectedLettersKatakana: number
-  selectedLetters: number
+  selectedLetters: number,
+  selected: {
+    base: {
+      katakana: Array<string>,
+      hiragana: Array<string>,
+    }
+    dakuon: {
+      katakana: Array<string>,
+      hiragana: Array<string>,
+    }
+    handakuon: {
+      katakana: Array<string>,
+      hiragana: Array<string>,
+    }
+    yoon: {
+      katakana: Array<string>,
+      hiragana: Array<string>,
+    }
+  }
+}
+
+export interface toggleLetterAction {
+  type: string
+  payload: {
+    letter: ILetter,
+    alphabet: "base" | "dakuon" | "handakuon" | "yoon",
+    kana: "katakana" | "hiragana"
+  }
+}
+
+export interface toggleLettersAction {
+  type: string
+  payload: {
+    letter: ILetter[],
+    alphabet: "base" | "dakuon" | "handakuon" | "yoon",
+    kana: "katakana" | "hiragana"
+  }
 }
