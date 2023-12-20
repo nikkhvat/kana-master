@@ -1,4 +1,4 @@
-import { KanaSection, LETTERS_COUNT } from '@/constants/kana';
+import { KanaSection, LETTERS_COUNT } from "@/constants/kana";
 
 export const removeElement = <T>(array: Array<T>, element: T): Array<T> => {
   return array.filter(el => el !== element);

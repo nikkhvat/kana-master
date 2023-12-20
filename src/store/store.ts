@@ -1,7 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 
-import kanaSlice from './features/kana/slice';
-import profileSlice from './features/profile/slice';
+import kanaSlice from "./features/kana/slice";
+import profileSlice from "./features/profile/slice";
 
 export const makeStore = () => {
   return configureStore({
@@ -14,5 +14,5 @@ export const makeStore = () => {
 
 export type AppStore = ReturnType<typeof makeStore>
 
-export type RootState = ReturnType<AppStore['getState']>
-export type AppDispatch = AppStore['dispatch']
+export type RootState = ReturnType<AppStore["getState"]>
+export type AppDispatch = AppStore["dispatch"]

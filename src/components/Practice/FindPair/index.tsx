@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 
 const Container = styled.View`
   flex: 1;
@@ -56,7 +56,7 @@ const Item = styled.TouchableOpacity<ItemProp>`
   background-color: ${({ theme, isCorrect, isSelect, isError }) =>
     isCorrect ? theme.colors.second_color2
       : isError ? theme.colors.second_color1
-      : isSelect ? 'transparent' : 'transparent'};
+      : isSelect ? "transparent" : "transparent"};
   padding: 14px;
 `;
 

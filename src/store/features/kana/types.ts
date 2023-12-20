@@ -1,4 +1,4 @@
-import { KanaSection } from '../../../constants/kana';
+import { KanaSection } from "../../../constants/kana";
 
 export interface InitialState {
   kanaSections: KanaSection[]

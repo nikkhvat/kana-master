@@ -1,18 +1,18 @@
-import React from 'react';
+import React from "react";
 
-import { useTheme } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import styled from 'styled-components/native';
+import { useTheme } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import styled from "styled-components/native";
 
-import { Colors } from '@/constants/app';
-import { useAppSelector } from '@/hooks/redux';
-import learningImage from '@/resources/preview/learning.png';
-import practiceImage from '@/resources/preview/practice.png';
-import wordgameImage from '@/resources/preview/wordgame.png';
-import { RootState } from '@/store/store';
+import { Colors } from "@/constants/app";
+import { useAppSelector } from "@/hooks/redux";
+import learningImage from "@/resources/preview/learning.png";
+import practiceImage from "@/resources/preview/practice.png";
+import wordgameImage from "@/resources/preview/wordgame.png";
+import { RootState } from "@/store/store";
 
 type PreviewCard = {
-  imageSource: 'learning' | 'practice' | 'wordgame';
+  imageSource: "learning" | "practice" | "wordgame";
   onEdit?: () => void;
 };
 
@@ -40,10 +40,10 @@ const SubTitle = styled.Text`
   font-size: 13px;
 `;
 
-const Button = styled.TouchableOpacity`
+const Button = styled.Pressable`
   width: 40px;
   height: 40px;
-  background-color: ${({theme}) => theme.colors.color4};
+  background-color: ${({ theme }) => theme.colors.color4};
   border-radius: 40px;
   position: absolute;
   right: 15px;
@@ -74,9 +74,9 @@ const PreviewCard: React.FC<PreviewCard> = ({
   const selectedLettersKatakana = useAppSelector((state: RootState) => state.kana.selectedLettersKatakana);
 
   const preview =
-    imageSource === 'learning'
+    imageSource === "learning"
       ? learningImage
-      : imageSource === 'practice'
+      : imageSource === "practice"
         ? practiceImage
         : wordgameImage;
 
@@ -85,14 +85,14 @@ const PreviewCard: React.FC<PreviewCard> = ({
       <Content>
         <Title>{selectedLettersHiragana + selectedLettersKatakana}</Title>
         <SubTitle>
-          {selectedLettersHiragana ? 'Hiragana' : ' '}
+          {selectedLettersHiragana ? "Hiragana" : " "}
           {selectedLettersHiragana !== 0 && selectedLettersKatakana !== 0
-            ? ' / '
-            : ''}
-          {selectedLettersKatakana ? 'Katakana' : ' '}
+            ? " / "
+            : ""}
+          {selectedLettersKatakana ? "Katakana" : " "}
         </SubTitle>
         <Button onPress={() => onEdit?.()}>
-          <Icon name={'square-edit-outline'} size={24} color={colors.color1} />
+          <Icon name={"square-edit-outline"} size={24} color={colors.color1} />
         </Button>
       </Content>
     </Container>

@@ -1,26 +1,26 @@
-import React from 'react';
+import React from "react";
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'react-native';
-import { Appearance } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { ThemeProvider } from 'styled-components';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StatusBar } from "react-native";
+import { Appearance } from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { ThemeProvider } from "styled-components";
 
-import { Theme } from '@/constants/profile';
-import { useAppSelector } from '@/hooks/redux';
-import ChooseAlphabet from '@/screens/ChooseAlphabet';
-import DrawScreen from '@/screens/Draw/index';
-import HomeScreen from '@/screens/Home';
-import Kana from '@/screens/Kana';
-import PracticeScreen from '@/screens/Practice';
-import ResultsScreen from '@/screens/Results';
-import SettingsScreen from '@/screens/Settings/Index';
-import { RootState } from '@/store/store';
-import { darkTheme } from '@/themes/dark';
-import { lightTheme } from '@/themes/light';
-import { RootStackParamList } from '@/types/navigationTypes';
+import { Theme } from "@/constants/profile";
+import { useAppSelector } from "@/hooks/redux";
+import ChooseAlphabet from "@/screens/ChooseAlphabet";
+import DrawScreen from "@/screens/Draw/index";
+import HomeScreen from "@/screens/Home";
+import Kana from "@/screens/Kana";
+import PracticeScreen from "@/screens/Practice";
+import ResultsScreen from "@/screens/Results";
+import SettingsScreen from "@/screens/Settings/Index";
+import { RootState } from "@/store/store";
+import { darkTheme } from "@/themes/dark";
+import { lightTheme } from "@/themes/light";
+import { RootStackParamList } from "@/types/navigationTypes";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -30,14 +30,14 @@ function BottomTabNavigator() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
-          let iconName = 'home';
+          let iconName = "home";
 
-          if (route.name === 'Learning') {
-            iconName = focused ? 'school-outline' : 'school-outline';
-          } else if (route.name === 'Profile') {
-            iconName = focused ? 'account-outline' : 'account-outline';
-          } else if (route.name === 'Kana') {
-            iconName = focused ? 'syllabary-hiragana' : 'syllabary-hiragana';
+          if (route.name === "Learning") {
+            iconName = focused ? "school-outline" : "school-outline";
+          } else if (route.name === "Profile") {
+            iconName = focused ? "account-outline" : "account-outline";
+          } else if (route.name === "Kana") {
+            iconName = focused ? "syllabary-hiragana" : "syllabary-hiragana";
           }
 
           return <Icon name={iconName} size={size} color={color} />;
@@ -48,18 +48,18 @@ function BottomTabNavigator() {
         name="Learning"
         component={HomeScreen}
         options={{
-          title: 'Learning',
+          title: "Learning",
           headerTransparent: true,
-          headerTitle: '',
+          headerTitle: "",
         }}
       />
       <Tab.Screen
         name="Kana"
         component={Kana}
         options={{
-          title: 'Kana',
+          title: "Kana",
           headerTransparent: true,
-          headerTitle: '',
+          headerTitle: "",
         }}
       />
       <Tab.Screen
@@ -67,7 +67,7 @@ function BottomTabNavigator() {
         component={SettingsScreen}
         options={{
           headerTransparent: true,
-          headerTitle: '',
+          headerTitle: "",
         }}
       />
     </Tab.Navigator>
@@ -84,15 +84,15 @@ const Layout = () => {
     themeFromStore === Theme.Auto
       ? Appearance.getColorScheme()
       : themeFromStore === Theme.Dark
-        ? 'dark'
-        : 'light';
+        ? "dark"
+        : "light";
 
-  const dark = { mode: 'dark', colors: darkTheme };
-  const light = { mode: 'light', colors: lightTheme };
+  const dark = { mode: "dark", colors: darkTheme };
+  const light = { mode: "light", colors: lightTheme };
 
   const theme =
     themeFromStore === Theme.Auto
-      ? scheme === 'dark'
+      ? scheme === "dark"
         ? dark
         : light
       : themeFromStore === Theme.Dark
@@ -102,10 +102,10 @@ const Layout = () => {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar
-        barStyle={scheme === 'dark' ? 'light-content' : 'dark-content'}
+        barStyle={scheme === "dark" ? "light-content" : "dark-content"}
       />
       <NavigationContainer
-        theme={scheme === 'dark' ? { dark: true, colors: darkTheme } : { dark: false, colors: lightTheme }} >
+        theme={scheme === "dark" ? { dark: true, colors: darkTheme } : { dark: false, colors: lightTheme }} >
         <Stack.Navigator>
           <Stack.Screen
             name="Root"
@@ -115,7 +115,7 @@ const Layout = () => {
           <Stack.Screen
             name="DrawScreen"
             component={DrawScreen}
-            options={{ title: 'Start Learn' }}
+            options={{ title: "Start Learn" }}
           />
           <Stack.Screen
             name="ChooseAlphabet"
@@ -126,10 +126,10 @@ const Layout = () => {
             name="Practice"
             component={PracticeScreen}
             options={{
-              title: 'Learning',
+              title: "Learning",
               headerTransparent: true,
               gestureEnabled: false,
-              headerTitle: '',
+              headerTitle: "",
               headerBackVisible: false,
             }}
           />
@@ -137,10 +137,10 @@ const Layout = () => {
             name="Results"
             component={ResultsScreen}
             options={{
-              title: 'Results',
+              title: "Results",
               headerTransparent: true,
               gestureEnabled: false,
-              headerTitle: '',
+              headerTitle: "",
               headerBackVisible: false,
             }}
           />

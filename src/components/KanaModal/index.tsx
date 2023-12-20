@@ -1,17 +1,17 @@
-import React from 'react';
+import React from "react";
 
-import { Audio } from 'expo-av';
-import { Dimensions, Modal } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useTheme } from 'styled-components';
-import styled from 'styled-components/native';
+import { Audio } from "expo-av";
+import { Dimensions, Modal } from "react-native";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { useTheme } from "styled-components";
+import styled from "styled-components/native";
 
-import Button from '@/components/Button';
-import { Colors } from '@/constants/app';
-import { ILetter } from '@/data/letters';
-import getSound from '@/resources/sounds/index';
-import getImage from '@/resources/svgs';
-import { darkTheme } from '@/themes/dark';
+import Button from "@/components/Button";
+import { Colors } from "@/constants/app";
+import { ILetter } from "@/data/letters";
+import getSound from "@/resources/sounds/index";
+import getImage from "@/resources/svgs";
+import { darkTheme } from "@/themes/dark";
 
 const Container = styled.View`
   flex: 1;
@@ -69,9 +69,9 @@ const Buttons = styled.View`
 
 interface KanaModalProp {
   show: boolean;
-  kana: 'Hiragana' | 'Katakana';
+  kana: "Hiragana" | "Katakana";
   letter: ILetter;
-  changeKata: (val: 'Hiragana' | 'Katakana') => void;
+  changeKata: (val: "Hiragana" | "Katakana") => void;
   closeModal: () => void;
   drawSymbol: (letter: ILetter) => void;
   prevLetter: () => void;
@@ -90,11 +90,11 @@ const KanaModal: React.FC<KanaModalProp> = ({
 }) => {
   Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
 
-  const getImagePath = (key: string | undefined, theme: 'DARK' | 'LIGHT') => {
-    const screenWidth = Dimensions.get('window').width;
+  const getImagePath = (key: string | undefined, theme: "DARK" | "LIGHT") => {
+    const screenWidth = Dimensions.get("window").width;
 
-    if (theme === 'DARK') {
-      key = key?.trim() + '-DARK';
+    if (theme === "DARK") {
+      key = key?.trim() + "-DARK";
     }
 
     return getImage(key?.toUpperCase(), {
@@ -105,7 +105,7 @@ const KanaModal: React.FC<KanaModalProp> = ({
 
   const colors = useTheme().colors as Colors;
 
-  const THEME = colors?.color1 === darkTheme?.color1 ? 'DARK' : 'LIGHT';
+  const THEME = colors?.color1 === darkTheme?.color1 ? "DARK" : "LIGHT";
 
   const playSound = async (letter: ILetter) => {
     try {
@@ -133,7 +133,7 @@ const KanaModal: React.FC<KanaModalProp> = ({
         <Header>
           <Icon
             onPress={() => closeModal()}
-            name={'close'}
+            name={"close"}
             size={29}
             color={colors.color4}
           />
@@ -141,36 +141,36 @@ const KanaModal: React.FC<KanaModalProp> = ({
         <TitleContainer>
           <Title>{kana}</Title>
           <SubTitle>{letter.en.toUpperCase()}</SubTitle>
-          {getImagePath(`${kana === 'Hiragana' ? 'H' : 'K'}-${letter.en}`, THEME)}
+          {getImagePath(`${kana === "Hiragana" ? "H" : "K"}-${letter.en}`, THEME)}
         </TitleContainer>
 
         <ButtonContainer>
           <Buttons>
             <Button
               customStyles={{ flex: 1, marginTop: 0 }}
-              title={'Sound'}
+              title={"Sound"}
               onClick={() => playSound(letter)}
-              type={'inactive'}
-              image={'volume-high'}
+              type={"inactive"}
+              image={"volume-high"}
             />
             <Button
               customStyles={{ flex: 1, marginTop: 0 }}
-              title={'Draw'}
+              title={"Draw"}
               onClick={() => {
                 drawSymbol(letter);
               }}
-              type={'inactive'}
-              image={'gesture-tap-hold'}
+              type={"inactive"}
+              image={"gesture-tap-hold"}
             />
           </Buttons>
           <Buttons>
             <Button
               customStyles={{ flex: 1, marginTop: 0 }}
-              title={`${kana === 'Hiragana' ? 'Katakana' : 'Hiragana'} →`}
+              title={`${kana === "Hiragana" ? "Katakana" : "Hiragana"} →`}
               onClick={() => {
-                changeKata(kana === 'Hiragana' ? 'Katakana' : 'Hiragana');
+                changeKata(kana === "Hiragana" ? "Katakana" : "Hiragana");
               }}
-              type={'inactive'}
+              type={"inactive"}
             />
           </Buttons>
         </ButtonContainer>
@@ -178,16 +178,16 @@ const KanaModal: React.FC<KanaModalProp> = ({
         <Buttons>
           <Button
             customStyles={{ width: 50 }}
-            title={'Sound'}
-            type={'inactive'}
-            image={'chevron-left'}
+            title={"Sound"}
+            type={"inactive"}
+            image={"chevron-left"}
             onClick={() => prevLetter()}
           />
           <Button
             customStyles={{ width: 50 }}
-            title={'Draw'}
-            type={'inactive'}
-            image={'chevron-right'}
+            title={"Draw"}
+            type={"inactive"}
+            image={"chevron-right"}
             onClick={() => nextLetter()}
           />
         </Buttons>

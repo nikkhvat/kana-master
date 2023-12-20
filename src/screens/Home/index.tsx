@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { StackNavigationProp } from '@react-navigation/stack';
-import { TouchableOpacity } from 'react-native';
-import { GestureHandlerRootView, HandlerStateChangeEvent, PanGestureHandler } from 'react-native-gesture-handler';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import styled from 'styled-components/native';
+import { StackNavigationProp } from "@react-navigation/stack";
+import { TouchableOpacity } from "react-native";
+import { GestureHandlerRootView, HandlerStateChangeEvent, PanGestureHandler } from "react-native-gesture-handler";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import styled from "styled-components/native";
 
-import Learning from './Learning';
-import Practice from './Practice';
-import WordBuilding from './WordBuilding';
+import Learning from "./Learning";
+import Practice from "./Practice";
+import WordBuilding from "./WordBuilding";
 
-import { RootStackParamList } from '@/types/navigationTypes';
+import { RootStackParamList } from "@/types/navigationTypes";
 
 
 type ContainerProps = {
@@ -20,7 +20,7 @@ type ContainerProps = {
 const Container = styled.View<ContainerProps>`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
-  padding-top: ${({ paddingTop }) => paddingTop + 'px'};
+  padding-top: ${({ paddingTop }) => paddingTop + "px"};
 `;
 
 const Title = styled.Text`
@@ -65,7 +65,7 @@ const Content = styled.View`
   flex: 1;
 `;
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
 interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
@@ -81,9 +81,9 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [screen, setScreen] = useState(Screen.Learning);
 
   const screens = [
-    { title: 'Practice', val: Screen.Learning },
-    { title: 'Testing', val: Screen.Practice },
-    { title: 'Word game', val: Screen.WordBuilding },
+    { title: "Practice", val: Screen.Learning },
+    { title: "Testing", val: Screen.Practice },
+    { title: "Word game", val: Screen.WordBuilding },
   ];
 
   const insets = useSafeAreaInsets();
@@ -93,7 +93,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   ) => {
     const { translationX } = event.nativeEvent;
 
-    if (typeof translationX === 'number') {
+    if (typeof translationX === "number") {
       if (translationX > 50 && screen > Screen.Learning) {
         setScreen(screen - 1);
       } else if (translationX < -50 && screen < Screen.WordBuilding) {

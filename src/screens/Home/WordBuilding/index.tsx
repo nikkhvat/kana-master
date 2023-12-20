@@ -1,43 +1,43 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { StackNavigationProp } from '@react-navigation/stack';
-import { ScrollView, View } from 'react-native';
+import { StackNavigationProp } from "@react-navigation/stack";
+import { ScrollView, View } from "react-native";
 
-import Button from '@/components/Button';
-import CardModeView, { CardModeViewProp } from '@/components/CardModeView';
-import PreviewCard from '@/components/PreviewCard';
-import { CardMode, PracticeScreenMode, TestMode } from '@/constants/kana';
-import { RootStackParamList } from '@/types/navigationTypes';
+import Button from "@/components/Button";
+import CardModeView, { CardModeViewProp } from "@/components/CardModeView";
+import PreviewCard from "@/components/PreviewCard";
+import { CardMode, PracticeScreenMode, TestMode } from "@/constants/kana";
+import { RootStackParamList } from "@/types/navigationTypes";
 
-type WordBuildingNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+type WordBuildingNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
 interface WordBuildingProps {
   navigation: WordBuildingNavigationProp;
 }
 
 const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
-  const cardMode: CardModeViewProp['buttons'] = [
+  const cardMode: CardModeViewProp["buttons"] = [
     [
-      { title: 'Hira → Kata', key: CardMode.hiraganaToKatakana, type: 'active' },
-      { title: 'Hira → Romaji', key: CardMode.hiraganaToRomaji, type: 'inactive' },
-      { title: 'Romaji → Hira', key: CardMode.romajiToHiragana, type: 'inactive' },
+      { title: "Hira → Kata", key: CardMode.hiraganaToKatakana, type: "active" },
+      { title: "Hira → Romaji", key: CardMode.hiraganaToRomaji, type: "inactive" },
+      { title: "Romaji → Hira", key: CardMode.romajiToHiragana, type: "inactive" },
     ],
     [
-      { title: 'Kata → Hira', key: CardMode.katakanaToHiragana, type: 'inactive' },
-      { title: 'Kata → Romaji', key: CardMode.katakanaToRomaji, type: 'inactive' },
-      { title: 'Romaji → Kata', key: CardMode.romajiToKatakana, type: 'inactive' },
+      { title: "Kata → Hira", key: CardMode.katakanaToHiragana, type: "inactive" },
+      { title: "Kata → Romaji", key: CardMode.katakanaToRomaji, type: "inactive" },
+      { title: "Romaji → Kata", key: CardMode.romajiToKatakana, type: "inactive" },
     ],
   ];
 
-  const Mode: CardModeViewProp['buttons'] = [
+  const Mode: CardModeViewProp["buttons"] = [
     [
-      { title: 'Choice', key: TestMode.Choice, type: 'active' },
-      { title: 'Word building', key: TestMode.WordBuilding, type: 'inactive' },
+      { title: "Choice", key: TestMode.Choice, type: "active" },
+      { title: "Word building", key: TestMode.WordBuilding, type: "inactive" },
     ],
     [
-      { title: 'Write', key: TestMode.Write, type: 'inactive' },
-      { title: 'Find the pair', key: TestMode.FindPair, type: 'inactive' },
+      { title: "Write", key: TestMode.Write, type: "inactive" },
+      { title: "Find the pair", key: TestMode.FindPair, type: "inactive" },
     ],
   ];
 
@@ -48,13 +48,13 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
     btnArray: typeof cardMode,
     setBtnArray: (data: {
       title: string;
-      type: 'active' | 'inactive' | 'weak' | 'general';
+      type: "active" | "inactive" | "weak" | "general";
       key: string;
     }[][]) => void,
     indexGroup: number,
     indexButton: number,
-    active: 'active' | 'inactive' | 'weak' | 'general',
-    mode: 'has_one' | 'no_one'
+    active: "active" | "inactive" | "weak" | "general",
+    mode: "has_one" | "no_one"
   ) => {
     const newBtnArray = [...btnArray];
     const currentType = newBtnArray[indexGroup][indexButton].type;
@@ -67,7 +67,7 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
     );
 
     if (
-      mode === 'has_one' &&
+      mode === "has_one" &&
       currentType === active &&
       !isActivePresentInOthers
     ) {
@@ -75,7 +75,7 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
     }
 
     newBtnArray[indexGroup][indexButton].type =
-      currentType === active ? 'inactive' : active;
+      currentType === active ? "inactive" : active;
 
     setBtnArray(newBtnArray);
   };
@@ -106,11 +106,11 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
     <View>
       <ScrollView style={{ paddingHorizontal: 20 }}>
         <PreviewCard
-          imageSource={'wordgame'}
-          onEdit={() => navigation.navigate('ChooseAlphabet')}
+          imageSource={"wordgame"}
+          onEdit={() => navigation.navigate("ChooseAlphabet")}
         />
         <CardModeView
-          title={'Card mode'}
+          title={"Card mode"}
           buttons={cardModeState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
@@ -118,13 +118,13 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
               setCardModeState,
               groupIndex,
               btnIndex,
-              'active',
-              'has_one'
+              "active",
+              "has_one"
             )
           }
         />
         <CardModeView
-          title={'Mode'}
+          title={"Mode"}
           buttons={modeState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
@@ -132,25 +132,25 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
               setModeState,
               groupIndex,
               btnIndex,
-              'active',
-              'has_one'
+              "active",
+              "has_one"
             )
           }
         />
 
         <Button
           customStyles={{ marginTop: 60, marginBottom: 15 }}
-          title={'Start'}
-          type={'general'}
+          title={"Start"}
+          type={"general"}
           fontSize={17}
           onClick={() => {
             const keysCardModeState = getActiveFromArray(
               cardModeState,
-              'active'
+              "active"
             );
-            const keysModeState = getActiveFromArray(modeState, 'weak');
+            const keysModeState = getActiveFromArray(modeState, "weak");
 
-            navigation.navigate('Practice', {
+            navigation.navigate("Practice", {
               keysCardModeState,
               keysModeState,
               keysDifficultyLevelState: [],

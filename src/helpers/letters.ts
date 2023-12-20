@@ -1,4 +1,4 @@
-import { ILetter } from '@/data/letters';
+import { ILetter } from "@/data/letters";
 
 export const shuffleArray = <T>(array: Array<T>): Array<T> => {
   const arrayCopy = array.slice();
@@ -19,7 +19,7 @@ export const getRandomLetter = (letters: ILetter[][]): ILetter => {
   const flatArray = letters.flat();
 
   if (flatArray.length === 0) {
-    throw new Error('Array is empty');
+    throw new Error("Array is empty");
   }
 
   const randomIndex = Math.floor(Math.random() * flatArray.length);
@@ -52,7 +52,7 @@ export const getColumn = (rows: (number | ILetter)[][], columnId: number): ILett
     const row = rows[i];
     const item = row[columnId];
 
-    if (typeof item != 'number') {
+    if (typeof item != "number") {
       array.push(item);
     }
   }
@@ -66,7 +66,7 @@ export const getRow = (rows: (number | ILetter)[][], rowId: number): ILetter[] =
   for (let i = 0; i < rows[rowId].length; i++) {
     const item = rows[rowId][i];
 
-    if (typeof item !== 'number') {
+    if (typeof item !== "number") {
       array.push(item);
     }
   }

@@ -1,25 +1,26 @@
-import React from 'react';
+import React, { useState } from "react";
 
 
 
 
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import styled, { useTheme } from 'styled-components/native';
+import { StackNavigationProp } from "@react-navigation/stack";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import styled, { useTheme } from "styled-components/native";
 
-import Button from '@/components/Button';
-import { Colors } from '@/constants/app';
-import { Kana, KanaMode, KanaSection } from '@/constants/kana';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { setKanaSelected } from '@/store/features/kana/slice';
-import { RootState } from '@/store/store';
-import { RootStackParamList } from '@/types/navigationTypes';
+import Button from "@/components/Button";
+import ChooseAlphabetModal from "@/components/ChooseAlphabetModal";
+import { Colors } from "@/constants/app";
+import { Kana, KanaMode, KanaSection } from "@/constants/kana";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { setKanaSelected } from "@/store/features/kana/slice";
+import { RootState } from "@/store/store";
+import { RootStackParamList } from "@/types/navigationTypes";
 
 const Container = styled.View<{ paddingTop: number }>`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.color1};
-  padding-top: ${({ paddingTop }) => paddingTop + 'px'};
+  padding-top: ${({ paddingTop }) => paddingTop + "px"};
 `;
 
 const Header = styled.View`
@@ -32,10 +33,12 @@ const Header = styled.View`
   padding-top: 20px;
 `;
 
-const HeaderButton = styled.TouchableOpacity`
+const HeaderButton = styled.Pressable`
   justify-content: row;
   justify-content: center;
   align-items: center;
+  padding: 18px;
+  margin: -18px;
 `;
 
 const InfoContainer = styled.View`
@@ -142,23 +145,23 @@ const SelectionRow = styled.View`
 type SelectionButtonProp = {
   empty?: boolean;
   selected?: boolean
-  type?: 'text' | 'container'
+  type?: "text" | "container"
 };
 
-const SelectionButton = styled.TouchableOpacity<SelectionButtonProp>`
+const SelectionButton = styled.Pressable<SelectionButtonProp>`
   height: 50px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 12px;
-  border-width: ${({ empty }) => (empty ? '0px' : '1px')};
+  border-width: ${({ empty }) => (empty ? "0px" : "1px")};
   border-color: ${({ theme }) => theme.colors.color2};
   background-color: ${({ theme, selected, type }) =>
     selected
-      ? type == 'text'
+      ? type == "text"
         ? theme.colors.second_color3
         : theme.colors.second_color4
-      : 'transparent'};
+      : "transparent"};
   flex: 1;
 `;
 
@@ -168,7 +171,7 @@ const SelectionText = styled.Text<{active?: boolean}>`
   font-weight: 700;
 `;
 
-type ChooseAlphabetNavigationProp = StackNavigationProp<RootStackParamList, 'ChooseAlphabet'>;
+type ChooseAlphabetNavigationProp = StackNavigationProp<RootStackParamList, "ChooseAlphabet">;
 
 interface ChooseAlphabetProps {
   navigation: ChooseAlphabetNavigationProp;
@@ -245,13 +248,15 @@ const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
 
   const colors = useTheme().colors as Colors;
 
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
+
   return (
     <Container paddingTop={insets.top}>
       <Header>
         <HeaderButton onPress={() => navigation.goBack()}>
           <Icon name="keyboard-backspace" size={24} color={colors.color4} />
         </HeaderButton>
-        <HeaderButton>
+        <HeaderButton onPress={() => setModalVisible(true)} >
           <Icon name="square-edit-outline" size={24} color={colors.color4} />
         </HeaderButton>
       </Header>
@@ -297,10 +302,10 @@ const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
               <SelectionText active={IS_BASIC}>Basic</SelectionText>
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.BasicHiragana)} selected={IS_BASIC_HIRA}>
-              <Icon name={IS_BASIC_HIRA ? 'check' : 'close'} size={24} color={colors.color4} />
+              <Icon name={IS_BASIC_HIRA ? "check" : "close"} size={24} color={colors.color4} />
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.BasicKatakana)} selected={IS_BASIC_KATA}>
-              <Icon name={IS_BASIC_KATA ? 'check' : 'close'} size={24} color={colors.color4} />
+              <Icon name={IS_BASIC_KATA ? "check" : "close"} size={24} color={colors.color4} />
             </SelectionButton>
           </SelectionRow>
           <SelectionRow>
@@ -308,10 +313,10 @@ const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
               <SelectionText active={IS_DAKUON}>Dakuon</SelectionText>
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.DakuonHiragana)} selected={IS_DAKUON_HIRA}>
-              <Icon name={IS_DAKUON_HIRA ? 'check' : 'close'} size={24} color={colors.color4} />
+              <Icon name={IS_DAKUON_HIRA ? "check" : "close"} size={24} color={colors.color4} />
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.DakuonKatakana)} selected={IS_DAKUON_KATA}>
-              <Icon name={IS_DAKUON_KATA ? 'check' : 'close'} size={24} color={colors.color4} />
+              <Icon name={IS_DAKUON_KATA ? "check" : "close"} size={24} color={colors.color4} />
             </SelectionButton>
           </SelectionRow>
           <SelectionRow>
@@ -319,10 +324,10 @@ const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
               <SelectionText active={IS_HANDAKUON}>Handakuon</SelectionText>
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.HandakuonHiragana)} selected={IS_HANDAKUON_HIRA}>
-              <Icon name={IS_HANDAKUON_HIRA ? 'check' : 'close'} size={24} color={colors.color4} />
+              <Icon name={IS_HANDAKUON_HIRA ? "check" : "close"} size={24} color={colors.color4} />
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.HandakuonKatakana)} selected={IS_HANDAKUON_KATA}>
-              <Icon name={IS_HANDAKUON_KATA ? 'check' : 'close'} size={24} color={colors.color4} />
+              <Icon name={IS_HANDAKUON_KATA ? "check" : "close"} size={24} color={colors.color4} />
             </SelectionButton>
           </SelectionRow>
           <SelectionRow>
@@ -330,24 +335,28 @@ const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
               <SelectionText active={IS_YOON}>Yoon</SelectionText>
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.YoonHiragana)} selected={IS_YOON_HIRA}>
-              <Icon name={IS_YOON_HIRA ? 'check' : 'close'} size={24} color={colors.color4} />
+              <Icon name={IS_YOON_HIRA ? "check" : "close"} size={24} color={colors.color4} />
             </SelectionButton>
             <SelectionButton onPress={() => set(KanaSection.YoonKatakana)} selected={IS_YOON_KATA}>
-              <Icon name={IS_YOON_KATA ? 'check' : 'close'} size={24} color={colors.color4} />
+              <Icon name={IS_YOON_KATA ? "check" : "close"} size={24} color={colors.color4} />
             </SelectionButton>
           </SelectionRow>
         </SelectionContainer>
 
         <Button
           customStyles={{ marginTop: 60, marginBottom: 15 }}
-          title={'Confirm'}
-          type={'general'}
+          title={"Confirm"}
+          type={"general"}
           fontSize={17}
           onClick={() => {
             navigation.goBack();
           }}
         />
       </Scroll>
+      <ChooseAlphabetModal 
+        closeModal={() => setModalVisible(false)} 
+        show={isModalVisible} 
+        />
     </Container>
   );
 };

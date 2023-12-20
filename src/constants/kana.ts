@@ -1,52 +1,52 @@
 
 export enum CardMode {
-  hiraganaToKatakana = 'hiragana_to_katakana',
-  hiraganaToRomaji = 'hiragana_to_romaji',
-  romajiToHiragana = 'romaji_to_hiragana',
-  katakanaToHiragana = 'katakana_to_hiragana',
-  katakanaToRomaji = 'katakana_to_romaji',
-  romajiToKatakana = 'romaji_to_katakana'
+  hiraganaToKatakana = "hiragana_to_katakana",
+  hiraganaToRomaji = "hiragana_to_romaji",
+  romajiToHiragana = "romaji_to_hiragana",
+  katakanaToHiragana = "katakana_to_hiragana",
+  katakanaToRomaji = "katakana_to_romaji",
+  romajiToKatakana = "romaji_to_katakana"
 }
 
 export enum TestMode {
-  Choice = 'choice',
-  Write = 'write',
-  WordBuilding = 'word_building',
-  FindPair = 'find_pair',
+  Choice = "choice",
+  Write = "write",
+  WordBuilding = "word_building",
+  FindPair = "find_pair",
 }
 
 export enum DifficultyLevelType {
-  TimeTest = 'time_test',
-  OneAttempt = 'one_attempt',
+  TimeTest = "time_test",
+  OneAttempt = "one_attempt",
 }
 
 export enum PracticeScreenMode {
-  Testing = 'testing',
-  WordGame = 'word_game'
+  Testing = "testing",
+  WordGame = "word_game"
 }
 
 export enum Kana {
-  Hiragana = 'Hiragana',
-  Katakana = 'Katakana',
-  English = 'English'
+  Hiragana = "Hiragana",
+  Katakana = "Katakana",
+  English = "English"
 }
 
 export enum KanaSection {
-  BasicHiragana = 'BasicHiragana',
-  BasicKatakana = 'BasicKatakana',
-  DakuonHiragana = 'DakuonHiragana',
-  DakuonKatakana = 'DakuonKatakana',
-  HandakuonHiragana = 'HandakuonHiragana',
-  HandakuonKatakana = 'HandakuonKatakana',
-  YoonHiragana = 'YoonHiragana',
-  YoonKatakana = 'YoonKatakana',
+  BasicHiragana = "BasicHiragana",
+  BasicKatakana = "BasicKatakana",
+  DakuonHiragana = "DakuonHiragana",
+  DakuonKatakana = "DakuonKatakana",
+  HandakuonHiragana = "HandakuonHiragana",
+  HandakuonKatakana = "HandakuonKatakana",
+  YoonHiragana = "YoonHiragana",
+  YoonKatakana = "YoonKatakana",
 }
 
 export enum KanaMode {
-  Basic = 'Basic',
-  Dakuon = 'Dakuon',
-  Handakuon = 'Handakuon',
-  Yoon = 'Yoon',
+  Basic = "Basic",
+  Dakuon = "Dakuon",
+  Handakuon = "Handakuon",
+  Yoon = "Yoon",
 }
 
 export const LETTERS_COUNT = {
@@ -70,4 +70,4 @@ export const DAKUON_SECTIONS = [KanaSection.DakuonHiragana, KanaSection.DakuonKa
 export const HANDAKUON_SECTIONS = [KanaSection.HandakuonHiragana, KanaSection.HandakuonKatakana];
 export const YOON_SECTIONS = [KanaSection.YoonHiragana, KanaSection.YoonKatakana];
 
-export const TEST_DELAY = 0;
+export const TEST_DELAY = 100;

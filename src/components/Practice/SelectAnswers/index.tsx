@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { Text } from 'react-native';
-import styled from 'styled-components/native';
+import { Text } from "react-native";
+import styled from "styled-components/native";
 
-import { TEST_DELAY } from '@/constants/kana';
+import { TEST_DELAY } from "@/constants/kana";
 
 const AnswersContainer = styled.View`
   flex-direction: column;
@@ -15,7 +15,7 @@ const AnswersRow = styled.View`
   gap: 15px;
 `;
 
-const AnswersItem = styled.TouchableOpacity<{type: 'green' | 'red' | 'transparent'}>`
+const AnswersItem = styled.TouchableOpacity<{type: "green" | "red" | "transparent"}>`
   width: 165px;
   height: 165px;
 
@@ -23,13 +23,13 @@ const AnswersItem = styled.TouchableOpacity<{type: 'green' | 'red' | 'transparen
   align-items: center;
 
   border-width: 1px;
-  border-color: ${({ type, theme }) => type === 'green' ? '#7ABC71' : type === 'red' ? '#EF625D' : theme.colors.color2 };
-  background-color: ${({ type, theme }) => type === 'green' ? '#7ABC71' : type === 'red' ? '#EF625D' : theme.colors.color2 };
+  border-color: ${({ type, theme }) => type === "green" ? "#7ABC71" : type === "red" ? "#EF625D" : theme.colors.color2 };
+  background-color: ${({ type, theme }) => type === "green" ? "#7ABC71" : type === "red" ? "#EF625D" : theme.colors.color2 };
   border-radius: 12px;
 `;
 
-const AnswersItemText = styled.Text<{type: 'green' | 'red' | 'transparent'}>`
-  color: ${({theme, type}) => type === 'transparent' ? theme.colors.color4 : theme.colors.color5};
+const AnswersItemText = styled.Text<{type: "green" | "red" | "transparent"}>`
+  color: ${({theme, type}) => type === "transparent" ? theme.colors.color4 : theme.colors.color5};
   font-size: 22px;
 `;
 
@@ -83,9 +83,9 @@ const SelectAnswers: React.FC<SelectAnswersProp> = ({
   };
 
   const getStatus = (id: string | number) => {
-    if (errors.includes(id)) return 'red';
-    else if (corrected === id) return 'green';
-    else return 'transparent';
+    if (errors.includes(id)) return "red";
+    else if (corrected === id) return "green";
+    else return "transparent";
   };
 
   return (

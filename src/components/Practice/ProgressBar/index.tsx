@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import styled, { useTheme } from 'styled-components/native';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import styled, { useTheme } from "styled-components/native";
 
-import { Colors } from '@/constants/app';
+import { Colors } from "@/constants/app";
 
 const ProgressBarContainer = styled.View`
   width: 100%;
@@ -19,7 +19,7 @@ const ProgressBarLine = styled.View`
 `;
 
 const ProgressBarLineActive = styled.View<{progress: number}>`
-  width: ${({progress}) => progress + '%'};
+  width: ${({progress}) => progress + "%"};
   height: 4px;
   background-color: ${({theme}) => theme.colors.color4};
 `;

@@ -1,23 +1,22 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState } from "react";
 
-import { StackNavigationProp } from '@react-navigation/stack';
-import { Audio } from 'expo-av';
+import { StackNavigationProp } from "@react-navigation/stack";
+import { Audio } from "expo-av";
 import {
   View,
   ScrollView,
-} from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import styled from 'styled-components/native';
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import styled from "styled-components/native";
 
-import letters, { ILetter, lettersDakuon, lettersHandakuon, lettersYoon } from '../../data/letters';
+import letters, { ILetter, lettersDakuon, lettersHandakuon, lettersYoon } from "../../data/letters";
 
-import KanaModal from '@/components/KanaModal';
-import KanaTable from '@/components/KanaTable';
-import { RootStackParamList } from '@/types/navigationTypes';
+import KanaModal from "@/components/KanaModal";
+import KanaTable from "@/components/KanaTable";
+import Switch from "@/components/Switch";
+import { RootStackParamList } from "@/types/navigationTypes";
 
-
-
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
 interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
@@ -26,7 +25,7 @@ interface HomeScreenProps {
 const Container = styled.View<{ paddingTop: number }>`
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.color1};
-  padding-top: ${({ paddingTop }) => paddingTop + 'px'};
+  padding-top: ${({ paddingTop }) => paddingTop + "px"};
 `;
 
 const Title = styled.Text`
@@ -35,38 +34,6 @@ const Title = styled.Text`
   margin-left: 20px;
   margin-top: 20px;
   margin-bottom: 10px;
-  color: ${({ theme }) => theme.colors.color4};
-`;
-
-const Content = styled.View`
-  padding-left: 20px;
-  padding-right: 20px;
-`;
-
-const Tabs = styled.View`
-  padding: 2px;
-  flex-direction: row;
-  width: 100%;
-  background-color: ${({ theme }) => theme.colors.second_color4};
-  border-radius: 12px;
-  margin-top: 8px;
-`;
-
-const Tab = styled.TouchableOpacity<{ active: boolean }>`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  height: 46px;
-  border-radius: 10px;
-  background-color: ${({ theme, active }) =>
-    active
-      ? theme.colors.color1
-      : 'transparent'};
-`;
-
-const TabText = styled.Text`
-  font-size: 15px;
-  font-weight: 400;
   color: ${({ theme }) => theme.colors.color4};
 `;
 
@@ -89,18 +56,18 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
 
   const insets = useSafeAreaInsets();
-  const [activeTab, setActiveTab] = useState<'Hiragana' | 'Katakana'>('Hiragana');
+  const [activeTab, setActiveTab] = useState<"Hiragana" | "Katakana">("Hiragana");
 
   const rows = useMemo(
     () =>
       letters.map((item) =>
-        item[0].en !== 'WA' && item[0].en !== 'YA' && item[0].en !== 'N'
+        item[0].en !== "WA" && item[0].en !== "YA" && item[0].en !== "N"
           ? item
-          : item[0].en === 'WA'
+          : item[0].en === "WA"
             ? [item[0], 0, 0, 0, item[1]]
-            : item[0].en === 'N'
+            : item[0].en === "N"
               ? [0, 0, item[0], 0, 0]
-              : [(item[0], 0, item[1], 0, item[2])]
+              : [item[0], 0, item[1], 0, item[2]]
       ),
     []
   );
@@ -112,11 +79,11 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const closeModal = () => setModalVisible(null);  
 
-  const list = ['basic', 'dokuon', 'handakuon', 'yoon'];
+  const list = ["basic", "dokuon", "handakuon", "yoon"];
   const listLetters = [rows, rowsDokuon, rowsHandakuon, rowsYoon];
 
   function isLetter(item: ILetter | number) {
-    return typeof item === 'object';
+    return typeof item === "object";
   }
 
   function findNext(isModalVisible: null | [(ILetter | number), number, number, string]): [(ILetter | number), number, number, string] | null {
@@ -192,22 +159,27 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   return (
     <Container paddingTop={insets.top}>
       <Title>Kana</Title>
-      <Content>
+      {/* <Content>
         <Tabs>
           <Tab
-            active={activeTab === 'Hiragana'}
-            onPress={() => setActiveTab('Hiragana')}
+            active={activeTab === "Hiragana"}
+            onPress={() => setActiveTab("Hiragana")}
           >
             <TabText>Hiragana</TabText>
           </Tab>
           <Tab
-            active={activeTab === 'Katakana'}
-            onPress={() => setActiveTab('Katakana')}
+            active={activeTab === "Katakana"}
+            onPress={() => setActiveTab("Katakana")}
           >
             <TabText>Katakana</TabText>
           </Tab>
         </Tabs>
-      </Content>
+      </Content> */}
+      <Switch
+        activeTab={activeTab}
+        setActiveTab={(val) => setActiveTab(val as "Hiragana" | "Katakana")}
+        options={["Hiragana", "Katakana"]}
+      />
       <ScrollView>
         <NameContainer>
           <Name>Basic</Name>
@@ -247,7 +219,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
         />
         <View style={{ marginBottom: 120 }}></View>
       </ScrollView>
-      {isModalVisible !== null && typeof isModalVisible[0] !== 'number' && (
+      {isModalVisible !== null && typeof isModalVisible[0] !== "number" && (
         <KanaModal
           show={isModalVisible === null ? false : true}
           kana={activeTab}

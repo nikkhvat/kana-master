@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import styled from 'styled-components/native';
+import { RouteProp } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import styled from "styled-components/native";
 
-import CircleProgress from '@/components/CircleProgress';
-import { RootStackParamList } from '@/types/navigationTypes';
+import CircleProgress from "@/components/CircleProgress";
+import { RootStackParamList } from "@/types/navigationTypes";
 
-type LearnResultsNavigationProp = StackNavigationProp<RootStackParamList, 'Results'>;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, 'Results'>;
+type LearnResultsNavigationProp = StackNavigationProp<RootStackParamList, "Results">;
+type LearnScreenRouteProp = RouteProp<RootStackParamList, "Results">;
 
 interface LearnResultsScreenProps {
   route: LearnScreenRouteProp;
@@ -19,7 +19,7 @@ interface LearnResultsScreenProps {
 const Container = styled.View<{ paddingTop: number }>`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.color1};
-  padding-top: ${({ paddingTop }) => paddingTop + 'px'};
+  padding-top: ${({ paddingTop }) => paddingTop + "px"};
   `;
 
 const Scroll = styled.ScrollView`
@@ -149,7 +149,7 @@ function ResultsScreen({ route, navigation }: LearnResultsScreenProps) {
   const insets = useSafeAreaInsets();
 
     const home = () => {
-      navigation.navigate('Root');
+      navigation.navigate("Root");
     };
 
   return (
@@ -177,7 +177,7 @@ function ResultsScreen({ route, navigation }: LearnResultsScreenProps) {
 
         <DetailsCard>
           <DetailsCardTitle>Alphabet:</DetailsCardTitle>
-          <DetailsCardValue>{stats.alphabets.join(', ')}</DetailsCardValue>
+          <DetailsCardValue>{stats.alphabets.join(", ")}</DetailsCardValue>
         </DetailsCard>
 
         <DetailsCard>
@@ -196,7 +196,7 @@ function ResultsScreen({ route, navigation }: LearnResultsScreenProps) {
 
         {stats.incorrectAnswers.length !== 0 && <DetailsCard>
           <DetailsCardTitle>Incorrect answers:</DetailsCardTitle>
-          <DetailsCardValue>{stats.incorrectAnswers.join(', ')}</DetailsCardValue>
+          <DetailsCardValue>{stats.incorrectAnswers.join(", ")}</DetailsCardValue>
         </DetailsCard>}
 
         <DoneButton onPress={home}>

@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Provider } from 'react-redux';
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
 
-import Layout from '@/layout';
-import { makeStore } from '@/store/store';
+import Layout from "@/layout";
+import { makeStore } from "@/store/store";
 
 
 const App = () => {

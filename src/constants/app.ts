@@ -1,3 +1,3 @@
-import { lightTheme } from '@/themes/light';
+import { lightTheme } from "@/themes/light";
 
 export type Colors = typeof lightTheme;

@@ -1,20 +1,20 @@
-import React from 'react';
+import React from "react";
 
-import { View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import styled from 'styled-components/native';
+import { View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import styled from "styled-components/native";
 
-import Button from '@/components/Button';
-import { Theme } from '@/constants/profile';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { setTheme } from '@/store/features/profile/slice';
-import { RootState } from '@/store/store';
+import Button from "@/components/Button";
+import { Theme } from "@/constants/profile";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { setTheme } from "@/store/features/profile/slice";
+import { RootState } from "@/store/store";
 
 const Container = styled.View<{paddingTop: number}>`
   flex: 1;
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.color1};
-  padding-top: ${({ paddingTop }) => paddingTop + 'px'};
+  padding-top: ${({ paddingTop }) => paddingTop + "px"};
 `;
 
 const Title = styled.Text`
@@ -60,9 +60,9 @@ const Settings: React.FC = () => {
 
       <Button
         customStyles={{ marginTop: 0 }}
-        title={'View statistics →'}
+        title={"View statistics →"}
         onClick={() => {}}
-        type={'inactive'}
+        type={"inactive"}
       />
 
       <SectionTitle>Theme</SectionTitle>
@@ -70,23 +70,23 @@ const Settings: React.FC = () => {
       <SectionButtons>
         <Button
           customStyles={{ marginTop: 15, flex: 1}}
-          title={'Light'}
+          title={"Light"}
           onClick={() => changeTheme(Theme.Light)}
-          type={theme === Theme.Light ? 'general' : 'inactive'}
+          type={theme === Theme.Light ? "general" : "inactive"}
         />
         <Button
           customStyles={{ marginTop: 15, flex: 1}}
-          title={'Dark'}
+          title={"Dark"}
           onClick={() => changeTheme(Theme.Dark)}
-          type={theme === Theme.Dark ? 'general' : 'inactive'}
+          type={theme === Theme.Dark ? "general" : "inactive"}
         />
       </SectionButtons>
       <SectionButtons>
         <Button
           customStyles={{ flex: 1 }}
-          title={'Auto'}
+          title={"Auto"}
           onClick={() => changeTheme(Theme.Auto)}
-          type={theme === Theme.Auto ? 'general' : 'inactive'}
+          type={theme === Theme.Auto ? "general" : "inactive"}
         />
         <View style={{flex: 1}} ></View>
       </SectionButtons>
@@ -96,23 +96,23 @@ const Settings: React.FC = () => {
       <SectionButtons>
         <Button
           customStyles={{ marginTop: 15, flex: 1}}
-          title={'Русский'}
+          title={"Русский"}
           onClick={() => {}}
-          type={'general'}
+          type={"general"}
         />
         <Button
           customStyles={{ marginTop: 15, flex: 1}}
-          title={'English'}
+          title={"English"}
           onClick={() => {}}
-          type={'inactive'}
+          type={"inactive"}
         />
       </SectionButtons>
       <SectionButtons>
         <Button
           customStyles={{ flex: 1 }}
-          title={'Español'}
+          title={"Español"}
           onClick={() => {}}
-          type={'inactive'}
+          type={"inactive"}
         />
         <View style={{flex: 1}} ></View>
       </SectionButtons>

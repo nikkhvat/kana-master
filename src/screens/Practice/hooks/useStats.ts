@@ -1,6 +1,6 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from "react";
 
-import { CardMode, Kana } from '@/constants/kana';
+import { CardMode, Kana } from "@/constants/kana";
 
 interface AnswerStats {
   time: number;

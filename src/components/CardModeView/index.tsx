@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 
-import Button from '@/components/Button';
+import Button from "@/components/Button";
 
 
 export type CardModeViewProp = {
   title: string;
   buttons: {
     title: string;
-    type: 'active' | 'inactive' | 'weak' | 'general';
+    type: "active" | "inactive" | "weak" | "general";
     key: string;
   }[][];
   onButtonClick?: (column: number, index: number) => void

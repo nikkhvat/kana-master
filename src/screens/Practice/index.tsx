@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import * as Haptics from 'expo-haptics';
-import { useKeepAwake } from 'expo-keep-awake';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import styled from 'styled-components/native';
+import { RouteProp } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import * as Haptics from "expo-haptics";
+import { useKeepAwake } from "expo-keep-awake";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import styled from "styled-components/native";
 
-import useStats from './hooks/useStats';
+import useStats from "./hooks/useStats";
 
-import FindPair from '@/components/Practice/FindPair';
-import ProgressBar from '@/components/Practice/ProgressBar';
-import SelectAnswers from '@/components/Practice/SelectAnswers';
-import ShowSymbol from '@/components/Practice/ShowSymbol';
-import Timer from '@/components/Practice/Timer';
-import { CardMode, DifficultyLevelType, Kana, PracticeScreenMode } from '@/constants/kana';
-import letters, { ILetter } from '@/data/letters';
-import { generateRandomLetters, shuffleArray } from '@/helpers/letters';
-import { RootStackParamList } from '@/types/navigationTypes';
+import FindPair from "@/components/Practice/FindPair";
+import ProgressBar from "@/components/Practice/ProgressBar";
+import SelectAnswers from "@/components/Practice/SelectAnswers";
+import ShowSymbol from "@/components/Practice/ShowSymbol";
+import Timer from "@/components/Practice/Timer";
+import { CardMode, DifficultyLevelType, Kana, PracticeScreenMode } from "@/constants/kana";
+import letters, { ILetter } from "@/data/letters";
+import { generateRandomLetters, shuffleArray } from "@/helpers/letters";
+import { RootStackParamList } from "@/types/navigationTypes";
 
 
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Practice'>;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, 'Practice'>;
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Practice">;
+type LearnScreenRouteProp = RouteProp<RootStackParamList, "Practice">;
 
 interface LearnScreenProps {
   route: LearnScreenRouteProp
@@ -33,7 +33,7 @@ const Container = styled.View<{paddingTop: number }>`
   flex: 1;
 
   padding: 20px;
-  padding-top: ${({ paddingTop }) => (paddingTop + 20) + 'px'};
+  padding-top: ${({ paddingTop }) => (paddingTop + 20) + "px"};
   background-color: ${({ theme }) => theme.colors.color1};
   justify-content: space-between;
   align-items: center;
@@ -155,7 +155,7 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
 
     if (index === questions.length - 1) {
       const finalStats = stats.getStats();
-      navigation.navigate('Results', { stats: finalStats });
+      navigation.navigate("Results", { stats: finalStats });
     } else {
       setQuestionIndex((prev) => prev + 1);
     }
@@ -174,18 +174,18 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
 
       {mode == PracticeScreenMode.WordGame && <FindPair
         pairs={[
-          [{ title: 'か', id: 'か' },{ title: 'う (2)', id: '2う' }],
-          [{ title: 'う', id: 'う' },{ title: 'か (2)', id: '2か' }],
-          [{ title: 'け', id: 'け' },{ title: 'け (2)', id: '2け' }],
-          [{ title: 'こ', id: 'こ' },{ title: 'こ (2)', id: '2こ' }],
+          [{ title: "か", id: "か" },{ title: "う (2)", id: "2う" }],
+          [{ title: "う", id: "う" },{ title: "か (2)", id: "2か" }],
+          [{ title: "け", id: "け" },{ title: "け (2)", id: "2け" }],
+          [{ title: "こ", id: "こ" },{ title: "こ (2)", id: "2こ" }],
         ]}
         answers={[
-          ['か', '2か'],
-          ['う', '2う'],
-          ['け', '2け'],
-          ['こ', '2こ'],
+          ["か", "2か"],
+          ["う", "2う"],
+          ["け", "2け"],
+          ["こ", "2こ"],
         ]}
-        title={'Сопоставь хирагану с романдзи.'}
+        title={"Сопоставь хирагану с романдзи."}
       />}
 
       {questions.length > 0 && mode == PracticeScreenMode.Testing && (

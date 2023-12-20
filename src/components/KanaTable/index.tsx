@@ -1,36 +1,53 @@
-import React from 'react';
+import React from "react";
 
-import styled from 'styled-components/native';
+import styled from "styled-components/native";
 
-import { ILetter } from '@/data/letters';
+import { ILetter } from "@/data/letters";
 
 const Container = styled.View`
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 20px;
   margin-bottom: 30px;
-  gap: 10px;
+  gap: 9px;
 `;
 
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 9px;
+`;
+
+const RowButtons = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 9px;
 `;
 
 type CellProp = {
-  isEmpty: boolean;
-  isLong: boolean
+  isEmpty?: boolean;
+  isLong: boolean,
+  isEditMode: boolean | undefined
+  isActive: boolean | undefined
+  isPlus: boolean
 };
 
 const Cell = styled.TouchableOpacity<CellProp>`
-  padding: 8px;
   border-radius: 12px;
-  border-width: ${({ isEmpty }) => (isEmpty ? 0 : '1px')};
+  border-width: ${({ isEmpty }) => (isEmpty ? 0 : "1px")};
   border-color: ${({ theme, isEmpty }) =>
-    isEmpty ? 'transparent' : theme.colors.color2};
-  width: ${({ isLong }) => isLong ? '105px' : '60px'};
-  height: 60px;
+    isEmpty ? "transparent" : theme.colors.color2};
+  width: ${({ isLong, isEditMode }) =>
+    isLong ? (isEditMode ? "89px" : "105px") : isEditMode ? "50px" : "60px"};
+  height: ${({ isEditMode }) => (isEditMode ? "50px" : "60px")};
+  background-color: ${({ theme, isPlus, isActive, isEmpty }) =>
+    !isActive || isEmpty
+      ? "transparent"
+      : isPlus
+        ? theme.colors.second_color3
+        : theme.colors.second_color4};
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -53,29 +70,79 @@ interface KanaTableProps {
   ) => void;
   kana: string;
   type: string;
+  isEditMode?: boolean;
+  onPlus?: (rowIndex: number, cellIndex?: number) => void;
+  fullSelected?: boolean
 }
 
-const KanaTable: React.FC<KanaTableProps> = ({ data, kana, onClick, type }) => {
+const KanaTable: React.FC<KanaTableProps> = ({
+  data,
+  kana,
+  onClick,
+  type,
+  isEditMode,
+  onPlus,
+  fullSelected
+}) => {
   return (
     <Container>
+      {isEditMode && data.length > 1 && (
+        <RowButtons>
+          {data[0].map((cell, cellIndex) => {
+            return (
+              <Cell
+                isPlus={true}
+                isActive={fullSelected}
+                isEditMode={isEditMode}
+                isLong={data[0].length === 3}
+                key={`plus_${cellIndex}`}
+                isEmpty={cell === 0}
+                onPress={() => onPlus?.(-1, cellIndex)}
+              >
+                <Symbol>+</Symbol>
+              </Cell>
+            );
+          })}
+        </RowButtons>
+      )}
+
       {data.map((row, rowIndex) => (
         <Row key={rowIndex}>
+          {isEditMode && (
+            <Cell
+              isPlus={true}
+              isActive={fullSelected}
+              isEditMode={isEditMode}
+              isLong={false}
+              key={`row-${rowIndex}`}
+              onPress={() => {
+                onPlus?.(rowIndex);
+              }}
+            >
+              <Symbol>+</Symbol>
+            </Cell>
+          )}
           {row.map((cell, cellIndex) => {
             return (
               <Cell
+                isPlus={false}
+                isActive={fullSelected}
+                isEditMode={isEditMode}
                 isLong={row.length === 3}
                 key={`${rowIndex}-${cellIndex}`}
                 isEmpty={cell === 0}
                 onPress={() => {
-                  if (typeof cell !== 'number')
+                  if (typeof cell !== "number")
                     onClick?.([cell, rowIndex, cellIndex, type]);
                 }}
               >
                 <Symbol>
-                  {typeof cell !== 'number' &&
-                    cell?.[kana === 'Hiragana' ? 'hi' : 'ka']}
+                  {typeof cell !== "number" &&
+                    cell?.[kana === "Hiragana" ? "hi" : "ka"]}
                 </Symbol>
-                <SubText>{typeof cell !== 'number' && cell?.en.toUpperCase()}</SubText>
+                <SubText>
+                  {typeof cell !== "number" && cell?.en.toUpperCase()}
+                </SubText>
               </Cell>
             );
           })}
