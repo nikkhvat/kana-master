@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 
 import styled from "styled-components/native";
 
-import { ILetter } from "@/data/letters";
+import { Alphabet } from "@/constants/kana";
+import { ILetter, lettersDakuon, lettersHandakuon, lettersWithSpaces, lettersYoon } from "@/data/letters";
+import { getLettersWithStatuses } from "@/helpers/kana";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { toggleLetter, toggleSome } from "@/store/features/kana/slice";
+import { RootState } from "@/store/store";
 
 const Container = styled.View`
   padding-left: 20px;
@@ -63,91 +68,124 @@ const SubText = styled.Text`
   color: ${({ theme }) => theme.colors.color4};
 `;
 
+
 interface KanaTableProps {
-  data: (number | ILetter)[][];
-  onClick?: (
-    data: [cell: ILetter, rowIndex: number, cellIndex: number, type: string]
-  ) => void;
-  kana: string;
-  type: string;
+  kana: "hiragana" | "katakana";
+  type: Alphabet;
   isEditMode?: boolean;
-  onPlus?: (
-    type: "row" | "cell",
-    index: number,
-    alphabet: "basic" | "dakuon" | "handakuon" | "yoon"
-  ) => void;
-  selectedLetters?: {
-    katakana: Array<string>;
-    hiragana: Array<string>;
-  };
+  onClick?: (val: [(ILetter | number), number, number, string]) => void
 }
 
 const KanaTable: React.FC<KanaTableProps> = ({
-  data,
   kana,
-  onClick,
   type,
   isEditMode,
-  onPlus,
-  selectedLetters = {
-    katakana: [],
-    hiragana: [],
-  }
+  onClick = (val) => {},
 }) => {
+  const dispatch = useAppDispatch();
 
-  const isActiveRow = (row: (number | ILetter)[]): boolean => {
-    let isSelected = true;
+  const getData = useCallback((type: Alphabet) => {
+    if (type === "base") return lettersWithSpaces;
+    else if (type === "dakuon") return lettersDakuon;
+    else if (type === "handakuon") return lettersHandakuon;
+    else if (type === "yoon") return lettersYoon;
+  }, []);
 
-    for (let i = 0; i < row.length; i++) {
-      const item = row[i];
-      if (typeof item !== "number") {
-        if (!selectedLetters[kana === "Hiragana" ? "hiragana" : "katakana"].includes(item.en)) {
-          isSelected = false;
-        }
-      }
-    }
+  const selectedLetters = useAppSelector(
+    (state: RootState) => state.kana.selected[type][kana]
+  );
+  const data = useMemo(() => getData(type), [getData, type]);
 
-    return isSelected;
-  };
+  const onToggleLetter = useCallback(
+    (letter: ILetter, alphabet: "base" | "dakuon" | "handakuon" | "yoon") => {
+      dispatch(
+        toggleLetter({
+          letter: letter,
+          alphabet,
+          kana: kana,
+        })
+      );
+    },
+    [dispatch, kana]
+  );
 
-  const isActiveColumn = (column: (number | ILetter)[][], index: number): boolean => {
-    let isSelected = true;
+  const onPress = useCallback(
+    (
+      val: [cell: ILetter, rowIndex: number, cellIndex: number, type: string]
+    ) => {
+      onToggleLetter(
+        val[0],
+        val[3] === "basic"
+          ? "base"
+          : (val[3] as "base" | "dakuon" | "handakuon" | "yoon")
+      );
+    },
+    [onToggleLetter]
+  );
 
-    for (let i = 0; i < column.length; i++) {
-      const items = column[i];
+  const onToggleSome = useCallback(
+    (
+      letters: ILetter[],
+      alphabet: "base" | "dakuon" | "handakuon" | "yoon"
+    ) => {
+      dispatch(
+        toggleSome({
+          letter: letters,
+          alphabet,
+          kana: kana,
+        })
+      );
+    },
+    [dispatch, kana]
+  );
 
-      const elem = items?.[index];
+  const onPlus = useCallback(
+    (type: "row" | "cell", index: number, alphabet: Alphabet) => {
+      const dataMap = {
+        base: lettersWithSpaces,
+        dakuon: lettersDakuon,
+        handakuon: lettersHandakuon,
+        yoon: lettersYoon,
+      };
 
-      if (typeof elem !== "number") {
-        if (!selectedLetters[kana === "Hiragana" ? "hiragana" : "katakana"].includes(elem.en)) {
-          isSelected = false;
-        }
-      }
-    }
+      const data = dataMap[alphabet] || [];
 
-    return isSelected;
-  };
+      const isILetter = (element: number | ILetter): element is ILetter => {
+        return typeof element === "object";
+      };
+
+      const letters: ILetter[] =
+        type === "row"
+          ? (data[index].filter(isILetter) as ILetter[])
+          : (data.flatMap((row) =>
+              isILetter(row[index]) ? [row[index]] : []
+            ) as ILetter[]);
+
+      onToggleSome(letters, alphabet);
+    },
+    [onToggleSome]
+  );
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const letters = useMemo(
+    () => getLettersWithStatuses(data, selectedLetters),
+    [data, selectedLetters]
+  );
 
   return (
     <Container>
-      {isEditMode && data.length > 1 && (
+      {isEditMode && letters.length > 1 && (
         <RowButtons>
-          {data[0].map((cell, cellIndex) => {
+          {letters[0].items.map((cell, cellIndex) => {
             return (
               <Cell
                 isPlus={true}
-                isActive={isActiveColumn(data, cellIndex)}
+                isActive={cell.active}
                 isEditMode={isEditMode}
-                isLong={data[0].length === 3}
+                isLong={letters[0].items.length === 3}
                 key={`plus_${cellIndex}`}
-                isEmpty={cell === 0}
-                onPress={() =>
-                  onPlus?.(
-                    "cell",
-                    cellIndex,
-                    type as "basic" | "dakuon" | "handakuon" | "yoon"
-                  )
-                }
+                isEmpty={cell.data === 0}
+                onPress={() => onPlus?.("cell", cellIndex, type)}
               >
                 <Symbol>+</Symbol>
               </Cell>
@@ -156,48 +194,44 @@ const KanaTable: React.FC<KanaTableProps> = ({
         </RowButtons>
       )}
 
-      {data.map((row, rowIndex) => (
+      {letters.map((row, rowIndex) => (
         <Row key={rowIndex}>
           {isEditMode && (
             <Cell
               isPlus={true}
-              isActive={isActiveRow(row)}
+              isActive={row.activeInRow}
               isEditMode={isEditMode}
               isLong={false}
               key={`row-${rowIndex}`}
-              onPress={() =>
-                onPlus?.(
-                  "row",
-                  rowIndex,
-                  type as "basic" | "dakuon" | "handakuon" | "yoon"
-                )
-              }
+              onPress={() => onPlus?.("row", rowIndex, type)}
             >
               <Symbol>+</Symbol>
             </Cell>
           )}
-          {row.map((cell, cellIndex) => {
+          {row.items.map((cell, cellIndex) => {
             return (
               <Cell
                 isPlus={false}
-                isActive={selectedLetters[
-                  kana === "Hiragana" ? "hiragana" : "katakana"
-                ].includes(typeof cell !== "number" ? cell.en : "-1")}
+                isActive={typeof cell !== "number" && cell.active && isEditMode}
                 isEditMode={isEditMode}
-                isLong={row.length === 3}
+                isLong={row.items.length === 3}
                 key={`${rowIndex}-${cellIndex}`}
-                isEmpty={cell === 0}
+                isEmpty={cell.data === 0}
                 onPress={() => {
-                  if (typeof cell !== "number")
-                    onClick?.([cell, rowIndex, cellIndex, type]);
+                  if (typeof cell.data !== "number")
+                    if (isEditMode) {
+                      onPress?.([cell.data, rowIndex, cellIndex, type]);
+                    } else {
+                      onClick?.([cell.data, rowIndex, cellIndex, type]);
+                    }
                 }}
               >
                 <Symbol>
-                  {typeof cell !== "number" &&
-                    cell?.[kana === "Hiragana" ? "hi" : "ka"]}
+                  {typeof cell.data !== "number" &&
+                    cell.data[kana === "hiragana" ? "hi" : "ka"]}
                 </Symbol>
                 <SubText>
-                  {typeof cell !== "number" && cell?.en.toUpperCase()}
+                  {typeof cell.data !== "number" && cell.data.en.toUpperCase()}
                 </SubText>
               </Cell>
             );

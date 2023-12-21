@@ -77,6 +77,15 @@ const letters: ILetter[][] = [
   ],
 ];
 
+export const lettersWithSpaces = letters.map((item) =>
+  item[0].en !== "WA" && item[0].en !== "YA" && item[0].en !== "N"
+    ? item
+    : item[0].en === "WA"
+      ? [item[0], 0, 0, 0, item[1]]
+      : item[0].en === "N"
+        ? [0, 0, item[0], 0, 0]
+        : [item[0], 0, item[1], 0, item[2]]);
+
 export const baseArray = letters.flatMap(subArray => subArray.map(letter => letter.en));
 
 export const lettersDakuon = [

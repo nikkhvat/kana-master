@@ -56,7 +56,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
 
   const insets = useSafeAreaInsets();
-  const [activeTab, setActiveTab] = useState<"Hiragana" | "Katakana">("Hiragana");
+  const [activeTab, setActiveTab] = useState<"hiragana" | "katakana">("hiragana");
 
   const rows = useMemo(
     () =>
@@ -71,7 +71,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
       ),
     []
   );
-  const rowsDokuon = useMemo(() => lettersDakuon.map((item) => item), []);
+  const rowsDakuon = useMemo(() => lettersDakuon.map((item) => item), []);
   const rowsHandakuon = useMemo(() => lettersHandakuon.map((item) => item), []);
   const rowsYoon = useMemo(() => lettersYoon.map((item) => item), []);
 
@@ -79,8 +79,8 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const closeModal = () => setModalVisible(null);  
 
-  const list = ["basic", "dokuon", "handakuon", "yoon"];
-  const listLetters = [rows, rowsDokuon, rowsHandakuon, rowsYoon];
+  const list = ["basic", "dakuon", "handakuon", "yoon"];
+  const listLetters = [rows, rowsDakuon, rowsHandakuon, rowsYoon];
 
   function isLetter(item: ILetter | number) {
     return typeof item === "object";
@@ -131,7 +131,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
       !isLetter(listLetters[listIndex][rowIndex][colIndex]) &&
       rowIndex >= 0
     );
-
+    
     return [
       listLetters[listIndex][rowIndex][colIndex],
       rowIndex,
@@ -159,64 +159,28 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   return (
     <Container paddingTop={insets.top}>
       <Title>Kana</Title>
-      {/* <Content>
-        <Tabs>
-          <Tab
-            active={activeTab === "Hiragana"}
-            onPress={() => setActiveTab("Hiragana")}
-          >
-            <TabText>Hiragana</TabText>
-          </Tab>
-          <Tab
-            active={activeTab === "Katakana"}
-            onPress={() => setActiveTab("Katakana")}
-          >
-            <TabText>Katakana</TabText>
-          </Tab>
-        </Tabs>
-      </Content> */}
       <Switch
         activeTab={activeTab}
-        setActiveTab={(val) => setActiveTab(val as "Hiragana" | "Katakana")}
-        options={["Hiragana", "Katakana"]}
+        setActiveTab={(val) => setActiveTab(val as "hiragana" | "katakana")}
+        options={["hiragana", "katakana"]}
       />
       <ScrollView>
         <NameContainer>
           <Name>Basic</Name>
         </NameContainer>
-        <KanaTable
-          type="basic"
-          data={rows}
-          kana={activeTab}
-          onClick={setModalVisible}
-        />
+        <KanaTable type="base" kana={activeTab} onClick={setModalVisible} />
         <NameContainer>
           <Name>Dakuon</Name>
         </NameContainer>
-        <KanaTable
-          type="dokuon"
-          data={rowsDokuon}
-          kana={activeTab}
-          onClick={setModalVisible}
-        />
+        <KanaTable type="dakuon" kana={activeTab} onClick={setModalVisible} />
         <NameContainer>
           <Name>Handakuon</Name>
         </NameContainer>
-        <KanaTable
-          type="handakuon"
-          data={rowsHandakuon}
-          kana={activeTab}
-          onClick={setModalVisible}
-        />
+        <KanaTable type="handakuon" kana={activeTab} onClick={setModalVisible} />
         <NameContainer>
           <Name>Yoon</Name>
         </NameContainer>
-        <KanaTable
-          type="yoon"
-          data={rowsYoon}
-          kana={activeTab}
-          onClick={setModalVisible}
-        />
+        <KanaTable type="yoon" kana={activeTab} onClick={setModalVisible} />
         <View style={{ marginBottom: 120 }}></View>
       </ScrollView>
       {isModalVisible !== null && typeof isModalVisible[0] !== "number" && (

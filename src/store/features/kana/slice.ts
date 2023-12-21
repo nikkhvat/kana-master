@@ -17,6 +17,21 @@ const initialState: InitialState = {
   }
 };
 
+function toggleLetterInArray(array: string[], letter: string) {
+  const index = array.indexOf(letter);
+  return index !== -1 ? array.filter(item => item !== letter) : [...array, letter];
+}
+
+function updateSelectedLetters(state: InitialState) {
+  state.selectedLettersHiragana = Object.values(state.selected).reduce(
+    (sum, current) => sum + current.hiragana.length, 0
+  );
+  state.selectedLettersKatakana = Object.values(state.selected).reduce(
+    (sum, current) => sum + current.katakana.length, 0
+  );
+  state.selectedLetters = state.selectedLettersHiragana + state.selectedLettersKatakana;
+}
+
 export const kanaSlice = createSlice({
   name: "kana",
   initialState,
@@ -28,61 +43,39 @@ export const kanaSlice = createSlice({
         handakuon: { katakana: [], hiragana: [] },
         yoon: { katakana: [], hiragana: [] },
       };
-      state.selectedLettersHiragana = 0;
-      state.selectedLettersKatakana = 0;
-      state.selectedLetters = 0;
+      updateSelectedLetters(state);
     },
     toggleSome: (state, action: toggleLettersAction) => {
-      let isSelected = true;
+      const { alphabet, kana, letter } = action.payload;
+      let local = state.selected[alphabet][kana];
 
-      for (let i = 0; i < action.payload.letter.length; i++) {
-        const letter = action.payload.letter[i];
-
-        if (!state.selected[action.payload.alphabet][action.payload.kana].includes(letter.en)) {
-          isSelected = false;
-        }
-      }
-
-      let local = state.selected[action.payload.alphabet][action.payload.kana];
-
-      for (let i = 0; i < action.payload.letter.length; i++) {
-        const elem = action.payload.letter[i];
-
-        if (local.indexOf(elem.en) !== -1) {
-          if (isSelected) {
-            local = local.filter(item => item !== elem.en);
-          }
-        } else {
-          if (!isSelected) {
-            local.push(elem.en);
-          }
-        }
-      }
+      const selectedLettersSet = new Set(state.selected[alphabet][kana]);
       
-      state.selected[action.payload.alphabet][action.payload.kana] = local;
+      let isActive = true;
+
+      for (let index = 0; index < letter.length; index++) {
+        const letterItem = letter[index];
+        if (!selectedLettersSet.has(letterItem.en)) {
+          isActive = false;
+        }
+      }
+
+      letter.forEach(elem => {
+        if (isActive === false && !selectedLettersSet.has(elem.en)) {
+          local = toggleLetterInArray(local, elem.en);
+        }
+        if (isActive === true) {
+          local = toggleLetterInArray(local, elem.en);
+        }
+      });
+
+      state.selected[alphabet][kana] = local;
+      updateSelectedLetters(state);
     },
     toggleLetter: (state, action: toggleLetterAction) => {
-      let local = state.selected[action.payload.alphabet][action.payload.kana];
-
-      if (local.indexOf(action.payload.letter.en) !== -1) {
-        local = local.filter(item => item !== action.payload.letter.en);
-      } else {
-        local.push(action.payload.letter.en);
-      }
-      
-      state.selected[action.payload.alphabet][action.payload.kana] = local;
-
-      state.selectedLettersHiragana = state.selected.base.hiragana.length +
-        state.selected.dakuon.hiragana.length +
-        state.selected.handakuon.hiragana.length +
-        state.selected.yoon.hiragana.length;
-
-      state.selectedLettersKatakana = state.selected.base.katakana.length +
-        state.selected.dakuon.katakana.length +
-        state.selected.handakuon.katakana.length +
-        state.selected.yoon.katakana.length;
-
-      state.selectedLetters = state.selectedLettersKatakana + state.selectedLettersHiragana;
+      const { alphabet, kana, letter } = action.payload;
+      state.selected[alphabet][kana] = toggleLetterInArray(state.selected[alphabet][kana], letter.en);
+      updateSelectedLetters(state);
     },
     setKanaSelected: (state, action) => {
       if (action.payload === KanaSection.BasicHiragana) {

@@ -69,9 +69,9 @@ const Buttons = styled.View`
 
 interface KanaModalProp {
   show: boolean;
-  kana: "Hiragana" | "Katakana";
+  kana: "hiragana" | "katakana";
   letter: ILetter;
-  changeKata: (val: "Hiragana" | "Katakana") => void;
+  changeKata: (val: "hiragana" | "katakana") => void;
   closeModal: () => void;
   drawSymbol: (letter: ILetter) => void;
   prevLetter: () => void;
@@ -141,7 +141,7 @@ const KanaModal: React.FC<KanaModalProp> = ({
         <TitleContainer>
           <Title>{kana}</Title>
           <SubTitle>{letter.en.toUpperCase()}</SubTitle>
-          {getImagePath(`${kana === "Hiragana" ? "H" : "K"}-${letter.en}`, THEME)}
+          {getImagePath(`${kana === "hiragana" ? "H" : "K"}-${letter.en}`, THEME)}
         </TitleContainer>
 
         <ButtonContainer>
@@ -166,9 +166,9 @@ const KanaModal: React.FC<KanaModalProp> = ({
           <Buttons>
             <Button
               customStyles={{ flex: 1, marginTop: 0 }}
-              title={`${kana === "Hiragana" ? "Katakana" : "Hiragana"} →`}
+              title={`${kana === "hiragana" ? "katakana" : "hiragana"} →`}
               onClick={() => {
-                changeKata(kana === "Hiragana" ? "Katakana" : "Hiragana");
+                changeKata(kana === "hiragana" ? "katakana" : "hiragana");
               }}
               type={"inactive"}
             />
