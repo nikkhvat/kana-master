@@ -15,8 +15,10 @@ import SelectAnswers from "@/components/Practice/SelectAnswers";
 import ShowSymbol from "@/components/Practice/ShowSymbol";
 import Timer from "@/components/Practice/Timer";
 import { CardMode, DifficultyLevelType, Kana, PracticeScreenMode } from "@/constants/kana";
-import letters, { ILetter } from "@/data/letters";
+import { ILetter, lettersTable } from "@/data/lettersTable";
 import { generateRandomLetters, shuffleArray } from "@/helpers/letters";
+import { useAppSelector } from "@/hooks/redux";
+import { RootState } from "@/store/store";
 import { RootStackParamList } from "@/types/navigationTypes";
 
 
@@ -72,9 +74,9 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
     kana: Kana;
     answers: {
       title: string;
-      id: number;
+      id: string;
     }[];
-    trueAnswer: number;
+    trueAnswer: string;
   };
 
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -94,55 +96,88 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
       }))
     );
   };
-  
+
+  const selectedLetters = useAppSelector((state: RootState) => state.kana.selected);
+
+  const kanaLetters = [
+    ...selectedLetters.base.katakana,
+    ...selectedLetters.dakuon.katakana,
+    ...selectedLetters.handakuon.katakana,
+    ...selectedLetters.yoon.katakana,
+  ].map(item => lettersTable[item]);
+
+  const hiraLetters = [
+    ...selectedLetters.base.hiragana,
+    ...selectedLetters.dakuon.hiragana,
+    ...selectedLetters.handakuon.hiragana,
+    ...selectedLetters.yoon.hiragana,
+  ].map(item => lettersTable[item]);
 
   useEffect(() => {
-    const l = [letters[0], letters[1], letters[2], letters[3], letters[4]];
-
+    
     if (mode == PracticeScreenMode.Testing) {
-      stats.startTimer();
+      const questions: Question[] = [];
 
-
-      const questions = [];
-
-      for (let i = 0; i < l.length; i++) {
-        const row = l[i];
+      {
+        // Generate questions for Kana
+        const typesQuestions = [];
         
-        for (let j = 0; j < row.length; j++) {
-          const cell = row[j];
-          
-          const type =
-            keysCardModeState[Math.floor(Math.random() * keysCardModeState.length)];
+        if (keysCardModeState.includes(CardMode.romajiToKatakana)) typesQuestions.push(CardMode.romajiToKatakana);
+        if (keysCardModeState.includes(CardMode.katakanaToRomaji)) typesQuestions.push(CardMode.katakanaToRomaji);
+        if (keysCardModeState.includes(CardMode.katakanaToHiragana)) typesQuestions.push(CardMode.katakanaToHiragana);
+        
+        for (let i = 0; i < kanaLetters.length; i++) {
+          const letter = kanaLetters[i];
+
+          const type = typesQuestions[Math.floor(Math.random() * typesQuestions.length)];
+
+          switch (type) {
+              case CardMode.katakanaToHiragana: {
+                questions.push({symbol: letter.ka, kana: Kana.Katakana, answers: getAnswers([kanaLetters], letter, Kana.Hiragana), trueAnswer: letter.id });
+                continue;
+              }
+              case CardMode.katakanaToRomaji: {
+                questions.push({symbol: letter.ka, kana: Kana.Katakana, answers: getAnswers([kanaLetters], letter, Kana.English), trueAnswer: letter.id });
+                continue;
+              }
+              case CardMode.romajiToKatakana: {
+                questions.push({symbol: letter.en, kana: Kana.English, answers: getAnswers([kanaLetters], letter, Kana.Katakana), trueAnswer: letter.id });
+                continue;
+              }
+            }
+        }
+      }
+
+      {
+        // Generation for Hira 
+        const typesQuestions = [];
+        
+        if (keysCardModeState.includes(CardMode.hiraganaToKatakana)) typesQuestions.push(CardMode.hiraganaToKatakana);
+        if (keysCardModeState.includes(CardMode.hiraganaToRomaji)) typesQuestions.push(CardMode.hiraganaToRomaji);
+        if (keysCardModeState.includes(CardMode.romajiToHiragana)) typesQuestions.push(CardMode.romajiToHiragana);
+        
+        for (let i = 0; i < hiraLetters.length; i++) {
+          const letter = hiraLetters[i];
+
+          const type = typesQuestions[Math.floor(Math.random() * typesQuestions.length)];
 
           switch (type) {
             case CardMode.hiraganaToKatakana: {
-              questions.push({ symbol: cell.hi, kana: Kana.Hiragana, answers: getAnswers(l, cell, Kana.Katakana), trueAnswer: cell.id });
+              questions.push({ symbol: letter.hi, kana: Kana.Hiragana, answers: getAnswers([hiraLetters], letter, Kana.Katakana), trueAnswer: letter.id });
               continue;
             }
             case CardMode.hiraganaToRomaji: {
-              questions.push({symbol: cell.hi, kana: Kana.Hiragana, answers: getAnswers(l, cell, Kana.English), trueAnswer: cell.id });
-              continue;
-            }
-            case CardMode.katakanaToHiragana: {
-              questions.push({symbol: cell.ka, kana: Kana.Katakana, answers: getAnswers(l, cell, Kana.Hiragana), trueAnswer: cell.id });
-              continue;
-            }
-            case CardMode.katakanaToRomaji: {
-              questions.push({symbol: cell.ka, kana: Kana.Katakana, answers: getAnswers(l, cell, Kana.English), trueAnswer: cell.id });
+              questions.push({symbol: letter.hi, kana: Kana.Hiragana, answers: getAnswers([hiraLetters], letter, Kana.English), trueAnswer: letter.id });
               continue;
             }
             case CardMode.romajiToHiragana: {
-              questions.push({symbol: cell.en, kana: Kana.English, answers: getAnswers(l, cell, Kana.Hiragana), trueAnswer: cell.id });
-              continue;
-            }
-            case CardMode.romajiToKatakana: {
-              questions.push({symbol: cell.en, kana: Kana.English, answers: getAnswers(l, cell, Kana.Katakana), trueAnswer: cell.id });
+              questions.push({symbol: letter.en, kana: Kana.English, answers: getAnswers([hiraLetters], letter, Kana.Hiragana), trueAnswer: letter.id });
               continue;
             }
           }
         }
       }
-    
+
       setQuestions(shuffleArray(questions));
     }
   }, []);

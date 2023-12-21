@@ -9,7 +9,7 @@ import { Colors } from "@/constants/app";
 
 interface ButtonProps extends TouchableOpacityProps {
   title: string;
-  type: "active" | "inactive" | "weak" | "general";
+  type: "active" | "inactive" | "weak" | "general" | "disabled";
   onClick?: () => void;
   fontSize?: number;
   image?: string | null;
@@ -17,12 +17,12 @@ interface ButtonProps extends TouchableOpacityProps {
 }
 
 interface StyledButtonProps extends TouchableOpacityProps {
-  type: "active" | "inactive" | "weak" | "general";
+  type: "active" | "inactive" | "weak" | "general" | "disabled";
 }
 
 interface StyledTextProps extends TextProps {
   fontSize?: number;
-  type: "active" | "inactive" | "weak" | "general";
+  type: "active" | "inactive" | "weak" | "general" | "disabled";
 }
 
 
@@ -33,6 +33,7 @@ const StyledButton = styled.Pressable<StyledButtonProps>`
   height: 50px;
   border-radius: 12px;
   background-color: ${({ theme, type }) =>
+    type === "disabled" ? theme.colors.color2 :
     type === "active"
       ? theme.colors.second_color3
       : type === "inactive"
@@ -48,13 +49,15 @@ const StyledButton = styled.Pressable<StyledButtonProps>`
 const StyledText = styled.Text<StyledTextProps>`
   font-size: ${({ fontSize }) => (fontSize ? fontSize + "px" : 13 + "px")};
   color: ${({ theme, type }) =>
-    type === "active"
-      ? theme.colors.color5
-      : type === "inactive"
-      ? theme.colors.color4
-      : type === "weak"
-      ? theme.colors.color4
-      : theme.colors.color1};
+    type === "disabled"
+      ? theme.colors.color3
+      : type === "active"
+        ? theme.colors.color5
+        : type === "inactive"
+          ? theme.colors.color4
+          : type === "weak"
+            ? theme.colors.color4
+            : theme.colors.color1};
   font-weight: 700;
 `;
 

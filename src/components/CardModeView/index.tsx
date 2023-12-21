@@ -11,8 +11,9 @@ export type CardModeViewProp = {
     title: string;
     type: "active" | "inactive" | "weak" | "general";
     key: string;
+    condition?: boolean
   }[][];
-  onButtonClick?: (column: number, index: number) => void
+  onButtonClick?: (column: number, index: number) => void;
 };
 
 const Container = styled.View`
@@ -49,22 +50,22 @@ const CardModeView: React.FC<CardModeViewProp> = ({ title, buttons, onButtonClic
         <Column>
           {buttons[0].map((btn, idx) => (
             <Button
-              onClick={() => onButtonClick?.(0, idx)}
+              onClick={() => btn.condition && onButtonClick?.(0, idx)}
               key={btn.title}
-              customStyles={{flex: 1}}
+              customStyles={{ flex: 1 }}
               title={btn.title}
-              type={btn.type}
+              type={btn.condition ? btn.type : "disabled"}
             />
           ))}
         </Column>
         <Column>
           {buttons[1].map((btn, idx) => (
             <Button
-              onClick={() => onButtonClick?.(1, idx)}
+              onClick={() => btn.condition && onButtonClick?.(1, idx)}
               key={btn.title}
-              customStyles={{flex: 1}}
+              customStyles={{ flex: 1 }}
               title={btn.title}
-              type={btn.type}
+              type={btn.condition ? btn.type : "disabled"}
             />
           ))}
         </Column>

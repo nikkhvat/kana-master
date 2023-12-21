@@ -1,4 +1,4 @@
-import { ILetter } from "@/data/letters";
+import { ILetter } from "@/data/lettersTable";
 
 export const shuffleArray = <T>(array: Array<T>): Array<T> => {
   const arrayCopy = array.slice();

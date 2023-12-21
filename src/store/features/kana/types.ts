@@ -1,5 +1,5 @@
 import { KanaSection } from "@/constants/kana";
-import { ILetter } from "@/data/letters";
+import { ILetter } from "@/data/lettersTable";
 
 export interface InitialState {
   selectedLettersHiragana: number

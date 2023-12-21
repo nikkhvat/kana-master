@@ -1,5 +1,5 @@
 import { CardMode, DifficultyLevelType, PracticeScreenMode, TestMode } from "@/constants/kana";
-import { ILetter } from "@/data/letters";
+import { ILetter } from "@/data/lettersTable";
 import { Stats } from "@/screens/Practice/hooks/useStats";
 
 export type RootStackParamList = {

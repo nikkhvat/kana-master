@@ -8,7 +8,7 @@ import styled from "styled-components/native";
 
 import Button from "@/components/Button";
 import { Colors } from "@/constants/app";
-import { ILetter } from "@/data/letters";
+import { ILetter } from "@/data/lettersTable";
 import getSound from "@/resources/sounds/index";
 import getImage from "@/resources/svgs";
 import { darkTheme } from "@/themes/dark";

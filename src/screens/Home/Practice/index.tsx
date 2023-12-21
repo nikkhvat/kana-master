@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { ScrollView, View } from "react-native";
@@ -8,6 +8,8 @@ import Button from "@/components/Button";
 import CardModeView, { CardModeViewProp } from "@/components/CardModeView";
 import PreviewCard from "@/components/PreviewCard";
 import { CardMode, DifficultyLevelType, PracticeScreenMode } from "@/constants/kana";
+import { useAppSelector } from "@/hooks/redux";
+import { RootState } from "@/store/store";
 import { RootStackParamList } from "@/types/navigationTypes";
 
 type PracticeNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
@@ -17,18 +19,37 @@ interface PracticeProps {
 }
 
 const Practice: React.FC<PracticeProps> = ({ navigation }) => {
-  const cardMode: CardModeViewProp["buttons"] = [
-    [
-      { title: "Hira → Kata", key: CardMode.hiraganaToKatakana, type: "active" },
-      { title: "Hira → Romaji", key: CardMode.hiraganaToRomaji, type: "inactive" },
-      { title: "Romaji → Hira", key: CardMode.romajiToHiragana, type: "inactive" },
-    ],
-    [
-      { title: "Kata → Hira", key: CardMode.katakanaToHiragana, type: "inactive" },
-      { title: "Kata → Romaji", key: CardMode.katakanaToRomaji, type: "inactive" },
-      { title: "Romaji → Kata", key: CardMode.romajiToKatakana, type: "inactive" },
-    ],
-  ];
+
+  
+  const letters = useAppSelector((state: RootState) => state.kana.selected);
+  const [cardModeState, setCardModeState] = useState<CardModeViewProp["buttons"]>([[], []]);
+
+  useEffect(() => {
+    const isHira =
+      letters.base.hiragana.length > 0 ||
+      letters.dakuon.hiragana.length > 0 ||
+      letters.handakuon.hiragana.length > 0 ||
+      letters.yoon.hiragana.length > 0;
+
+    const isKata =
+      letters.base.katakana.length > 0 ||
+      letters.dakuon.katakana.length > 0 ||
+      letters.handakuon.katakana.length > 0 ||
+      letters.yoon.katakana.length > 0;
+    
+    setCardModeState(() => [
+      [
+        { title: "Hira → Romaji", key: CardMode.hiraganaToRomaji, type: isHira ? "active" : "inactive", condition: isHira, },
+        { title: "Romaji → Hira", key: CardMode.romajiToHiragana, type: "inactive", condition: isHira, },
+        { title: "Hira → Kata", key: CardMode.hiraganaToKatakana, type: "inactive", condition: isHira && isKata, },
+      ],
+      [
+        { title: "Kata → Romaji", key: CardMode.katakanaToRomaji, type: isKata ? "active" : "inactive", condition: isKata, },
+        { title: "Romaji → Kata", key: CardMode.romajiToKatakana, type: "inactive", condition: isKata, },
+        { title: "Kata → Hira", key: CardMode.katakanaToHiragana, type: "inactive", condition: isHira && isKata, },
+      ],
+    ]);
+  }, [letters]);
 
   const DifficultyLevel: CardModeViewProp["buttons"] = [
     [{ title: "Time test", key: DifficultyLevelType.TimeTest, type: "inactive" }],
@@ -53,11 +74,10 @@ const Practice: React.FC<PracticeProps> = ({ navigation }) => {
     return array;
   };
 
-  const [cardModeState, setCardModeState] = useState(cardMode);
   const [difficultyLevelState, setDifficultyLevelState] = useState(DifficultyLevel);
   
   const toggleButtonState = (
-    btnArray: typeof cardMode,
+    btnArray: typeof cardModeState,
     setBtnArray: (cards: any) => void,
     indexGroup: number,
     indexButton: number,
@@ -70,7 +90,8 @@ const Practice: React.FC<PracticeProps> = ({ navigation }) => {
     const isActivePresentInOthers = newBtnArray.some((group, gIndex) =>
       group.some(
         (btn, bIndex) =>
-          btn.type === active && (gIndex !== indexGroup || bIndex !== indexButton)
+          btn.type === active &&
+          (gIndex !== indexGroup || bIndex !== indexButton)
       )
     );
 

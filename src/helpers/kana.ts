@@ -1,4 +1,4 @@
-import { ILetter } from "@/data/letters";
+import { ILetter } from "@/data/lettersTable";
 
 export function getLettersWithStatuses(
   letters: (ILetter | number)[][] | undefined,

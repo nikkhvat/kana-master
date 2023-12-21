@@ -21,6 +21,7 @@
     "@reduxjs/toolkit": "^2.0.1",
     "@terrylinla/react-native-sketch-canvas": "^0.8.0",
     "classnames": "^2.3.2",
+    "crypto": "^1.0.1",
     "expo": "~49.0.21",
     "expo-av": "~13.6.0",
     "expo-haptics": "~12.6.0",

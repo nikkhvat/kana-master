@@ -9,7 +9,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 
-import letters, { ILetter, lettersDakuon, lettersHandakuon, lettersYoon } from "../../data/letters";
+import { ILetter, baseWithSpaces, dakuon, handakuon, yoon } from "../../data/lettersTable";
 
 import KanaModal from "@/components/KanaModal";
 import KanaTable from "@/components/KanaTable";
@@ -58,29 +58,16 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState<"hiragana" | "katakana">("hiragana");
 
-  const rows = useMemo(
-    () =>
-      letters.map((item) =>
-        item[0].en !== "WA" && item[0].en !== "YA" && item[0].en !== "N"
-          ? item
-          : item[0].en === "WA"
-            ? [item[0], 0, 0, 0, item[1]]
-            : item[0].en === "N"
-              ? [0, 0, item[0], 0, 0]
-              : [item[0], 0, item[1], 0, item[2]]
-      ),
-    []
-  );
-  const rowsDakuon = useMemo(() => lettersDakuon.map((item) => item), []);
-  const rowsHandakuon = useMemo(() => lettersHandakuon.map((item) => item), []);
-  const rowsYoon = useMemo(() => lettersYoon.map((item) => item), []);
+  const rowsDakuon = useMemo(() => dakuon.map((item) => item), []);
+  const rowsHandakuon = useMemo(() => handakuon.map((item) => item), []);
+  const rowsYoon = useMemo(() => yoon.map((item) => item), []);
 
   const [isModalVisible, setModalVisible] = useState(null as null | [(ILetter | number), number, number, string]);
 
   const closeModal = () => setModalVisible(null);  
 
   const list = ["basic", "dakuon", "handakuon", "yoon"];
-  const listLetters = [rows, rowsDakuon, rowsHandakuon, rowsYoon];
+  const listLetters = [baseWithSpaces, rowsDakuon, rowsHandakuon, rowsYoon];
 
   function isLetter(item: ILetter | number) {
     return typeof item === "object";
@@ -131,7 +118,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
       !isLetter(listLetters[listIndex][rowIndex][colIndex]) &&
       rowIndex >= 0
     );
-    
+
     return [
       listLetters[listIndex][rowIndex][colIndex],
       rowIndex,

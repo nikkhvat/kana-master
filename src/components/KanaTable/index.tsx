@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo } from "react";
 import styled from "styled-components/native";
 
 import { Alphabet } from "@/constants/kana";
-import { ILetter, lettersDakuon, lettersHandakuon, lettersWithSpaces, lettersYoon } from "@/data/letters";
+import { ILetter, dakuon, handakuon, baseWithSpaces, yoon } from "@/data/lettersTable";
 import { getLettersWithStatuses } from "@/helpers/kana";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { toggleLetter, toggleSome } from "@/store/features/kana/slice";
@@ -85,10 +85,10 @@ const KanaTable: React.FC<KanaTableProps> = ({
   const dispatch = useAppDispatch();
 
   const getData = useCallback((type: Alphabet) => {
-    if (type === "base") return lettersWithSpaces;
-    else if (type === "dakuon") return lettersDakuon;
-    else if (type === "handakuon") return lettersHandakuon;
-    else if (type === "yoon") return lettersYoon;
+    if (type === "base") return baseWithSpaces;
+    else if (type === "dakuon") return dakuon;
+    else if (type === "handakuon") return handakuon;
+    else if (type === "yoon") return yoon;
   }, []);
 
   const selectedLetters = useAppSelector(
@@ -142,10 +142,10 @@ const KanaTable: React.FC<KanaTableProps> = ({
   const onPlus = useCallback(
     (type: "row" | "cell", index: number, alphabet: Alphabet) => {
       const dataMap = {
-        base: lettersWithSpaces,
-        dakuon: lettersDakuon,
-        handakuon: lettersHandakuon,
-        yoon: lettersYoon,
+        base: baseWithSpaces,
+        dakuon: dakuon,
+        handakuon: handakuon,
+        yoon: yoon,
       };
 
       const data = dataMap[alphabet] || [];
