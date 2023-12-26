@@ -27,6 +27,9 @@ const Container = styled.ImageBackground`
   padding-bottom: 15px;
   position: relative;
   margin-top: 20px;
+
+  padding-left: 15px;
+  padding-right: 15px;
 `;
 
 const Title = styled.Text`
@@ -54,10 +57,10 @@ const Button = styled.Pressable`
 `;
 
 const Content = styled.View`
-  width: 315px;
+  width: 100%;
   background-color: ${({ theme }) => theme.colors.color1 };
   border-radius: 12px;
-  height: 79px;
+  height: 80px;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;

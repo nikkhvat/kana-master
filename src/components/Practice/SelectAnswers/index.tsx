@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Text } from "react-native";
+import { Dimensions, Text } from "react-native";
 import styled from "styled-components/native";
 
 import { TEST_DELAY } from "@/constants/kana";
@@ -15,21 +15,37 @@ const AnswersRow = styled.View`
   gap: 15px;
 `;
 
-const AnswersItem = styled.TouchableOpacity<{type: "green" | "red" | "transparent"}>`
-  width: 165px;
-  height: 165px;
+type AnswersItem = {
+  width?: number;
+  type: "green" | "red" | "transparent";
+};
+
+const AnswersItem = styled.TouchableOpacity<AnswersItem>`
+  width: ${({ width }) => width + "px"};
+  height: ${({ width }) => width + "px"};
 
   justify-content: center;
   align-items: center;
 
   border-width: 1px;
-  border-color: ${({ type, theme }) => type === "green" ? "#7ABC71" : type === "red" ? "#EF625D" : theme.colors.color2 };
-  background-color: ${({ type, theme }) => type === "green" ? "#7ABC71" : type === "red" ? "#EF625D" : theme.colors.color2 };
+  border-color: ${({ type, theme }) =>
+    type === "green"
+      ? "#7ABC71"
+      : type === "red"
+        ? "#EF625D"
+        : theme.colors.color2};
+  background-color: ${({ type, theme }) =>
+    type === "green"
+      ? "#7ABC71"
+      : type === "red"
+        ? "#EF625D"
+        : theme.colors.color2};
   border-radius: 12px;
 `;
 
-const AnswersItemText = styled.Text<{type: "green" | "red" | "transparent"}>`
-  color: ${({theme, type}) => type === "transparent" ? theme.colors.color4 : theme.colors.color5};
+const AnswersItemText = styled.Text<AnswersItem>`
+  color: ${({ theme, type }) =>
+    type === "transparent" ? theme.colors.color4 : theme.colors.color5};
   font-size: 22px;
 `;
 
@@ -49,7 +65,8 @@ const SelectAnswers: React.FC<SelectAnswersProp> = ({
   onError, 
   onCompleted 
 }) => {
-  
+  const screenWidth = Dimensions.get("window").width;
+
   const [errors, setErrors] = useState([] as (string | number)[]);
   const [corrected, setCorrected] = useState(null as string | number | null);
   
@@ -88,22 +105,24 @@ const SelectAnswers: React.FC<SelectAnswersProp> = ({
     else return "transparent";
   };
 
+  const widthCard = (screenWidth - (20 * 2)) / 2;
+
   return (
     <AnswersContainer>
       <AnswersRow>
-        <AnswersItem onPress={() => pick(answers[0].id)} type={getStatus(answers[0].id)}>
+        <AnswersItem width={widthCard} onPress={() => pick(answers[0].id)} type={getStatus(answers[0].id)}>
           <AnswersItemText type={getStatus(answers[0].id)}>{answers[0].title}</AnswersItemText>
         </AnswersItem>
-        <AnswersItem onPress={() => pick(answers[1].id)} type={getStatus(answers[1].id)}>
+        <AnswersItem width={widthCard} onPress={() => pick(answers[1].id)} type={getStatus(answers[1].id)}>
           <AnswersItemText type={getStatus(answers[1].id)}>{answers[1].title}</AnswersItemText>
         </AnswersItem>
       </AnswersRow>
 
       <AnswersRow>
-        <AnswersItem onPress={() => pick(answers[2].id)} type={getStatus(answers[2].id)}>
+        <AnswersItem width={widthCard} onPress={() => pick(answers[2].id)} type={getStatus(answers[2].id)}>
           <AnswersItemText type={getStatus(answers[2].id)}>{answers[2].title}</AnswersItemText>
         </AnswersItem>
-        <AnswersItem onPress={() => pick(answers[3].id)} type={getStatus(answers[3].id)}>
+        <AnswersItem width={widthCard} onPress={() => pick(answers[3].id)} type={getStatus(answers[3].id)}>
           <AnswersItemText type={getStatus(answers[3].id)}>{answers[3].title}</AnswersItemText>
         </AnswersItem>
       </AnswersRow>

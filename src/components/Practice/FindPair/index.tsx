@@ -57,7 +57,8 @@ const Item = styled.TouchableOpacity<ItemProp>`
     isCorrect ? theme.colors.second_color2
       : isError ? theme.colors.second_color1
       : isSelect ? "transparent" : "transparent"};
-  padding: 14px;
+  /* padding: 14px; */
+  height: 50px;
 `;
 
 const Text = styled.Text`

@@ -20,7 +20,7 @@ const Container = styled.View<{ paddingTop: number }>`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.color1};
   padding-top: ${({ paddingTop }) => paddingTop + "px"};
-  `;
+`;
 
 const Scroll = styled.ScrollView`
   padding: 20px;

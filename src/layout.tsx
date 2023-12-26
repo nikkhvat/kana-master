@@ -8,6 +8,9 @@ import { Appearance } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ThemeProvider } from "styled-components";
 
+import { Word, words } from "./data/words";
+import { findWordsFromArray } from "./helpers/word";
+
 import { Theme } from "@/constants/profile";
 import { useAppSelector } from "@/hooks/redux";
 import ChooseAlphabet from "@/screens/ChooseAlphabet";
@@ -22,10 +25,45 @@ import { darkTheme } from "@/themes/dark";
 import { lightTheme } from "@/themes/light";
 import { RootStackParamList } from "@/types/navigationTypes";
 
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
+
+  const characters: string[] = [
+    "ア",
+    "イ",
+    "ウ",
+    "エ",
+    "オ",
+    "カ",
+    "キ",
+    "ク",
+    "ケ",
+    "コ",
+    "サ",
+    "シ",
+    "ス",
+    "セ",
+    "ソ",
+    "あ",
+    "い",
+    "う",
+    "え",
+    "お",
+    "か",
+    "き",
+    "く",
+    "け",
+    "こ",
+    "さ",
+  ];
+
+  const matchingWords = findWordsFromArray(words, characters);
+  console.log(matchingWords.length);
+
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

@@ -9,6 +9,8 @@ import styled from "styled-components/native";
 
 import useStats from "./hooks/useStats";
 
+import ChooseLetters from "@/components/Practice/ChooseLetters";
+import ChooseValue from "@/components/Practice/ChooseValue";
 import FindPair from "@/components/Practice/FindPair";
 import ProgressBar from "@/components/Practice/ProgressBar";
 import SelectAnswers from "@/components/Practice/SelectAnswers";
@@ -207,12 +209,13 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
         {IS_TIMER && mode === PracticeScreenMode.Testing && <Timer />}
       </Header>
 
-      {mode == PracticeScreenMode.WordGame && <FindPair
+      {/* Find the pair mode */}
+      {/* {mode == PracticeScreenMode.WordGame && <FindPair
         pairs={[
-          [{ title: "か", id: "か" },{ title: "う (2)", id: "2う" }],
-          [{ title: "う", id: "う" },{ title: "か (2)", id: "2か" }],
-          [{ title: "け", id: "け" },{ title: "け (2)", id: "2け" }],
-          [{ title: "こ", id: "こ" },{ title: "こ (2)", id: "2こ" }],
+          [{ title: "か", id: "か" },{ title: "う", id: "2う" }],
+          [{ title: "う", id: "う" },{ title: "か", id: "2か" }],
+          [{ title: "け", id: "け" },{ title: "け", id: "2け" }],
+          [{ title: "こ", id: "こ" },{ title: "こ", id: "2こ" }],
         ]}
         answers={[
           ["か", "2か"],
@@ -221,6 +224,24 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
           ["こ", "2こ"],
         ]}
         title={"Сопоставь хирагану с романдзи."}
+      />} */}
+
+      {/* Choose value practice */}
+      {/* <ChooseValue
+        title={"Выбери романдзи для きく"}
+        questions={[
+          { text: "KIKU", key: "KIKU" },
+          { text: "KUKI", key: "KUKI" },
+          { text: "KIKE", key: "KIKE" }
+        ]}
+      /> */}
+
+      {/* Choose letters words */}
+      {mode == PracticeScreenMode.WordGame && <ChooseLetters
+        title={"Выбери хирагану для"}
+        romanji={"ningen"}
+        translate={"human"}
+        kana={"にんげん"}
       />}
 
       {questions.length > 0 && mode == PracticeScreenMode.Testing && (

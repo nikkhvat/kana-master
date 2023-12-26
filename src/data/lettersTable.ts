@@ -53,6 +53,7 @@ export const lettersTable: Record<string, ILetter> = {
   WA: { id: "a53d8501-373d-4944-a76b-657f672162f9", ka: "ワ", hi: "わ", en: "WA", ru: "ВА"},
   WO: { id: "858b53e1-af17-45d5-8fc2-330121eab5c4", ka: "ヲ", hi: "を", en: "WO", ru: "ВО"},
   N: { id: "2a481d17-0d7c-492a-85fc-cab60e9fb6df", ka: "ン", hi: "ん", en: "N", ru: "Н"},
+  // dakuon
   GA: { id: "2dc3667e-c4cb-4d04-adc8-f3c5603d6b3d", ka: "ガ", hi: "が", en: "GA", ru: "ГА"},
   GI: { id: "e6131a96-35f2-48ae-a2ee-53d7bde93a8b", ka: "ギ", hi: "ぎ", en: "GI", ru: "ГИ"},
   GU: { id: "b7dde579-94e7-4b7f-bf21-0b4e7f825aa9", ka: "グ", hi: "ぐ", en: "GU", ru: "ГУ"},
@@ -73,11 +74,13 @@ export const lettersTable: Record<string, ILetter> = {
   BU: { id: "ad5fe49a-65dd-4016-ad02-ca824b6ac476", ka: "ブ", hi: "ぶ", en: "BU", ru: "БУ"},
   BE: { id: "f8f32a3f-a6cf-443c-a7d5-9201f1d50b6f", ka: "ベ", hi: "べ", en: "BE", ru: "БЭ"},
   BO: { id: "b1ee6b66-8c09-4cf7-a7ee-12ed24d4fb9b", ka: "ボ", hi: "ぼ", en: "BO", ru: "БО"},
+  // handakuon
   PA: { id: "29586e2f-2cdf-4f5a-ab03-43cdc7de5bee", ka: "ぱ", hi: "ぱ", en: "PA", ru: "ПА"},
   PI: { id: "aa3a1a5c-3654-46e3-826f-aaf4f8d0538b", ka: "ぴ", hi: "ぴ", en: "PI", ru: "ПИ"},
   PU: { id: "70bd9d94-d6d5-4572-9b4e-290c2effbec4", ka: "ぷ", hi: "ぷ", en: "PU", ru: "ПУ"},
   PE: { id: "cb95fb95-60c8-4324-a716-a9a1013f9214", ka: "ぺ", hi: "ぺ", en: "PE", ru: "ПЭ"},
   PO: { id: "dded7c42-3b0c-4e89-9b03-1ad95d40fa9d", ka: "ぽ", hi: "ぽ", en: "PO", ru: "ПО"},
+  // yoon
   KYA: { id: "d1a354dd-03db-4143-8883-bfd21f0c63bf", ka: "きゃ", hi: "きゃ", en: "KYA", ru: "KYA"},
   KYU: { id: "4f2017b1-ae1d-4630-ba8a-4ce5d55b556f", ka: "きゅ", hi: "きゅ", en: "KYU", ru: "KYU"},
   KYO: { id: "578f764c-1bdc-4ad6-a89b-daecde53d680", ka: "きょ", hi: "きょ", en: "KYO", ru: "KYO"},
