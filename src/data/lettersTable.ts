@@ -1,9 +1,11 @@
+import { UUID } from "crypto";
+
 export interface ILetter {
-  ka: string
-  hi: string
-  en: string
-  ru: string
-  id: string
+  readonly ka: string
+  readonly hi: string
+  readonly en: string
+  readonly ru: string
+  readonly id: UUID
 }
 
 export const lettersTable: Record<string, ILetter> = {
@@ -104,11 +106,11 @@ export const lettersTable: Record<string, ILetter> = {
   RYO: { id: "3aa9f1c6-21d3-419f-ad97-fda28085a281", ka: "りょ", hi: "りょ", en: "RYO", ru: "RYO"}
 };
 
-export const lettersTableById: Record<string, ILetter> = {
-  "a151eeeb-2537-463c-ae23-d484d1bcb835":  {id: "a151eeeb-2537-463c-ae23-d484d1bcb835", ka: "ア", hi: "あ", en: "A", ru: "А"},
+export const lettersTableById: Record<UUID, ILetter> = {
   "11017078-148a-4a44-b3f7-21d1df02d981":  {id: "11017078-148a-4a44-b3f7-21d1df02d981", ka: "イ", hi: "い", en: "I", ru: "И"},
-  "bcbd90e2-fabc-4dcc-8022-02e5b650c822":  {id: "bcbd90e2-fabc-4dcc-8022-02e5b650c822", ka: "ウ", hi: "う", en: "U", ru: "У"},
+  "a151eeeb-2537-463c-ae23-d484d1bcb835":  {id: "a151eeeb-2537-463c-ae23-d484d1bcb835", ka: "ア", hi: "あ", en: "A", ru: "А"},
   "70680d73-c9f9-4b4e-aac4-c82caa49668c":  {id: "70680d73-c9f9-4b4e-aac4-c82caa49668c", ka: "エ", hi: "え", en: "E", ru: "Э"},
+  "bcbd90e2-fabc-4dcc-8022-02e5b650c822":  {id: "bcbd90e2-fabc-4dcc-8022-02e5b650c822", ka: "ウ", hi: "う", en: "U", ru: "У"},
   "e430643d-5624-432e-b53e-974447baad22":  {id: "e430643d-5624-432e-b53e-974447baad22", ka: "オ", hi: "お", en: "O", ru: "О"},
   "22350aba-d254-48ba-811a-9d1448761042":  {id: "22350aba-d254-48ba-811a-9d1448761042", ka: "カ", hi: "か", en: "KA", ru: "КА"},
   "a1d45e3b-a1c9-4409-8d39-725a0a35899d":  {id: "a1d45e3b-a1c9-4409-8d39-725a0a35899d", ka: "キ", hi: "き", en: "KI", ru: "КИ"},

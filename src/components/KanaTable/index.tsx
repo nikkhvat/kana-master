@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 
+import { Dimensions } from "react-native";
 import styled from "styled-components/native";
 
 import { Alphabet } from "@/constants/kana";
@@ -14,21 +15,21 @@ const Container = styled.View`
   padding-right: 20px;
   padding-top: 20px;
   margin-bottom: 30px;
-  gap: 9px;
+  gap: 10px;
 `;
 
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  gap: 9px;
+  gap: 10px;
 `;
 
 const RowButtons = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
-  gap: 9px;
+  gap: 10px;
 `;
 
 type CellProp = {
@@ -37,18 +38,23 @@ type CellProp = {
   isEditMode: boolean | undefined
   isActive: boolean | undefined
   isPlus: boolean
+
+  itemWidth: number
+  itemWidthLong: number
+
+  isInfo: boolean
 };
 
 const Cell = styled.TouchableOpacity<CellProp>`
   border-radius: 12px;
   border-width: ${({ isEmpty }) => (isEmpty ? 0 : "1px")};
-  border-color: ${({ theme, isEmpty }) =>
-    isEmpty ? "transparent" : theme.colors.color2};
-  width: ${({ isLong, isEditMode }) =>
-    isLong ? (isEditMode ? "89px" : "105px") : isEditMode ? "50px" : "60px"};
-  height: ${({ isEditMode }) => (isEditMode ? "50px" : "60px")};
-  background-color: ${({ theme, isPlus, isActive, isEmpty }) =>
-    !isActive || isEmpty
+  border-color: ${({ theme, isEmpty, isInfo }) =>
+    (isEmpty || isInfo) ? "transparent" : theme.colors.color2};
+  width: ${({ isLong, itemWidth, itemWidthLong }) =>
+    isLong ? `${itemWidthLong}px` : `${itemWidth}px`};
+  height: ${({ itemWidth }) => `${itemWidth}px`};
+  background-color: ${({ theme, isPlus, isActive, isEmpty, isInfo }) =>
+    (!isActive || isEmpty || isInfo)
       ? "transparent"
       : isPlus
         ? theme.colors.second_color3
@@ -58,9 +64,21 @@ const Cell = styled.TouchableOpacity<CellProp>`
   justify-content: center;
 `;
 
-const Symbol = styled.Text`
-  font-size: 17px;
-  color: ${({ theme }) => theme.colors.color4};
+type SymbolProps = {
+  isInfo?: boolean;
+  fontSize: number;
+
+  isPlus?: boolean
+};
+
+const Symbol = styled.Text<SymbolProps>`
+  font-size: ${({ fontSize }) => fontSize + "px"};
+  color: ${({ theme, isInfo, isPlus }) =>
+    isPlus
+      ? theme.colors.color5
+      : isInfo
+        ? theme.colors.color3
+        : theme.colors.color4};
 `;
 
 const SubText = styled.Text`
@@ -80,7 +98,7 @@ const KanaTable: React.FC<KanaTableProps> = ({
   kana,
   type,
   isEditMode,
-  onClick = (val) => {},
+  onClick = () => {},
 }) => {
   const dispatch = useAppDispatch();
 
@@ -172,14 +190,22 @@ const KanaTable: React.FC<KanaTableProps> = ({
     [data, selectedLetters]
   );
 
+  const screenWidth = Dimensions.get("window").width;
+
+  const itemWidth = (screenWidth / 6) - 15;
+  const itemWidthLong = (screenWidth / 3) - (itemWidth / 3) - 23;
+
   return (
     <Container>
-      {isEditMode && letters.length > 1 && (
+      {letters.length > 1 && (
         <RowButtons>
           {letters[0].items.map((cell, cellIndex) => {
             return (
               <Cell
-                isPlus={true}
+                itemWidthLong={itemWidthLong}
+                itemWidth={itemWidth}
+                isInfo={isEditMode !== true}
+                isPlus={isEditMode === true}
                 isActive={cell.active}
                 isEditMode={isEditMode}
                 isLong={letters[0].items.length === 3}
@@ -187,7 +213,26 @@ const KanaTable: React.FC<KanaTableProps> = ({
                 isEmpty={cell.data === 0}
                 onPress={() => onPlus?.("cell", cellIndex, type)}
               >
-                <Symbol>+</Symbol>
+                <Symbol
+                  fontSize={isEditMode !== true ? 13 : 22}
+                  isInfo={isEditMode !== true}
+                  isPlus={isEditMode === true}
+                >
+                  {isEditMode && "+"}
+                  {!isEditMode && "-"}
+                  {!isEditMode &&
+                    typeof cell.data !== "number" &&
+                    cell.data.en.length === 1 &&
+                    cell.data.en[0]}
+                  {!isEditMode &&
+                    typeof cell.data !== "number" &&
+                    cell.data.en.length === 2 &&
+                    cell.data.en[1]}
+                  {!isEditMode &&
+                    typeof cell.data !== "number" &&
+                    cell.data.en.length === 3 &&
+                    cell.data.en[2]}
+                </Symbol>
               </Cell>
             );
           })}
@@ -196,21 +241,37 @@ const KanaTable: React.FC<KanaTableProps> = ({
 
       {letters.map((row, rowIndex) => (
         <Row key={rowIndex}>
-          {isEditMode && (
-            <Cell
-              isPlus={true}
-              isActive={row.activeInRow}
-              isEditMode={isEditMode}
-              isLong={false}
-              key={`row-${rowIndex}`}
-              onPress={() => onPlus?.("row", rowIndex, type)}
+          <Cell
+            itemWidthLong={itemWidthLong}
+            itemWidth={itemWidth}
+            isInfo={isEditMode !== true}
+            isPlus={isEditMode === true}
+            isActive={row.activeInRow}
+            isEditMode={isEditMode}
+            isLong={false}
+            key={`row-${rowIndex}`}
+            onPress={() => onPlus?.("row", rowIndex, type)}
+          >
+            <Symbol
+              fontSize={isEditMode !== true ? 13 : 22}
+              isInfo={isEditMode !== true}
+              isPlus={isEditMode === true}
             >
-              <Symbol>+</Symbol>
-            </Cell>
-          )}
+              {isEditMode && "+"}
+              {!isEditMode && "-"}
+              {!isEditMode &&
+                typeof row.items[0].data !== "number" &&
+                (row.items[0].data.en.length < 3
+                  ? row.items[0].data.en[0]
+                  : row.items[0].data.en[0] + row.items[0].data.en[1])}
+            </Symbol>
+          </Cell>
           {row.items.map((cell, cellIndex) => {
             return (
               <Cell
+                isInfo={false}
+                itemWidthLong={itemWidthLong}
+                itemWidth={itemWidth}
                 isPlus={false}
                 isActive={typeof cell !== "number" && cell.active && isEditMode}
                 isEditMode={isEditMode}
@@ -226,7 +287,7 @@ const KanaTable: React.FC<KanaTableProps> = ({
                     }
                 }}
               >
-                <Symbol>
+                <Symbol fontSize={17}>
                   {typeof cell.data !== "number" &&
                     cell.data[kana === "hiragana" ? "hi" : "ka"]}
                 </Symbol>
