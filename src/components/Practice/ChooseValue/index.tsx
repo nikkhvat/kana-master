@@ -63,11 +63,18 @@ const Text = styled.Text`
 `;
 
 interface ChooseValueProps {
-  title: string
-  questions: {text: string, key: string}[]
+  title: string;
+  questions: { text: string; key: string }[];
+  onCompleted: (isError: boolean) => void
+  trueKey: string
 }
 
-const ChooseValue: React.FC<ChooseValueProps> = ({ title, questions = [] }) => {
+const ChooseValue: React.FC<ChooseValueProps> = ({
+  title,
+  questions = [],
+  onCompleted,
+  trueKey,
+}) => {
   return (
     <Container>
       <Question>{title}</Question>
@@ -79,6 +86,9 @@ const ChooseValue: React.FC<ChooseValueProps> = ({ title, questions = [] }) => {
             isCorrect={false}
             isSelect={false}
             isError={false}
+            onPress={() => {
+              onCompleted(trueKey === question.key);
+            }}
           >
             <Text>{question.text}</Text>
           </Item>

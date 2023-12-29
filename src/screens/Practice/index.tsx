@@ -91,7 +91,8 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
     type: "choose-word";
 
     title: string;
-    questions: { text: string; key: string; }[]
+    questions: { text: string; key: string }[];
+    trueKey: string;
   };
 
   type QuestionWordBuilding = {
@@ -120,14 +121,19 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
   const getRandomWords = (
     excludedWords: string[],
     allWords: Word[]
-  ): Word | null => {
+  ): Word => {
     // const availableWords = excludedWords.indexOf(allWords);
     const availableWords = allWords.filter(
       (word) => !excludedWords.includes(word.romanji)
     );
 
     if (availableWords.length === 0) {
-      return null;
+      return {
+        kana: "null",
+        kanji: "null",
+        romanji: "null",
+        translate: "null",
+      };
     }
 
     const randomIndex = Math.floor(Math.random() * availableWords.length);
@@ -150,6 +156,26 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
   };
 
 
+  const selectedLetters = useAppSelector((state: RootState) => state.kana.selected);
+
+  const kanaLetters = [
+    ...selectedLetters.base.katakana,
+    ...selectedLetters.dakuon.katakana,
+    ...selectedLetters.handakuon.katakana,
+    ...selectedLetters.yoon.katakana,
+  ].map(item => lettersTable[item]);
+
+  const hiraLetters = [
+    ...selectedLetters.base.hiragana,
+    ...selectedLetters.dakuon.hiragana,
+    ...selectedLetters.handakuon.hiragana,
+    ...selectedLetters.yoon.hiragana,
+  ].map(item => lettersTable[item]);
+
+  const selectedWords = useAppSelector((state: RootState) => state.kana.selectedWords);
+
+  const kanaWords: Word[] = selectedWords.katakana;
+  const hiraWords: Word[] = selectedWords.hiragana;
   // type QuestionChoice = {
   //   type: "choose-word";
 
@@ -185,10 +211,20 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
 
     switch (type) {
       case TestMode.Choice: {
+        const word1 = getRandomWords([word.romanji], kana === "hirigana" ? hiraWords : kanaWords);
+        const word2 = getRandomWords([word.romanji, word1.romanji], kana === "hirigana" ? hiraWords : kanaWords);
+        const word3 = getRandomWords([word.romanji, word1.romanji, word2.romanji], kana === "hirigana" ? hiraWords : kanaWords);
+
         return {
           type: "choose-word",
-          title: "",
-          questions: [],
+          title: `Выбери раманджи для ${word.kana}`,
+          questions: shuffleArray([
+            { text: word.romanji, key: word.romanji },
+            { text: word1.romanji, key: word1.romanji },
+            { text: word2.romanji, key: word2.romanji },
+            { text: word3.romanji, key: word3.romanji },
+          ]),
+          trueKey: word.romanji,
         };
       }
       case TestMode.WordBuilding: {
@@ -204,33 +240,38 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
         };
       }
       case TestMode.FindPair: {
+        const word1 = getRandomWords([word.romanji], kana === "hirigana" ? hiraWords : kanaWords);
+        const word2 = getRandomWords([word.romanji, word1.romanji], kana === "hirigana" ? hiraWords : kanaWords);
+        const word3 = getRandomWords([word.romanji, word1.romanji, word2.romanji], kana === "hirigana" ? hiraWords : kanaWords);
+
+        const kanaElements = [word?.kana, word1?.kana, word2?.kana, word3?.kana];
+        const romanjiElements = [word?.romanji, word1?.romanji, word2?.romanji, word3?.romanji];
+
+        kanaElements.sort(() => Math.random() - 0.5);
+        romanjiElements.sort(() => Math.random() - 0.5);
+
+        const shuffledPairs = kanaElements.map((kana, index) => {
+          return [{ title: kana, id: kana }, { title: romanjiElements[index], id: romanjiElements[index] }];
+        });
+
         return {
           type: "find-pair-word",
-          title: "",
-          pairs: [],
-          answers: [],
+          title: `Сопоставь ${
+            kana === "hirigana" ? "хиригану" : "катакану"
+          } с романдзи.`,
+          pairs: shuffledPairs,
+          answers: [
+            [word?.kana, word?.romanji],
+            [word1?.kana, word1?.romanji],
+            [word2?.kana, word2?.romanji],
+            [word3?.kana, word3?.romanji],
+          ],
         };
       }
     }
   };
 
-  const selectedLetters = useAppSelector((state: RootState) => state.kana.selected);
-
-  const kanaLetters = [
-    ...selectedLetters.base.katakana,
-    ...selectedLetters.dakuon.katakana,
-    ...selectedLetters.handakuon.katakana,
-    ...selectedLetters.yoon.katakana,
-  ].map(item => lettersTable[item]);
-
-  const hiraLetters = [
-    ...selectedLetters.base.hiragana,
-    ...selectedLetters.dakuon.hiragana,
-    ...selectedLetters.handakuon.hiragana,
-    ...selectedLetters.yoon.hiragana,
-  ].map(item => lettersTable[item]);
-
-  const selectedWords = useAppSelector((state: RootState) => state.kana.selectedWords);
+  
 
   useEffect(() => {
     if (mode == PracticeScreenMode.WordGame) {
@@ -241,8 +282,7 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
         | QuestionFindPair
       )[] = [];
 
-      const kanaWords: Word[] = selectedWords.katakana;
-      const hiraWords: Word[] = selectedWords.hiragana;
+      
       const wordsCount: number = kanaWords.length + hiraWords.length;
 
       const questionsCount: number = wordsCount > 20 ? 20 : wordsCount;
@@ -426,6 +466,7 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
         <FindPair
           pairs={question.pairs}
           answers={question.answers}
+          onCompleted={(isError) => onFinish(!isError)}
           title={question.title}
         />
       );
@@ -454,7 +495,12 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
       mode == PracticeScreenMode.WordGame
     ) {
       return (
-        <ChooseValue title={currentQuestion.title} questions={currentQuestion.questions} />
+        <ChooseValue
+          title={currentQuestion.title}
+          questions={currentQuestion.questions}
+          onCompleted={(isError) => onFinish(!isError)}
+          trueKey={currentQuestion.trueKey}
+        />
       );      
     }
   };
