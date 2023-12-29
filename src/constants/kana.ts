@@ -30,6 +30,11 @@ export enum Kana {
   English = "English"
 }
 
+export enum KanaAlphabet {
+  Hiragana = "Hiragana",
+  Katakana = "Katakana",
+}
+
 export enum KanaSection {
   BasicHiragana = "BasicHiragana",
   BasicKatakana = "BasicKatakana",
@@ -72,3 +77,8 @@ export const YOON_SECTIONS = [KanaSection.YoonHiragana, KanaSection.YoonKatakana
 export const TEST_DELAY = 100;
 
 export type Alphabet = "base" | "dakuon" | "handakuon" | "yoon"
+
+export const QuestionTypeChooseLetter = "choose-letter";
+export const QuestionTypeChooseWord = "choose-word";
+export const QuestionTypeBuildingWord = "building-word";
+export const QuestionTypeFindPairWord = "find-pair-word";

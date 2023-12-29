@@ -9,23 +9,19 @@ import styled from "styled-components/native";
 
 import useStats from "./hooks/useStats";
 
-import ChooseLetters from "@/components/Practice/ChooseLetters";
-import ChooseValue from "@/components/Practice/ChooseValue";
-import FindPair from "@/components/Practice/FindPair";
 import ProgressBar from "@/components/Practice/ProgressBar";
-import SelectAnswers from "@/components/Practice/SelectAnswers";
-import ShowSymbol from "@/components/Practice/ShowSymbol";
+import ShowQuestion from "@/components/Practice/ShowQuestions";
 import Timer from "@/components/Practice/Timer";
-import { CardMode, DifficultyLevelType, Kana, PracticeScreenMode, TestMode } from "@/constants/kana";
-import { ILetter, lettersTable } from "@/data/lettersTable";
+import { CardMode, DifficultyLevelType, Kana, KanaAlphabet, PracticeScreenMode, QuestionTypeBuildingWord, QuestionTypeChooseLetter, QuestionTypeChooseWord, QuestionTypeFindPairWord, TestMode } from "@/constants/kana";
+import { lettersTable } from "@/data/lettersTable";
 import { Word } from "@/data/words";
-import { generateRandomLetters, shuffleArray } from "@/helpers/letters";
+import { shuffleArray } from "@/helpers/letters";
+import { getAnswers, getRandomWords } from "@/helpers/words";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { countAvailableWords } from "@/store/features/kana/slice";
 import { RootState } from "@/store/store";
 import { RootStackParamList } from "@/types/navigationTypes";
-
-
+import { AnyQuestion, Question } from "@/types/questions";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Practice">;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, "Practice">;
@@ -64,8 +60,8 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
   }, []);
 
   const { 
-    keysCardModeState, //  keysCardModeState ["hiragana_to_romaji", "romaji_to_hiragana"]
-    keysModeState, // keysModeState ["choice", "word_building", "find_pair"]
+    keysCardModeState,
+    keysModeState,
     keysDifficultyLevelState, 
     mode } = route.params;
 
@@ -79,82 +75,9 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
 
   const insets = useSafeAreaInsets();
 
-  type Question = {
-    type: "choose-letter"
-    symbol: string;
-    kana: Kana;
-    answers: { title: string; id: string; }[];
-    trueAnswer: string;
-  };
 
-  type QuestionChoice = {
-    type: "choose-word";
-
-    title: string;
-    questions: { text: string; key: string }[];
-    trueKey: string;
-  };
-
-  type QuestionWordBuilding = {
-    type: "building-word";
-
-    title: string;
-    romanji: string;
-    translate: string;
-    kana: string;
-    shuffle: string[];
-  };
-
-  type QuestionFindPair = {
-    type: "find-pair-word";
-
-    title: string
-    pairs: { title: string; id: string; }[][]
-    answers: string[][]
-  };
-
-  const [questions, setQuestions] = useState<
-    (Question | QuestionChoice | QuestionWordBuilding | QuestionFindPair)[]
-  >([]);
+  const [questions, setQuestions] = useState<AnyQuestion[]>([]);
   const [index, setQuestionIndex] = useState(0);
-
-  const getRandomWords = (
-    excludedWords: string[],
-    allWords: Word[]
-  ): Word => {
-    // const availableWords = excludedWords.indexOf(allWords);
-    const availableWords = allWords.filter(
-      (word) => !excludedWords.includes(word.romanji)
-    );
-
-    if (availableWords.length === 0) {
-      return {
-        kana: "null",
-        kanji: "null",
-        romanji: "null",
-        translate: "null",
-      };
-    }
-
-    const randomIndex = Math.floor(Math.random() * availableWords.length);
-    return availableWords[randomIndex];
-  };
-
-  const getAnswers = (l: ILetter[][], letter: ILetter, kana?: Kana) => {
-    return shuffleArray(
-      [
-        letter,
-        ...generateRandomLetters(l, {
-          limit: 3,
-          excludeLetter: letter,
-        }),
-      ].map(({ ka, hi, en, id }) => ({
-        title: kana === Kana.Hiragana ? hi : kana === Kana.Katakana ? ka : en,
-        id: id,
-      }))
-    );
-  };
-
 
   const selectedLetters = useAppSelector((state: RootState) => state.kana.selected);
 
@@ -176,47 +99,33 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
 
   const kanaWords: Word[] = selectedWords.katakana;
   const hiraWords: Word[] = selectedWords.hiragana;
-  // type QuestionChoice = {
-  //   type: "choose-word";
-
-  //   title: string;
-  //   questions: { text: string; key: string }[];
-  // };
-
-  // type QuestionWordBuilding = {
-  //   type: "building-word";
-
-  //   title: string;
-  //   romanji: string;
-  //   translate: string;
-  //   kana: string;
-  // };
-
-  // type QuestionFindPair = {
-  //   type: "find-pair-word";
-
-  //   title: string;
-  //   pairs: { title: string; id: string }[][];
-  //   answers: string[][];
-  // };
 
   const generateWordQuestion = (
     word: Word,
     questionTypes: TestMode[],
-    kana: "katakana" | "hirigana",
+    kana: KanaAlphabet,
     mode: "romanji" | "kana"
-  ): QuestionChoice | QuestionWordBuilding | QuestionFindPair => {
+  ): AnyQuestion => {
     const type =
       questionTypes[Math.floor(Math.random() * questionTypes.length)];
 
     switch (type) {
       case TestMode.Choice: {
-        const word1 = getRandomWords([word.romanji], kana === "hirigana" ? hiraWords : kanaWords);
-        const word2 = getRandomWords([word.romanji, word1.romanji], kana === "hirigana" ? hiraWords : kanaWords);
-        const word3 = getRandomWords([word.romanji, word1.romanji, word2.romanji], kana === "hirigana" ? hiraWords : kanaWords);
+        const word1 = getRandomWords(
+          [word.romanji],
+          kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
+        );
+        const word2 = getRandomWords(
+          [word.romanji, word1.romanji],
+          kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
+        );
+        const word3 = getRandomWords(
+          [word.romanji, word1.romanji, word2.romanji],
+          kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
+        );
 
         return {
-          type: "choose-word",
+          type: QuestionTypeChooseWord,
           title: `Выбери раманджи для ${word.kana}`,
           questions: shuffleArray([
             { text: word.romanji, key: word.romanji },
@@ -229,8 +138,14 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
       }
       case TestMode.WordBuilding: {
         return {
-          type: "building-word",
-          title: `Выбери ${mode === "romanji" ? "романджи" : kana === "hirigana" ? "хиригану" : "катакану"}`,
+          type: QuestionTypeBuildingWord,
+          title: `Выбери ${
+            mode === "romanji"
+              ? "романджи"
+              : kana === KanaAlphabet.Hiragana
+                ? "хиригану"
+                : "катакану"
+          }`,
           romanji: mode === "romanji" ? word.kana : word.romanji,
           shuffle: shuffleArray(
             (mode === "romanji" ? word.romanji : word.kana).split("")
@@ -240,24 +155,46 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
         };
       }
       case TestMode.FindPair: {
-        const word1 = getRandomWords([word.romanji], kana === "hirigana" ? hiraWords : kanaWords);
-        const word2 = getRandomWords([word.romanji, word1.romanji], kana === "hirigana" ? hiraWords : kanaWords);
-        const word3 = getRandomWords([word.romanji, word1.romanji, word2.romanji], kana === "hirigana" ? hiraWords : kanaWords);
+        const word1 = getRandomWords(
+          [word.romanji],
+          kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
+        );
+        const word2 = getRandomWords(
+          [word.romanji, word1.romanji],
+          kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
+        );
+        const word3 = getRandomWords(
+          [word.romanji, word1.romanji, word2.romanji],
+          kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
+        );
 
-        const kanaElements = [word?.kana, word1?.kana, word2?.kana, word3?.kana];
-        const romanjiElements = [word?.romanji, word1?.romanji, word2?.romanji, word3?.romanji];
+        const kanaElements = [
+          word?.kana,
+          word1?.kana,
+          word2?.kana,
+          word3?.kana,
+        ];
+        const romanjiElements = [
+          word?.romanji,
+          word1?.romanji,
+          word2?.romanji,
+          word3?.romanji,
+        ];
 
         kanaElements.sort(() => Math.random() - 0.5);
         romanjiElements.sort(() => Math.random() - 0.5);
 
         const shuffledPairs = kanaElements.map((kana, index) => {
-          return [{ title: kana, id: kana }, { title: romanjiElements[index], id: romanjiElements[index] }];
+          return [
+            { title: kana, id: kana },
+            { title: romanjiElements[index], id: romanjiElements[index] },
+          ];
         });
 
         return {
-          type: "find-pair-word",
+          type: QuestionTypeFindPairWord,
           title: `Сопоставь ${
-            kana === "hirigana" ? "хиригану" : "катакану"
+            kana === KanaAlphabet.Hiragana ? "хиригану" : "катакану"
           } с романдзи.`,
           pairs: shuffledPairs,
           answers: [
@@ -271,23 +208,14 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
     }
   };
 
-  
-
   useEffect(() => {
     if (mode == PracticeScreenMode.WordGame) {
-      const questions: (
-        | Question
-        | QuestionChoice
-        | QuestionWordBuilding
-        | QuestionFindPair
-      )[] = [];
-
+      const questions: AnyQuestion[] = [];
       
       const wordsCount: number = kanaWords.length + hiraWords.length;
 
       const questionsCount: number = wordsCount > 20 ? 20 : wordsCount;
 
-      // Generate questions for Kana
       const questionTypes: CardMode[] = [];
       
       if (keysCardModeState.includes(CardMode.hiraganaToRomaji)) questionTypes.push(CardMode.hiraganaToRomaji);
@@ -313,7 +241,7 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
 
             if (word !== null) {
                addedQuestionHira.push(word?.romanji);
-               questions.push(generateWordQuestion(word, cardTypes, "hirigana", "kana"));
+               questions.push(generateWordQuestion(word, cardTypes, KanaAlphabet.Hiragana, "kana"));
             }
             continue;
           }
@@ -323,7 +251,7 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
             if (word !== null) {
                addedQuestionHira.push(word?.romanji);
                questions.push(
-                 generateWordQuestion(word, cardTypes, "hirigana", "romanji")
+                 generateWordQuestion(word, cardTypes, KanaAlphabet.Hiragana, "romanji")
                );
             }
             continue;
@@ -332,7 +260,9 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
             const word = getRandomWords(addedQuestionKana, kanaWords);
             if (word !== null) {
                addedQuestionKana.push(word?.romanji);
-               questions.push(generateWordQuestion(word, cardTypes, "katakana", "kana"));
+               questions.push(
+                 generateWordQuestion(word, cardTypes, KanaAlphabet.Katakana, "kana")
+               );
             }
 
             continue;
@@ -341,7 +271,14 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
             const word = getRandomWords(addedQuestionKana, kanaWords);
             if (word !== null) {
                addedQuestionKana.push(word?.romanji);
-               questions.push(generateWordQuestion(word, cardTypes, "katakana", "romanji"));
+               questions.push(
+                 generateWordQuestion(
+                   word,
+                   cardTypes,
+                   KanaAlphabet.Katakana,
+                   "romanji"
+                 )
+               );
             }
             continue;
           }
@@ -369,15 +306,15 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
 
           switch (type) {
               case CardMode.katakanaToHiragana: {
-                questions.push({type: "choose-letter", symbol: letter.ka, kana: Kana.Katakana, answers: getAnswers([kanaLetters], letter, Kana.Hiragana), trueAnswer: letter.id });
+                questions.push({type: QuestionTypeChooseLetter, symbol: letter.ka, kana: Kana.Katakana, answers: getAnswers([kanaLetters], letter, Kana.Hiragana), trueAnswer: letter.id });
                 continue;
               }
               case CardMode.katakanaToRomaji: {
-                questions.push({type: "choose-letter", symbol: letter.ka, kana: Kana.Katakana, answers: getAnswers([kanaLetters], letter, Kana.English), trueAnswer: letter.id });
+                questions.push({type: QuestionTypeChooseLetter, symbol: letter.ka, kana: Kana.Katakana, answers: getAnswers([kanaLetters], letter, Kana.English), trueAnswer: letter.id });
                 continue;
               }
               case CardMode.romajiToKatakana: {
-                questions.push({type: "choose-letter", symbol: letter.en, kana: Kana.English, answers: getAnswers([kanaLetters], letter, Kana.Katakana), trueAnswer: letter.id });
+                questions.push({type: QuestionTypeChooseLetter, symbol: letter.en, kana: Kana.English, answers: getAnswers([kanaLetters], letter, Kana.Katakana), trueAnswer: letter.id });
                 continue;
               }
             }
@@ -399,15 +336,15 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
 
           switch (type) {
             case CardMode.hiraganaToKatakana: {
-              questions.push({type: "choose-letter", symbol: letter.hi, kana: Kana.Hiragana, answers: getAnswers([hiraLetters], letter, Kana.Katakana), trueAnswer: letter.id });
+              questions.push({type: QuestionTypeChooseLetter, symbol: letter.hi, kana: Kana.Hiragana, answers: getAnswers([hiraLetters], letter, Kana.Katakana), trueAnswer: letter.id });
               continue;
             }
             case CardMode.hiraganaToRomaji: {
-              questions.push({type: "choose-letter", symbol: letter.hi, kana: Kana.Hiragana, answers: getAnswers([hiraLetters], letter, Kana.English), trueAnswer: letter.id });
+              questions.push({type: QuestionTypeChooseLetter, symbol: letter.hi, kana: Kana.Hiragana, answers: getAnswers([hiraLetters], letter, Kana.English), trueAnswer: letter.id });
               continue;
             }
             case CardMode.romajiToHiragana: {
-              questions.push({type: "choose-letter", symbol: letter.en, kana: Kana.English, answers: getAnswers([hiraLetters], letter, Kana.Hiragana), trueAnswer: letter.id });
+              questions.push({type: QuestionTypeChooseLetter, symbol: letter.en, kana: Kana.English, answers: getAnswers([hiraLetters], letter, Kana.Hiragana), trueAnswer: letter.id });
               continue;
             }
           }
@@ -433,78 +370,6 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
     }
   };
 
-  const ShowQuestion = () => {
-    const currentQuestion = questions[index];
-
-    if (questions.length === 0) return <></>;
-
-    if (
-      currentQuestion?.type === "choose-letter" &&
-      mode === PracticeScreenMode.Testing
-    ) {
-      const question = currentQuestion as Question;
-
-      return (
-        <>
-          <ShowSymbol symbol={question.symbol} subtext={question.kana} />
-          <SelectAnswers
-            answers={question.answers}
-            onCompleted={onFinish}
-            trueAnswer={question.trueAnswer}
-          />
-        </>
-      );
-    }
-
-    if (
-      currentQuestion?.type === "find-pair-word" &&
-      mode == PracticeScreenMode.WordGame
-    ) {
-      const question = currentQuestion as QuestionFindPair;
-
-      return (
-        <FindPair
-          pairs={question.pairs}
-          answers={question.answers}
-          onCompleted={(isError) => onFinish(!isError)}
-          title={question.title}
-        />
-      );
-    }
-
-    if (
-      currentQuestion?.type === "building-word" &&
-      mode == PracticeScreenMode.WordGame
-    ) {
-      {
-        return (
-          <ChooseLetters
-            title={currentQuestion.title}
-            romanji={currentQuestion.romanji}
-            translate={currentQuestion.translate}
-            kana={currentQuestion.kana}
-            shuffle={currentQuestion.shuffle}
-            onFinish={(isError) => onFinish(!isError)}
-          />
-        );
-      }
-    }
-
-    if (
-      currentQuestion?.type === "choose-word" &&
-      mode == PracticeScreenMode.WordGame
-    ) {
-      return (
-        <ChooseValue
-          title={currentQuestion.title}
-          questions={currentQuestion.questions}
-          onCompleted={(isError) => onFinish(!isError)}
-          trueKey={currentQuestion.trueKey}
-        />
-      );      
-    }
-  };
-
   return (
     <Container paddingTop={insets.top}>
       <Header>
@@ -516,7 +381,11 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
         {IS_TIMER && mode === PracticeScreenMode.Testing && <Timer />}
       </Header>
 
-      {ShowQuestion()}
+      <ShowQuestion 
+        onFinish={onFinish}
+        questions={questions}
+        mode={mode}
+        question={questions[index]} />
     </Container>
   );
 }
