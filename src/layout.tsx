@@ -31,39 +31,6 @@ const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
 
-  const characters: string[] = [
-    "ア",
-    "イ",
-    "ウ",
-    "エ",
-    "オ",
-    "カ",
-    "キ",
-    "ク",
-    "ケ",
-    "コ",
-    "サ",
-    "シ",
-    "ス",
-    "セ",
-    "ソ",
-    "あ",
-    "い",
-    "う",
-    "え",
-    "お",
-    "か",
-    "き",
-    "く",
-    "け",
-    "こ",
-    "さ",
-  ];
-
-  const matchingWords = findWordsFromArray(words, characters);
-  console.log(matchingWords.length);
-
-
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

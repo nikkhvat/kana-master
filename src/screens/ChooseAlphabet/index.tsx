@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 
+import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -35,12 +36,17 @@ const HeaderButton = styled.Pressable`
 `;
 
 type ChooseAlphabetNavigationProp = StackNavigationProp<RootStackParamList, "ChooseAlphabet">;
+type ChooseAlphabetScreenRouteProp = RouteProp<RootStackParamList, "ChooseAlphabet">;
 
 interface ChooseAlphabetProps {
+  route: ChooseAlphabetScreenRouteProp;
   navigation: ChooseAlphabetNavigationProp;
 }
 
-const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
+const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ route, navigation }) => {
+
+  const { screen } = route.params;
+
   const insets = useSafeAreaInsets();
 
   const colors = useTheme().colors as Colors;
@@ -60,7 +66,9 @@ const ChooseAlphabet: React.FC<ChooseAlphabetProps> = ({ navigation }) => {
         </HeaderButton>
       </Header>
 
-      {!isModalVisible && <KanaCategory navigation={navigation} />}
+      {!isModalVisible && (
+        <KanaCategory screen={screen} navigation={navigation} />
+      )}
       <ChooseAlphabetModal closeModal={closeModal} show={isModalVisible} />
     </Container>
   );

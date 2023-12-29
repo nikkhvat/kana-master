@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -9,7 +9,7 @@ import Button from "../Button";
 import { Colors } from "@/constants/app";
 import { Kana, KanaMode, KanaSection, LETTERS_COUNT } from "@/constants/kana";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { setKanaSelected } from "@/store/features/kana/slice";
+import { countAvailableWords, setKanaSelected } from "@/store/features/kana/slice";
 import { RootState } from "@/store/store";
 
 const InfoContainer = styled.View`
@@ -115,8 +115,8 @@ const SelectionRow = styled.View`
 
 type SelectionButtonProp = {
   empty?: boolean;
-  selected?: boolean
-  type?: "text" | "container"
+  selected?: boolean;
+  type?: "text" | "container";
 };
 
 const SelectionButton = styled.Pressable<SelectionButtonProp>`
@@ -143,11 +143,20 @@ const SelectionText = styled.Text<{active?: boolean}>`
 `;
 
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const KanaCategory = ({ navigation }: any) => {
+const KanaCategory = ({
+  screen,
+  navigation,
+}: {
+  screen: "Learning" | "Practice" | "WordBuilding";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  navigation: any;
+}) => {
   const dispatch = useAppDispatch();
+  
+  const SHOW_ALLOWED_WORDS = screen === "WordBuilding";
 
-  const SHOW_ALLOWED_WORDS = false;
+  const hiraganaSelectedWords = useAppSelector((state: RootState) => state.kana.selectedWords.hiragana);
+  const katakanaSelectedWords = useAppSelector((state: RootState) => state.kana.selectedWords.katakana);
 
   const selected = useAppSelector((state: RootState) => state.kana.selected);
 
@@ -160,6 +169,13 @@ const KanaCategory = ({ navigation }: any) => {
   const selectedLetters = useAppSelector(
     (state: RootState) => state.kana.selectedLetters
   );
+
+  useEffect(() => {
+    if (SHOW_ALLOWED_WORDS) {
+      dispatch(countAvailableWords());
+    }
+  }, [selected]);
+
 
   const IS_KANA_SELECTED =
     selected.base.katakana.length ===
@@ -254,8 +270,10 @@ const KanaCategory = ({ navigation }: any) => {
         {SHOW_ALLOWED_WORDS && <VerticalBorder />}
         {SHOW_ALLOWED_WORDS && (
           <InfoBlock>
-            <InfoTitle>24</InfoTitle>
-            <InfoSubTitle>Avaleble words</InfoSubTitle>
+            <InfoTitle>
+              {hiraganaSelectedWords.length + katakanaSelectedWords.length}
+            </InfoTitle>
+            <InfoSubTitle>Available words</InfoSubTitle>
           </InfoBlock>
         )}
       </InfoContainer>

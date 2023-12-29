@@ -1,5 +1,6 @@
 import { KanaSection } from "@/constants/kana";
 import { ILetter } from "@/data/lettersTable";
+import { Word } from "@/data/words";
 
 export interface InitialState {
   selectedLettersHiragana: number
@@ -22,6 +23,10 @@ export interface InitialState {
       katakana: Array<string>,
       hiragana: Array<string>,
     }
+  }
+  selectedWords: {
+    katakana: Word[],
+    hiragana: Word[],
   }
 }
 

@@ -114,7 +114,9 @@ const Practice: React.FC<PracticeProps> = ({ navigation }) => {
       <ScrollView style={{ paddingHorizontal: 20 }}>
         <PreviewCard
           imageSource={"practice"}
-          onEdit={() => navigation.navigate("ChooseAlphabet")}
+          onEdit={() => navigation.navigate("ChooseAlphabet", {
+            screen: "Practice"
+          })}
         />
 
         <CardModeView

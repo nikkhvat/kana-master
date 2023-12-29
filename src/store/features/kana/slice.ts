@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { InitialState, toggleLetterAction, toggleLettersAction } from "./types";
 
 import { Kana, KanaMode, KanaSection, LETTERS_COUNT } from "@/constants/kana";
-import { baseFlat, baseFlatLetters, dakuonFlat, dakuonFlatLetters, handakuonFlat, handakuonFlatLetters, yoonFlat, yoonFlatLetters } from "@/data/lettersTable";
+import { baseFlatLetters, dakuonFlatLetters, handakuonFlatLetters, lettersTable, yoonFlatLetters } from "@/data/lettersTable";
+import { words } from "@/data/words";
+import { findWordsFromArray } from "@/helpers/word";
 
 const initialState: InitialState = {
   selectedLettersHiragana: LETTERS_COUNT[KanaSection.BasicHiragana],
@@ -14,7 +16,8 @@ const initialState: InitialState = {
     dakuon: { katakana: dakuonFlatLetters, hiragana: dakuonFlatLetters },
     handakuon: { katakana: handakuonFlatLetters, hiragana: handakuonFlatLetters },
     yoon: { katakana: yoonFlatLetters, hiragana: yoonFlatLetters },
-  }
+  },
+  selectedWords: { katakana: [], hiragana: []}
 };
 
 function toggleLetterInArray(array: string[], letter: string) {
@@ -36,6 +39,27 @@ export const kanaSlice = createSlice({
   name: "kana",
   initialState,
   reducers: {
+    countAvailableWords: (state) => {
+      const kanaLetters = [
+        ...state.selected.base.katakana,
+        ...state.selected.dakuon.katakana,
+        ...state.selected.handakuon.katakana,
+        ...state.selected.yoon.katakana,
+      ].map(item => lettersTable[item].ka);
+
+      const hiraLetters = [
+        ...state.selected.base.hiragana,
+        ...state.selected.dakuon.hiragana,
+        ...state.selected.handakuon.hiragana,
+        ...state.selected.yoon.hiragana,
+      ].map(item => lettersTable[item].hi);
+      
+      const kanaMatchingWords = findWordsFromArray(words, kanaLetters);
+      const hiraMatchingWords = findWordsFromArray(words, hiraLetters);
+
+      state.selectedWords.hiragana = hiraMatchingWords;
+      state.selectedWords.katakana = kanaMatchingWords;
+    },
     resetKanaSelected: (state) => {
       state.selected = {
         base: { katakana: [], hiragana: [] },
@@ -189,6 +213,6 @@ export const kanaSlice = createSlice({
   },
 });
 
-export const { setKanaSelected, resetKanaSelected, toggleLetter, toggleSome } = kanaSlice.actions;
+export const { setKanaSelected, resetKanaSelected, toggleLetter, toggleSome, countAvailableWords } = kanaSlice.actions;
 
 export default kanaSlice.reducer;

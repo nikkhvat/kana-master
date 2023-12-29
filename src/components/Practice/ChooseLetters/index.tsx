@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import styled from "styled-components/native";
 
@@ -65,6 +65,7 @@ const ChooseLettersContainer = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   gap: 9px;
   margin-top: 30px;
 `;
@@ -97,58 +98,66 @@ interface ChooseLettersProps {
   title: string;
 
   romanji: string;
+  shuffle: string[];
   translate: string;
 
   kana: string;
 
-  onFinish?: (hasError: boolean) => void
+  onFinish?: (hasError: boolean) => void;
 }
 
+const DELAY = 500;
 
 const ChooseLetters: React.FC<ChooseLettersProps> = ({
   title,
   romanji,
   translate,
   kana,
+  shuffle,
   onFinish
 }) => {
-  const letters = kana.split("");
+  const letters = useMemo(() => kana.split(""), [kana]);
 
-  const emptyLetters = letters.map(() => null);
+  const [questionTitle, setTitle] = useState(`${title} ${romanji} (${translate})`);
 
-  const [selectedLetters, setSelectedLetters] = useState(emptyLetters as (null | {letter: string, index: number})[]);
+  const [shuffleLetters, setShuffleLetters] = useState(shuffle);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShuffleLetters(shuffle);
+      setTitle(`${title} ${romanji} (${translate})`);
+    }, DELAY);
+  }, [title, shuffle, romanji, translate]);
+
+  const emptyLetters = useMemo(() => letters.map(() => null), [letters]);
+
+  const [selectedLetters, setSelectedLetters] = useState(
+    emptyLetters as (null | { letter: string; index: number })[]
+  );
 
   const [trueAnswers, setTrueAnswers] = useState(
     emptyLetters as (null | true | false)[]
   );
 
-  const onClickLetter = (data: {index: number, letter: string}) => {    
+  const onClickLetter = (data: { index: number; letter: string }) => {
     let isFirstElem = false;
 
-    setSelectedLetters((prev) => prev.map(((item) => {
-      if (item === null && isFirstElem === false) {
-        isFirstElem = true;
-        return data;
-      } 
-      
-      return item;
-    })));
+    setSelectedLetters((prev) =>
+      prev.map((item) => {
+        if (item === null && !isFirstElem) {
+          isFirstElem = true;
+          return data;
+        }
+        return item;
+      })
+    );
   };
 
-  const isSelected = (data: {index: number, letter: string}) => {
-    let selected = false;
-
-    for (let i = 0; i < selectedLetters.length; i++) {
-      const element = selectedLetters[i];
-      
-      if (element?.index === data.index && element.letter === data.letter) {
-        selected = true;
-      }
-    }
-
-
-    return selected;
-  };
+  const isSelected = (data: { index: number; letter: string }) =>
+    selectedLetters.some(
+      (element) =>
+        element?.index === data.index && element.letter === data.letter
+    );
 
   const reset = () => {
     setSelectedLetters(emptyLetters);
@@ -156,35 +165,28 @@ const ChooseLetters: React.FC<ChooseLettersProps> = ({
   };
 
   useEffect(() => {
-    if (selectedLetters[selectedLetters.length - 1] !== null) {
-      const answers = trueAnswers.map((_, index) => {
-        if (letters[index] === selectedLetters[index]?.letter) {
-          return true;
-        } else return false;
-      });
+    if (selectedLetters.every((letter) => letter !== null)) {
+      const answers = letters.map(
+        (letter, index) => letter === selectedLetters[index]?.letter
+      );
 
-      setTrueAnswers(() => answers);
+      setTrueAnswers(answers);
 
-      let hasError = false;
-
-      for (let i = 0; i < answers.length; i++) {
-        const answer = answers[i];
-        
-        if (answer === false) {
-          hasError = true;
-        }
-      }
+      const hasError = answers.some((answer) => !answer);
 
       onFinish?.(hasError);
+
+      setTimeout(reset, DELAY);
     }
-    
   }, [selectedLetters]);
+
+  useEffect(() => {
+    setTimeout(reset, DELAY);
+  }, [kana]);
 
   return (
     <Container>
-      <Question>
-        {title} {romanji} ({translate})
-      </Question>
+      <Question>{questionTitle}</Question>
 
       <Content>
         <WordContainer onPress={reset}>
@@ -200,7 +202,7 @@ const ChooseLetters: React.FC<ChooseLettersProps> = ({
         </WordContainer>
 
         <ChooseLettersContainer>
-          {letters.map((letter, index) => {
+          {shuffleLetters.map((letter, index) => {
             const data = { index: index, letter: letter };
             const selected = isSelected(data);
 

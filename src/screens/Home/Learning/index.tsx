@@ -35,7 +35,9 @@ const Learning: React.FC<PracticeProps> = ({ navigation }) => {
     <Container>
       <PreviewCard
         imageSource={"learning"}
-        onEdit={() => navigation.navigate("ChooseAlphabet")}
+        onEdit={() => navigation.navigate("ChooseAlphabet", {
+          screen: "Learning"
+        })}
       />
 
       <Content>

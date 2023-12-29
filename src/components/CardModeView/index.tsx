@@ -47,28 +47,26 @@ const CardModeView: React.FC<CardModeViewProp> = ({ title, buttons, onButtonClic
     <Container>
       <Title>{title}</Title>
       <ButtonsContainer>
-        <Column>
+        {buttons.length > 0 && <Column>
           {buttons[0].map((btn, idx) => (
             <Button
               onClick={() => btn.condition && onButtonClick?.(0, idx)}
               key={btn.title}
-              customStyles={{ flex: 1 }}
               title={btn.title}
               type={btn.condition ? btn.type : "disabled"}
             />
           ))}
-        </Column>
-        <Column>
+        </Column>}
+        {buttons.length > 1 && <Column>
           {buttons[1].map((btn, idx) => (
             <Button
               onClick={() => btn.condition && onButtonClick?.(1, idx)}
               key={btn.title}
-              customStyles={{ flex: 1 }}
               title={btn.title}
               type={btn.condition ? btn.type : "disabled"}
             />
           ))}
-        </Column>
+        </Column>}
       </ButtonsContainer>
     </Container>
   );

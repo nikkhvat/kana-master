@@ -10,7 +10,6 @@ export enum CardMode {
 
 export enum TestMode {
   Choice = "choice",
-  Write = "write",
   WordBuilding = "word_building",
   FindPair = "find_pair",
 }

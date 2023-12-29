@@ -19,20 +19,10 @@ interface WordBuildingProps {
 }
 
 const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
-  // const cardMode: CardModeViewProp["buttons"] = [
-  //   [
-  //     { title: "Hira → Kata", key: CardMode.hiraganaToKatakana, type: "active" },
-  //     { title: "Hira → Romaji", key: CardMode.hiraganaToRomaji, type: "inactive" },
-  //     { title: "Romaji → Hira", key: CardMode.romajiToHiragana, type: "inactive" },
-  //   ],
-  //   [
-  //     { title: "Kata → Hira", key: CardMode.katakanaToHiragana, type: "inactive" },
-  //     { title: "Kata → Romaji", key: CardMode.katakanaToRomaji, type: "inactive" },
-  //     { title: "Romaji → Kata", key: CardMode.romajiToKatakana, type: "inactive" },
-  //   ],
-  // ];
   const letters = useAppSelector((state: RootState) => state.kana.selected);
+
   const [cardModeState, setCardModeState] = useState<CardModeViewProp["buttons"]>([[], []]);
+  const [modeState, setModeState] = useState<CardModeViewProp["buttons"]>([]);
 
   useEffect(() => {
     const isHira =
@@ -46,33 +36,26 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
       letters.dakuon.katakana.length > 0 ||
       letters.handakuon.katakana.length > 0 ||
       letters.yoon.katakana.length > 0;
-    
+
     setCardModeState(() => [
       [
-        { title: "Hira → Romaji", key: CardMode.hiraganaToRomaji, type: isHira ? "active" : "inactive", condition: isHira, },
-        { title: "Romaji → Hira", key: CardMode.romajiToHiragana, type: "inactive", condition: isHira, },
-        { title: "Hira → Kata", key: CardMode.hiraganaToKatakana, type: isHira && isKata ? "active" : "inactive", condition: isHira && isKata, },
+        { title: "Hira → Romaji", key: CardMode.hiraganaToRomaji, type: isHira ? "active" : "inactive", condition: isHira },
+        { title: "Romaji → Hira", key: CardMode.romajiToHiragana, type: "inactive", condition: isHira },
       ],
       [
-        { title: "Kata → Romaji", key: CardMode.katakanaToRomaji, type: isKata ? "active" : "inactive", condition: isKata, },
-        { title: "Romaji → Kata", key: CardMode.romajiToKatakana, type: "inactive", condition: isKata, },
-        { title: "Kata → Hira", key: CardMode.katakanaToHiragana, type: isHira && isKata ? "active" : "inactive", condition: isHira && isKata, },
+        { title: "Kata → Romaji", key: CardMode.katakanaToRomaji, type: isKata ? "active" : "inactive", condition: isKata },
+        { title: "Romaji → Kata", key: CardMode.romajiToKatakana, type: "inactive", condition: isKata },
       ],
     ]);
+
+    setModeState([
+      [
+        { title: "Choice", key: TestMode.Choice, type: "active", condition: true },
+        { title: "Word building", key: TestMode.WordBuilding, type: "active", condition: true },
+      ],
+      [{ title: "Find the pair", key: TestMode.FindPair, type: "active", condition: true }],
+    ]);
   }, [letters]);
-
-  const Mode: CardModeViewProp["buttons"] = [
-    [
-      { title: "Choice", key: TestMode.Choice, type: "active" },
-      { title: "Word building", key: TestMode.WordBuilding, type: "inactive" },
-    ],
-    [
-      { title: "Write", key: TestMode.Write, type: "inactive" },
-      { title: "Find the pair", key: TestMode.FindPair, type: "inactive" },
-    ],
-  ];
-
-  const [modeState, setModeState] = useState(Mode);
 
   const toggleButtonState = (
     btnArray: typeof cardModeState,
@@ -140,7 +123,9 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
       <ScrollView style={{ paddingHorizontal: 20 }}>
         <PreviewCard
           imageSource={"wordgame"}
-          onEdit={() => navigation.navigate("ChooseAlphabet")}
+          onEdit={() => navigation.navigate("ChooseAlphabet", {
+            screen: "WordBuilding"
+          })}
         />
         <CardModeView
           title={"Card mode"}
@@ -181,7 +166,7 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
               cardModeState,
               "active"
             );
-            const keysModeState = getActiveFromArray(modeState, "weak");
+            const keysModeState = getActiveFromArray(modeState, "active");
 
             navigation.navigate("Practice", {
               keysCardModeState,
