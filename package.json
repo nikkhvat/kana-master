@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@benjeau/react-native-draw": "^0.8.3",
+    "@react-native-async-storage/async-storage": "^1.21.0",
     "@react-native-picker/picker": "2.6.1",
     "@react-native/metro-config": "^0.73.2",
     "@react-navigation/bottom-tabs": "^6.5.11",
@@ -39,6 +40,7 @@
     "react-native-svg": "14.1.0",
     "react-native-vector-icons": "^10.0.3",
     "react-redux": "^9.0.4",
+    "redux-persist": "^6.0.0",
     "styled-components": "^6.1.1",
     "use-sound": "^4.0.1"
   },
