@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useTranslation } from "react-i18next";
 import { TouchableOpacity } from "react-native";
 import { GestureHandlerRootView, HandlerStateChangeEvent, PanGestureHandler } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -78,12 +79,14 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     WordBuilding
   }
 
+  const { t } = useTranslation();
+
   const [screen, setScreen] = useState(Screen.Learning);
 
   const screens = [
-    { title: "Practice", val: Screen.Learning },
-    { title: "Testing", val: Screen.Practice },
-    { title: "Word game", val: Screen.WordBuilding },
+    { title: t("learning.practice"), val: Screen.Learning },
+    { title: t("learning.testing"), val: Screen.Practice },
+    { title: t("learning.wordGame"), val: Screen.WordBuilding },
   ];
 
   const insets = useSafeAreaInsets();
@@ -106,13 +109,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <PanGestureHandler onEnded={onSwipeEnd}>
         <Container paddingTop={insets.top}>
-          <Title>Learning</Title>
+          <Title>{t("tabs.learning")}</Title>
           <Header>
             {screens.map((item) => (
               <TouchableOpacity
                 key={item.val}
                 style={{
-                  padding: 10
+                  padding: 10,
                 }}
                 onPress={() => setScreen(item.val)}
               >

@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useTranslation } from "react-i18next";
 import { StatusBar } from "react-native";
 import { Appearance } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ThemeProvider } from "styled-components";
 
-import { Word, words } from "./data/words";
-import { findWordsFromArray } from "./helpers/word";
 
 import { Theme } from "@/constants/profile";
 import { useAppSelector } from "@/hooks/redux";
@@ -30,6 +29,14 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
+
+  const { t, i18n } = useTranslation();
+
+  const lang = useAppSelector((state: RootState) => state.profile.language);
+
+  useEffect(() => {
+    i18n.changeLanguage(lang);
+  }, [i18n, lang]);
 
   return (
     <Tab.Navigator
@@ -53,7 +60,7 @@ function BottomTabNavigator() {
         name="Learning"
         component={HomeScreen}
         options={{
-          title: "Learning",
+          title: t("tabs.learning"),
           headerTransparent: true,
           headerTitle: "",
         }}
@@ -62,7 +69,7 @@ function BottomTabNavigator() {
         name="Kana"
         component={Kana}
         options={{
-          title: "Kana",
+          title: t("tabs.kana"),
           headerTransparent: true,
           headerTitle: "",
         }}
@@ -71,6 +78,7 @@ function BottomTabNavigator() {
         name="Profile"
         component={SettingsScreen}
         options={{
+          title: t("tabs.profile"),
           headerTransparent: true,
           headerTitle: "",
         }}

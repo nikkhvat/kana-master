@@ -6,6 +6,7 @@ import { Theme } from "@/constants/profile";
 
 const initialState: InitialState = {
   theme: Theme.Auto,
+  language: "en"
 };
 
 export const profileSlice = createSlice({
@@ -14,10 +15,13 @@ export const profileSlice = createSlice({
   reducers: {
     setTheme: (state, action) => {
       state.theme = action.payload;
-    }
+    },
+    setLang: (state, action) => {
+      state.language = action.payload;
+    },
   },
 });
 
-export const { setTheme } = profileSlice.actions;
+export const { setTheme, setLang } = profileSlice.actions;
 
 export default profileSlice.reducer;

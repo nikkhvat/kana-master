@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 
 import Button from "@/components/Button";
@@ -12,6 +13,7 @@ import { useAppSelector } from "@/hooks/redux";
 import { RootState } from "@/store/store";
 import { RootStackParamList } from "@/types/navigationTypes";
 
+
 type WordBuildingNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
 interface WordBuildingProps {
@@ -19,6 +21,8 @@ interface WordBuildingProps {
 }
 
 const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
+  const { t } = useTranslation();
+  
   const letters = useAppSelector((state: RootState) => state.kana.selected);
 
   const [cardModeState, setCardModeState] = useState<CardModeViewProp["buttons"]>([[], []]);
@@ -50,10 +54,10 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
 
     setModeState([
       [
-        { title: "Choice", key: TestMode.Choice, type: "active", condition: true },
-        { title: "Word building", key: TestMode.WordBuilding, type: "active", condition: true },
+        { title: t("wordGame.choice"), key: TestMode.Choice, type: "active", condition: true },
+        { title: t("wordGame.wordBuilding"), key: TestMode.WordBuilding, type: "active", condition: true },
       ],
-      [{ title: "Find the pair", key: TestMode.FindPair, type: "active", condition: true }],
+      [{ title: t("wordGame.findThePair"), key: TestMode.FindPair, type: "active", condition: true }],
     ]);
   }, [letters]);
 
@@ -123,12 +127,14 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
       <ScrollView style={{ paddingHorizontal: 20 }}>
         <PreviewCard
           imageSource={"wordgame"}
-          onEdit={() => navigation.navigate("ChooseAlphabet", {
-            screen: "WordBuilding"
-          })}
+          onEdit={() =>
+            navigation.navigate("ChooseAlphabet", {
+              screen: "WordBuilding",
+            })
+          }
         />
         <CardModeView
-          title={"Card mode"}
+          title={t("wordGame.cardMode")}
           buttons={cardModeState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
@@ -142,7 +148,7 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
           }
         />
         <CardModeView
-          title={"Mode"}
+          title={t("wordGame.mode")}
           buttons={modeState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
@@ -158,7 +164,7 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
 
         <Button
           customStyles={{ marginTop: 60, marginBottom: 15 }}
-          title={"Start"}
+          title={t("wordGame.start")}
           type={"general"}
           fontSize={17}
           onClick={() => {

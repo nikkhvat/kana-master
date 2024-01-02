@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useTranslation } from "react-i18next";
 import { ScrollView, View } from "react-native";
 
 import Button from "@/components/Button";
@@ -12,6 +13,7 @@ import { useAppSelector } from "@/hooks/redux";
 import { RootState } from "@/store/store";
 import { RootStackParamList } from "@/types/navigationTypes";
 
+
 type PracticeNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
 interface PracticeProps {
@@ -19,7 +21,7 @@ interface PracticeProps {
 }
 
 const Practice: React.FC<PracticeProps> = ({ navigation }) => {
-
+  const { t } = useTranslation();
   
   const letters = useAppSelector((state: RootState) => state.kana.selected);
   const [cardModeState, setCardModeState] = useState<CardModeViewProp["buttons"]>([[], []]);
@@ -52,8 +54,16 @@ const Practice: React.FC<PracticeProps> = ({ navigation }) => {
   }, [letters]);
 
   const DifficultyLevel: CardModeViewProp["buttons"] = [
-    [{ title: "Time test", key: DifficultyLevelType.TimeTest, type: "inactive" }],
-    [{ title: "One attempt", key: DifficultyLevelType.OneAttempt, type: "inactive" }],
+    [{ 
+      title: t("difficultyLevel.timeTest"), 
+      key: DifficultyLevelType.TimeTest, 
+      type: "inactive" 
+    }],
+    [{ 
+      title: t("difficultyLevel.oneAttempt"), 
+      key: DifficultyLevelType.OneAttempt, 
+      type: "inactive" 
+    }],
   ];
 
   const getActiveFromArray = (objects: any, active: string) => {
@@ -114,13 +124,15 @@ const Practice: React.FC<PracticeProps> = ({ navigation }) => {
       <ScrollView style={{ paddingHorizontal: 20 }}>
         <PreviewCard
           imageSource={"practice"}
-          onEdit={() => navigation.navigate("ChooseAlphabet", {
-            screen: "Practice"
-          })}
+          onEdit={() =>
+            navigation.navigate("ChooseAlphabet", {
+              screen: "Practice",
+            })
+          }
         />
 
         <CardModeView
-          title={"Card mode"}
+          title={t("testing.cardMode")}
           buttons={cardModeState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
@@ -135,7 +147,7 @@ const Practice: React.FC<PracticeProps> = ({ navigation }) => {
         />
 
         <CardModeView
-          title={"Difficulty level"}
+          title={t("testing.difficultyLevel")}
           buttons={difficultyLevelState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
@@ -151,7 +163,7 @@ const Practice: React.FC<PracticeProps> = ({ navigation }) => {
 
         <Button
           customStyles={{ marginTop: 60, marginBottom: 15 }}
-          title={"Start"}
+          title={t("testing.start")}
           type={"general"}
           fontSize={17}
           onClick={() => {

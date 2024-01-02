@@ -1,5 +1,6 @@
 import React from "react";
 
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import styled from "styled-components/native";
@@ -7,7 +8,7 @@ import styled from "styled-components/native";
 import Button from "@/components/Button";
 import { Theme } from "@/constants/profile";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { setTheme } from "@/store/features/profile/slice";
+import { setLang, setTheme } from "@/store/features/profile/slice";
 import { RootState } from "@/store/store";
 
 const Container = styled.View<{paddingTop: number}>`
@@ -52,31 +53,37 @@ const Settings: React.FC = () => {
     dispatch(setTheme(theme));
   };
 
+  const { t, i18n } = useTranslation();
+
+  const setLanguage = (lang: string) => {
+    dispatch(setLang(lang));
+  };
+
   return (
     <Container paddingTop={insets.top}>
-      <Title>Profile</Title>
+      <Title>{t("tabs.profile")}</Title>
 
-      <SectionTitle>Statistics</SectionTitle>
+      <SectionTitle>{t("profile.statistics")}</SectionTitle>
 
       <Button
         customStyles={{ marginTop: 0 }}
-        title={"View statistics →"}
+        title={t("profile.viewStatistics")}
         onClick={() => {}}
         type={"inactive"}
       />
 
-      <SectionTitle>Theme</SectionTitle>
+      <SectionTitle>{t("profile.theme")}</SectionTitle>
 
       <SectionButtons>
         <Button
-          customStyles={{ marginTop: 15, flex: 1}}
-          title={"Light"}
+          customStyles={{ marginTop: 15, flex: 1 }}
+          title={t("profile.light")}
           onClick={() => changeTheme(Theme.Light)}
           type={theme === Theme.Light ? "general" : "inactive"}
         />
         <Button
-          customStyles={{ marginTop: 15, flex: 1}}
-          title={"Dark"}
+          customStyles={{ marginTop: 15, flex: 1 }}
+          title={t("profile.dark")}
           onClick={() => changeTheme(Theme.Dark)}
           type={theme === Theme.Dark ? "general" : "inactive"}
         />
@@ -84,37 +91,28 @@ const Settings: React.FC = () => {
       <SectionButtons>
         <Button
           customStyles={{ flex: 1 }}
-          title={"Auto"}
+          title={t("profile.auto")}
           onClick={() => changeTheme(Theme.Auto)}
           type={theme === Theme.Auto ? "general" : "inactive"}
         />
-        <View style={{flex: 1}} ></View>
+        <View style={{ flex: 1 }}></View>
       </SectionButtons>
 
-      <SectionTitle>Language</SectionTitle>
+      <SectionTitle>{t("profile.language")}</SectionTitle>
 
       <SectionButtons>
         <Button
-          customStyles={{ marginTop: 15, flex: 1}}
+          customStyles={{ marginTop: 15, flex: 1 }}
           title={"Русский"}
-          onClick={() => {}}
-          type={"general"}
+          onClick={() => setLanguage("ru")}
+          type={i18n.language === "ru" ? "general" : "inactive"}
         />
         <Button
-          customStyles={{ marginTop: 15, flex: 1}}
+          customStyles={{ marginTop: 15, flex: 1 }}
           title={"English"}
-          onClick={() => {}}
-          type={"inactive"}
+          onClick={() => setLanguage("en")}
+          type={i18n.language === "en" ? "general" : "inactive"}
         />
-      </SectionButtons>
-      <SectionButtons>
-        <Button
-          customStyles={{ flex: 1 }}
-          title={"Español"}
-          onClick={() => {}}
-          type={"inactive"}
-        />
-        <View style={{flex: 1}} ></View>
       </SectionButtons>
     </Container>
   );

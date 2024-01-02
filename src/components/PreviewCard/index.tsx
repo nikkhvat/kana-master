@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useTheme } from "@react-navigation/native";
+import { useTranslation } from "react-i18next";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styled from "styled-components/native";
 
@@ -76,6 +77,8 @@ const PreviewCard: React.FC<PreviewCard> = ({
   const selectedLettersHiragana = useAppSelector((state: RootState) => state.kana.selectedLettersHiragana);
   const selectedLettersKatakana = useAppSelector((state: RootState) => state.kana.selectedLettersKatakana);
 
+  const { t } = useTranslation();
+
   const preview =
     imageSource === "learning"
       ? learningImage
@@ -88,11 +91,11 @@ const PreviewCard: React.FC<PreviewCard> = ({
       <Content>
         <Title>{selectedLettersHiragana + selectedLettersKatakana}</Title>
         <SubTitle>
-          {selectedLettersHiragana ? "Hiragana" : " "}
+          {selectedLettersHiragana ? t("kana.hiragana") : " "}
           {selectedLettersHiragana !== 0 && selectedLettersKatakana !== 0
             ? " / "
             : ""}
-          {selectedLettersKatakana ? "Katakana" : " "}
+          {selectedLettersKatakana ? t("kana.katakana") : " "}
         </SubTitle>
         <Button onPress={() => onEdit?.()}>
           <Icon name={"square-edit-outline"} size={24} color={colors.color1} />

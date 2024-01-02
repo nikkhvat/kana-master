@@ -12,6 +12,12 @@ import { store, persistor } from "./src/store/store";
 
 import Layout from "@/layout";
 
+import "./src/libs/i18n/index"; 
+
+// import "@formatjs/intl-pluralrules/polyfill";
+// import "@formatjs/intl-pluralrules/polyfill-locales";
+// import "@formatjs/intl-pluralrules/locale-data/ru"; // Для русского языка
+// import "@formatjs/intl-pluralrules/locale-data/en"; // Для русского языка
 
 const App = () => {
   return (
