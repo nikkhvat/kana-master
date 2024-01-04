@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useRef, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { TouchableOpacity } from "react-native";
+import { Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView, HandlerStateChangeEvent, PanGestureHandler } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import styled from "styled-components/native";
@@ -72,6 +73,8 @@ interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
 }
 
+const screenWidth = Dimensions.get("window").width;
+
 const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   enum Screen {
     Learning,
@@ -98,10 +101,28 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
     if (typeof translationX === "number") {
       if (translationX > 50 && screen > Screen.Learning) {
-        setScreen(screen - 1);
+        handleTabPress(screen - 1);
       } else if (translationX < -50 && screen < Screen.WordBuilding) {
-        setScreen(screen + 1);
+        handleTabPress(screen + 1);
       }
+    }
+  };
+
+  const scrollViewRef = useRef<ScrollView>();
+
+  const handleTabPress = (index: number) => {
+    scrollViewRef?.current?.scrollTo({ x: index * screenWidth, animated: false });
+
+    switch (index) {
+      case 0:
+        setScreen(Screen.Learning);
+        break;
+      case 1:
+        setScreen(Screen.Practice);
+        break;
+      case 2:
+        setScreen(Screen.WordBuilding);
+        break;
     }
   };
 
@@ -117,7 +138,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
                 style={{
                   padding: 10,
                 }}
-                onPress={() => setScreen(item.val)}
+                onPress={() => handleTabPress(item.val)}
               >
                 <Tab active={item.val === screen}>{item.title}</Tab>
                 {item.val === screen && <TabLine />}
@@ -125,11 +146,18 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
             ))}
           </Header>
           <Content>
-            {screen === Screen.Learning && <Learning navigation={navigation} />}
-            {screen === Screen.Practice && <Practice navigation={navigation} />}
-            {screen === Screen.WordBuilding && (
+            <ScrollView
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              ref={scrollViewRef as any}
+              style={{ flex: 1 }}
+              scrollEnabled={false}
+            >
+              <Learning navigation={navigation} />
+              <Practice navigation={navigation} />
               <WordBuilding navigation={navigation} />
-            )}
+            </ScrollView>
           </Content>
         </Container>
       </PanGestureHandler>

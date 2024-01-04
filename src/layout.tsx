@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -29,14 +29,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
 function BottomTabNavigator() {
-
-  const { t, i18n } = useTranslation();
-
-  const lang = useAppSelector((state: RootState) => state.profile.language);
-
-  useEffect(() => {
-    i18n.changeLanguage(lang);
-  }, [i18n, lang]);
+  const { t } = useTranslation();
 
   return (
     <Tab.Navigator
@@ -81,18 +74,17 @@ function BottomTabNavigator() {
           title: t("tabs.profile"),
           headerTransparent: true,
           headerTitle: "",
-        }}
-      />
+        }} />
     </Tab.Navigator>
   );
 }
 
 const Layout = () => {
-  
-  const themeFromStore = useAppSelector(
-    (state: RootState) => state.profile.theme
-    );
-    
+  const { i18n } = useTranslation();
+
+  const lang = useAppSelector((state: RootState) => state.profile.language);
+  const themeFromStore = useAppSelector((state: RootState) => state.profile.theme);
+
   const scheme =
     themeFromStore === Theme.Auto
       ? Appearance.getColorScheme()
@@ -100,25 +92,35 @@ const Layout = () => {
         ? "dark"
         : "light";
 
+  const [themeApp, setThemeApp] = useState(scheme);
+
+  useEffect(() => {
+    const setTheme = async () => {
+      setThemeApp(themeFromStore === Theme.Auto
+        ? Appearance.getColorScheme()
+        : themeFromStore === Theme.Dark
+          ? "dark"
+          : "light");
+    };
+
+    setTheme();
+  }, [themeFromStore]);
+
+  useEffect(() => {
+    const changeLang = async () => i18n.changeLanguage(lang);
+    changeLang();
+  }, [i18n, lang]);
+    
   const dark = { mode: "dark", colors: darkTheme };
   const light = { mode: "light", colors: lightTheme };
 
-  const theme =
-    themeFromStore === Theme.Auto
-      ? scheme === "dark"
-        ? dark
-        : light
-      : themeFromStore === Theme.Dark
-        ? dark
-        : light;
-
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={themeApp === "dark" ? dark : light}>
       <StatusBar
-        barStyle={scheme === "dark" ? "light-content" : "dark-content"}
+        barStyle={themeApp === "dark" ? "light-content" : "dark-content"}
       />
       <NavigationContainer
-        theme={scheme === "dark" ? { dark: true, colors: darkTheme } : { dark: false, colors: lightTheme }} >
+        theme={themeApp === "dark" ? { dark: true, colors: darkTheme } : { dark: false, colors: lightTheme }} >
         <Stack.Navigator>
           <Stack.Screen
             name="Root"

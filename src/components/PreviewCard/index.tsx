@@ -7,9 +7,9 @@ import styled from "styled-components/native";
 
 import { Colors } from "@/constants/app";
 import { useAppSelector } from "@/hooks/redux";
-import learningImage from "@/resources/preview/learning.png";
-import practiceImage from "@/resources/preview/practice.png";
-import wordgameImage from "@/resources/preview/wordgame.png";
+import learningImage from "@/resources/preview/learning.jpg";
+import practiceImage from "@/resources/preview/practice.jpg";
+import wordgameImage from "@/resources/preview/wordgame.jpg";
 import { RootState } from "@/store/store";
 
 type PreviewCard = {

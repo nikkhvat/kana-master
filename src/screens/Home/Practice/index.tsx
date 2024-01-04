@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { ScrollView, View } from "react-native";
+import { Dimensions, ScrollView, View } from "react-native";
 
 import Button from "@/components/Button";
 import CardModeView, { CardModeViewProp } from "@/components/CardModeView";
@@ -19,6 +19,8 @@ type PracticeNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 interface PracticeProps {
   navigation: PracticeNavigationProp;
 }
+
+const screenWidth = Dimensions.get("window").width;
 
 const Practice: React.FC<PracticeProps> = ({ navigation }) => {
   const { t } = useTranslation();
@@ -120,7 +122,7 @@ const Practice: React.FC<PracticeProps> = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <View style={{width: screenWidth}} >
       <ScrollView style={{ paddingHorizontal: 20 }}>
         <PreviewCard
           imageSource={"practice"}

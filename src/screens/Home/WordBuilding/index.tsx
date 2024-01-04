@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { ScrollView, View } from "react-native";
+import { Dimensions, ScrollView, View } from "react-native";
 
 import Button from "@/components/Button";
 import CardModeView, { CardModeViewProp } from "@/components/CardModeView";
@@ -19,6 +19,8 @@ type WordBuildingNavigationProp = StackNavigationProp<RootStackParamList, "Home"
 interface WordBuildingProps {
   navigation: WordBuildingNavigationProp;
 }
+
+const screenWidth = Dimensions.get("window").width;
 
 const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
   const { t } = useTranslation();
@@ -123,7 +125,7 @@ const WordBuilding: React.FC<WordBuildingProps> = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <View style={{ width: screenWidth }} >
       <ScrollView style={{ paddingHorizontal: 20 }}>
         <PreviewCard
           imageSource={"wordgame"}
