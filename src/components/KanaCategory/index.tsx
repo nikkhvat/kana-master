@@ -12,137 +12,6 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { countAvailableWords, setKanaSelected } from "@/store/features/kana/slice";
 import { RootState } from "@/store/store";
 
-const InfoContainer = styled.View`
-  height: 120px;
-  border-color: ${({ theme }) => theme.colors.color2};
-  border-bottom-width: 1px;
-  padding-left: 20px;
-  padding-right: 20px;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-`;
-
-const InfoBlock = styled.View`
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  width: 40%;
-`;
-
-const InfoTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 34px;
-  font-weight: 700;
-`;
-
-const InfoSubTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 15px;
-  font-weight: 400;
-  margin-top: 10px;
-`;
-
-const VerticalBorder = styled.View`
-  width: 1px;
-  height: 70px;
-  background-color: ${({ theme }) => theme.colors.color2};
-`;
-
-const Scroll = styled.ScrollView`
-  padding-left: 20px;
-  padding-right: 20px;
-`;
-
-const KanaStatContainer = styled.View`
-  width: 100%;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  padding-top: 30px;
-`;
-
-const KanaCard = styled.View`
-  width: 108px;
-  height: 85px;
-  border-radius: 12px;
-  border-color: ${({ theme }) => theme.colors.color2};
-  border-width: 1px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-`;
-
-const KanaCardTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 13px;
-  font-weight: 700;
-`;
-
-const KanaCardSubTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.second_color3};
-  font-size: 22px;
-  font-weight: 700;
-`;
-
-const SelectionTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 17px;
-  font-weight: 700;
-  margin-top: 30px;
-  margin-bottom: 15px;
-`;
-
-const SelectionContainer = styled.View`
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 10px;
-`;
-
-const SelectionRow = styled.View`
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-`;
-
-type SelectionButtonProp = {
-  empty?: boolean;
-  selected?: boolean;
-  type?: "text" | "container";
-};
-
-const SelectionButton = styled.Pressable<SelectionButtonProp>`
-  height: 50px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-  border-width: ${({ empty }) => (empty ? "0px" : "1px")};
-  border-color: ${({ theme }) => theme.colors.color2};
-  background-color: ${({ theme, selected, type }) =>
-    selected
-      ? type == "text"
-        ? theme.colors.second_color3
-        : theme.colors.second_color4
-      : "transparent"};
-  flex: 1;
-`;
-
-const SelectionText = styled.Text<{active?: boolean}>`
-  color: ${({ theme, active }) => active ? theme.colors.color5 : theme.colors.color4};
-  font-size: 13px;
-  font-weight: 700;
-`;
-
-
 const KanaCategory = ({
   screen,
   navigation,
@@ -174,7 +43,7 @@ const KanaCategory = ({
     if (SHOW_ALLOWED_WORDS) {
       dispatch(countAvailableWords());
     }
-  }, [selected]);
+  }, [SHOW_ALLOWED_WORDS, dispatch, selected]);
 
 
   const IS_KANA_SELECTED =
@@ -442,3 +311,135 @@ const KanaCategory = ({
 };
 
 export default KanaCategory;
+
+
+const InfoContainer = styled.View`
+  height: 120px;
+  border-color: ${({ theme }) => theme.colors.color2};
+  border-bottom-width: 1px;
+  padding-left: 20px;
+  padding-right: 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+`;
+
+const InfoBlock = styled.View`
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 40%;
+`;
+
+const InfoTitle = styled.Text`
+  color: ${({ theme }) => theme.colors.color4};
+  font-size: 34px;
+  font-weight: 700;
+`;
+
+const InfoSubTitle = styled.Text`
+  color: ${({ theme }) => theme.colors.color4};
+  font-size: 15px;
+  font-weight: 400;
+  margin-top: 10px;
+`;
+
+const VerticalBorder = styled.View`
+  width: 1px;
+  height: 70px;
+  background-color: ${({ theme }) => theme.colors.color2};
+`;
+
+const Scroll = styled.ScrollView`
+  padding-left: 20px;
+  padding-right: 20px;
+`;
+
+const KanaStatContainer = styled.View`
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding-top: 30px;
+`;
+
+const KanaCard = styled.View`
+  width: 108px;
+  height: 85px;
+  border-radius: 12px;
+  border-color: ${({ theme }) => theme.colors.color2};
+  border-width: 1px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+`;
+
+const KanaCardTitle = styled.Text`
+  color: ${({ theme }) => theme.colors.color4};
+  font-size: 13px;
+  font-weight: 700;
+`;
+
+const KanaCardSubTitle = styled.Text`
+  color: ${({ theme }) => theme.colors.second_color3};
+  font-size: 22px;
+  font-weight: 700;
+`;
+
+const SelectionTitle = styled.Text`
+  color: ${({ theme }) => theme.colors.color4};
+  font-size: 17px;
+  font-weight: 700;
+  margin-top: 30px;
+  margin-bottom: 15px;
+`;
+
+const SelectionContainer = styled.View`
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+`;
+
+const SelectionRow = styled.View`
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+`;
+
+type SelectionButtonProp = {
+  empty?: boolean;
+  selected?: boolean;
+  type?: "text" | "container";
+};
+
+const SelectionButton = styled.Pressable<SelectionButtonProp>`
+  height: 50px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  border-width: ${({ empty }) => (empty ? "0px" : "1px")};
+  border-color: ${({ theme }) => theme.colors.color2};
+  background-color: ${({ theme, selected, type }) =>
+    selected
+      ? type == "text"
+        ? theme.colors.second_color3
+        : theme.colors.second_color4
+      : "transparent"};
+  flex: 1;
+`;
+
+const SelectionText = styled.Text<{active?: boolean}>`
+  color: ${({ theme, active }) => active ? theme.colors.color5 : theme.colors.color4};
+  font-size: 13px;
+  font-weight: 700;
+`;
+

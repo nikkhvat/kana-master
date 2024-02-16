@@ -12,60 +12,6 @@ import getSound from "@/resources/sounds/index";
 import getImage from "@/resources/svgs";
 import { darkTheme } from "@/themes/dark";
 
-const Container = styled.View`
-  flex: 1;
-  padding-top: 15px;
-  justify-content: flex-start;
-  background-color: ${({ theme }) => theme.colors.color1};
-`;
-
-const Header = styled.View`
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  padding-left: 20px;
-  padding-right: 20px;
-`;
-
-const TitleContainer = styled.View`
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 30px;
-`;
-
-const Title = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 17px;
-  font-weight: 700;
-`;
-
-const SubTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 34px;
-  font-weight: 700;
-  margin-top: 15px;
-`;
-
-const ButtonContainer = styled.View`
-  flex: 1;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 0;
-`;
-
-const Buttons = styled.View`
-  flex: 1;
-  padding-left: 20px;
-  padding-right: 20px;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 15px;
-  margin-top: 15px;
-`;
-
 interface KanaModalProp {
   show: boolean;
   kana: "hiragana" | "katakana";
@@ -214,3 +160,57 @@ const KanaModal: React.FC<KanaModalProp> = ({
 };
 
 export default KanaModal;
+
+const Container = styled.View`
+  flex: 1;
+  padding-top: 15px;
+  justify-content: flex-start;
+  background-color: ${({ theme }) => theme.colors.color1};
+`;
+
+const Header = styled.View`
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+`;
+
+const TitleContainer = styled.View`
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 30px;
+`;
+
+const Title = styled.Text`
+  color: ${({ theme }) => theme.colors.color4};
+  font-size: 17px;
+  font-weight: 700;
+`;
+
+const SubTitle = styled.Text`
+  color: ${({ theme }) => theme.colors.color4};
+  font-size: 34px;
+  font-weight: 700;
+  margin-top: 15px;
+`;
+
+const ButtonContainer = styled.View`
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0;
+`;
+
+const Buttons = styled.View`
+  flex: 1;
+  padding-left: 20px;
+  padding-right: 20px;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 15px;
+`;
