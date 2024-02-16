@@ -45,36 +45,32 @@ export const generateRandomLetters = (
   return letters;
 };
 
-export const getColumn = (rows: (number | ILetter)[][], columnId: number): ILetter[] => {
+export const getColumn = (rows: (ILetter)[][], columnId: number): ILetter[] => {
   const array: ILetter[] = [];
 
   for (let i = 0; i < rows.length; i++) {
     const row = rows[i];
     const item = row[columnId];
 
-    if (typeof item != "number") {
-      array.push(item);
-    }
+    array.push(item);
   }
 
   return array;
 };
 
-export const getRow = (rows: (number | ILetter)[][], rowId: number): ILetter[] => {
+export const getRow = (rows: (ILetter)[][], rowId: number): ILetter[] => {
   const array: ILetter[] = [];
 
   for (let i = 0; i < rows[rowId].length; i++) {
     const item = rows[rowId][i];
 
-    if (typeof item !== "number") {
-      array.push(item);
-    }
+    array.push(item);
   }
 
   return array;
 };
 
-export const selectedLetters = (rows: (number | ILetter)[][], selected: { rows: number[], cols: number[] }): ILetter[] => {
+export const selectedLetters = (rows: (ILetter)[][], selected: { rows: number[], cols: number[] }): ILetter[] => {
   const array: ILetter[] = [];
 
   for (let i = 0; i < selected.cols.length; i++) {

@@ -8,7 +8,6 @@ import styled from "styled-components/native";
 
 import Button from "@/components/Button";
 import { Colors } from "@/constants/app";
-import { ILetter } from "@/data/lettersTable";
 import getSound from "@/resources/sounds/index";
 import getImage from "@/resources/svgs";
 import { darkTheme } from "@/themes/dark";
@@ -70,10 +69,16 @@ const Buttons = styled.View`
 interface KanaModalProp {
   show: boolean;
   kana: "hiragana" | "katakana";
-  letter: ILetter;
+  letter: {
+    id: string;
+    ka: string;
+    hi: string;
+    en: string;
+    ru: string;
+  } | null;
   changeKata: (val: "hiragana" | "katakana") => void;
   closeModal: () => void;
-  drawSymbol: (letter: ILetter) => void;
+  drawSymbol: (enKey: string) => void;
   prevLetter: () => void;
   nextLetter: () => void;
 }
@@ -107,9 +112,9 @@ const KanaModal: React.FC<KanaModalProp> = ({
 
   const THEME = colors?.color1 === darkTheme?.color1 ? "DARK" : "LIGHT";
 
-  const playSound = async (letter: ILetter) => {
+  const playSound = async (enKey: string) => {
     try {
-      const sound = getSound(letter.en);
+      const sound = getSound(enKey);
 
       const { sound: playbackObject } = await Audio.Sound.createAsync(sound, {
         shouldPlay: true,
@@ -120,6 +125,18 @@ const KanaModal: React.FC<KanaModalProp> = ({
       console.log(error);
     }
   };
+
+  if (letter === null) return (
+    <Modal
+      visible={show}
+      presentationStyle="pageSheet"
+      animationType="slide"
+      onRequestClose={() => closeModal()}
+      onDismiss={() => closeModal()}
+    >
+      Letter is null :(
+    </Modal>
+  );
 
   return (
     <Modal
@@ -149,7 +166,7 @@ const KanaModal: React.FC<KanaModalProp> = ({
             <Button
               customStyles={{ flex: 1, marginTop: 0 }}
               title={"Sound"}
-              onClick={() => playSound(letter)}
+              onClick={() => playSound(letter.en)}
               type={"inactive"}
               image={"volume-high"}
             />
@@ -157,7 +174,7 @@ const KanaModal: React.FC<KanaModalProp> = ({
               customStyles={{ flex: 1, marginTop: 0 }}
               title={"Draw"}
               onClick={() => {
-                drawSymbol(letter);
+                drawSymbol(letter.en);
               }}
               type={"inactive"}
               image={"gesture-tap-hold"}

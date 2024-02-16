@@ -8,6 +8,8 @@ export interface ILetter {
   readonly id: UUID
 }
 
+export type LettersKeys = keyof typeof lettersTableById
+
 export const lettersTable: Record<string, ILetter> = {
   A: { id: "a151eeeb-2537-463c-ae23-d484d1bcb835", ka: "ア", hi: "あ", en: "A", ru: "А"},
   I: { id: "11017078-148a-4a44-b3f7-21d1df02d981", ka: "イ", hi: "い", en: "I", ru: "И"},
@@ -106,7 +108,7 @@ export const lettersTable: Record<string, ILetter> = {
   RYO: { id: "3aa9f1c6-21d3-419f-ad97-fda28085a281", ka: "りょ", hi: "りょ", en: "RYO", ru: "RYO"}
 };
 
-export const lettersTableById: Record<UUID, ILetter> = {
+export const lettersTableById = {
   "11017078-148a-4a44-b3f7-21d1df02d981":  {id: "11017078-148a-4a44-b3f7-21d1df02d981", ka: "イ", hi: "い", en: "I", ru: "И"},
   "a151eeeb-2537-463c-ae23-d484d1bcb835":  {id: "a151eeeb-2537-463c-ae23-d484d1bcb835", ka: "ア", hi: "あ", en: "A", ru: "А"},
   "70680d73-c9f9-4b4e-aac4-c82caa49668c":  {id: "70680d73-c9f9-4b4e-aac4-c82caa49668c", ka: "エ", hi: "え", en: "E", ru: "Э"},
@@ -271,15 +273,6 @@ export const base: ILetter[][] = [
     { id: "2a481d17-0d7c-492a-85fc-cab60e9fb6df", ka: "ン", hi: "ん", en: "N", ru: "Н"},
   ]
 ];
-
-export const baseWithSpaces = base.map((item) =>
-  item[0].en !== "WA" && item[0].en !== "YA" && item[0].en !== "N"
-    ? item
-    : item[0].en === "WA"
-      ? [item[0], 0, 0, 0, item[1]]
-      : item[0].en === "N"
-        ? [0, 0, item[0], 0, 0]
-        : [item[0], 0, item[1], 0, item[2]]);
 
 export const dakuon: ILetter[][] = [
   [

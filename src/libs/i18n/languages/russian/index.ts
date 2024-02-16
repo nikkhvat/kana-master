@@ -1,6 +1,6 @@
 const Russian = {
 	tabs: {
-		profile: "Профиль",
+		profile: "Профиль1",
 		learning: "Обучение",
 		kana: "Кана",
 	},
