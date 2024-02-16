@@ -31,25 +31,6 @@ interface LearnScreenProps {
   navigation: HomeScreenNavigationProp
 }
 
-const Container = styled.View<{paddingTop: number }>`
-  flex: 1;
-
-  padding: 20px;
-  padding-top: ${({ paddingTop }) => (paddingTop + 20) + "px"};
-  background-color: ${({ theme }) => theme.colors.color1};
-  justify-content: space-between;
-  align-items: center;
-
-  width: 100%;
-`;
-
-const Header = styled.View`
-  width: 100%;
-  flex-direction: column;
-  gap: 22px;
-`;
-
-
 function PracticeScreen({ route, navigation }: LearnScreenProps) {
   useKeepAwake();
 
@@ -68,13 +49,11 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
   const IS_TIMER = keysDifficultyLevelState.includes(DifficultyLevelType.TimeTest);
   const ONE_ATTEMPT = keysDifficultyLevelState.includes(DifficultyLevelType.OneAttempt);
   
-
   const stats = useStats({
     cardModeState: keysCardModeState,
   });
 
   const insets = useSafeAreaInsets();
-
 
   const [questions, setQuestions] = useState<AnyQuestion[]>([]);
   const [index, setQuestionIndex] = useState(0);
@@ -207,6 +186,19 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
       }
     }
   };
+
+  function getRandomElementsFromArray(arr: Question[], numElements = 25) {
+    const tempArray = [...arr];
+    const randomElements = [];
+
+    for (let i = 0; i < numElements && tempArray.length > 0; i++) {
+      const randomIndex = Math.floor(Math.random() * tempArray.length);
+      randomElements.push(tempArray.splice(randomIndex, 1)[0]);
+    }
+
+    return randomElements;
+  }
+
 
   useEffect(() => {
     if (mode == PracticeScreenMode.WordGame) {
@@ -351,7 +343,12 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
         }
       }
 
-      setQuestions(shuffleArray(questions));
+      if (questions.length > 20) {
+        setQuestions(shuffleArray(getRandomElementsFromArray(questions, 25)));
+      } else {
+        setQuestions(shuffleArray(questions));
+      }
+
     }
   }, []);
   
@@ -391,3 +388,22 @@ function PracticeScreen({ route, navigation }: LearnScreenProps) {
 }
 
 export default PracticeScreen;
+
+
+const Container = styled.View<{ paddingTop: number }>`
+  flex: 1;
+
+  padding: 20px;
+  padding-top: ${({ paddingTop }) => (paddingTop + 20) + "px"};
+  background-color: ${({ theme }) => theme.colors.color1};
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+`;
+
+const Header = styled.View`
+  width: 100%;
+  flex-direction: column;
+  gap: 22px;
+`;
