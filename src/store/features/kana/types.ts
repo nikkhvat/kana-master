@@ -1,6 +1,6 @@
-import { KanaSection } from "@/constants/kana";
-import { ILetter } from "@/data/lettersTable";
-import { Word } from "@/data/words";
+import { KanaSection } from "@/shared/constants/kana";
+import { ILetter } from "@/shared/data/lettersTable";
+import { Word } from "@/shared/data/words";
 
 export interface InitialState {
   selectedLettersHiragana: number

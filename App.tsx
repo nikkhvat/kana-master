@@ -6,9 +6,9 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import { store, persistor } from "./src/store/store";
 
-import Layout from "@/layout";
+import Layout from "@/app/layout";
 
-import "./src/libs/i18n/index"; 
+import "@/shared/lib/i18n/index"; 
 
 const App = () => {
   return (

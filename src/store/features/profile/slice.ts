@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { InitialState } from "./types";
 
-import { Theme } from "@/constants/profile";
+import { Theme } from "@/shared/constants/profile";
 
 const initialState: InitialState = {
   theme: Theme.Auto,

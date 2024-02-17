@@ -2,10 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { InitialState, toggleLetterAction, toggleLettersAction } from "./types";
 
-import { Kana, KanaMode, KanaSection, LETTERS_COUNT } from "@/constants/kana";
-import { baseFlatLetters, dakuonFlatLetters, handakuonFlatLetters, lettersTable, yoonFlatLetters } from "@/data/lettersTable";
-import { words } from "@/data/words";
-import { findWordsFromArray } from "@/helpers/word";
+import { Kana, KanaMode, KanaSection, LETTERS_COUNT } from "@/shared/constants/kana";
+import { baseFlatLetters, dakuonFlatLetters, handakuonFlatLetters, lettersTable, yoonFlatLetters } from "@/shared/data/lettersTable";
+import { words } from "@/shared/data/words";
+import { findWordsFromArray } from "@/shared/helpers/word";
 
 const initialState: InitialState = {
   selectedLettersHiragana: LETTERS_COUNT[KanaSection.BasicHiragana],
