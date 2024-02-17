@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Audio } from "expo-av";
 import { useTranslation } from "react-i18next";
-import {
-  View,
-  ScrollView,
-} from "react-native";
+import { SectionList } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 
 
+import { Alphabet } from "@/shared/constants/kana";
 import {
   LettersKeys, baseFlatLetters, dakuonFlatLetters,
   handakuonFlatLetters, lettersTable,
@@ -74,25 +72,30 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
         setActiveTab={(val) => setActiveTab(val as "hiragana" | "katakana")}
         options={["hiragana", "katakana"]}
       />
-      {isModalVisible === null && <ScrollView>
-        <NameContainer>
-          <Name>Basic</Name>
-        </NameContainer>
-        <EducationKanaTable type="base" kana={activeTab} onClick={setModalVisible} />
-        <NameContainer>
-          <Name>Dakuon</Name>
-        </NameContainer>
-        <EducationKanaTable type="dakuon" kana={activeTab} onClick={setModalVisible} />
-        <NameContainer>
-          <Name>Handakuon</Name>
-        </NameContainer>
-        <EducationKanaTable type="handakuon" kana={activeTab} onClick={setModalVisible} />
-        <NameContainer>
-          <Name>Yoon</Name>
-        </NameContainer>
-        <EducationKanaTable type="yoon" kana={activeTab} onClick={setModalVisible} />
-        <View style={{ marginBottom: 120 }}></View>
-      </ScrollView>}
+      <LineContainer />
+      {isModalVisible === null && 
+        <SectionList
+        sections={[
+          { title: "Base", data: ["base"] },
+          { title: "Dakuon", data: ["dakuon"] },
+          { title: "Handakuon", data: ["handakuon"] },
+          { title: "Yoon", data: ["yoon"] },
+        ]}
+          keyExtractor={(item, index) => item + index}
+          renderItem={({ item, index }) => (
+            <EducationKanaTable 
+              type={item as Alphabet} 
+              kana={activeTab} 
+              onClick={setModalVisible}
+              last={item === "yoon"} />
+          )}
+          renderSectionHeader={({ section: { title } }) => (
+            <NameContainer>
+              <Name>{title}</Name>
+            </NameContainer>
+          )}
+        />
+      }
       {isModalVisible !== null && (
         <EducationShowKanaModal
           show={isModalVisible === null ? false : true}
@@ -116,6 +119,7 @@ const Container = styled.View<{ paddingTop: number }>`
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.color1};
   padding-top: ${({ paddingTop }) => paddingTop + "px"};
+  padding-bottom: 140px;
 `;
 
 const Title = styled.Text`
@@ -132,12 +136,20 @@ const NameContainer = styled.View`
   padding-right: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
-  border-color: ${({ theme }) => theme.colors.color2};
-  border-bottom-width: 1px;
+  background-color: ${({ theme }) => theme.colors.color1};
 `;
 
 const Name = styled.Text`
   color: ${({ theme }) => theme.colors.color4};
   font-size: 17px;
   font-weight: 700;
+`;
+
+const LineContainer = styled.View`
+  width: 100%;
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.color2};
+  position: absolute;
+  top: 220px;
+  z-index: 999;
 `;

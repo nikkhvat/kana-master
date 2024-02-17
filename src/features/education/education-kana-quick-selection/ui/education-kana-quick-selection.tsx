@@ -6,13 +6,13 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styled, { useTheme } from "styled-components/native";
 
 
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { Colors } from "@/shared/constants/app";
 import { Kana, KanaMode, KanaSection, LETTERS_COUNT } from "@/shared/constants/kana";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
 import { countAvailableWords, setKanaSelected } from "@/store/features/kana/slice";
 import { RootState } from "@/store/store";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
 
 type ChooseAlphabetNavigationProp = StackNavigationProp<RootStackParamList, "ChooseAlphabet">;
 

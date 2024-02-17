@@ -15,6 +15,7 @@ interface EducationKanaTableProps {
   type: Alphabet;
   isEditMode?: boolean;
   onClick?: (id: string) => void
+  last?: boolean
 }
 
 const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
@@ -22,6 +23,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
   type,
   isEditMode,
   onClick = () => {},
+  last
 }) => {
   const dispatch = useAppDispatch();
 
@@ -118,7 +120,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
   const itemWidthLong = (screenWidth / 3) - (itemWidth / 3) - 23;
 
   return (
-    <Container>
+    <Container last={last} >
       {letters.length > 1 && (
         <RowButtons>
           {letters[0].items.map((cell, cellIndex) => {
@@ -220,12 +222,16 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
 export default EducationKanaTable;
 
 
-const Container = styled.View`
+const Container = styled.View<{ last?: boolean }>`
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 20px;
   margin-bottom: 30px;
   gap: 10px;
+  margin-bottom: 20px;
+  border-bottom-width: ${({ last }) => last ? "0px" : "1px"};
+  padding-bottom: 30px;
+  border-bottom-color: ${({ theme }) => theme.colors.color2};
 `;
 
 const Row = styled.View`

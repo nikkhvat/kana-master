@@ -7,9 +7,9 @@ import { GestureHandlerRootView, HandlerStateChangeEvent, PanGestureHandler } fr
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 
-import EducationLearning from "@/features/education/education-learning/education-learning";
-import EducationPractice from "@/features/education/education-practice/education-practice";
-import EducationWordGame from "@/features/education/education-word-game/education-word-game";
+import EducationLearning from "@/features/education/education-welcome-learning/education-learning";
+import EducationPractice from "@/features/education/education-welcome-practice/education-practice";
+import EducationWordGame from "@/features/education/education-welcome-word-game/education-word-game";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 
 

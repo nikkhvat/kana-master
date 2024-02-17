@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { Dimensions } from "react-native";
 import styled from "styled-components/native";
 
-import Button from "@/shared/ui/button/button";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
+import Button from "@/shared/ui/button/button";
 import KanaSelectedCard from "@/widgets/education/education-selected-card/education-kana-selected-card";
 
 

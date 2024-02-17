@@ -5,11 +5,11 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { Dimensions, ScrollView, View } from "react-native";
 
-import { CardMode, PracticeScreenMode, TestMode } from "@/shared/constants/kana";
 import { useAppSelector } from "@/hooks/redux";
+import { CardMode, PracticeScreenMode, TestMode } from "@/shared/constants/kana";
+import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
 import { RootState } from "@/store/store";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
 import EducationModeChange, { EducationModeChangeProps } from "@/widgets/education/education-mode-change/education-mode-change";
 import KanaSelectedCard from "@/widgets/education/education-selected-card/education-kana-selected-card";
 
