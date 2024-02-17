@@ -225,11 +225,10 @@ export default EducationKanaTable;
 const Container = styled.View<{ last?: boolean }>`
   padding-left: 20px;
   padding-right: 20px;
-  padding-top: 20px;
-  margin-bottom: 30px;
   gap: 10px;
   margin-bottom: 20px;
   border-bottom-width: ${({ last }) => last ? "0px" : "1px"};
+  padding-top: 10px;
   padding-bottom: 30px;
   border-bottom-color: ${({ theme }) => theme.colors.color2};
 `;
