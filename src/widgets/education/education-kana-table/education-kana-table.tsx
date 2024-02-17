@@ -25,6 +25,8 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
   onClick = () => {},
   last
 }) => {
+  console.log("RENDER EducationKanaTable");
+  
   const dispatch = useAppDispatch();
 
   const getData = useCallback((type: Alphabet) => {

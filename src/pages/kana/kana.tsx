@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Audio } from "expo-av";
 import { useTranslation } from "react-i18next";
-import { SectionList } from "react-native";
+import { SectionList, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 
@@ -25,6 +25,8 @@ interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
 }
 
+const MemoizedEducationKanaTable = React.memo(EducationKanaTable);
+
 export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
 
@@ -35,14 +37,18 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const [isModalVisible, setModalVisible] = useState<string | null>(null);
 
+  const openModal = useCallback((id: string) => {
+    setModalVisible(id);
+  }, []);
+
   const closeModal = () => setModalVisible(null);
 
-  const flatLetters = [
+  const flatLetters = useMemo(() => [
     ...baseFlatLetters,
     ...dakuonFlatLetters,
     ...handakuonFlatLetters,
     ...yoonFlatLetters,
-  ];
+  ], []);
 
   const prev = () => {
     const active = lettersTableById[isModalVisible as LettersKeys];
@@ -64,39 +70,42 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
     setModalVisible(newLetter.id);
   };
 
+  const sections = [
+    { title: "Base", data: ["base"] },
+    { title: "Dakuon", data: ["dakuon"] },
+    { title: "Handakuon", data: ["handakuon"] },
+    { title: "Yoon", data: ["yoon"] },
+  ];
+
+  const toggleTab = (val: string) => {
+    setActiveTab(val as "hiragana" | "katakana");
+  };
+
   return (
     <Container paddingTop={insets.top}>
       <Title>{t("tabs.kana")}</Title>
       <Switcher
         activeTab={activeTab}
-        setActiveTab={(val) => setActiveTab(val as "hiragana" | "katakana")}
+        setActiveTab={toggleTab}
         options={["hiragana", "katakana"]}
       />
-      <LineContainer />
-      {isModalVisible === null && 
-        <SectionList
-        sections={[
-          { title: "Base", data: ["base"] },
-          { title: "Dakuon", data: ["dakuon"] },
-          { title: "Handakuon", data: ["handakuon"] },
-          { title: "Yoon", data: ["yoon"] },
-        ]}
-          keyExtractor={(item, index) => item + index}
-          renderItem={({ item, index }) => (
-            <EducationKanaTable 
-              type={item as Alphabet} 
-              kana={activeTab} 
-              onClick={setModalVisible}
-              last={item === "yoon"} />
+      <LineContainer val={insets.top} />
+      <SectionList
+        sections={sections}
+        keyExtractor={(item, index) => item + index}
+        renderItem={({ item }) => (
+          <MemoizedEducationKanaTable 
+            type={item as Alphabet} 
+            kana={activeTab} 
+            onClick={openModal}
+            last={item === "yoon"} />
           )}
-          renderSectionHeader={({ section: { title } }) => (
-            <NameContainer>
-              <Name>{title}</Name>
-            </NameContainer>
-          )}
-        />
-      }
-      {isModalVisible !== null && (
+        renderSectionHeader={({ section: { title } }) => (
+          <NameContainer>
+            <Name>{title}</Name>
+          </NameContainer>
+        )} />
+
         <EducationShowKanaModal
           show={isModalVisible === null ? false : true}
           kana={activeTab}
@@ -107,7 +116,6 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
           prevLetter={prev}
           nextLetter={next}
         />
-      )}
     </Container>
   );
 };
@@ -145,11 +153,12 @@ const Name = styled.Text`
   font-weight: 700;
 `;
 
-const LineContainer = styled.View`
+const LineContainer = styled.View<{ val: number }>`
   width: 100%;
   height: 1px;
   background-color: ${({ theme }) => theme.colors.color2};
   position: absolute;
   top: 220px;
   z-index: 999;
+  top: ${({ val }) => (val + 160) + "px"};;
 `;
