@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { InitialState, toggleLetterAction, toggleLettersAction } from "./types";
 
 import { Kana, KanaMode, KanaSection, LETTERS_COUNT } from "@/shared/constants/kana";
-import { baseFlatLetters, dakuonFlatLetters, handakuonFlatLetters, lettersTable, yoonFlatLetters } from "@/shared/data/lettersTable";
+import { LettersKeys, baseFlatLettersId, dakuonFlatLettersId, handakuonFlatLettersId, lettersTableById, yoonFlatLettersId } from "@/shared/data/lettersTable";
 import { words } from "@/shared/data/words";
 import { findWordsFromArray } from "@/shared/helpers/word";
 
@@ -12,10 +12,10 @@ const initialState: InitialState = {
   selectedLettersKatakana: LETTERS_COUNT[KanaSection.BasicKatakana],
   selectedLetters: LETTERS_COUNT[KanaSection.BasicHiragana] + LETTERS_COUNT[KanaSection.BasicKatakana],
   selected: {
-    base: { katakana: baseFlatLetters, hiragana: baseFlatLetters },
-    dakuon: { katakana: dakuonFlatLetters, hiragana: dakuonFlatLetters },
-    handakuon: { katakana: handakuonFlatLetters, hiragana: handakuonFlatLetters },
-    yoon: { katakana: yoonFlatLetters, hiragana: yoonFlatLetters },
+    base: { katakana: baseFlatLettersId, hiragana: baseFlatLettersId },
+    dakuon: { katakana: dakuonFlatLettersId, hiragana: dakuonFlatLettersId },
+    handakuon: { katakana: handakuonFlatLettersId, hiragana: handakuonFlatLettersId },
+    yoon: { katakana: yoonFlatLettersId, hiragana: yoonFlatLettersId },
   },
   selectedWords: { katakana: [], hiragana: []}
 };
@@ -45,14 +45,14 @@ export const kanaSlice = createSlice({
         ...state.selected.dakuon.katakana,
         ...state.selected.handakuon.katakana,
         ...state.selected.yoon.katakana,
-      ].map(item => lettersTable[item].ka);
+      ].map(item => lettersTableById[item as LettersKeys].ka);
 
       const hiraLetters = [
         ...state.selected.base.hiragana,
         ...state.selected.dakuon.hiragana,
         ...state.selected.handakuon.hiragana,
         ...state.selected.yoon.hiragana,
-      ].map(item => lettersTable[item].hi);
+      ].map(item => lettersTableById[item as LettersKeys].hi);
       
       const kanaMatchingWords = findWordsFromArray(words, kanaLetters);
       const hiraMatchingWords = findWordsFromArray(words, hiraLetters);
@@ -104,42 +104,42 @@ export const kanaSlice = createSlice({
     setKanaSelected: (state, action) => {
       if (action.payload === KanaSection.BasicHiragana) {
         const condition = state.selected.base.hiragana.length === LETTERS_COUNT[KanaSection.BasicHiragana];
-        state.selected.base.hiragana = condition ? [] : baseFlatLetters;
+        state.selected.base.hiragana = condition ? [] : baseFlatLettersId;
       }
 
       if (action.payload === KanaSection.BasicKatakana) {
         const condition = state.selected.base.katakana.length === LETTERS_COUNT[KanaSection.BasicKatakana];
-        state.selected.base.katakana = condition ? [] : baseFlatLetters;
+        state.selected.base.katakana = condition ? [] : baseFlatLettersId;
       }
 
       if (action.payload === KanaSection.DakuonKatakana) {
         const condition = state.selected.dakuon.katakana.length === LETTERS_COUNT[KanaSection.DakuonKatakana];
-        state.selected.dakuon.katakana = condition ? [] : dakuonFlatLetters;
+        state.selected.dakuon.katakana = condition ? [] : dakuonFlatLettersId;
       }
 
       if (action.payload === KanaSection.DakuonHiragana) {
         const condition = state.selected.dakuon.hiragana.length === LETTERS_COUNT[KanaSection.DakuonHiragana];
-        state.selected.dakuon.hiragana = condition ? [] : dakuonFlatLetters;
+        state.selected.dakuon.hiragana = condition ? [] : dakuonFlatLettersId;
       }
 
       if (action.payload === KanaSection.HandakuonKatakana) {
         const condition = state.selected.handakuon.katakana.length === LETTERS_COUNT[KanaSection.HandakuonKatakana];
-        state.selected.handakuon.katakana = condition ? [] : handakuonFlatLetters;
+        state.selected.handakuon.katakana = condition ? [] : handakuonFlatLettersId;
       }
 
       if (action.payload === KanaSection.HandakuonHiragana) {
         const condition = state.selected.handakuon.hiragana.length === LETTERS_COUNT[KanaSection.HandakuonHiragana];
-        state.selected.handakuon.hiragana = condition ? [] : handakuonFlatLetters;
+        state.selected.handakuon.hiragana = condition ? [] : handakuonFlatLettersId;
       }
 
       if (action.payload === KanaSection.YoonKatakana) {
         const condition = state.selected.yoon.katakana.length === LETTERS_COUNT[KanaSection.YoonKatakana];
-        state.selected.yoon.katakana = condition ? [] : yoonFlatLetters;
+        state.selected.yoon.katakana = condition ? [] : yoonFlatLettersId;
       }
 
       if (action.payload === KanaSection.YoonHiragana) {
         const condition = state.selected.yoon.hiragana.length === LETTERS_COUNT[KanaSection.YoonHiragana];
-        state.selected.yoon.hiragana = condition ? [] : yoonFlatLetters;
+        state.selected.yoon.hiragana = condition ? [] : yoonFlatLettersId;
       }
 
       if (action.payload === Kana.Hiragana) {
@@ -148,10 +148,10 @@ export const kanaSlice = createSlice({
           state.selected.handakuon.hiragana.length === LETTERS_COUNT[KanaSection.HandakuonHiragana] &&
           state.selected.yoon.hiragana.length === LETTERS_COUNT[KanaSection.YoonHiragana];
 
-        state.selected.base.hiragana = condition ? [] : baseFlatLetters;
-        state.selected.dakuon.hiragana = condition ? [] : dakuonFlatLetters;
-        state.selected.handakuon.hiragana = condition ? [] : handakuonFlatLetters;
-        state.selected.yoon.hiragana = condition ? [] : yoonFlatLetters;
+        state.selected.base.hiragana = condition ? [] : baseFlatLettersId;
+        state.selected.dakuon.hiragana = condition ? [] : dakuonFlatLettersId;
+        state.selected.handakuon.hiragana = condition ? [] : handakuonFlatLettersId;
+        state.selected.yoon.hiragana = condition ? [] : yoonFlatLettersId;
       }
 
       if (action.payload === Kana.Katakana) {
@@ -160,42 +160,42 @@ export const kanaSlice = createSlice({
           state.selected.handakuon.katakana.length === LETTERS_COUNT[KanaSection.HandakuonKatakana] &&
           state.selected.yoon.katakana.length === LETTERS_COUNT[KanaSection.YoonKatakana];
 
-        state.selected.base.katakana = condition ? [] : baseFlatLetters;
-        state.selected.dakuon.katakana = condition ? [] : dakuonFlatLetters;
-        state.selected.handakuon.katakana = condition ? [] : handakuonFlatLetters;
-        state.selected.yoon.katakana = condition ? [] : yoonFlatLetters;
+        state.selected.base.katakana = condition ? [] : baseFlatLettersId;
+        state.selected.dakuon.katakana = condition ? [] : dakuonFlatLettersId;
+        state.selected.handakuon.katakana = condition ? [] : handakuonFlatLettersId;
+        state.selected.yoon.katakana = condition ? [] : yoonFlatLettersId;
       }
 
       if (action.payload === KanaMode.Basic) {
         const condition = state.selected.base.hiragana.length === LETTERS_COUNT[KanaSection.BasicHiragana] &&
           state.selected.base.katakana.length === LETTERS_COUNT[KanaSection.BasicKatakana];
 
-        state.selected.base.hiragana = condition ? [] : baseFlatLetters;
-        state.selected.base.katakana = condition ? [] : baseFlatLetters;
+        state.selected.base.hiragana = condition ? [] : baseFlatLettersId;
+        state.selected.base.katakana = condition ? [] : baseFlatLettersId;
       }
 
       if (action.payload === KanaMode.Dakuon) {
         const condition = state.selected.dakuon.hiragana.length === LETTERS_COUNT[KanaSection.DakuonHiragana] &&
           state.selected.dakuon.katakana.length === LETTERS_COUNT[KanaSection.DakuonKatakana];
 
-        state.selected.dakuon.hiragana = condition ? [] : dakuonFlatLetters;
-        state.selected.dakuon.katakana = condition ? [] : dakuonFlatLetters;
+        state.selected.dakuon.hiragana = condition ? [] : dakuonFlatLettersId;
+        state.selected.dakuon.katakana = condition ? [] : dakuonFlatLettersId;
       }
 
       if (action.payload === KanaMode.Handakuon) {
         const condition = state.selected.handakuon.hiragana.length === LETTERS_COUNT[KanaSection.HandakuonHiragana] &&
           state.selected.handakuon.katakana.length === LETTERS_COUNT[KanaSection.HandakuonKatakana];
 
-        state.selected.handakuon.hiragana = condition ? [] : handakuonFlatLetters;
-        state.selected.handakuon.katakana = condition ? [] : handakuonFlatLetters;
+        state.selected.handakuon.hiragana = condition ? [] : handakuonFlatLettersId;
+        state.selected.handakuon.katakana = condition ? [] : handakuonFlatLettersId;
       }
 
       if (action.payload === KanaMode.Yoon) {
         const condition = state.selected.yoon.katakana.length === LETTERS_COUNT[KanaSection.YoonKatakana] &&
           state.selected.yoon.hiragana.length === LETTERS_COUNT[KanaSection.YoonHiragana];
 
-        state.selected.yoon.katakana = condition ? [] : yoonFlatLetters;
-        state.selected.yoon.hiragana = condition ? [] : yoonFlatLetters;
+        state.selected.yoon.katakana = condition ? [] : yoonFlatLettersId;
+        state.selected.yoon.hiragana = condition ? [] : yoonFlatLettersId;
       }
 
       state.selectedLettersHiragana = state.selected.base.hiragana.length +

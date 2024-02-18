@@ -23,7 +23,6 @@ import { lightTheme } from "@/shared/themes/light";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import { RootState } from "@/store/store";
 
-
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
@@ -64,6 +63,7 @@ function BottomTabNavigator() {
           title: t("tabs.kana"),
           headerTransparent: true,
           headerTitle: "",
+          lazy: true
         }}
       />
       <Tab.Screen

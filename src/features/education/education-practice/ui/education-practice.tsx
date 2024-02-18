@@ -12,7 +12,7 @@ import { useEducationPracticeContext } from "../lib/context/education-practice-c
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import useStats from "@/hooks/useStats";
 import { CardMode, DifficultyLevelType, Kana, KanaAlphabet, PracticeScreenMode, QuestionTypeBuildingWord, QuestionTypeChooseLetter, QuestionTypeChooseWord, QuestionTypeFindPairWord, TestMode } from "@/shared/constants/kana";
-import { lettersTable } from "@/shared/data/lettersTable";
+import { LettersKeys, lettersTableById } from "@/shared/data/lettersTable";
 import { Word } from "@/shared/data/words";
 import { shuffleArray } from "@/shared/helpers/letters";
 import { getAnswers, getRandomWords } from "@/shared/helpers/words";
@@ -70,14 +70,14 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
     ...selectedLetters.dakuon.katakana,
     ...selectedLetters.handakuon.katakana,
     ...selectedLetters.yoon.katakana,
-  ].map(item => lettersTable[item]);
+  ].map(item => lettersTableById[item as LettersKeys]);
 
   const hiraLetters = [
     ...selectedLetters.base.hiragana,
     ...selectedLetters.dakuon.hiragana,
     ...selectedLetters.handakuon.hiragana,
     ...selectedLetters.yoon.hiragana,
-  ].map(item => lettersTable[item]);
+  ].map(item => lettersTableById[item as LettersKeys]);
 
   const selectedWords = useAppSelector((state: RootState) => state.kana.selectedWords);
 

@@ -6,7 +6,7 @@ import styled from "styled-components/native";
 import { useAppDispatch } from "@/hooks/redux";
 import Switcher from "@/shared/ui/switcher/switcher";
 import { resetKanaSelected } from "@/store/features/kana/slice";
-import EducationKanaTable from "@/widgets/education/education-kana-table/education-kana-table";
+import EducationKanaTableSelected from "@/widgets/education/education-kana-table-selected/education-kana-table";
 
 interface EducationKanaSelectionProps {
   closeModal: () => void
@@ -39,19 +39,19 @@ const EducationKanaSelection: React.FC<EducationKanaSelectionProps> = ({ closeMo
           <NameContainer>
             <Name>Basic</Name>
           </NameContainer>
-          <EducationKanaTable isEditMode={true} type="base" kana={activeTab} />
+          <EducationKanaTableSelected isEditMode={true} type="base" kana={activeTab} />
           <NameContainer>
             <Name>Dakuon</Name>
           </NameContainer>
-          <EducationKanaTable isEditMode={true} type="dakuon" kana={activeTab} />
+          <EducationKanaTableSelected isEditMode={true} type="dakuon" kana={activeTab} />
           <NameContainer>
             <Name>Handakuon</Name>
           </NameContainer>
-          <EducationKanaTable isEditMode={true} type="handakuon" kana={activeTab} />
+          <EducationKanaTableSelected isEditMode={true} type="handakuon" kana={activeTab} />
           <NameContainer>
             <Name>Yoon</Name>
           </NameContainer>
-          <EducationKanaTable isEditMode={true} type="yoon" kana={activeTab} />
+          <EducationKanaTableSelected isEditMode={true} type="yoon" kana={activeTab} />
           <View style={{ marginBottom: 120 }}></View>
         </Content>
       </Container>

@@ -1,220 +1,109 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 
 import { Dimensions } from "react-native";
 import styled from "styled-components/native";
 
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { Alphabet } from "@/shared/constants/kana";
-import { ILetter, dakuon, handakuon, base, yoon } from "@/shared/data/lettersTable";
-import { getLettersWithStatuses } from "@/shared/helpers/kana";
-import { toggleLetter, toggleSome } from "@/store/features/kana/slice";
-import { RootState } from "@/store/store";
+import { dakuon, handakuon, base, yoon, LettersKeys } from "@/shared/data/lettersTable";
 
 interface EducationKanaTableProps {
   kana: "hiragana" | "katakana";
   type: Alphabet;
-  isEditMode?: boolean;
-  onClick?: (id: string) => void
-  last?: boolean
+  onClick?: (id: LettersKeys) => void;
+  last?: boolean;
 }
 
-const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
-  kana,
-  type,
-  isEditMode,
-  onClick = () => {},
-  last
-}) => {
-  console.log("RENDER EducationKanaTable");
-  
-  const dispatch = useAppDispatch();
+const screenWidth = Dimensions.get("window").width;
 
-  const getData = useCallback((type: Alphabet) => {
-    if (type === "base") return base;
-    else if (type === "dakuon") return dakuon;
-    else if (type === "handakuon") return handakuon;
-    else if (type === "yoon") return yoon;
-  }, []);
+const EducationKanaTable: React.FC<EducationKanaTableProps> = ({ kana, type, onClick = () => { }, last }) => {
+  const itemWidth = useMemo(() => (screenWidth / 6) - 15, []);
+  const itemWidthLong = useMemo(() => (screenWidth / 3) - (itemWidth / 3) - 23, [itemWidth]);
 
-  const selectedLetters = useAppSelector(
-    (state: RootState) => state.kana.selected[type][kana]
-  );
-  const data = useMemo(() => getData(type), [getData, type]);
-
-  const onToggleLetter = useCallback(
-    (letter: ILetter, alphabet: "base" | "dakuon" | "handakuon" | "yoon") => {
-      dispatch(
-        toggleLetter({
-          letter: letter,
-          alphabet,
-          kana: kana,
-        })
-      );
-    },
-    [dispatch, kana]
-  );
-
-  const onPress = useCallback(
-    (
-      val: [cell: ILetter, rowIndex: number, cellIndex: number, type: string]
-    ) => {
-      onToggleLetter(
-        val[0],
-        val[3] === "basic"
-          ? "base"
-          : (val[3] as "base" | "dakuon" | "handakuon" | "yoon")
-      );
-    },
-    [onToggleLetter]
-  );
-
-  const onToggleSome = useCallback(
-    (
-      letters: ILetter[],
-      alphabet: "base" | "dakuon" | "handakuon" | "yoon"
-    ) => {
-      dispatch(
-        toggleSome({
-          letter: letters,
-          alphabet,
-          kana: kana,
-        })
-      );
-    },
-    [dispatch, kana]
-  );
-
-  const onPlus = useCallback(
-    (type: "row" | "cell", index: number, alphabet: Alphabet) => {
-      const dataMap = {
-        base: base,
-        dakuon: dakuon,
-        handakuon: handakuon,
-        yoon: yoon,
-      };
-
-      const data = dataMap[alphabet] || [];
-
-      const isILetter = (element: ILetter): element is ILetter => {
-        return typeof element === "object";
-      };
-
-      const letters: ILetter[] =
-        type === "row"
-          ? (data[index].filter(isILetter) as ILetter[])
-          : (data.flatMap((row) =>
-              isILetter(row[index]) ? [row[index]] : []
-            ) as ILetter[]);
-
-      onToggleSome(letters, alphabet);
-    },
-    [onToggleSome]
-  );
-
-  const letters = useMemo(
-    () => getLettersWithStatuses(data, selectedLetters),
-    [data, selectedLetters]
-  );
-
-  const screenWidth = Dimensions.get("window").width;
-
-  const itemWidth = (screenWidth / 6) - 15;
-  const itemWidthLong = (screenWidth / 3) - (itemWidth / 3) - 23;
+  const letters = useMemo(() => {
+    switch (type) {
+      case "base":
+        return base;
+      case "dakuon":
+        return dakuon;
+      case "handakuon":
+        return handakuon;
+      default:
+        return yoon;
+    }
+  }, [type]);
 
   return (
-    <Container last={last} >
-      {letters.length > 1 && (
+    <Container last={last}>
+      {letters && letters.length > 1 && (
         <RowButtons>
-          {letters[0].items.map((cell, cellIndex) => {
-            return (
-              <Cell
-                itemWidthLong={itemWidthLong}
-                itemWidth={itemWidth}
-                isInfo={isEditMode !== true}
-                isPlus={isEditMode === true}
-                isActive={cell.active}
-                isEditMode={isEditMode}
-                isLong={letters[0].items.length === 3}
-                key={`plus_${cellIndex}`}
-                isEmpty={false}
-                onPress={() => onPlus?.("cell", cellIndex, type)}
-              >
-                <Symbol
-                  fontSize={isEditMode !== true ? 13 : 22}
-                  isInfo={isEditMode !== true}
-                  isPlus={isEditMode === true}
-                >
-                  {isEditMode && "+"}
-                  {!isEditMode && "-"}
-                  {!isEditMode && cell.data.en.length === 1 && cell.data.en[0]}
-                  {!isEditMode && cell.data.en.length === 2 && cell.data.en[1]}
-                  {!isEditMode && cell.data.en.length === 3 && cell.data.en[2]}
-                </Symbol>
-              </Cell>
-            );
-          })}
+          {letters[0].map((cell, cellIndex) => (
+            <Cell
+              key={`plus_${cellIndex}`}
+              itemWidthLong={itemWidthLong}
+              itemWidth={itemWidth}
+              isInfo={true}
+              isPlus={false}
+              isActive={false}
+              isEditMode={false}
+              isLong={letters[0].length === 3}
+              isEmpty={false}
+            >
+              <Symbol fontSize={13} isInfo={true} isPlus={false}>
+                {"-"}
+                {cell.en}
+              </Symbol>
+            </Cell>
+          ))}
         </RowButtons>
       )}
-
-      {letters.map((row, rowIndex) => (
-        <Row key={rowIndex}>
+      {letters && letters.map((row, rowIndex) => (
+        <Row key={`row-${rowIndex}`}>
           <Cell
             itemWidthLong={itemWidthLong}
             itemWidth={itemWidth}
-            isInfo={isEditMode !== true}
-            isPlus={isEditMode === true}
-            isActive={row.activeInRow}
-            isEditMode={isEditMode}
+            isInfo={true}
+            isPlus={false}
+            isActive={false}
+            isEditMode={false}
             isLong={false}
             key={`row-${rowIndex}`}
-            onPress={() => onPlus?.("row", rowIndex, type)}
           >
             <Symbol
-              fontSize={isEditMode !== true ? 13 : 22}
-              isInfo={isEditMode !== true}
-              isPlus={isEditMode === true}
+              fontSize={13}
+              isInfo={true}
+              isPlus={false}
             >
-              {isEditMode && "+"}
-              {!isEditMode && "-"}
-              {!isEditMode &&
-                row.items[0] !== null &&
-                (row.items[0].data.en.length < 3
-                  ? row.items[0].data.en[0]
-                  : row.items[0].data.en[0] + row.items[0].data.en[1])}
+              {"-"}
+              {row[0] !== null &&
+                (row[0].en.length < 3
+                  ? row[0].en[0]
+                  : row[0].en[0] + row[0].en[1])}
             </Symbol>
           </Cell>
-          {(
-            row.items[0].data.en === "YA" ? [row.items[0], null, row.items[1], null, row.items[2]] :
-            row.items[0].data.en === "WA" ? [row.items[0], null, null, null, row.items[1]] : 
-            row.items[0].data.en === "N" ? [null, null, row.items[0], null, null] 
-            : row.items).map((cell, cellIndex) => {
-            return (
-              <Cell
+          {(row[0].en === "YA" ? [row[0], null, row[1], null, row[2]] :
+            row[0].en === "WA" ? [row[0], null, null, null, row[1]] :
+              row[0].en === "N" ? [null, null, row[0], null, null]
+                : row).map((cell, cellIndex) => (
+            <Cell
+              key={`${rowIndex}-${cellIndex}`}
               isInfo={false}
               itemWidthLong={itemWidthLong}
               itemWidth={itemWidth}
               isPlus={false}
-              isActive={cell !== null && cell.active && isEditMode}
-              isEditMode={isEditMode}
-              isLong={row.items.length === 3 && row.items[0].data.en !== "YA"}
-              key={`${rowIndex}-${cellIndex}`}
+              isActive={false}
+              isEditMode={false}
+              isLong={row.length === 3 && row[0].en !== "YA"}
               isEmpty={cell === null}
-              onPress={() => {
-                if (cell !== null) {
-                  if (isEditMode) onPress?.([cell.data, rowIndex, cellIndex, type]);
-                  else onClick?.(cell.data.id);
-                }
-              }}
-              >
-                <Symbol fontSize={17}>
-                  {cell !== null && cell.data[kana === "hiragana" ? "hi" : "ka"]}
-                </Symbol>
-                <SubText>
-                  {cell !== null && cell.data.en.toUpperCase()}
-                </SubText>
-              </Cell>
-            );
-          })}
+              onPress={() => cell && onClick(cell.id)}
+            >
+              <Symbol fontSize={17}>
+                {cell && cell[kana === "hiragana" ? "hi" : "ka"]}
+              </Symbol>
+              <SubText>
+                {cell && cell.en.toUpperCase()}
+              </SubText>
+            </Cell>
+          ))}
         </Row>
       ))}
     </Container>
@@ -222,6 +111,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
 };
 
 export default EducationKanaTable;
+
 
 
 const Container = styled.View<{ last?: boolean }>`
@@ -270,12 +160,10 @@ const Cell = styled.TouchableOpacity<CellProp>`
   width: ${({ isLong, itemWidth, itemWidthLong }) =>
     isLong ? `${itemWidthLong}px` : `${itemWidth}px`};
   height: ${({ itemWidth }) => `${itemWidth}px`};
-  background-color: ${({ theme, isPlus, isActive, isEmpty, isInfo }) =>
+  background-color: ${({ theme, isActive, isEmpty, isInfo }) =>
     (!isActive || isEmpty || isInfo)
       ? "transparent"
-      : isPlus
-        ? theme.colors.second_color3
-        : theme.colors.second_color4};
+      : theme.colors.second_color4};
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -290,12 +178,10 @@ type SymbolProps = {
 
 const Symbol = styled.Text<SymbolProps>`
   font-size: ${({ fontSize }) => fontSize + "px"};
-  color: ${({ theme, isInfo, isPlus }) =>
-    isPlus
-      ? theme.colors.color5
-      : isInfo
-        ? theme.colors.color3
-        : theme.colors.color4};
+  color: ${({ theme, isInfo }) =>
+    isInfo
+      ? theme.colors.color3
+      : theme.colors.color4};
 `;
 
 const SubText = styled.Text`
