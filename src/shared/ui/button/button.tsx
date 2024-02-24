@@ -1,94 +1,79 @@
 import React from "react";
 
-import { useTheme } from "@react-navigation/native";
-import { TouchableOpacityProps, TextProps } from "react-native";
-import Ionics from "react-native-vector-icons/MaterialCommunityIcons";
-import styled from "styled-components/native";
+import { Text, StyleSheet, ViewStyle, TextStyle, TouchableOpacityProps, Pressable } from "react-native";
+import Ionicons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { Colors } from "@/shared/constants/app";
+import { useThemeContext } from "@/hooks/theme-context";
 
 interface ButtonProps extends TouchableOpacityProps {
-  title: string;
+  title?: string;
   type: "active" | "inactive" | "weak" | "general" | "disabled";
   onClick?: () => void;
   fontSize?: number;
   image?: string | null;
-  customStyles?: Record<string, string | number>
+  customStyles?: Record<string, string | number>;
+  icon?: React.ReactElement
 }
 
 const Button: React.FC<ButtonProps> = ({
   title,
   onClick,
   type,
-  fontSize,
-  customStyles,
+  fontSize = 16,
+  customStyles = {},
   image = null,
+  icon,
   ...props
 }) => {
-  const theme = useTheme() as unknown as {colors: Colors};
+  const { colors } = useThemeContext();
+
+  const buttonStyle: ViewStyle = {
+    ...styles.button,
+    marginTop: 15,
+    backgroundColor: type === "disabled" ? colors.color2 :
+      type === "active" ? colors.second_color3 :
+        type === "inactive" ? "transparent" :
+          type === "weak" ? colors.second_color4 :
+            colors.color4,
+    borderColor: type === "inactive" ? colors.color2 : "transparent",
+    borderWidth: type === "inactive" ? 1 : 0,
+    ...customStyles,
+  };
+
+  const textStyle: TextStyle = {
+    ...styles.text,
+    fontSize: fontSize,
+    color: type === "disabled" ? colors.color3 :
+      type === "active" ? colors.color5 :
+        type === "inactive" ? colors.color4 :
+          type === "weak" ? colors.color4 :
+            colors.color1,
+  };
 
   return (
-    <StyledButton
-      onPress={() => onClick?.()}
-      type={type}
-      style={customStyles}
-      theme={theme}
-      {...props}
-    >
+    <Pressable onPress={onClick} style={buttonStyle} {...props}>
+      {icon && icon}
       {image === null ? (
-        <StyledText fontSize={fontSize} type={type} theme={theme}>
-          {title}
-        </StyledText>
+        <>
+          {title && <Text style={textStyle}>{title}</Text>}
+        </>
       ) : (
-        <Ionics name={image} size={24} color={theme.colors.color4} />
+        <Ionicons name={image} size={24} color={colors.color4} />
       )}
-    </StyledButton>
+    </Pressable>
   );
 };
 
 export default Button;
 
-interface StyledButtonProps extends TouchableOpacityProps {
-  type: "active" | "inactive" | "weak" | "general" | "disabled";
-}
-
-interface StyledTextProps extends TextProps {
-  fontSize?: number;
-  type: "active" | "inactive" | "weak" | "general" | "disabled";
-}
-
-
-const StyledButton = styled.Pressable<StyledButtonProps>`
-  justify-content: center;
-  align-items: center;
-  margin-top: 15px;
-  height: 50px;
-  border-radius: 12px;
-  background-color: ${({ theme, type }) =>
-    type === "disabled" ? theme.colors.color2 :
-      type === "active"
-        ? theme.colors.second_color3
-        : type === "inactive"
-          ? "transparent"
-          : type === "weak"
-            ? theme.colors.second_color4
-            : theme.colors.color4};
-  border-color: ${({ theme, type }) => (type === "inactive" ? theme.colors.color2 : "transparent")};
-  border-style: solid;
-  border-width: ${({ type }) => (type === "inactive" ? 1 : 0)}px;
-`;
-
-const StyledText = styled.Text<StyledTextProps>`
-  font-size: ${({ fontSize }) => (fontSize ? fontSize + "px" : 13 + "px")};
-  color: ${({ theme, type }) =>
-    type === "disabled"
-      ? theme.colors.color3
-      : type === "active"
-        ? theme.colors.color5
-        : type === "inactive"
-          ? theme.colors.color4
-          : type === "weak"
-            ? theme.colors.color4
-            : theme.colors.color1};
-  font-weight: 700;
-`;
+const styles = StyleSheet.create({
+  button: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    borderRadius: 12,
+  },
+  text: {
+    fontWeight: "700",
+  },
+});

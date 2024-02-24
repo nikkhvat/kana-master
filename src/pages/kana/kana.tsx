@@ -3,11 +3,12 @@ import React, { useCallback, useMemo, useState } from "react";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Audio } from "expo-av";
 import { useTranslation } from "react-i18next";
-import { SectionList, View } from "react-native";
+import { SectionList, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import styled from "styled-components/native";
 
-
+import EducationKanaTable from "@/features/education/education-kana-table/education-kana-table";
+import EducationShowKanaModal from "@/features/education/education-show-kana-modal/education-show-kana-modal";
+import { useThemeContext } from "@/hooks/theme-context";
 import { Alphabet } from "@/shared/constants/kana";
 import {
   LettersKeys, baseFlatLettersId,
@@ -16,8 +17,6 @@ import {
 } from "@/shared/data/lettersTable";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Switcher from "@/shared/ui/switcher/switcher";
-import EducationKanaTable from "@/widgets/education/education-kana-table/education-kana-table";
-import EducationShowKanaModal from "@/widgets/education/education-show-kana-modal/education-show-kana-modal";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -84,96 +83,81 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
     setActiveTab(val as "hiragana" | "katakana");
   };
 
+  const { colors } = useThemeContext();  
+
   return (
-    <Container paddingTop={insets.top}>
-      <Title>{t("tabs.kana")}</Title>
+    <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.color1 }]}>
+      <Text style={[styles.title, { color: colors.color4 }]}>{t("tabs.kana")}</Text>
       <Switcher
         activeTab={activeTab}
         setActiveTab={toggleTab}
         options={["hiragana", "katakana"]}
       />
-      <LineContainer val={insets.top} />
+      <View style={[styles.lineContainer, { top: insets.top + 160, backgroundColor: colors.color2 }]} />
       <SectionList
         sections={sections}
         keyExtractor={(item, index) => item + index}
         renderItem={({ item }) => (
-          <React.Suspense fallback={<View></View>}>
-            <View style={{ display: activeTab === "hiragana" ? "none" : "flex" }} >
-              <MemoizedEducationKanaTable
-                type={item as Alphabet}
-                kana={"hiragana"}
-                onClick={openModal}
-                last={item === "yoon"}
-              />
-            </View>
-            <View style={{ display: activeTab === "hiragana" ? "flex" : "none" }} >
-              <MemoizedEducationKanaTable
-                type={item as Alphabet}
-                kana={"katakana"}
-                onClick={openModal}
-                last={item === "yoon"}
-              />
-            </View>
+          <React.Suspense fallback={<View />}>
+            <MemoizedEducationKanaTable
+              type={item as Alphabet}
+              kana={activeTab}
+              onClick={openModal}
+              last={item === "yoon"}
+            />
           </React.Suspense>
         )}
         renderSectionHeader={({ section: { title } }) => (
-          <NameContainer>
-            <Name>{title}</Name>
-          </NameContainer>
-        )} />
+          <View style={[styles.nameContainer, { backgroundColor: colors.color1 }]}>
+            <Text style={[styles.name, { color: colors.color4 }]}>{title}</Text>
+          </View>
+        )}
+      />
 
-        <EducationShowKanaModal
-          show={isModalVisible === null ? false : true}
-          kana={activeTab}
-          changeKata={(kata) => setActiveTab(kata)}
-          letter={lettersTableById[isModalVisible as LettersKeys] || null}
-          closeModal={closeModal}
-          drawSymbol={() => { }}
-          prevLetter={prev}
-          nextLetter={next}
-        />
-    </Container>
+      <EducationShowKanaModal
+        type="yoon"
+        show={isModalVisible === null ? false : true}
+        kana={activeTab}
+        changeKata={(kata) => setActiveTab(kata)}
+        letter={lettersTableById[isModalVisible as LettersKeys] || null}
+        drawSymbol={() => { }}
+        closeModal={closeModal}
+        prevLetter={prev}
+        nextLetter={next}
+      />
+    </View>
   );
 };
 
 export default Kana;
 
-const Container = styled.View<{ paddingTop: number }>`
-  flex-direction: column;
-  background-color: ${({ theme }) => theme.colors.color1};
-  padding-top: ${({ paddingTop }) => paddingTop + "px"};
-  padding-bottom: 140px;
-`;
 
-const Title = styled.Text`
-  font-size: 28px;
-  font-weight: 700;
-  margin-left: 20px;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  color: ${({ theme }) => theme.colors.color4};
-`;
-
-const NameContainer = styled.View`
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  background-color: ${({ theme }) => theme.colors.color1};
-`;
-
-const Name = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 17px;
-  font-weight: 700;
-`;
-
-const LineContainer = styled.View<{ val: number }>`
-  width: 100%;
-  height: 1px;
-  background-color: ${({ theme }) => theme.colors.color2};
-  position: absolute;
-  top: 220px;
-  z-index: 999;
-  top: ${({ val }) => (val + 160) + "px"};;
-`;
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "column",
+    paddingBottom: 80,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "700",
+    marginLeft: 20,
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  nameContainer: {
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+  name: {
+    fontSize: 17,
+    fontWeight: "700",
+  },
+  lineContainer: {
+    width: "100%",
+    height: 1,
+    position: "absolute",
+    zIndex: 999,
+  },
+});

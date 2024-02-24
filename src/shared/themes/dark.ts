@@ -16,6 +16,8 @@ const darkTheme = {
   text: "#BDBDBD",
   border: "#3A3A3A",
   notification: "red",
+
+  _theme: "dark"
 };
 
 

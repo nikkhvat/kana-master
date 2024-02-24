@@ -1,27 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 import { StatusBar } from "react-native";
-import { Appearance } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { ThemeProvider } from "styled-components";
 
-
-import { useAppSelector } from "@/hooks/redux";
+import { useThemeContext } from "@/hooks/theme-context";
 import EducationKanaQuickSelectionPage from "@/pages/education/education-kana-quick-selection/education-kana-quick-selection";
 import EducationPracticePage from "@/pages/education/education-practice/education-practice";
 import EducationResultPage from "@/pages/education/education-result/education-result";
 import EducationWelcome from "@/pages/education/education-welcome/education-welcome";
 import Kana from "@/pages/kana/kana";
 import ProfilePage from "@/pages/profile/profile";
-import { Theme } from "@/shared/constants/profile";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
-import { RootState } from "@/store/store";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -79,59 +74,35 @@ function BottomTabNavigator() {
 }
 
 const Layout = () => {
-  const { i18n } = useTranslation();
 
-  const lang = useAppSelector((state: RootState) => state.profile.language);
-  const themeFromStore = useAppSelector((state: RootState) => state.profile.theme);
+  // const lang = useAppSelector((state: RootState) => state.profile.language);
 
-  const scheme =
-    themeFromStore === Theme.Auto
-      ? Appearance.getColorScheme()
-      : themeFromStore === Theme.Dark
-        ? "dark"
-        : "light";
+  // useEffect(() => {
+  //   const changeLang = async () => i18n.changeLanguage(lang);
+  //   changeLang();
+  // }, [i18n, lang]);
 
-  const [themeApp, setThemeApp] = useState(scheme);
-
-  useEffect(() => {
-    const setTheme = async () => {
-      setThemeApp(themeFromStore === Theme.Auto
-        ? Appearance.getColorScheme()
-        : themeFromStore === Theme.Dark
-          ? "dark"
-          : "light");
-    };
-
-    setTheme();
-  }, [themeFromStore]);
-
-  useEffect(() => {
-    const changeLang = async () => i18n.changeLanguage(lang);
-    changeLang();
-  }, [i18n, lang]);
-    
-  const dark = { mode: "dark", colors: darkTheme };
-  const light = { mode: "light", colors: lightTheme };
+  const { colors } = useThemeContext();  
 
   return (
-    <ThemeProvider theme={themeApp === "dark" ? dark : light}>
+    <>
       <StatusBar
-        barStyle={themeApp === "dark" ? "light-content" : "dark-content"}
+        barStyle={colors._theme === "dark" ? "light-content" : "dark-content"}
       />
       <NavigationContainer
-        theme={themeApp === "dark" ? { dark: true, colors: darkTheme } : { dark: false, colors: lightTheme }} >
+        theme={colors._theme === "dark" ? { dark: true, colors: darkTheme } : { dark: false, colors: lightTheme }} >
         <Stack.Navigator>
           <Stack.Screen
             name="Root"
             component={BottomTabNavigator}
             options={{ headerShown: false }}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="ChooseAlphabet"
             component={EducationKanaQuickSelectionPage}
             options={{ headerShown: false }}
-          />
-          <Stack.Screen
+          /> */}
+          {/* <Stack.Screen
             name="Practice"
             component={EducationPracticePage}
             options={{
@@ -141,7 +112,7 @@ const Layout = () => {
               headerTitle: "",
               headerBackVisible: false,
             }}
-          />
+          /> */}
           <Stack.Screen
             name="Results"
             component={EducationResultPage}
@@ -155,7 +126,7 @@ const Layout = () => {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </ThemeProvider>
+    </>
   );
 };
 

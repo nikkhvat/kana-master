@@ -16,6 +16,8 @@ const lightTheme = {
   text: "#2A2A2A",
   border: "#ECECEC",
   notification: "red",
+
+  _theme: "light"
 };
 
 export { lightTheme };

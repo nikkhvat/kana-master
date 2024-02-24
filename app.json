@@ -35,6 +35,9 @@
         "projectId": "0c96ff0c-f16f-48ba-ac2f-b768df7666c3"
       }
     },
-    "owner": "nikkhvat"
+    "owner": "nikkhvat",
+    "plugins": [
+      "expo-router"
+    ]
   }
 }

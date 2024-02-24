@@ -2,18 +2,17 @@ import React, { useRef, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Dimensions, ScrollView, TouchableOpacity } from "react-native";
-import { GestureHandlerRootView, HandlerStateChangeEvent, PanGestureHandler } from "react-native-gesture-handler";
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import styled from "styled-components/native";
+// import styled from "styled-components/native";
 
-import EducationLearning from "@/features/education/education-welcome-learning/education-learning";
-import EducationPractice from "@/features/education/education-welcome-practice/education-practice";
-import EducationWordGame from "@/features/education/education-welcome-word-game/education-word-game";
+import { useThemeContext } from "@/hooks/theme-context";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
+import EducationLearning from "@/widgets/education/education-welcome-learning/education-learning";
+import EducationPractice from "@/widgets/education/education-welcome-practice/education-practice";
+import EducationWordGame from "@/widgets/education/education-welcome-word-game/education-word-game";
 
-
-const screenWidth = Dimensions.get("window").width;
+const screenWidth = Dimensions.get("window").width - 40;
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -40,24 +39,10 @@ const EducationWelcomePage: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const insets = useSafeAreaInsets();
 
-  const onSwipeEnd = (
-    event: HandlerStateChangeEvent<Record<string, unknown>>
-  ) => {
-    const { translationX } = event.nativeEvent;
-
-    if (typeof translationX === "number") {
-      if (translationX > 50 && screen > Screen.Learning) {
-        handleTabPress(screen - 1);
-      } else if (translationX < -50 && screen < Screen.WordBuilding) {
-        handleTabPress(screen + 1);
-      }
-    }
-  };
-
   const scrollViewRef = useRef<ScrollView>();
 
   const handleTabPress = (index: number) => {
-    scrollViewRef?.current?.scrollTo({ x: index * screenWidth, animated: false });
+    scrollViewRef?.current?.scrollTo({ x: (index * screenWidth), animated: false });
 
     switch (index) {
       case 0:
@@ -72,95 +57,74 @@ const EducationWelcomePage: React.FC<HomeScreenProps> = ({ navigation }) => {
     }
   };
 
+  const { colors } = useThemeContext();
+
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <PanGestureHandler onEnded={onSwipeEnd}>
-        <Container paddingTop={insets.top}>
-          <Title>{t("tabs.learning")}</Title>
-          <Header>
-            {screens.map((item) => (
-              <TouchableOpacity
-                key={item.val}
-                style={{
-                  padding: 10,
-                }}
-                onPress={() => handleTabPress(item.val)}
-              >
-                <Tab active={item.val === screen}>{item.title}</Tab>
-                {item.val === screen && <TabLine />}
-              </TouchableOpacity>
-            ))}
-          </Header>
-          <Content>
-            <ScrollView
-              horizontal
-              pagingEnabled
-              showsHorizontalScrollIndicator={false}
-              ref={scrollViewRef as never}
-              style={{ flex: 1 }}
-              scrollEnabled={false}
-            >
-              <EducationLearning navigation={navigation} />
-              <EducationPractice navigation={navigation} />
-              <EducationWordGame navigation={navigation} />
-            </ScrollView>
-          </Content>
-        </Container>
-      </PanGestureHandler>
-    </GestureHandlerRootView>
+    <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.color4 }]}>{t("tabs.learning")}</Text>
+      <View style={styles.header}>
+        {screens.map((item, index) => (
+          <TouchableOpacity key={index} style={styles.tab} onPress={() => handleTabPress(item.val)}>
+            <Text style={[styles.tabText, { color: item.val === screen ? colors.color4 : colors.color3 }]}>
+              {item.title}
+            </Text>
+            {item.val === screen && <View style={[styles.tabLine, { backgroundColor: colors.color4 }]} />}
+          </TouchableOpacity>
+        ))}
+      </View>
+      <ScrollView
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        ref={scrollViewRef as never}
+        style={{ flex: 1 }}
+        scrollEnabled={false}
+      >
+        <EducationLearning navigation={navigation} />
+        <EducationPractice navigation={navigation} />
+        <EducationWordGame navigation={navigation} />
+      </ScrollView>
+    </View>
   );
 };
 
 export default EducationWelcomePage;
 
-type ContainerProps = {
-  paddingTop: number;
-};
-
-const Container = styled.View<ContainerProps>`
-  flex: 1;
-  background-color: ${({ theme }) => theme.colors.background};
-  padding-top: ${({ paddingTop }) => paddingTop + "px"};
-`;
-
-const Title = styled.Text`
-  font-size: 28px;
-  font-weight: 700;
-  margin-left: 20px;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  color: ${({ theme }) => theme.colors.color4};
-`;
-
-const Header = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding-left: 20px;
-  padding-right: 20px;
-  height: 54px;
-`;
-
-const TabLine = styled.View`
-  background-color: ${({ theme }) => theme.colors.color4};
-  height: 2px;
-  width: 32px;
-  position: absolute;
-  top: 4px;
-  left: 10px;
-`;
-
-type TabProps = {
-  active: boolean;
-};
-
-const Tab = styled.Text<TabProps>`
-  font-size: 15px;
-  font-weight: 700;
-  color: ${({ active, theme }) =>
-    active ? theme.colors.color4 : theme.colors.color3};
-`;
-
-const Content = styled.View`
-  flex: 1;
-`;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "700",
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    height: 54,
+  },
+  tab: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    marginTop: 10,
+    position: "relative",
+  },
+  tabText: {
+    fontSize: 15,
+    fontWeight: "700",
+  },
+  tabLine: {
+    position: "absolute",
+    height: 2,
+    width: 32,
+    top: 4,
+  },
+  content: {
+    gap: 0
+  },
+});

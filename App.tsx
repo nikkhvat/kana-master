@@ -7,6 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./src/store/store";
 
 import Layout from "@/app/layout";
+import { ThemeProvider } from "@/hooks/theme-context";
 
 import "@/shared/lib/i18n/index"; 
 
@@ -15,7 +16,9 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SafeAreaProvider>
-          <Layout />
+          <ThemeProvider>
+            <Layout />
+          </ThemeProvider>
         </SafeAreaProvider>
       </PersistGate>
     </Provider>

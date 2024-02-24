@@ -6,10 +6,10 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styled, { useTheme } from "styled-components/native";
 
-import EducationKanaQuickSelection from "@/features/education/education-kana-quick-selection/ui/education-kana-quick-selection";
-import EducationKanaSelection from "@/features/education/education-kana-selection/ui/education-kana-quick-selection";
 import { Colors } from "@/shared/constants/app";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
+import EducationKanaQuickSelection from "@/widgets/education/education-kana-quick-selection/ui/education-kana-quick-selection";
+import EducationKanaSelection from "@/widgets/education/education-kana-selection/ui/education-kana-quick-selection";
 
 type ChooseAlphabetNavigationProp = StackNavigationProp<RootStackParamList, "ChooseAlphabet">;
 type ChooseAlphabetScreenRouteProp = RouteProp<RootStackParamList, "ChooseAlphabet">;

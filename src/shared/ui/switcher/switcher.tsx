@@ -1,65 +1,62 @@
 import React from "react";
 
-import styled from "styled-components/native";
+import { View, Text, StyleSheet, DimensionValue, Pressable } from "react-native";
+
+import { useThemeContext } from "@/hooks/theme-context";
 
 interface SwitcherProps {
-  activeTab: string
-  options: string[]
-  setActiveTab: (val: string) => void
-  width?: string
+  activeTab: string;
+  options: string[];
+  setActiveTab: (val: string) => void;
+  width?: DimensionValue
 }
 
-const Switcher: React.FC<SwitcherProps> = ({ width, activeTab, setActiveTab, options }) => {
+const Switcher: React.FC<SwitcherProps> = ({ width = "100%", activeTab, setActiveTab, options }) => {
+  const { colors } = useThemeContext();
+
   return (
-    <Content width={width} >
-      <Tabs>
+    <View style={[styles.content, { width: width }]}>
+      <View style={[styles.tabs, { backgroundColor: colors.second_color4 }]}>
         {options.map((tab) => (
-          <Tab
+          <Pressable
             key={tab}
-            active={activeTab === tab}
             onPress={() => setActiveTab(tab)}
+            style={[
+              styles.tab,
+              { backgroundColor: activeTab === tab ? colors.color1 : "transparent" }
+            ]}
           >
-            <TabText>{tab}</TabText>
-          </Tab>
+            <Text style={[styles.tabText, { color: colors.color4 }]}>{tab}</Text>
+          </Pressable>
         ))}
-      </Tabs>
-    </Content>
+      </View>
+    </View>
   );
 };
 
 export default Switcher;
 
-type Content = {
-  width?: string
-}
-
-const Content = styled.View<Content>`
-  padding-left: 20px;
-  padding-right: 20px;
-  width: ${({ width }) => (width ? width : "100%")};
-`;
-
-const Tabs = styled.View`
-  padding: 2px;
-  flex-direction: row;
-  width: 100%;
-  background-color: ${({ theme }) => theme.colors.second_color4};
-  border-radius: 12px;
-  margin-top: 8px;
-`;
-
-const Tab = styled.TouchableOpacity<{ active: boolean }>`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  height: 46px;
-  border-radius: 10px;
-  background-color: ${({ theme, active }) =>
-    active ? theme.colors.color1 : "transparent"};
-`;
-
-const TabText = styled.Text`
-  font-size: 15px;
-  font-weight: 400;
-  color: ${({ theme }) => theme.colors.color4};
-`;
+const styles = StyleSheet.create({
+  content: {
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  tabs: {
+    padding: 2,
+    flexDirection: "row",
+    width: "100%",
+    borderRadius: 12,
+    marginTop: 8,
+  },
+  tab: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 46,
+    borderRadius: 10,
+  },
+  tabText: {
+    fontSize: 15,
+    fontWeight: "400",
+  },
+});
