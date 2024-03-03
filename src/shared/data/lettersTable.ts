@@ -321,10 +321,10 @@ export const yoon: ILetter[][] = [
 ];
 
 export const baseFlatLettersId: LettersKeysBase[] = [
-  "11017078-148a-4a44-b3f7-21d1df02d981",
   "a151eeeb-2537-463c-ae23-d484d1bcb835",
-  "70680d73-c9f9-4b4e-aac4-c82caa49668c",
+  "11017078-148a-4a44-b3f7-21d1df02d981",
   "bcbd90e2-fabc-4dcc-8022-02e5b650c822",
+  "70680d73-c9f9-4b4e-aac4-c82caa49668c",
   "e430643d-5624-432e-b53e-974447baad22",
   "22350aba-d254-48ba-811a-9d1448761042",
   "a1d45e3b-a1c9-4409-8d39-725a0a35899d",
@@ -399,6 +399,7 @@ export const handakuonFlatLettersId: LettersKeysHandakuon[] = [
   "cb95fb95-60c8-4324-a716-a9a1013f9214",
   "dded7c42-3b0c-4e89-9b03-1ad95d40fa9d",
 ];
+
 export const yoonFlatLettersId: LettersKeysYoon[] = [
   "d1a354dd-03db-4143-8883-bfd21f0c63bf",
   "4f2017b1-ae1d-4630-ba8a-4ce5d55b556f",

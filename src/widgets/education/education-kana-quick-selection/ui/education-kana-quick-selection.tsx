@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
-import { View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styled, { useTheme } from "styled-components/native";
 
 
+import SelectButton, { SelectButtonState } from "@/entities/education/kana-quick-selection/SelectButton/select-button";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { useThemeContext } from "@/hooks/theme-context";
 import { Colors } from "@/shared/constants/app";
 import { Kana, KanaMode, KanaSection, LETTERS_COUNT } from "@/shared/constants/kana";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
@@ -132,175 +134,84 @@ const EducationKanaQuickSelection: React.FC<EducationKanaQuickSelectionProps> = 
     dispatch(setKanaSelected(value));
   };
 
-  const colors = useTheme().colors as Colors;
-
+  const { colors } = useThemeContext();
+  
   return (
     <View>
-      <InfoContainer>
-        <InfoBlock>
-          <InfoTitle>{selectedLetters}</InfoTitle>
-          <InfoSubTitle>Entries in scope</InfoSubTitle>
-        </InfoBlock>
-        {SHOW_ALLOWED_WORDS && <VerticalBorder />}
+      <View style={[styles.infoContainer, { borderColor: colors.color2}]}>
+        <View style={styles.infoBlock}>
+          <Text style={[styles.infoTitle, { color: colors.color4 }]}>{selectedLetters}</Text>
+          <Text style={[styles.infoSubTitle, { color: colors.color4 }]}>Entries in scope</Text>
+        </View>
+        {SHOW_ALLOWED_WORDS && <View style={[styles.verticalBorder, { backgroundColor: colors.color2 }]} />}
         {SHOW_ALLOWED_WORDS && (
-          <InfoBlock>
-            <InfoTitle>
+          <View style={styles.infoBlock}>
+            <Text style={[styles.infoTitle, { color: colors.color4 }]}>
               {hiraganaSelectedWords.length + katakanaSelectedWords.length}
-            </InfoTitle>
-            <InfoSubTitle>Available words</InfoSubTitle>
-          </InfoBlock>
+            </Text>
+            <Text style={[styles.infoSubTitle, { color: colors.color4 }]}>Available words</Text>
+          </View>
         )}
-      </InfoContainer>
+      </View>
 
-      <Scroll>
-        <KanaStatContainer>
-          <KanaCard>
-            <KanaCardTitle>Hiragana</KanaCardTitle>
-            <KanaCardSubTitle>{selectedLettersHiragana}</KanaCardSubTitle>
-          </KanaCard>
-          <KanaCard>
-            <KanaCardTitle>Katakana</KanaCardTitle>
-            <KanaCardSubTitle>{selectedLettersKatakana}</KanaCardSubTitle>
-          </KanaCard>
-        </KanaStatContainer>
+      <ScrollView style={styles.scroll}>
+        <View style={styles.kanaStatContainer}>
+          <View style={[styles.kanaCard, { borderColor: colors.color2 }]}>
+            <Text style={[styles.kanaCardTitle, { color: colors.color4 }]}>Hiragana</Text>
+            <Text style={[styles.kanaCardSubTitle, { color: colors.second_color3 }]}>{selectedLettersHiragana}</Text>
+          </View>
+          <View style={[styles.kanaCard, { borderColor: colors.color2 }]}>
+            <Text style={[styles.kanaCardTitle, { color: colors.color4 }]}>Katakana</Text>
+            <Text style={[styles.kanaCardSubTitle, { color: colors.second_color3 }]}>{selectedLettersKatakana}</Text>
+          </View>
+        </View>
 
-        <SelectionTitle>Kana quick selection</SelectionTitle>
+        <Text style={[styles.selectionTitle, {color: colors.color4}]}>Kana quick selection</Text>
 
-        <SelectionContainer>
-          <SelectionRow>
-            <SelectionButton empty></SelectionButton>
-            <SelectionButton
-              onPress={() => set(Kana.Hiragana)}
-              selected={IS_HIRA_SELECTED}
-              type="text"
-            >
-              <SelectionText active={IS_HIRA_SELECTED}>Hiragana</SelectionText>
-            </SelectionButton>
-            <SelectionButton
-              onPress={() => set(Kana.Katakana)}
-              selected={IS_KANA_SELECTED}
-              type="text"
-            >
-              <SelectionText active={IS_KANA_SELECTED}>Katakana</SelectionText>
-            </SelectionButton>
-          </SelectionRow>
-          <SelectionRow>
-            <SelectionButton
-              onPress={() => set(KanaMode.Basic)}
-              selected={IS_BASIC}
-              type="text"
-            >
-              <SelectionText active={IS_BASIC}>Basic</SelectionText>
-            </SelectionButton>
-            <SelectionButton
-              onPress={() => set(KanaSection.BasicHiragana)}
-              selected={IS_BASIC_HIRA}
-            >
-              <Icon
-                name={IS_BASIC_HIRA ? "check" : "close"}
-                size={24}
-                color={colors.color4}
-              />
-            </SelectionButton>
-            <SelectionButton
-              onPress={() => set(KanaSection.BasicKatakana)}
-              selected={IS_BASIC_KATA}
-            >
-              <Icon
-                name={IS_BASIC_KATA ? "check" : "close"}
-                size={24}
-                color={colors.color4}
-              />
-            </SelectionButton>
-          </SelectionRow>
-          <SelectionRow>
-            <SelectionButton
-              onPress={() => set(KanaMode.Dakuon)}
-              selected={IS_DAKUON}
-              type="text"
-            >
-              <SelectionText active={IS_DAKUON}>Dakuon</SelectionText>
-            </SelectionButton>
-            <SelectionButton
-              onPress={() => set(KanaSection.DakuonHiragana)}
-              selected={IS_DAKUON_HIRA}
-            >
-              <Icon
-                name={IS_DAKUON_HIRA ? "check" : "close"}
-                size={24}
-                color={colors.color4}
-              />
-            </SelectionButton>
-            <SelectionButton
-              onPress={() => set(KanaSection.DakuonKatakana)}
-              selected={IS_DAKUON_KATA}
-            >
-              <Icon
-                name={IS_DAKUON_KATA ? "check" : "close"}
-                size={24}
-                color={colors.color4}
-              />
-            </SelectionButton>
-          </SelectionRow>
-          <SelectionRow>
-            <SelectionButton
-              onPress={() => set(KanaMode.Handakuon)}
-              selected={IS_HANDAKUON}
-              type="text"
-            >
-              <SelectionText active={IS_HANDAKUON}>Handakuon</SelectionText>
-            </SelectionButton>
-            <SelectionButton
-              onPress={() => set(KanaSection.HandakuonHiragana)}
-              selected={IS_HANDAKUON_HIRA}
-            >
-              <Icon
-                name={IS_HANDAKUON_HIRA ? "check" : "close"}
-                size={24}
-                color={colors.color4}
-              />
-            </SelectionButton>
-            <SelectionButton
-              onPress={() => set(KanaSection.HandakuonKatakana)}
-              selected={IS_HANDAKUON_KATA}
-            >
-              <Icon
-                name={IS_HANDAKUON_KATA ? "check" : "close"}
-                size={24}
-                color={colors.color4}
-              />
-            </SelectionButton>
-          </SelectionRow>
-          <SelectionRow>
-            <SelectionButton
-              onPress={() => set(KanaMode.Yoon)}
-              selected={IS_YOON}
-              type="text"
-            >
-              <SelectionText active={IS_YOON}>Yoon</SelectionText>
-            </SelectionButton>
-            <SelectionButton
-              onPress={() => set(KanaSection.YoonHiragana)}
-              selected={IS_YOON_HIRA}
-            >
-              <Icon
-                name={IS_YOON_HIRA ? "check" : "close"}
-                size={24}
-                color={colors.color4}
-              />
-            </SelectionButton>
-            <SelectionButton
-              onPress={() => set(KanaSection.YoonKatakana)}
-              selected={IS_YOON_KATA}
-            >
-              <Icon
-                name={IS_YOON_KATA ? "check" : "close"}
-                size={24}
-                color={colors.color4}
-              />
-            </SelectionButton>
-          </SelectionRow>
-        </SelectionContainer>
+        <View style={styles.selectionContainer}>
+          <View style={styles.selectionRow}>
+            <SelectButton type={SelectButtonState.Empty} />
+            <SelectButton selected={IS_HIRA_SELECTED} onPress={() => set(Kana.Hiragana)} type={SelectButtonState.Text}>
+              Hiragana
+            </SelectButton>
+            <SelectButton selected={IS_KANA_SELECTED} onPress={() => set(Kana.Katakana)} type={SelectButtonState.Text}>
+              Katakana
+            </SelectButton>
+          </View>
+
+          <View style={styles.selectionRow}>
+            <SelectButton selected={IS_BASIC} onPress={() => set(KanaMode.Basic)} type={SelectButtonState.Text}>
+              Basic
+            </SelectButton>
+            <SelectButton selected={IS_BASIC_HIRA} onPress={() => set(KanaSection.BasicHiragana)} type={SelectButtonState.Icon} />
+            <SelectButton selected={IS_BASIC_KATA} onPress={() => set(KanaSection.BasicKatakana)} type={SelectButtonState.Icon} />
+          </View>
+          
+          <View style={styles.selectionRow}>
+            <SelectButton selected={IS_DAKUON} onPress={() => set(KanaMode.Dakuon)} type={SelectButtonState.Text}>
+              Dakuon
+            </SelectButton>
+            <SelectButton selected={IS_DAKUON_HIRA} onPress={() => set(KanaSection.DakuonHiragana)} type={SelectButtonState.Icon} />
+            <SelectButton selected={IS_DAKUON_KATA} onPress={() => set(KanaSection.DakuonKatakana)} type={SelectButtonState.Icon} />
+          </View>
+          
+          <View style={styles.selectionRow}>
+            <SelectButton selected={IS_HANDAKUON} onPress={() => set(KanaMode.Handakuon)} type={SelectButtonState.Text}>
+              Handakuon
+            </SelectButton>
+            <SelectButton selected={IS_HANDAKUON_HIRA} onPress={() => set(KanaSection.HandakuonHiragana)} type={SelectButtonState.Icon} />
+            <SelectButton selected={IS_HANDAKUON_KATA} onPress={() => set(KanaSection.HandakuonKatakana)} type={SelectButtonState.Icon} /> 
+          </View>
+          
+          <View style={styles.selectionRow}>
+            <SelectButton selected={IS_YOON} onPress={() => set(KanaMode.Yoon)} type={SelectButtonState.Text}>
+              Yoon
+            </SelectButton>
+            <SelectButton selected={IS_YOON_HIRA} onPress={() => set(KanaSection.YoonHiragana)} type={SelectButtonState.Icon} />
+            <SelectButton selected={IS_YOON_KATA} onPress={() => set(KanaSection.YoonKatakana)} type={SelectButtonState.Icon} />
+          </View>
+        </View>
+
         <Button
           customStyles={{ marginTop: 60, marginBottom: 15 }}
           title={"Confirm"}
@@ -310,140 +221,96 @@ const EducationKanaQuickSelection: React.FC<EducationKanaQuickSelectionProps> = 
             navigation.goBack();
           }}
         />
-      </Scroll>
+      </ScrollView>
     </View>
   );
 };
 
 export default EducationKanaQuickSelection;
 
-const InfoContainer = styled.View`
-  height: 120px;
-  border-color: ${({ theme }) => theme.colors.color2};
-  border-bottom-width: 1px;
-  padding-left: 20px;
-  padding-right: 20px;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-`;
 
-const InfoBlock = styled.View`
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  width: 40%;
-`;
-
-const InfoTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 34px;
-  font-weight: 700;
-`;
-
-const InfoSubTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 15px;
-  font-weight: 400;
-  margin-top: 10px;
-`;
-
-const VerticalBorder = styled.View`
-  width: 1px;
-  height: 70px;
-  background-color: ${({ theme }) => theme.colors.color2};
-`;
-
-const Scroll = styled.ScrollView`
-  padding-left: 20px;
-  padding-right: 20px;
-`;
-
-const KanaStatContainer = styled.View`
-  width: 100%;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  padding-top: 30px;
-`;
-
-const KanaCard = styled.View`
-  width: 108px;
-  height: 85px;
-  border-radius: 12px;
-  border-color: ${({ theme }) => theme.colors.color2};
-  border-width: 1px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-`;
-
-const KanaCardTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 13px;
-  font-weight: 700;
-`;
-
-const KanaCardSubTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.second_color3};
-  font-size: 22px;
-  font-weight: 700;
-`;
-
-const SelectionTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 17px;
-  font-weight: 700;
-  margin-top: 30px;
-  margin-bottom: 15px;
-`;
-
-const SelectionContainer = styled.View`
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 10px;
-`;
-
-const SelectionRow = styled.View`
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-`;
-
-type SelectionButtonProp = {
-  empty?: boolean;
-  selected?: boolean;
-  type?: "text" | "container";
-};
-
-const SelectionButton = styled.Pressable<SelectionButtonProp>`
-  height: 50px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-  border-width: ${({ empty }) => (empty ? "0px" : "1px")};
-  border-color: ${({ theme }) => theme.colors.color2};
-  background-color: ${({ theme, selected, type }) =>
-    selected
-      ? type == "text"
-        ? theme.colors.second_color3
-        : theme.colors.second_color4
-      : "transparent"};
-  flex: 1;
-`;
-
-const SelectionText = styled.Text<{ active?: boolean }>`
-  color: ${({ theme, active }) => active ? theme.colors.color5 : theme.colors.color4};
-  font-size: 13px;
-  font-weight: 700;
-`;
-
+const styles = StyleSheet.create({
+  infoContainer: {
+    height: 120,
+    borderBottomWidth: 1,
+    paddingLeft: 20,
+    paddingRight: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 20,
+  },
+  infoBlock: {
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    width: "40%",
+  },
+  infoTitle: {
+    fontSize: 34,
+    fontWeight: "700",
+  },
+  infoSubTitle: {
+    fontSize: 15,
+    fontWeight: "400",
+    marginTop: 10,
+  },
+  verticalBorder: {
+    width: 1,
+    height: 70,
+  },
+  scroll: {
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  kanaStatContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
+    paddingTop: 30,
+  },
+  kanaCard: {
+    width: 108,
+    height: 85,
+    borderRadius: 12,
+    borderWidth: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+  },
+  kanaCardTitle: {
+    fontSize: 13,
+    fontWeight: "700",
+  },
+  kanaCardSubTitle: {
+    fontSize: 22,
+    fontWeight: "700",
+  },
+  selectionTitle: {
+    fontSize: 17,
+    fontWeight: "700",
+    marginTop: 30,
+    marginBottom: 15,
+  },
+  selectionContainer: {
+    width: "100%",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "flex-start",
+    gap: 10,
+  },
+  selectionRow: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 10,
+  },
+  selectionText: {
+    fontSize: 13,
+    fontWeight: "700",
+  }
+});

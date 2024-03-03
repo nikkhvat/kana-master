@@ -16,12 +16,14 @@ const colors = {
 interface ThemeContextType {
   colors: Colors;
   theme: Theme;
+  themeString: string;
   updateTheme: (theme: Theme) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType>({
   colors: colors.ligth,
   theme: Theme.Light,
+  themeString: "light",
   updateTheme: () => {},
 });
 
@@ -62,8 +64,10 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({ children 
 
   const colors = getColors(theme);
 
+  const themeString = theme === Theme.Auto ? "auto" : theme === Theme.Dark ? "dark" : "light";
+
   return (
-    <ThemeContext.Provider value={{ updateTheme, colors, theme }}>
+    <ThemeContext.Provider value={{ updateTheme, colors, theme, themeString: themeString }}>
       {children}
     </ThemeContext.Provider>
   );

@@ -12,7 +12,7 @@ const Russian = {
 		theme: "Тема",
 		light: "Светлая",
 		dark: "Тёмная",
-		auto: "Системная",
+		auto: "Авто",
 
 		language: "Язык приложения"
 	},
@@ -50,7 +50,7 @@ const Russian = {
 
 	kana: {
 		hiragana: "Хирагана",
-		katakana: "Каткана"
+		katakana: "Катакана"
 	}
 };
 

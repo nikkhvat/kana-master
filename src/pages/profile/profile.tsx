@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
@@ -8,6 +8,7 @@ import Icon from "react-native-vector-icons/Feather";
 import { useThemeContext } from "@/hooks/theme-context";
 import { Theme } from "@/shared/constants/profile";
 import Button from "@/shared/ui/button/button";
+import Switcher from "@/shared/ui/switcher/switcher";
 
 
 const ProfilePage: React.FC = () => {
@@ -19,15 +20,26 @@ const ProfilePage: React.FC = () => {
     i18n.changeLanguage(lang);
   };
 
-  const { colors, updateTheme, theme } = useThemeContext();  
+  const { colors, updateTheme, theme, themeString } = useThemeContext();  
+
+  const [themeTab, setThemeTab] = useState<string>(themeString);
+
+  const onUpdateTheme = (theme: string) => {
+    setThemeTab(theme);
+    
+    if (theme === "light") return updateTheme(Theme.Light);
+    if (theme === "dark") return updateTheme(Theme.Dark);
+
+    updateTheme(Theme.Auto);
+  };
 
   return (
     <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.color1 }]}>
       <Text style={[styles.title, { color: colors.color4 }]}>{t("tabs.profile")}</Text>
 
-      <Text style={[styles.sectionTitle, { color: colors.color4 }]}>{t("profile.theme")} {colors._theme}</Text>
+      <Text style={[styles.sectionTitle, { color: colors.color4 }]}>{t("profile.theme")}</Text>
 
-      <View style={styles.sectionButtons}>
+      {/* <View style={styles.sectionButtons}>
         <Button
           customStyles={{ marginTop: 15, flex: 1 }}
           onClick={() => updateTheme(Theme.Light)}
@@ -56,7 +68,16 @@ const ProfilePage: React.FC = () => {
           onClick={() => updateTheme(Theme.Auto)}
           type={theme === Theme.Auto ? "general" : "inactive"}
         />
-      </View>
+      </View> */}
+
+      <Switcher
+        activeTab={themeTab}
+        options={[
+          "dark",
+          "light",
+          "auto",
+        ]}
+        setActiveTab={onUpdateTheme} />
 
       <Text style={[styles.sectionTitle, { color: colors.color4 }]}>{t("profile.language")}</Text>
 

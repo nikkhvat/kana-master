@@ -1,11 +1,12 @@
 import React from "react";
 
 import { Audio } from "expo-av";
-import { Alert, Dimensions, Modal, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Modal, StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/hooks/theme-context";
 import { Alphabet } from "@/shared/constants/kana";
+import { dakuonFlatLettersId, handakuonFlatLettersId, yoonFlatLettersId } from "@/shared/data/lettersTable";
 import getSound from "@/shared/resources/sounds/index";
 import getImage from "@/shared/resources/svgs";
 import Button from "@/shared/ui/button/button";
@@ -45,8 +46,6 @@ const EducationShowKanaModal: React.FC<EducationShowKanaModalProps> = ({
     const screenWidth = Dimensions.get("window").width;
     const key_formated = `${kana === "katakana" ? "katakana" : "hirigana"}_${theme === "DARK" ? "dark" : "light"}_${key?.replaceAll("-", "_")}`;
 
-    console.log(key_formated);
-
     return getImage(key_formated, {
       width: screenWidth - 24,
       height: screenWidth - 24,
@@ -71,6 +70,15 @@ const EducationShowKanaModal: React.FC<EducationShowKanaModalProps> = ({
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getTypeById = (id: any) => {
+    if (yoonFlatLettersId.includes(id)) return "yoon";
+    if (handakuonFlatLettersId.includes(id)) return "handakuon";
+    if (dakuonFlatLettersId.includes(id)) return "dakuon";
+
+    return "basic";
+  };
+
   return (
     <Modal
       visible={show}
@@ -89,7 +97,7 @@ const EducationShowKanaModal: React.FC<EducationShowKanaModalProps> = ({
           />
         </View>
         {letter !== null && <View style={styles.titleContainer}>
-          <Text style={[styles.title, { color: colors.color4 }]}>{kana}</Text>
+          <Text style={[styles.title, { color: colors.color4 }]}>{kana} ({getTypeById(letter.id)})</Text>
           <Text style={[styles.subTitle, { color: colors.color4 }]}>{letter.en.toUpperCase()}</Text>
           {getImagePath(type === "yoon" ? letter.id : `${kana === "hiragana" ? "H" : "K"}-${letter.en}`, THEME)}
         </View>}
@@ -173,6 +181,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 17,
     fontWeight: "700",
+    textTransform: "capitalize"
   },
   subTitle: {
     fontSize: 34,

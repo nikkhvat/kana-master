@@ -54,8 +54,8 @@ export enum KanaMode {
 }
 
 export const LETTERS_COUNT = {
-  [KanaSection.BasicHiragana]: 46,
-  [KanaSection.BasicKatakana]: 46,
+  [KanaSection.BasicHiragana]: 48,
+  [KanaSection.BasicKatakana]: 48,
 
   [KanaSection.DakuonHiragana]: 20,
   [KanaSection.DakuonKatakana]: 20,
@@ -63,8 +63,8 @@ export const LETTERS_COUNT = {
   [KanaSection.HandakuonHiragana]: 5,
   [KanaSection.HandakuonKatakana]: 5,
 
-  [KanaSection.YoonHiragana]: 21,
-  [KanaSection.YoonKatakana]: 21,
+  [KanaSection.YoonHiragana]: 36,
+  [KanaSection.YoonKatakana]: 36,
 };
 
 export const HIRA_SECTIONS = [KanaSection.BasicHiragana, KanaSection.DakuonHiragana, KanaSection.HandakuonHiragana, KanaSection.YoonHiragana];

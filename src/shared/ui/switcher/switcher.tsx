@@ -7,17 +7,18 @@ import { useThemeContext } from "@/hooks/theme-context";
 interface SwitcherProps {
   activeTab: string;
   options: string[];
+  translate?: string[];
   setActiveTab: (val: string) => void;
   width?: DimensionValue
 }
 
-const Switcher: React.FC<SwitcherProps> = ({ width = "100%", activeTab, setActiveTab, options }) => {
+const Switcher: React.FC<SwitcherProps> = ({ width = "100%", activeTab, setActiveTab, options, translate }) => {
   const { colors } = useThemeContext();
 
   return (
     <View style={[styles.content, { width: width }]}>
       <View style={[styles.tabs, { backgroundColor: colors.second_color4 }]}>
-        {options.map((tab) => (
+        {options.map((tab, index) => (
           <Pressable
             key={tab}
             onPress={() => setActiveTab(tab)}
@@ -26,7 +27,7 @@ const Switcher: React.FC<SwitcherProps> = ({ width = "100%", activeTab, setActiv
               { backgroundColor: activeTab === tab ? colors.color1 : "transparent" }
             ]}
           >
-            <Text style={[styles.tabText, { color: colors.color4 }]}>{tab}</Text>
+            <Text style={[styles.tabText, { color: colors.color4 }]}>{(translate && translate.length === options.length) ? translate[index] : tab}</Text>
           </Pressable>
         ))}
       </View>
@@ -38,8 +39,8 @@ export default Switcher;
 
 const styles = StyleSheet.create({
   content: {
-    paddingLeft: 20,
-    paddingRight: 20,
+    // paddingLeft: 20,
+    // paddingRight: 20,
   },
   tabs: {
     padding: 2,
@@ -58,5 +59,6 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: 15,
     fontWeight: "400",
+    textTransform: "capitalize"
   },
 });

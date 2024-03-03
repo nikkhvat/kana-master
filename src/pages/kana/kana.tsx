@@ -71,7 +71,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const sections = useMemo(
     () => [
-      { title: "Base", data: ["base"] },
+      { title: "Basic", data: ["base"] },
       { title: "Dakuon", data: ["dakuon"] },
       { title: "Handakuon", data: ["handakuon"] },
       { title: "Yoon", data: ["yoon"] },
@@ -88,11 +88,20 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   return (
     <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.color1 }]}>
       <Text style={[styles.title, { color: colors.color4 }]}>{t("tabs.kana")}</Text>
-      <Switcher
-        activeTab={activeTab}
-        setActiveTab={toggleTab}
-        options={["hiragana", "katakana"]}
-      />
+      <View style={styles.switcherContainer}>
+        <Switcher
+          activeTab={activeTab}
+          setActiveTab={toggleTab}
+          options={[
+            "hiragana", 
+            "katakana"
+          ]}
+          translate={[
+            t("kana.hiragana"),
+            t("kana.katakana"),
+          ]}
+        />
+      </View>
       <View style={[styles.lineContainer, { top: insets.top + 160, backgroundColor: colors.color2 }]} />
       <SectionList
         sections={sections}
@@ -136,6 +145,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     paddingBottom: 80,
+  },
+  switcherContainer: {
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 28,

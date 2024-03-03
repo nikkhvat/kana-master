@@ -97,11 +97,11 @@ const Layout = () => {
             component={BottomTabNavigator}
             options={{ headerShown: false }}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             name="ChooseAlphabet"
             component={EducationKanaQuickSelectionPage}
             options={{ headerShown: false }}
-          /> */}
+          />
           {/* <Stack.Screen
             name="Practice"
             component={EducationPracticePage}
