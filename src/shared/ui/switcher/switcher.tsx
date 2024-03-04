@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 
-import { View, Text, StyleSheet, DimensionValue, Pressable } from "react-native";
+import { View, Text, StyleSheet, Animated, Pressable, Dimensions } from "react-native";
 
 import { useThemeContext } from "@/hooks/theme-context";
 
@@ -9,27 +9,57 @@ interface SwitcherProps {
   options: string[];
   translate?: string[];
   setActiveTab: (val: string) => void;
-  width?: DimensionValue
+  width?: number;
 }
 
-const Switcher: React.FC<SwitcherProps> = ({ width = "100%", activeTab, setActiveTab, options, translate }) => {
+const Switcher: React.FC<SwitcherProps> = ({ activeTab, setActiveTab, options, translate }) => {
   const { colors } = useThemeContext();
+  const animatedValue = useRef(new Animated.Value(0)).current;
+
+  const screenWidth = ((Dimensions.get("window").width - 44) / options.length);
+
+  const handlePress = (index: number) => {
+    Animated.spring(animatedValue, {
+      toValue: index,
+      useNativeDriver: true,
+    }).start();
+    setActiveTab(options[index]);
+  };
 
   return (
-    <View style={[styles.content, { width: width }]}>
+    <View style={[styles.content]}>
       <View style={[styles.tabs, { backgroundColor: colors.second_color4 }]}>
         {options.map((tab, index) => (
           <Pressable
             key={tab}
-            onPress={() => setActiveTab(tab)}
+            onPress={() => handlePress(index)}
             style={[
               styles.tab,
-              { backgroundColor: activeTab === tab ? colors.color1 : "transparent" }
+              { backgroundColor: "transparent" },
             ]}
           >
-            <Text style={[styles.tabText, { color: colors.color4 }]}>{(translate && translate.length === options.length) ? translate[index] : tab}</Text>
+            <Text style={[styles.tabText, { color: colors.color4 }]}>
+              {(translate && translate.length === options.length) ? translate[index] : tab}
+            </Text>
           </Pressable>
         ))}
+        <Animated.View
+          style={[
+            styles.indicator,
+            {
+              width: `${100 / options.length}%`,
+              transform: [
+                {
+                  translateX: animatedValue.interpolate({
+                    inputRange: [0, options.length - 1],
+                    outputRange: [0, screenWidth * (options.length - 1)],
+                  }),
+                },
+              ],
+              backgroundColor: colors.color1,
+            },
+          ]}
+        />
       </View>
     </View>
   );
@@ -39,8 +69,7 @@ export default Switcher;
 
 const styles = StyleSheet.create({
   content: {
-    // paddingLeft: 20,
-    // paddingRight: 20,
+    width: "100%"
   },
   tabs: {
     padding: 2,
@@ -48,6 +77,7 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: 12,
     marginTop: 8,
+    position: "relative",
   },
   tab: {
     flex: 1,
@@ -59,6 +89,14 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: 15,
     fontWeight: "400",
-    textTransform: "capitalize"
+    textTransform: "capitalize",
+  },
+  indicator: {
+    position: "absolute",
+    height: "100%",
+    borderRadius: 12,
+    zIndex: -1,
+    marginTop: 2,
+    marginLeft: 2
   },
 });

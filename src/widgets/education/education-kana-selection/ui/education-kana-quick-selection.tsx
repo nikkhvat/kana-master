@@ -73,7 +73,7 @@ const EducationKanaSelection: React.FC<EducationKanaSelectionProps> = ({ closeMo
         />
       </View>
       <View style={{ position: "absolute", bottom: 0, height: 100, width: "100%", paddingTop: 5, backgroundColor: colors.color1, borderColor: colors.color2, borderTopWidth: 1, flexDirection: "row", alignItems: "flex-start", justifyContent: "center", paddingHorizontal: 20 }}>
-        <Switcher activeTab={activeTab} setActiveTab={(val) => setActiveTab(val as "hiragana" | "katakana")} options={["hiragana", "katakana"]} width="100%" />
+        <Switcher activeTab={activeTab} setActiveTab={(val) => setActiveTab(val as "hiragana" | "katakana")} options={["hiragana", "katakana"]} />
       </View>
     </Modal>
   );
