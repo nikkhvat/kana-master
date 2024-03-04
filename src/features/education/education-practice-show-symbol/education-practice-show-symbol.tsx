@@ -1,34 +1,36 @@
 import React from "react";
 
-import { View } from "react-native";
-import styled from "styled-components/native";
+import { View, Text, StyleSheet } from "react-native";
+
+import { useThemeContext } from "@/hooks/theme-context";
 
 interface EducationPracticeShowSymbolProps {
-  symbol: string
-  subtext: string
+  symbol: string;
+  subtext: string;
 }
 
-const EducationPracticeShowSymbol: React.FC<EducationPracticeShowSymbolProps> = ({symbol, subtext}) => {
+const EducationPracticeShowSymbol: React.FC<EducationPracticeShowSymbolProps> = ({ symbol, subtext }) => {
+
+  const { colors } = useThemeContext();
+
   return (
     <View>
-      <Symbol>{symbol}</Symbol>
-      <SubText>{subtext}</SubText>
+      <Text style={[styles.symbol, { color: colors.color4 }]}>{symbol}</Text>
+      <Text style={[styles.subText, { color: colors.color3 }]}>{subtext}</Text>
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  symbol: {
+    textAlign: "center",
+    fontSize: 94,
+  },
+  subText: {
+    textAlign: "center",
+    fontSize: 17,
+    fontWeight: "600",
+  },
+});
+
 export default EducationPracticeShowSymbol;
-
-const Symbol = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  text-align: center;
-  font-size: 94px;
-`;
-
-const SubText = styled.Text`
-  color: ${({ theme }) => theme.colors.color3};
-  text-align: center;
-  font-size: 17px;
-  font-weight: 600;
-`;
-

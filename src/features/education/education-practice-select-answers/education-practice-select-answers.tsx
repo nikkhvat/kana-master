@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import { Dimensions, Text } from "react-native";
-import styled from "styled-components/native";
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+import { useThemeContext } from "@/hooks/theme-context";
 import { TEST_DELAY } from "@/shared/constants/kana";
 
 interface EducationPracticeSelectAnswersProps {
@@ -22,6 +22,8 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
   onCompleted 
 }) => {
   const screenWidth = Dimensions.get("window").width;
+
+  const { colors } = useThemeContext();
 
   const [errors, setErrors] = useState([] as (string | number)[]);
   const [corrected, setCorrected] = useState(null as string | number | null);
@@ -63,72 +65,104 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
 
   const widthCard = (screenWidth - (20 * 2)) / 2;
 
-  return (
-    <AnswersContainer>
-      <AnswersRow>
-        <AnswersItem width={widthCard} onPress={() => pick(answers[0].id)} type={getStatus(answers[0].id)}>
-          <AnswersItemText type={getStatus(answers[0].id)}>{answers[0].title}</AnswersItemText>
-        </AnswersItem>
-        <AnswersItem width={widthCard} onPress={() => pick(answers[1].id)} type={getStatus(answers[1].id)}>
-          <AnswersItemText type={getStatus(answers[1].id)}>{answers[1].title}</AnswersItemText>
-        </AnswersItem>
-      </AnswersRow>
 
-      <AnswersRow>
-        <AnswersItem width={widthCard} onPress={() => pick(answers[2].id)} type={getStatus(answers[2].id)}>
-          <AnswersItemText type={getStatus(answers[2].id)}>{answers[2].title}</AnswersItemText>
-        </AnswersItem>
-        <AnswersItem width={widthCard} onPress={() => pick(answers[3].id)} type={getStatus(answers[3].id)}>
-          <AnswersItemText type={getStatus(answers[3].id)}>{answers[3].title}</AnswersItemText>
-        </AnswersItem>
-      </AnswersRow>
-    </AnswersContainer>
+
+  return (
+    <View style={{ flexDirection: "column", gap: 15 }}>
+      <View style={{ flexDirection: "row", gap: 15 }}>
+        <TouchableOpacity
+          style={[
+            styles.answersItem,
+            { width: widthCard, height: widthCard },
+            { borderColor: getStatus(answers[0].id) === "green" ? "#7ABC71" : getStatus(answers[0].id) === "red" ? "#EF625D" : colors.color2 },
+            { backgroundColor: getStatus(answers[0].id) === "green" ? "#7ABC71" : getStatus(answers[0].id) === "red" ? "#EF625D" : colors.color2 },
+          ]}
+          onPress={() => pick(answers[0].id)}
+        >
+          <Text
+            style={[
+              styles.answersItemText,
+              { color: getStatus(answers[0].id) === "transparent" ? colors.color4 : colors.color5 },
+            ]}
+          >
+            {answers[0].title}
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[
+            styles.answersItem,
+            { width: widthCard, height: widthCard },
+            { borderColor: getStatus(answers[1].id) === "green" ? "#7ABC71" : getStatus(answers[1].id) === "red" ? "#EF625D" : colors.color2 },
+            { backgroundColor: getStatus(answers[1].id) === "green" ? "#7ABC71" : getStatus(answers[1].id) === "red" ? "#EF625D" : colors.color2 },
+          ]}
+          onPress={() => pick(answers[1].id)}
+        >
+          <Text
+            style={[
+              styles.answersItemText,
+              { color: getStatus(answers[1].id) === "transparent" ? colors.color4 : colors.color5 },
+            ]}
+          >
+            {answers[1].title}
+          </Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={{ flexDirection: "row", gap: 15 }}>
+        <TouchableOpacity
+          style={[
+            styles.answersItem,
+            { width: widthCard, height: widthCard },
+            { borderColor: getStatus(answers[2].id) === "green" ? "#7ABC71" : getStatus(answers[2].id) === "red" ? "#EF625D" : colors.color2 },
+            { backgroundColor: getStatus(answers[2].id) === "green" ? "#7ABC71" : getStatus(answers[2].id) === "red" ? "#EF625D" : colors.color2 },
+          ]}
+          onPress={() => pick(answers[2].id)}
+        >
+          <Text
+            style={[
+              styles.answersItemText,
+              { color: getStatus(answers[2].id) === "transparent" ? colors.color4 : colors.color5 },
+            ]}
+          >
+            {answers[2].title}
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[
+            styles.answersItem,
+            { width: widthCard, height: widthCard },
+            { borderColor: getStatus(answers[3].id) === "green" ? "#7ABC71" : getStatus(answers[3].id) === "red" ? "#EF625D" : colors.color2 },
+            { backgroundColor: getStatus(answers[3].id) === "green" ? "#7ABC71" : getStatus(answers[3].id) === "red" ? "#EF625D" : colors.color2 },
+          ]}
+          onPress={() => pick(answers[3].id)}
+        >
+          <Text
+            style={[
+              styles.answersItemText,
+              { color: getStatus(answers[3].id) === "transparent" ? colors.color4 : colors.color5 },
+            ]}
+          >
+            {answers[3].title}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
+const styles = StyleSheet.create({
+  answersItem: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 12,
+  },
+  answersItemText: {
+    fontSize: 22,
+  },
+});
+
 
 export default EducationPracticeSelectAnswers;
-
-const AnswersContainer = styled.View`
-  flex-direction: column;
-  gap: 15px;
-`;
-
-const AnswersRow = styled.View`
-  flex-direction: row;
-  gap: 15px;
-`;
-
-type AnswersItem = {
-  width?: number;
-  type: "green" | "red" | "transparent";
-};
-
-const AnswersItem = styled.TouchableOpacity<AnswersItem>`
-  width: ${({ width }) => width + "px"};
-  height: ${({ width }) => width + "px"};
-
-  justify-content: center;
-  align-items: center;
-
-  border-width: 1px;
-  border-color: ${({ type, theme }) =>
-    type === "green"
-      ? "#7ABC71"
-      : type === "red"
-        ? "#EF625D"
-        : theme.colors.color2};
-  background-color: ${({ type, theme }) =>
-    type === "green"
-      ? "#7ABC71"
-      : type === "red"
-        ? "#EF625D"
-        : theme.colors.color2};
-  border-radius: 12px;
-`;
-
-const AnswersItemText = styled.Text<AnswersItem>`
-  color: ${({ theme, type }) =>
-    type === "transparent" ? theme.colors.color4 : theme.colors.color5};
-  font-size: 22px;
-`;

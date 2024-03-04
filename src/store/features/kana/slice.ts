@@ -45,14 +45,14 @@ export const kanaSlice = createSlice({
         ...state.selected.dakuon.katakana,
         ...state.selected.handakuon.katakana,
         ...state.selected.yoon.katakana,
-      ].map(item => lettersTableById[item as LettersKeys].ka);
+      ].map(item => lettersTableById[item as LettersKeys]?.ka);
 
       const hiraLetters = [
         ...state.selected.base.hiragana,
         ...state.selected.dakuon.hiragana,
         ...state.selected.handakuon.hiragana,
         ...state.selected.yoon.hiragana,
-      ].map(item => lettersTableById[item as LettersKeys].hi);
+      ].map(item => lettersTableById[item as LettersKeys]?.hi);
       
       const kanaMatchingWords = findWordsFromArray(words, kanaLetters);
       const hiraMatchingWords = findWordsFromArray(words, hiraLetters);
@@ -79,17 +79,17 @@ export const kanaSlice = createSlice({
 
       for (let index = 0; index < letter.length; index++) {
         const letterItem = letter[index];
-        if (!selectedLettersSet.has(letterItem.en)) {
+        if (!selectedLettersSet.has(letterItem.id)) {
           isActive = false;
         }
       }
 
       letter.forEach(elem => {
-        if (isActive === false && !selectedLettersSet.has(elem.en)) {
-          local = toggleLetterInArray(local, elem.en);
+        if (isActive === false && !selectedLettersSet.has(elem.id)) {
+          local = toggleLetterInArray(local, elem.id);
         }
         if (isActive === true) {
-          local = toggleLetterInArray(local, elem.en);
+          local = toggleLetterInArray(local, elem.id);
         }
       });
 
@@ -98,7 +98,7 @@ export const kanaSlice = createSlice({
     },
     toggleLetter: (state, action: toggleLetterAction) => {
       const { alphabet, kana, letter } = action.payload;
-      state.selected[alphabet][kana] = toggleLetterInArray(state.selected[alphabet][kana], letter.en);
+      state.selected[alphabet][kana] = toggleLetterInArray(state.selected[alphabet][kana], letter.id);
       updateSelectedLetters(state);
     },
     setKanaSelected: (state, action) => {

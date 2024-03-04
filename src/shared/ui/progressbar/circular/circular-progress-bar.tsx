@@ -1,13 +1,12 @@
 import React from "react";
 
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { Svg, Circle } from "react-native-svg";
-import styled, { useTheme } from "styled-components/native";
 
-import { Colors } from "@/shared/constants/app";
+import { useThemeContext } from "@/hooks/theme-context";
 
 interface CircularProgressBarProps {
-  progress: number
+  progress: number;
 }
 
 const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ progress }) => {
@@ -16,7 +15,7 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ progress }) =
 
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
-  const colors = useTheme().colors as Colors;
+  const { colors } = useThemeContext();
 
   return (
     <View>
@@ -43,27 +42,14 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ progress }) =
           rotation="-90"
           origin="50, 50"
         />
-        <TitleContainer>
-          <Title>{`${Math.round(progress)}%`}</Title>
-        </TitleContainer>
+        <View style={{ position: "absolute", top: 38, width: 100 }}>
+          <Text style={{ width: "100%", textAlign: "center", fontSize: 17, color: colors.color4, fontWeight: "700" }}>
+            {`${Math.round(progress)}%`}
+          </Text>
+        </View>
       </Svg>
     </View>
   );
 };
 
 export default CircularProgressBar;
-
-
-const TitleContainer = styled.View`
-  position: absolute;
-  top: 38px;
-  width: 100px;
-`;
-
-const Title = styled.Text`
-  width: 100%;
-  text-align: center;
-  font-size: 17px;
-  color: ${({ theme }) => theme.colors.color4};
-  font-weight: 700;
-`;

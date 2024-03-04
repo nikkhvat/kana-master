@@ -1,15 +1,12 @@
 import React, { useEffect } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import styled, { useTheme } from "styled-components/native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 
 import SelectButton, { SelectButtonState } from "@/entities/education/kana-quick-selection/SelectButton/select-button";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useThemeContext } from "@/hooks/theme-context";
-import { Colors } from "@/shared/constants/app";
 import { Kana, KanaMode, KanaSection, LETTERS_COUNT } from "@/shared/constants/kana";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";

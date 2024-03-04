@@ -48,6 +48,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
 
   // Передаёться масив вопросов 
   const init = (questions: AnyQuestion[]) => {
+    console.log("INIT questions",questions);
     setQuestions(questions);
   };
 

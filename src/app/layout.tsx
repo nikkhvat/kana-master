@@ -74,14 +74,6 @@ function BottomTabNavigator() {
 }
 
 const Layout = () => {
-
-  // const lang = useAppSelector((state: RootState) => state.profile.language);
-
-  // useEffect(() => {
-  //   const changeLang = async () => i18n.changeLanguage(lang);
-  //   changeLang();
-  // }, [i18n, lang]);
-
   const { colors } = useThemeContext();  
 
   return (
@@ -102,7 +94,7 @@ const Layout = () => {
             component={EducationKanaQuickSelectionPage}
             options={{ headerShown: false }}
           />
-          {/* <Stack.Screen
+          <Stack.Screen
             name="Practice"
             component={EducationPracticePage}
             options={{
@@ -112,7 +104,7 @@ const Layout = () => {
               headerTitle: "",
               headerBackVisible: false,
             }}
-          /> */}
+          />
           <Stack.Screen
             name="Results"
             component={EducationResultPage}

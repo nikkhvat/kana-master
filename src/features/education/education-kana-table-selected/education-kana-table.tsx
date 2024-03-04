@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 
-import { Dimensions, View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { Dimensions, View, Text, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useThemeContext } from "@/hooks/theme-context";
@@ -22,7 +22,7 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
   kana,
   type,
   isEditMode,
-  onClick = () => {},
+  onClick = () => { },
   last
 }) => {
   const dispatch = useAppDispatch();
@@ -39,7 +39,7 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
   const selectedLetters = useAppSelector(
     (state: RootState) => state.kana.selected[type][kana]
   );
-  
+
   const data = useMemo(() => getData(type), [getData, type]);
 
   const onToggleLetter = useCallback(
@@ -104,8 +104,8 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
         type === "row"
           ? (data[index].filter(isILetter) as ILetter[])
           : (data.flatMap((row) =>
-              isILetter(row[index]) ? [row[index]] : []
-            ) as ILetter[]);
+            isILetter(row[index]) ? [row[index]] : []
+          ) as ILetter[]);
 
       onToggleSome(letters, alphabet);
     },
@@ -126,31 +126,29 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
   const isPlus = isEditMode === true;
 
   return (
-    <View style={{ paddingLeft: 20, paddingRight: 20, marginBottom: 20, borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.color2, paddingTop: 10, paddingBottom: 30 }}>
+    <View style={[styles.container, { borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.color2 }]}>
       {letters.length > 1 && (
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end", gap: 10 }}>
+        <View style={styles.rowButtons}>
           {letters[0].items.map((cell, cellIndex) => {
             return (
               <TouchableOpacity
                 key={`plus_${cellIndex}`}
-                style={{
-                  borderRadius: 12,
-                  borderWidth: 1,
-                  borderColor: "transparent",
-                  width: cellIndex === 0 ? itemWidthLong : itemWidth,
-                  height: itemWidth,
-                  backgroundColor: "transparent",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                style={[
+                  styles.cell,
+                  {
+                    width: letters[0].items.length === 3 ? itemWidthLong : itemWidth,
+                    height: itemWidth,
+                    borderWidth: 0,
+                  }]}
                 onPress={() => onPlus?.("cell", cellIndex, type)}
               >
                 <Text
-                  style={{
-                    fontSize: isEditMode !== true ? 13 : 22,
-                    color: isEditMode ? colors.color5 : isInfo ? colors.color3 : colors.color4,
-                  }}
+                  style={[
+                    styles.symbol, 
+                    {
+                      fontSize: isEditMode !== true ? 13 : 22,
+                      color: isEditMode ? colors.color5 : isInfo ? colors.color3 : colors.color4,
+                    }]}
                 >
                   {isEditMode && "+"}
                   {!isEditMode && "-"}
@@ -166,36 +164,38 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
 
       <ScrollView>
         {letters.map((row, rowIndex) => (
-          <View key={rowIndex} style={{ flexDirection: "row", alignItems: "center", justifyContent: "flex-end", gap: 10 }}>
-            <TouchableOpacity
-              style={{
-                borderRadius: 12,
-                borderWidth: 1,
-                borderColor: "transparent",
-                width: itemWidth,
-                height: itemWidth,
-                backgroundColor: "transparent",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              onPress={() => onPlus?.("row", rowIndex, type)}
-            >
-              <Text
+          <View key={`row-${rowIndex}`} style={[styles.row, { marginTop: 10 }]}>
+            <View style={styles.rowButtons}>
+              <TouchableOpacity
                 style={{
-                  fontSize: isEditMode !== true ? 13 : 22,
-                  color: isEditMode ? colors.color5 : isInfo ? colors.color3 : colors.color4,
+                  borderRadius: 12,
+                  borderWidth: 1,
+                  borderColor: "transparent",
+                  width: itemWidth,
+                  height: itemWidth,
+                  backgroundColor: "transparent",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
+                onPress={() => onPlus?.("row", rowIndex, type)}
               >
-                {isEditMode && "+"}
-                {!isEditMode && "-"}
-                {!isEditMode &&
-                  row.items[0] !== null &&
-                  (row.items[0].data.en.length < 3
-                    ? row.items[0].data.en[0]
-                    : row.items[0].data.en[0] + row.items[0].data.en[1])}
-              </Text>
-            </TouchableOpacity>
+                <Text
+                  style={{
+                    fontSize: isEditMode !== true ? 13 : 22,
+                    color: isEditMode ? colors.color5 : isInfo ? colors.color3 : colors.color4,
+                  }}
+                >
+                  {isEditMode && "+"}
+                  {!isEditMode && "-"}
+                  {!isEditMode &&
+                    row.items[0] !== null &&
+                    (row.items[0].data.en.length < 3
+                      ? row.items[0].data.en[0]
+                      : row.items[0].data.en[0] + row.items[0].data.en[1])}
+                </Text>
+              </TouchableOpacity>
+            </View>
             {(
               row.items[0].data.en === "YA" ? [row.items[0], null, row.items[1], null, row.items[2]] :
                 row.items[0].data.en === "WA" ? [row.items[0], null, null, null, row.items[1]] :
@@ -204,21 +204,23 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
                       return (
                         <TouchableOpacity
                           key={`${rowIndex}-${cellIndex}`}
-                          style={{
-                            borderRadius: 12,
-                            borderWidth: cell === null ? 0 : 1,
-                            borderColor: cell === null ? "transparent" : colors.color2,
-                            width: cell === null ? itemWidth : row.items.length === 3 && row.items[0].data.en !== "YA" ? itemWidthLong : itemWidth,
-                            height: itemWidth,
-                            backgroundColor: !cell || !cell.active || isInfo
-                              ? "transparent"
-                              : isPlus
-                                ? colors.second_color3
-                                : colors.second_color4,
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
+                          style={[
+                            styles.cell,
+                            {
+                              borderRadius: 12,
+                              borderWidth: cell === null ? 0 : 1,
+                              borderColor: cell === null ? "transparent" : colors.color2,
+                              width: cell === null ? itemWidth : row.items.length === 3 && row.items[0].data.en !== "YA" ? itemWidthLong : itemWidth,
+                              height: itemWidth,
+                              backgroundColor: !cell || !cell.active || isInfo
+                                ? "transparent"
+                                : isPlus
+                                  ? colors.second_color3
+                                  : colors.second_color4,
+                              flexDirection: "column",
+                              alignItems: "center",
+                              justifyContent: "center",
+                          }]}
                           onPress={() => {
                             if (cell !== null) {
                               if (isEditMode) onPress?.([cell.data, rowIndex, cellIndex, type]);
@@ -227,19 +229,16 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
                           }}
                         >
                           <Text
-                            style={{
-                              fontSize: 17,
-                              color: !cell || !cell.active || isEditMode ? colors.color4 : colors.color5,
-                            }}
+                            style={[
+                              styles.symbol, 
+                              {
+                                fontSize: 17,
+                                color: !cell || !cell.active || isEditMode ? colors.color4 : colors.color5,
+                              }]}
                           >
                             {cell !== null && cell.data[kana === "hiragana" ? "hi" : "ka"]}
                           </Text>
-                          <Text
-                            style={{
-                              fontSize: 13,
-                              color: colors.color4,
-                            }}
-                          >
+                          <Text style={[styles.subText, { color: colors.color4 }]}>
                             {cell !== null && cell.data.en.toUpperCase()}
                           </Text>
                         </TouchableOpacity>
@@ -253,3 +252,38 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
 };
 
 export default EducationKanaTableSelected;
+
+const styles = StyleSheet.create({
+  container: {
+    paddingLeft: 20,
+    paddingRight: 20,
+    marginTop: 15,
+    marginBottom: 30,
+    paddingBottom: 30,
+    gap: 9,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    gap: 9,
+  },
+  rowButtons: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    gap: 9
+  },
+  cell: {
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 12,
+    borderWidth: 1,
+  },
+  symbol: {
+    fontWeight: "400",
+  },
+  subText: {
+    fontSize: 13,
+  },
+});

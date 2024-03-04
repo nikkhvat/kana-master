@@ -24,7 +24,7 @@ const ThemeContext = createContext<ThemeContextType>({
   colors: colors.ligth,
   theme: Theme.Light,
   themeString: "light",
-  updateTheme: () => {},
+  updateTheme: () => { },
 });
 
 interface ThemeProviderProps {
@@ -32,13 +32,13 @@ interface ThemeProviderProps {
 }
 
 const getColors = (theme: Theme) => {
-    if (theme === Theme.Dark) {
-      return colors["dark"];
-    }
+  if (theme === Theme.Dark) {
+    return colors["dark"];
+  }
 
   if (theme === Theme.Light) {
-      return colors["ligth"];
-    }
+    return colors["ligth"];
+  }
 
   if (theme === Theme.Auto) {
 
@@ -53,11 +53,9 @@ const getColors = (theme: Theme) => {
   return colors["ligth"];
 };
 
-// Создаем провайдер контекста
 export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(Theme.Light);
 
-  // Функция для обновления компонента в контексте
   const updateTheme = (theme: Theme) => {
     setTheme(theme);
   };
@@ -73,7 +71,6 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({ children 
   );
 };
 
-// Хук для использования контекста
 export const useThemeContext = () => {
   const context = useContext(ThemeContext);
 

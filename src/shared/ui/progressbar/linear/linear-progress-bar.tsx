@@ -1,85 +1,83 @@
 import React from "react";
 
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import styled, { useTheme } from "styled-components/native";
 
-import { Colors } from "@/shared/constants/app";
+import { useThemeContext } from "@/hooks/theme-context";
 
 interface ProgressBarProp {
-  close?: () => void
-  current: number
-  all: number
+  close?: () => void;
+  current: number;
+  all: number;
 }
 
 const LinearProgressBar: React.FC<ProgressBarProp> = ({ close, current, all }) => {
-  const colors = useTheme().colors as Colors;
+  
+  const { colors } = useThemeContext();
 
   return (
-    <ProgressBarContainer>
-      <ProgressBarLine>
-        <ProgressBarLineActive progress={(current / all) * 100} />
-      </ProgressBarLine>
-      <ProgressBarBottom>
-        <ProgressBarClose onPress={() => close?.()}>
+    <View style={styles.progressBarContainer}>
+      <View style={[styles.progressBarLine, { backgroundColor: colors.color2 }]}>
+        <View style={[
+          styles.progressBarLineActive, 
+          { 
+            width: `${(current / all) * 100}%`,
+            backgroundColor: colors.color4,
+          },
+        ]} />
+      </View>
+      <View style={styles.progressBarBottom}>
+        <TouchableOpacity style={styles.progressBarClose} onPress={() => close?.()}>
           <Icon
             onPress={() => close?.()}
             name="close"
             size={24}
             color={colors.color3}
           />
-        </ProgressBarClose>
-
-        <ProgressBarText>
+        </TouchableOpacity>
+        <Text style={[styles.progressBarText, { color: colors.color3 }]}>
           Question {current} / {all}
-        </ProgressBarText>
-      </ProgressBarBottom>
-    </ProgressBarContainer>
+        </Text>
+      </View>
+    </View>
   );
 };
 
+const styles = StyleSheet.create({
+  progressBarContainer: {
+    width: "100%",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  progressBarLine: {
+    width: "100%",
+    height: 4,
+  },
+  progressBarLineActive: {
+    height: 4,
+  },
+  progressBarBottom: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 6,
+  },
+  progressBarClose: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: -15,
+    padding: 10,
+  },
+  progressBarText: {
+    textAlign: "right",
+    fontSize: 11,
+    fontStyle: "normal",
+    fontWeight: "400",
+    lineHeight: 22,
+    letterSpacing: -0.43,
+  }
+});
+
 export default LinearProgressBar;
-
-const ProgressBarContainer = styled.View`
-  width: 100%;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ProgressBarLine = styled.View`
-  width: 100%;
-  height: 4px;
-  background-color: ${({ theme }) => theme.colors.color2};
-`;
-
-const ProgressBarLineActive = styled.View<{ progress: number }>`
-  width: ${({ progress }) => progress + "%"};
-  height: 4px;
-  background-color: ${({ theme }) => theme.colors.color4};
-`;
-
-const ProgressBarBottom = styled.View`
-  width: 100%;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 6px;
-`;
-
-const ProgressBarClose = styled.TouchableOpacity`
-  justify-content: row;
-  justify-content: center;
-  align-items: center;
-  margin-left: -15px;
-  padding: 10px;
-`;
-
-const ProgressBarText = styled.Text`
-  color: ${({ theme }) => theme.colors.color3};
-  text-align: right;
-  font-size: 11px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 22px;
-  letter-spacing: -0.43px;
-`;

@@ -2,9 +2,8 @@ import React from "react";
 
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import styled from "styled-components/native";
 
 import { useThemeContext } from "@/hooks/theme-context";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
@@ -18,56 +17,52 @@ interface EducationResultProps {
   navigation: LearnResultsNavigationProp;
 }
 
-
 const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation }) => {
   const { stats } = route.params;
 
   const insets = useSafeAreaInsets();
 
-  const { colors } = useThemeContext();  
+  const { colors } = useThemeContext();
 
   const home = () => {
     navigation.navigate("Root");
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.color1 }]}>
-      <Text style={[styles.title, { color: colors.color4 }]}>Practice complete!</Text>
+    <View style={[containerStyles.container, { paddingTop: insets.top, backgroundColor: colors.color1 }]}>
+      <Text style={[containerStyles.title, { color: colors.color4 }]}>Practice complete!</Text>
 
-      <View style={[styles.statsCard, { borderColor: colors.color2 }]}>
-        <View style={styles.statsGraph}>
+      <View style={[containerStyles.statsCard, { borderColor: colors.color2 }]}>
+        <View style={containerStyles.statsGraph}>
           <CircularProgressBar
             progress={(stats.correctAnswers / stats.totalQuestions) * 100}
           />
         </View>
-        <View style={styles.statsDescription}>
-          <Text style={[styles.statsTitle, { color: colors.color4 }]}>Score</Text>
-          <View style={styles.statsSubText}>
-            <Text style={[styles.statsSubTitleLarge, { color: colors.color4 }]}>{stats.correctAnswers + 1}</Text>
-            <Text style={[styles.statsSubTitle, { color: colors.color4 }]}>/ {stats.totalQuestions + 1}</Text>
+        <View style={containerStyles.statsDescription}>
+          <Text style={[containerStyles.statsTitle, { color: colors.color4 }]}>Score</Text>
+          <View style={containerStyles.statsSubText}>
+            <Text style={[containerStyles.statsSubTitleLarge, { color: colors.color4 }]}>{stats.correctAnswers + 1}</Text>
+            <Text style={[containerStyles.statsSubTitle, { color: colors.color4 }]}>/ {stats.totalQuestions + 1}</Text>
           </View>
-          <Text style={[styles.statsSubTime, { color: colors.color3 }]}>33.3 sec (2.8 sec / question)</Text>
+          <Text style={[containerStyles.statsSubTime, { color: colors.color3 }]}>33.3 sec (2.8 sec / question)</Text>
         </View>
       </View>
 
-      <ScrollView style={styles.scroll}>
-        {/* <Text style={[styles.detailsTitle, { color: colors.color4 }]}>Details</Text> */}
+      <ScrollView style={containerStyles.scroll}>
+        {/* <Text style={[containerStyles.detailsTitle, { color: colors.color4 }]}>Details</Text> */}
 
         {/* DetailsCard and other components similarly styled */}
         {/* Assuming other components are refactored similarly to above */}
       </ScrollView>
 
-      {/* <TouchableOpacity style={[styles.doneButton, { backgroundColor: colors.color4 }]} onPress={home}>
-        <Text style={[styles.doneText, { color: colors.color1 }]}>Done</Text>
-      </TouchableOpacity> */}
+      <TouchableOpacity style={[{ backgroundColor: colors.color4 }]} onPress={home}>
+        <Text style={[{ color: colors.color1 }]}>Done</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default EducationResultPage;
-
-
-const styles = StyleSheet.create({
+const containerStyles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
@@ -89,12 +84,12 @@ const styles = StyleSheet.create({
     height: 130,
     flexDirection: "row",
     padding: 15,
+    gap: 15
   },
   statsGraph: {
     width: 100,
     height: 100,
-    borderRadius: 50,
-    backgroundColor: "#3a3a3a", // Example background color, adjust as necessary
+    borderRadius: 50
   },
   statsDescription: {},
   statsTitle: {
@@ -120,3 +115,5 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
 });
+
+export default EducationResultPage;

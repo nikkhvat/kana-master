@@ -12,7 +12,7 @@ export function getLettersWithStatuses(
     return letters.every(row => {
       const item = row[index];
       
-      return typeof selectedLettersSet.has(item?.en);
+      return typeof selectedLettersSet.has(item?.id);
     });
   };
 
@@ -20,7 +20,7 @@ export function getLettersWithStatuses(
   const columnsList = Array.from({ length: columns }, (_, i) => isActiveColumn(i));
 
   const isActiveRow = (items: (ILetter)[]) => items.every(item =>
-    typeof selectedLettersSet.has(item.en)
+    typeof selectedLettersSet.has(item.id)
   );
 
   return letters.map(group => {
@@ -28,7 +28,7 @@ export function getLettersWithStatuses(
       const commonFields = { data: item, column: columnsList[index], active: false };
       return {
         ...commonFields,
-        active: selectedLettersSet.has(item.en)
+        active: selectedLettersSet.has(item.id)
       };
     });
 

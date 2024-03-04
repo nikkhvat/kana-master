@@ -3,9 +3,8 @@ import React, { useEffect } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useKeepAwake } from "expo-keep-awake";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import styled from "styled-components/native";
-
 
 import { useEducationPracticeContext } from "../lib/context/education-practice-context";
 
@@ -16,6 +15,7 @@ import EducationPracticeSelectAnswers from "@/features/education/education-pract
 import EducationPracticeShowSymbol from "@/features/education/education-practice-show-symbol/education-practice-show-symbol";
 import EducationPracticeTimer from "@/features/education/education-practice-timer/education-practice-timer";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { useThemeContext } from "@/hooks/theme-context";
 import useStats from "@/hooks/useStats";
 import { CardMode, DifficultyLevelType, Kana, KanaAlphabet, PracticeScreenMode, QuestionTypeBuildingWord, QuestionTypeChooseLetter, QuestionTypeChooseWord, QuestionTypeFindPairWord, TestMode } from "@/shared/constants/kana";
 import { ILetter, LettersKeys, lettersTableById } from "@/shared/data/lettersTable";
@@ -65,6 +65,8 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
 
   const selectedLetters = useAppSelector((state: RootState) => state.kana.selected);
 
+  console.log("+++++++++++== selectedLetters", selectedLetters);
+  
   const kanaLetters = [
     ...selectedLetters.base.katakana,
     ...selectedLetters.dakuon.katakana,
@@ -78,6 +80,10 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
     ...selectedLetters.handakuon.hiragana,
     ...selectedLetters.yoon.hiragana,
   ].map(item => lettersTableById[item as LettersKeys]);
+
+  console.log("---------- kanaLetters", kanaLetters);
+  console.log("---------- hiraLetters", hiraLetters);
+  
 
   const selectedWords = useAppSelector((state: RootState) => state.kana.selectedWords);
 
@@ -204,84 +210,84 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
 
 
   useEffect(() => {
-    if (mode == PracticeScreenMode.WordGame) {
-      const questions: AnyQuestion[] = [];
+    // if (mode == PracticeScreenMode.WordGame) {
+    //   const questions: AnyQuestion[] = [];
 
-      const wordsCount: number = kanaWords.length + hiraWords.length;
+    //   const wordsCount: number = kanaWords.length + hiraWords.length;
 
-      const questionsCount: number = wordsCount > 20 ? 20 : wordsCount;
+    //   const questionsCount: number = wordsCount > 20 ? 20 : wordsCount;
 
-      const questionTypes: CardMode[] = [];
+    //   const questionTypes: CardMode[] = [];
 
-      if (keysCardModeState.includes(CardMode.hiraganaToRomaji)) questionTypes.push(CardMode.hiraganaToRomaji);
-      if (keysCardModeState.includes(CardMode.romajiToHiragana)) questionTypes.push(CardMode.romajiToHiragana);
-      if (keysCardModeState.includes(CardMode.katakanaToRomaji)) questionTypes.push(CardMode.katakanaToRomaji);
-      if (keysCardModeState.includes(CardMode.romajiToKatakana)) questionTypes.push(CardMode.romajiToKatakana);
+    //   if (keysCardModeState.includes(CardMode.hiraganaToRomaji)) questionTypes.push(CardMode.hiraganaToRomaji);
+    //   if (keysCardModeState.includes(CardMode.romajiToHiragana)) questionTypes.push(CardMode.romajiToHiragana);
+    //   if (keysCardModeState.includes(CardMode.katakanaToRomaji)) questionTypes.push(CardMode.katakanaToRomaji);
+    //   if (keysCardModeState.includes(CardMode.romajiToKatakana)) questionTypes.push(CardMode.romajiToKatakana);
 
-      const cardTypes: TestMode[] = [];
+    //   const cardTypes: TestMode[] = [];
 
-      if (keysModeState.includes(TestMode.Choice)) cardTypes.push(TestMode.Choice);
-      if (keysModeState.includes(TestMode.WordBuilding)) cardTypes.push(TestMode.WordBuilding);
-      if (keysModeState.includes(TestMode.FindPair)) cardTypes.push(TestMode.FindPair);
+    //   if (keysModeState.includes(TestMode.Choice)) cardTypes.push(TestMode.Choice);
+    //   if (keysModeState.includes(TestMode.WordBuilding)) cardTypes.push(TestMode.WordBuilding);
+    //   if (keysModeState.includes(TestMode.FindPair)) cardTypes.push(TestMode.FindPair);
 
-      const addedQuestionKana: string[] = [];
-      const addedQuestionHira: string[] = [];
+    //   const addedQuestionKana: string[] = [];
+    //   const addedQuestionHira: string[] = [];
 
-      for (let i = 0; i < questionsCount; i++) {
-        const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
+    //   for (let i = 0; i < questionsCount; i++) {
+    //     const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
 
-        switch (type) {
-          case CardMode.hiraganaToRomaji: {
-            const word = getRandomWords(addedQuestionHira, hiraWords);
+    //     switch (type) {
+    //       case CardMode.hiraganaToRomaji: {
+    //         const word = getRandomWords(addedQuestionHira, hiraWords);
 
-            if (word !== null) {
-              addedQuestionHira.push(word?.romanji);
-              questions.push(generateWordQuestion(word, cardTypes, KanaAlphabet.Hiragana, "kana"));
-            }
-            continue;
-          }
-          case CardMode.romajiToHiragana: {
-            const word = getRandomWords(addedQuestionHira, hiraWords);
+    //         if (word !== null) {
+    //           addedQuestionHira.push(word?.romanji);
+    //           questions.push(generateWordQuestion(word, cardTypes, KanaAlphabet.Hiragana, "kana"));
+    //         }
+    //         continue;
+    //       }
+    //       case CardMode.romajiToHiragana: {
+    //         const word = getRandomWords(addedQuestionHira, hiraWords);
 
-            if (word !== null) {
-              addedQuestionHira.push(word?.romanji);
-              questions.push(
-                generateWordQuestion(word, cardTypes, KanaAlphabet.Hiragana, "romanji")
-              );
-            }
-            continue;
-          }
-          case CardMode.katakanaToRomaji: {
-            const word = getRandomWords(addedQuestionKana, kanaWords);
-            if (word !== null) {
-              addedQuestionKana.push(word?.romanji);
-              questions.push(
-                generateWordQuestion(word, cardTypes, KanaAlphabet.Katakana, "kana")
-              );
-            }
+    //         if (word !== null) {
+    //           addedQuestionHira.push(word?.romanji);
+    //           questions.push(
+    //             generateWordQuestion(word, cardTypes, KanaAlphabet.Hiragana, "romanji")
+    //           );
+    //         }
+    //         continue;
+    //       }
+    //       case CardMode.katakanaToRomaji: {
+    //         const word = getRandomWords(addedQuestionKana, kanaWords);
+    //         if (word !== null) {
+    //           addedQuestionKana.push(word?.romanji);
+    //           questions.push(
+    //             generateWordQuestion(word, cardTypes, KanaAlphabet.Katakana, "kana")
+    //           );
+    //         }
 
-            continue;
-          }
-          case CardMode.romajiToKatakana: {
-            const word = getRandomWords(addedQuestionKana, kanaWords);
-            if (word !== null) {
-              addedQuestionKana.push(word?.romanji);
-              questions.push(
-                generateWordQuestion(
-                  word,
-                  cardTypes,
-                  KanaAlphabet.Katakana,
-                  "romanji"
-                )
-              );
-            }
-            continue;
-          }
-        }
-      }
+    //         continue;
+    //       }
+    //       case CardMode.romajiToKatakana: {
+    //         const word = getRandomWords(addedQuestionKana, kanaWords);
+    //         if (word !== null) {
+    //           addedQuestionKana.push(word?.romanji);
+    //           questions.push(
+    //             generateWordQuestion(
+    //               word,
+    //               cardTypes,
+    //               KanaAlphabet.Katakana,
+    //               "romanji"
+    //             )
+    //           );
+    //         }
+    //         continue;
+    //       }
+    //     }
+    //   }
 
-      init(shuffleArray(questions));
-    }
+    //   init(shuffleArray(questions));
+    // }
 
     if (mode == PracticeScreenMode.Testing) {
       const questions: Question[] = [];
@@ -294,7 +300,9 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
         if (keysCardModeState.includes(CardMode.katakanaToRomaji)) questionTypes.push(CardMode.katakanaToRomaji);
         if (keysCardModeState.includes(CardMode.katakanaToHiragana)) questionTypes.push(CardMode.katakanaToHiragana);
 
+        console.log("kanaLetters", kanaLetters);
         for (let i = 0; i < kanaLetters.length; i++) {
+          
           const letter = kanaLetters[i] as ILetter;
 
           const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
@@ -342,23 +350,45 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
         if (keysCardModeState.includes(CardMode.hiraganaToRomaji)) questionTypes.push(CardMode.hiraganaToRomaji);
         if (keysCardModeState.includes(CardMode.romajiToHiragana)) questionTypes.push(CardMode.romajiToHiragana);
 
+        console.log("hiraLetters", hiraLetters);
+
         for (let i = 0; i < hiraLetters.length; i++) {
           const letter = hiraLetters[i] as ILetter;
 
-          const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
-
-          switch (type) {
-            case CardMode.hiraganaToKatakana: {
-              questions.push({ type: QuestionTypeChooseLetter, symbol: letter.hi, kana: Kana.Hiragana, answers: getAnswers([hiraLetters] as ILetter[][], letter, Kana.Katakana), trueAnswer: letter.id });
-              continue;
-            }
-            case CardMode.hiraganaToRomaji: {
-              questions.push({ type: QuestionTypeChooseLetter, symbol: letter.hi, kana: Kana.Hiragana, answers: getAnswers([hiraLetters] as ILetter[][], letter, Kana.English), trueAnswer: letter.id });
-              continue;
-            }
-            case CardMode.romajiToHiragana: {
-              questions.push({ type: QuestionTypeChooseLetter, symbol: letter.en, kana: Kana.English, answers: getAnswers([hiraLetters] as ILetter[][], letter, Kana.Hiragana), trueAnswer: letter.id });
-              continue;
+          if (letter !== undefined) {
+            const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
+  
+            switch (type) {
+              case CardMode.hiraganaToKatakana: {
+                questions.push({ 
+                  type: QuestionTypeChooseLetter, 
+                  symbol: letter.hi, 
+                  kana: Kana.Hiragana, 
+                  answers: getAnswers([hiraLetters] as ILetter[][], letter, Kana.Katakana), 
+                  trueAnswer: letter.id 
+                });
+                continue;
+              }
+              case CardMode.hiraganaToRomaji: {
+                questions.push({ 
+                  type: QuestionTypeChooseLetter, 
+                  symbol: letter.hi, 
+                  kana: Kana.Hiragana, 
+                  answers: getAnswers([hiraLetters] as ILetter[][], letter, Kana.English), 
+                  trueAnswer: letter.id 
+                });
+                continue;
+              }
+              case CardMode.romajiToHiragana: {
+                questions.push({ 
+                  type: QuestionTypeChooseLetter, 
+                  symbol: letter.en, 
+                  kana: Kana.English, 
+                  answers: getAnswers([hiraLetters] as ILetter[][], letter, Kana.Hiragana), 
+                  trueAnswer: letter.id 
+                });
+                continue;
+              }
             }
           }
         }
@@ -391,9 +421,17 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
 
   const onSubmit = (trueAnswer: boolean) => submit(trueAnswer, finishCallback);
 
+  const { colors } = useThemeContext();
+
   return (
-    <Container paddingTop={insets.top}>
-      <Header>
+    <View 
+      style={[
+        styles.container, 
+        { 
+          paddingTop: insets.top + 20, 
+          backgroundColor: colors.color1 }
+      ]} >
+      <View style={styles.header}>
         <LinearProgressBar
           close={() => navigation.goBack()}
           current={currentIndex}
@@ -401,7 +439,7 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
         />
         {IS_TIMER && mode === PracticeScreenMode.Testing && 
           <EducationPracticeTimer />}
-      </Header>
+      </View>
       
       {/* Выбор символа (тестирование) */}
       {isChooseLetter && mode === PracticeScreenMode.Testing && <>
@@ -414,16 +452,16 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
       </>}
 
       {/* Выбор пары (игра слов) */}
-      {isFindPair && mode == PracticeScreenMode.WordGame &&
+      {/* {isFindPair && mode == PracticeScreenMode.WordGame &&
         <EducationPracticeFindPair
           pairs={question.pairs}
           answers={question.answers}
           onCompleted={(isError) => onSubmit(!isError)}
           title={question.title}
-        />}
+        />} */}
       
       {/* Составить слово из предложенных букв (игра слов) */}
-      {isBuildingWord && mode == PracticeScreenMode.WordGame &&
+      {/* {isBuildingWord && mode == PracticeScreenMode.WordGame &&
         <EducationPracticeChooseLetters
           title={question.title}
           romanji={question.romanji}
@@ -431,37 +469,33 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
           kana={question.kana}
           shuffle={question.shuffle}
           onFinish={(isError) => onSubmit(!isError)}
-        />}
+        />} */}
       
       {/* Составить слово из предложенных букв (игра слов) */}
-      {isChooseWord && mode == PracticeScreenMode.WordGame &&
+      {/* {isChooseWord && mode == PracticeScreenMode.WordGame &&
         <EducationPracticeChooseValue
           title={question.title}
           questions={question.questions}
           onCompleted={(isError) => onSubmit(!isError)}
           trueKey={question.trueKey}
-        />}
-    </Container>
+        />} */}
+    </View>
   );
 }
 
 export default EducationPractice;
 
-
-const Container = styled.View<{ paddingTop: number }>`
-  flex: 1;
-
-  padding: 20px;
-  padding-top: ${({ paddingTop }) => (paddingTop + 20) + "px"};
-  background-color: ${({ theme }) => theme.colors.color1};
-  justify-content: space-between;
-  align-items: center;
-
-  width: 100%;
-`;
-
-const Header = styled.View`
-  width: 100%;
-  flex-direction: column;
-  gap: 22px;
-`;
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    flex: 1,
+    padding: 20,
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  header: {
+    width: "100%",
+    flexDirection: "column",
+    gap: 22
+  }
+});
