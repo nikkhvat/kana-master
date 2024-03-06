@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-import styled from "styled-components/native";
+import { View, Text, TouchableOpacity, Pressable, StyleSheet } from "react-native";
+
+import { useThemeContext } from "@/hooks/theme-context";
 
 interface ChooseLettersProps {
   title: string;
@@ -24,6 +26,8 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
   shuffle,
   onFinish
 }) => {
+  const { colors } = useThemeContext();
+
   const letters = useMemo(() => kana.split(""), [kana]);
 
   const [questionTitle, setTitle] = useState(`${title} ${romanji} (${translate})`);
@@ -93,135 +97,127 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
   }, [kana]);
 
   return (
-    <Container>
-      <Question>{questionTitle}</Question>
+    <View style={styles.container}>
+      <Text style={[styles.question, { color: colors.color4 }]}>{questionTitle}</Text>
 
-      <Content>
-        <WordContainer onPress={reset}>
+      <View style={styles.content}>
+        <Pressable onPress={reset} style={styles.wordContainer}>
           {selectedLetters.map((letter, i) => (
-            <LetterContainer
-              correct={trueAnswers[i]}
-              isCurrent={letter === null && selectedLetters[i - 1] !== null}
+            <View
               key={`selected-letter${i}-${letter?.letter}`}
+              style={[
+                styles.letterContainer,
+                {
+                  borderColor: letter === null && selectedLetters[i - 1] !== null
+                    ? colors.second_color3
+                    : trueAnswers[i] === null
+                      ? colors.color3
+                      : trueAnswers[i]
+                        ? colors.second_color2
+                        : colors.second_color1,
+                },
+              ]}
             >
-              {letter !== null && <Letter>{letter?.letter}</Letter>}
-            </LetterContainer>
+              {letter !== null && <Text style={[styles.letter, { color: colors.color4 }]}>{letter?.letter}</Text>}
+            </View>
           ))}
-        </WordContainer>
+        </Pressable>
 
-        <ChooseLettersContainer>
+        <View style={styles.chooseLettersContainer}>
           {shuffleLetters.map((letter, index) => {
             const data = { index: index, letter: letter };
             const selected = isSelected(data);
 
             return (
-              <ChooseLettersBox
-                selected={selected}
+              <TouchableOpacity
                 onPress={() => !selected && onClickLetter(data)}
                 key={`letter-list-${letter}-${index}`}
+                style={[
+                  styles.chooseLettersBox,
+                  {
+                    borderColor: !selected ? colors.color2 : "transparent",
+                  },
+                ]}
               >
-                <ChooseLettersText selected={selected}>
+                <Text
+                  style={[
+                    styles.chooseLettersText,
+                    {
+                      color: !selected ? colors.color4 : "transparent"
+                    },
+                  ]}
+                >
                   {letter}
-                </ChooseLettersText>
-              </ChooseLettersBox>
+                </Text>
+              </TouchableOpacity>
             );
           })}
-        </ChooseLettersContainer>
-      </Content>
-    </Container>
+        </View>
+      </View>
+    </View>
+
   );
 };
 
 export default EducationPracticeChooseLetters;
 
-const Container = styled.View`
-  flex: 1;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-`;
 
-const Question = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 17px;
-  font-weight: 600;
-  margin-top: 35px;
-  margin-bottom: 30px;
-  width: 100%;
-  text-align: center;
-`;
-
-const Content = styled.View`
-  width: 100%;
-  flex-direction: row;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const WordContainer = styled.Pressable`
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-`;
-
-type LetterContainerProps = {
-  isCurrent: boolean
-  correct: true | false | null
-};
-
-const LetterContainer = styled.View<LetterContainerProps>`
-  width: 22px;
-  height: 26px;
-  border-color: ${({ theme, isCurrent, correct }) =>
-    isCurrent
-      ? theme.colors.second_color3
-      : correct === null
-        ? theme.colors.color3
-        : correct
-          ? theme.colors.second_color2
-          : theme.colors.second_color1};
-  border-bottom-width: 2px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Letter = styled.Text`
-  font-size: 22px;
-  color: ${({ theme }) => theme.colors.color4};  
-`;
-
-const ChooseLettersContainer = styled.View`
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 9px;
-  margin-top: 30px;
-`;
-
-type ChooseLettersBox = {
-  selected: boolean;
-};
-
-const ChooseLettersBox = styled.TouchableOpacity<ChooseLettersBox>`
-  border-radius: 12px;
-  border-width: 1px;
-  border-color: ${({ theme, selected }) =>
-    !selected ? theme.colors.color2 : "transparent"};
-  padding: 10px;
-
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-
-  width: 50px;
-  height: 50px;
-`;
-
-const ChooseLettersText = styled.Text<ChooseLettersBox>`
-  font-size: 22px;
-  color: ${({ theme, selected }) => !selected ? theme.colors.color4 : "transparent"};
-`;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    width: "100%",
+  },
+  question: {
+    fontSize: 17,
+    fontWeight: "600",
+    marginTop: 35,
+    marginBottom: 30,
+    width: "100%",
+    textAlign: "center",
+  },
+  content: {
+    width: "100%",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  wordContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 5,
+  },
+  letterContainer: {
+    width: 22,
+    height: 26,
+    borderBottomWidth: 2,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  letter: {
+    fontSize: 22,
+  },
+  chooseLettersContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    flexWrap: "wrap",
+    gap: 9,
+    marginTop: 30,
+  },
+  chooseLettersBox: {
+    borderRadius: 12,
+    borderWidth: 1,
+    padding: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 50,
+    height: 50,
+  },
+  chooseLettersText: {
+    fontSize: 22,
+  },
+});

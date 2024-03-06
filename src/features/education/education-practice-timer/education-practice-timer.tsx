@@ -1,67 +1,85 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
+import { View, Text, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import styled, { useTheme } from "styled-components/native";
 
-import { Colors } from "@/shared/constants/app";
+import { useThemeContext } from "@/hooks/theme-context";
 
-const EducationPracticeTimer = () => {
-  const colors = useTheme().colors as Colors;
+interface EducationPracticeTimerProps {
+  onTimerEnd?: () => void
+  initial: number
+  currentIndex: number
+}
+
+const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
+  initial = 5,
+  onTimerEnd
+}) => {
+  const { colors } = useThemeContext();
+
+  const [timeLeft, setTimeLeft] = useState(initial);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      setTimeLeft(0);
+      onTimerEnd?.();
+    }
+
+    if (!timeLeft) return;
+
+    const intervalId = setInterval(() => {
+
+      setTimeLeft(timeLeft - 1);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [onTimerEnd, timeLeft]);
+
+  const fullProgress = (timeLeft / initial) * 100;
 
   return (
-    <Container>
-      <TimerContainer>
-        <TimerStroke width={75} />
-      </TimerContainer>
-      <TimerTextContainer>
+    <View style={styles.container}>
+      <View style={[styles.timerContainer, {backgroundColor: colors.color2}]}>
+        <View style={[styles.timerStroke, { width: `${fullProgress}%`, backgroundColor: colors.second_color2 }]} />
+      </View>
+      <View style={styles.timerTextContainer}>
         <Icon name={"timer-outline"} size={24} color={colors.color4} />
-        <TimerTime>00:04</TimerTime>
-      </TimerTextContainer>
-    </Container>
+        <Text style={[styles.timerTime, { color: colors.color4 }]}>00:0{timeLeft}</Text>
+      </View>
+    </View>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 15
+  },
+  timerContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    height: 10,
+    borderRadius: 33,
+  },
+  timerStroke: {
+    height: 10,
+    borderRadius: 33,
+  },
+  timerTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+  },
+  timerTime: {
+    fontSize: 17,
+    fontWeight: "600",
+  },
+});
+
 export default EducationPracticeTimer;
-
-const Container = styled.View`
-  width: 100%;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 30px;
-`;
-
-const TimerContainer = styled.View`
-  flex: 1;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  background-color: ${({ theme }) => theme.colors.color2};
-  height: 10px;
-  border-radius: 33px;
-`;
-
-type TimerStrokeProp = {
-  width: number
-}
-
-
-const TimerStroke = styled.View<TimerStrokeProp>`
-  background-color: ${({ theme }) => theme.colors.second_color2};
-  width: ${({ width }) => width + "%"};
-  height: 10px;
-  border-radius: 33px;
-`;
-
-const TimerTextContainer = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-`;
-
-const TimerTime = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 17px;
-  font-weight: 600;
-`;

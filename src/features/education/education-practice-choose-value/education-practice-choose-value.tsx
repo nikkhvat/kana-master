@@ -1,100 +1,136 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-import styled from "styled-components/native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+
+import { useThemeContext } from "@/hooks/theme-context";
+import { TEST_DELAY } from "@/shared/constants/kana";
 
 interface EducationPracticeChooseValueProps {
   title: string;
-  questions: { text: string; key: string }[];
-  onCompleted: (isError: boolean) => void
-  trueKey: string
+  answers: { text: string; key: string }[];
+  trueAnswer: string;
+  onCompleted?: (isError: boolean) => void;
+  onError?: (id: string) => void;
 }
 
 const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> = ({
   title,
-  questions = [],
+  answers = [],
+  trueAnswer,
   onCompleted,
-  trueKey,
+  onError,
 }) => {
-  return (
-    <Container>
-      <Question>{title}</Question>
+  const { colors } = useThemeContext();
 
-      <Columns>
-        {questions.map((question) => (
-          <Item
-            key={question.key}
-            isCorrect={false}
-            isSelect={false}
-            isError={false}
+  const [errors, setErrors] = useState([] as (string | number)[]);
+  const [corrected, setCorrected] = useState(null as string | number | null);
+
+  useEffect(() => {
+    setErrors([]);
+    setCorrected(null);
+  }, [trueAnswer, answers]);
+
+  const pick = (id: string) => {
+    if (corrected !== null) return;
+
+    if (errors.includes(id)) return;
+
+    if (id !== trueAnswer) {
+      setErrors((prev) => [...prev, id]);
+
+      setTimeout(() => {
+        onError?.(id);
+      }, TEST_DELAY);
+      return;
+    }
+
+    setCorrected(id);
+
+    setTimeout(() => {
+      onCompleted?.(errors.length === 0);
+    }, TEST_DELAY);
+  };
+
+  const isCorrectAnswer = (id: string): boolean => id === corrected;
+  const isInCorrectAnswer = (id: string): boolean => errors.includes(id);
+  
+  const cardBorderColor = (id: string): string => {
+    return isInCorrectAnswer(id) ? 
+      colors.second_color1 
+      : isCorrectAnswer(id) 
+      ? colors.second_color2 : colors.color2;
+  };
+  
+  const cardBackgroundColor = (id: string): string => {
+    return isInCorrectAnswer(id) ? 
+      colors.second_color1 
+      : isCorrectAnswer(id) 
+      ? colors.second_color2 : "transparent";
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={[styles.question, { color: colors.color4 }]}>{title}</Text>
+
+      <View style={styles.columns}>
+        {answers.map((answer) => (
+          <TouchableOpacity
+            key={answer.key}
+            style={[
+              styles.item,
+              {
+                borderColor: cardBorderColor(answer.key),
+                backgroundColor: cardBackgroundColor(answer.key),
+              },
+            ]}
             onPress={() => {
-              onCompleted(trueKey === question.key);
+              pick?.(answer.key);
             }}
           >
-            <Text>{question.text}</Text>
-          </Item>
+            <Text style={[styles.text, {color: colors.color4}]}>{answer.text}</Text>
+          </TouchableOpacity>
         ))}
-      </Columns>
-    </Container>
+      </View>
+    </View>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    width: "100%",
+  },
+  question: {
+    fontSize: 17,
+    fontWeight: "600",
+    marginTop: 35,
+    marginBottom: 30,
+    width: "100%",
+    textAlign: "center",
+  },
+  columns: {
+    height: 50,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 15,
+    width: "100%",
+  },
+  item: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 12,
+    borderWidth: 1,
+    height: 50,
+  },
+  text: {
+    fontSize: 17,
+    fontWeight: "400",
+  },
+});
+
 export default EducationPracticeChooseValue;
-
-const Container = styled.View`
-  flex: 1;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-`;
-
-const Question = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 17px;
-  font-weight: 600;
-  margin-top: 35px;
-  margin-bottom: 30px;
-  width: 100%;
-  text-align: center;
-`;
-
-const Columns = styled.View`
-  height: 50px;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-
-  width: 100%;
-`;
-
-interface ItemProp {
-  isCorrect: boolean;
-  isSelect: boolean;
-  isError: boolean;
-}
-
-const Item = styled.TouchableOpacity<ItemProp>`
-  /* flex: 1; */
-  width: 100%;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  border-width: 1px;
-  border-color: ${({ theme, isCorrect, isSelect, isError }) =>
-    isCorrect
-      ? theme.colors.second_color2
-      : isError ? theme.colors.second_color1
-        : isSelect ? theme.colors.second_color2 : theme.colors.color3};
-  background-color: ${({ theme, isCorrect, isSelect, isError }) =>
-    isCorrect ? theme.colors.second_color2
-      : isError ? theme.colors.second_color1
-        : isSelect ? "transparent" : "transparent"};
-  height: 50px;
-`;
-
-const Text = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 17px;
-  font-weight: 400;
-`;

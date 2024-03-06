@@ -48,12 +48,9 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
         </View>
       </View>
 
-      <ScrollView style={containerStyles.scroll}>
-        {/* <Text style={[containerStyles.detailsTitle, { color: colors.color4 }]}>Details</Text> */}
+      {/* <ScrollView style={containerStyles.scroll}>
 
-        {/* DetailsCard and other components similarly styled */}
-        {/* Assuming other components are refactored similarly to above */}
-      </ScrollView>
+      </ScrollView> */}
 
       <TouchableOpacity style={[{ backgroundColor: colors.color4 }]} onPress={home}>
         <Text style={[{ color: colors.color1 }]}>Done</Text>

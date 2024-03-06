@@ -4,7 +4,6 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-// import styled from "styled-components/native";
 
 import { useThemeContext } from "@/hooks/theme-context";
 import { RootStackParamList } from "@/shared/types/navigationTypes";

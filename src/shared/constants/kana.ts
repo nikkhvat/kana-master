@@ -74,7 +74,7 @@ export const DAKUON_SECTIONS = [KanaSection.DakuonHiragana, KanaSection.DakuonKa
 export const HANDAKUON_SECTIONS = [KanaSection.HandakuonHiragana, KanaSection.HandakuonKatakana];
 export const YOON_SECTIONS = [KanaSection.YoonHiragana, KanaSection.YoonKatakana];
 
-export const TEST_DELAY = 100;
+export const TEST_DELAY = 300;
 
 export type Alphabet = "base" | "dakuon" | "handakuon" | "yoon"
 

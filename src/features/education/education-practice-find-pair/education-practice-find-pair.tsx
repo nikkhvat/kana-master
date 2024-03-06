@@ -1,23 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 
-import styled from "styled-components/native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+
+import { useThemeContext } from "@/hooks/theme-context";
 
 interface EducationPracticeFindPairProps {
   pairs: {
-    title: string
-    id: number | string
-  }[][]
-  answers: (string | number)[][]
-  onCompleted?: (hasError: boolean) => void
-  onError?: () => void
-  title: string
+    title: string;
+    id: number | string;
+  }[][];
+  answers: (string | number)[][];
+  onCompleted?: (hasError: boolean) => void;
+  onError?: () => void;
+  title: string;
 }
 
 type Item = {
   title: string;
   id: number | string;
-  index: number
+  index: number;
 };
 
 const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
@@ -27,6 +29,8 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
   onError,
   title,
 }) => {
+  const { colors } = useThemeContext();
+
   const [hasError, setHasError] = useState(false);
 
   const [selectedPair, setSelectedPair] = useState(null as null | Item);
@@ -82,95 +86,84 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
   }, [matchedPairs]);
 
   return (
-    <Container>
-      <Question>{title}</Question>
-      <Pairs>
-        {pairs.map((pair) => (
-          <Row key={pair[0].id}>
-            <Item
-              isError={errorsPairs.includes(pair[0].id)}
-              isSelect={pair[0].id === selectedPair?.id}
-              isCorrect={isMatched(pair[0].id)}
-              onPress={() => pick({ ...pair[0], index: 0 })}
-            >
-              <Text>{pair[0].title}</Text>
-            </Item>
-            <Item
-              isError={errorsPairs.includes(pair[1].id)}
-              isSelect={pair[1].id === selectedPair?.id}
-              isCorrect={isMatched(pair[1].id)}
-              onPress={() => pick({ ...pair[1], index: 1 })}
-            >
-              <Text>{pair[1].title}</Text>
-            </Item>
-          </Row>
+    <View style={styles.container}>
+      <Text style={[styles.question, {color: colors.color4}]}>{title}</Text>
+      <View style={styles.pairs}>
+        {pairs.map((pair, rowIndex) => (
+          <View key={pair[0].id} style={styles.row}>
+            {pair.map((item, colIndex) => (
+              <TouchableOpacity
+                key={item.id}
+                style={[
+                  styles.item,
+                  {
+                    borderColor: isCorrectPair(item as Item, pair[1 - colIndex] as Item)
+                      ? colors.second_color2
+                      : errorsPairs.includes(item.id)
+                        ? colors.second_color1
+                        : item.id === selectedPair?.id
+                          ? colors.second_color2
+                          : colors.color3,
+                    backgroundColor: isCorrectPair(item as Item, pair[1 - colIndex] as Item)
+                      ? colors.second_color2
+                      : errorsPairs.includes(item.id)
+                        ? colors.second_color1
+                        : item.id === selectedPair?.id
+                          ? "transparent"
+                          : "transparent",
+                  },
+                ]}
+                onPress={() => pick({ ...item, index: colIndex })}
+              >
+                <Text style={[styles.text, { color: colors.color4 }]}>{item.title}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         ))}
-      </Pairs>
-    </Container>
+      </View>
+    </View>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    width: "100%",
+  },
+  question: {
+    fontSize: 17,
+    fontWeight: "600",
+    marginTop: 35,
+    marginBottom: 30,
+    width: "100%",
+    textAlign: "center",
+  },
+  pairs: {
+    flexDirection: "column",
+    gap: 15,
+  },
+  row: {
+    height: 50,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 15,
+    width: "100%",
+  },
+  item: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 12,
+    borderWidth: 1,
+    height: 50,
+  },
+  text: {
+    fontSize: 22,
+  },
+});
+
 export default EducationPracticeFindPair;
-
-const Container = styled.View`
-  flex: 1;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-`;
-
-const Question = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 17px;
-  font-weight: 600;
-  margin-top: 35px;
-  margin-bottom: 30px;
-  width: 100%;
-  text-align: center;
-`;
-
-const Pairs = styled.View`
-  flex-direction: column;
-  gap: 15px;
-`;
-
-const Row = styled.View`
-  height: 50px;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-
-  width: 100%;
-`;
-
-interface ItemProp {
-  isCorrect: boolean
-  isSelect: boolean
-  isError: boolean
-}
-
-const Item = styled.TouchableOpacity<ItemProp>`
-  flex: 1;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  border-width: 1px;
-  border-color: ${({ theme, isCorrect, isSelect, isError }) =>
-    isCorrect
-      ? theme.colors.second_color2
-      : isError ? theme.colors.second_color1
-        : isSelect ? theme.colors.second_color2 : theme.colors.color3};
-  background-color: ${({ theme, isCorrect, isSelect, isError }) =>
-    isCorrect ? theme.colors.second_color2
-      : isError ? theme.colors.second_color1
-        : isSelect ? "transparent" : "transparent"};
-  /* padding: 14px; */
-  height: 50px;
-`;
-
-const Text = styled.Text`
-  color: ${({ theme }) => theme.colors.color4};
-  font-size: 22px;
-`;

@@ -9,7 +9,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/hooks/theme-context";
 import EducationKanaQuickSelectionPage from "@/pages/education/education-kana-quick-selection/education-kana-quick-selection";
-import EducationPracticePage from "@/pages/education/education-practice/education-practice";
+import EducationPracticePage from "@/pages/education/education-practice/ui/education-practice";
 import EducationResultPage from "@/pages/education/education-result/education-result";
 import EducationWelcome from "@/pages/education/education-welcome/education-welcome";
 import Kana from "@/pages/kana/kana";
