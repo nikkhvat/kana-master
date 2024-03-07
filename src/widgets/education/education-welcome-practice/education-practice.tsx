@@ -27,6 +27,7 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
   
   const letters = useAppSelector((state: RootState) => state.kana.selected);
   const [cardModeState, setCardModeState] = useState<EducationModeChangeProps["buttons"]>([[], []]);
+  const [difficultyLevelState, setDifficultyLevelState] = useState<EducationModeChangeProps["buttons"]>([[], []]);
 
   useEffect(() => {
     const isHira =
@@ -43,30 +44,23 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
     
     setCardModeState(() => [
       [
-        { title: "Hira → Romaji", key: CardMode.hiraganaToRomaji, type: isHira ? "active" : "inactive", condition: isHira, },
-        { title: "Romaji → Hira", key: CardMode.romajiToHiragana, type: "inactive", condition: isHira, },
-        { title: "Hira → Kata", key: CardMode.hiraganaToKatakana, type: "inactive", condition: isHira && isKata, },
+        { title: "Hira → Romaji", key: CardMode.hiraganaToRomaji, type: isHira ? "active" : "inactive", condition: isHira },
+        { title: "Romaji → Hira", key: CardMode.romajiToHiragana, type: "inactive", condition: isHira },
+        { title: "Hira → Kata", key: CardMode.hiraganaToKatakana, type: "inactive", condition: isHira && isKata },
       ],
       [
-        { title: "Kata → Romaji", key: CardMode.katakanaToRomaji, type: isKata ? "active" : "inactive", condition: isKata, },
-        { title: "Romaji → Kata", key: CardMode.romajiToKatakana, type: "inactive", condition: isKata, },
-        { title: "Kata → Hira", key: CardMode.katakanaToHiragana, type: "inactive", condition: isHira && isKata, },
+        { title: "Kata → Romaji", key: CardMode.katakanaToRomaji, type: isKata ? "active" : "inactive", condition: isKata },
+        { title: "Romaji → Kata", key: CardMode.romajiToKatakana, type: "inactive", condition: isKata },
+        { title: "Kata → Hira", key: CardMode.katakanaToHiragana, type: "inactive", condition: isHira && isKata },
       ],
     ]);
-  }, [letters]);
+    
+    setDifficultyLevelState(() => [
+      [{ title: t("difficultyLevel.timeTest"), key: DifficultyLevelType.TimeTest, condition: true, type: "inactive" }],
+      [{ title: t("difficultyLevel.oneAttempt"), key: DifficultyLevelType.OneAttempt, condition: true, type: "inactive" }],
+    ]);
+  }, [letters, t]);
 
-  const DifficultyLevel: EducationModeChangeProps["buttons"] = [
-    [{ 
-      title: t("difficultyLevel.timeTest"), 
-      key: DifficultyLevelType.TimeTest, 
-      type: "inactive" 
-    }],
-    [{ 
-      title: t("difficultyLevel.oneAttempt"), 
-      key: DifficultyLevelType.OneAttempt, 
-      type: "inactive" 
-    }],
-  ];
 
   const getActiveFromArray = (objects: any, active: string) => {
     const array = [];
@@ -86,7 +80,7 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
     return array;
   };
 
-  const [difficultyLevelState, setDifficultyLevelState] = useState(DifficultyLevel);
+  
   
   const toggleButtonState = (
     btnArray: typeof cardModeState,
