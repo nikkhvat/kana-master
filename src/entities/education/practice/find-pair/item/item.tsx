@@ -40,7 +40,7 @@ const FindPairItem: React.FC<FindPairItemProps> = ({
       height: 50,
     },
     text: {
-      color: colors.color4,
+      color: (isCorrect || isError) ? colors.color1 : colors.color4,
       fontSize: 22,
     }
   });

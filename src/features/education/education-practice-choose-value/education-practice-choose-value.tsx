@@ -68,6 +68,10 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
       ? colors.second_color2 : "transparent";
   };
 
+  const cardColor = (id: string): string => {
+    return (isInCorrectAnswer(id) || isCorrectAnswer(id)) ? colors.color1 : colors.color4;
+  };
+
   return (
     <View style={styles.container}>
       <Text style={[styles.question, { color: colors.color4 }]}>{title}</Text>
@@ -87,7 +91,7 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
               pick?.(answer.key);
             }}
           >
-            <Text style={[styles.text, {color: colors.color4}]}>{answer.text}</Text>
+            <Text style={[styles.text, { color: cardColor(answer.key)}]}>{answer.text}</Text>
           </TouchableOpacity>
         ))}
       </View>

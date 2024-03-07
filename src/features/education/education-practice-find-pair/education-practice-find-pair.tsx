@@ -38,20 +38,43 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
   const [selectedPair, setSelectedPair] = useState(null as null | Item);
   const [matchedPairs, setMatchedPairs] = useState([] as any[]);
 
+  const isInclude = (errorsPairs: Array<string | number>, id: string | number) => {
+    for (let i = 0; i < errorsPairs.length; i++) {
+      const element = errorsPairs[i];
+      
+      if (element === id) return true;
+    }
+
+    return false;
+  };
+  
   const [errorsPairs, setErrorsPairs] = useState([] as any[]);
 
   const isCorrectPair = (pair1: Item, pair2: Item) => {
-    return answers.some(
-      (answer) => answer.includes(pair1.id) && answer.includes(pair2.id)
+
+    const cond = answers.some(
+      (answer) => {
+        const cond1 = answer[0] === pair1.id || answer[1] === pair1.id;
+        const cond2 = answer[0] === pair2.id || answer[1] === pair2.id;
+        return cond1 && cond2;
+      }
     );
+    return cond;
   };
 
-  const isMatched = (id: string | number) => {
-    return matchedPairs.some((pair) => pair.includes(id));
+  const isMatched = (id: string | number) => {    
+    return matchedPairs.some((pair) => pair === id);
   };
 
   const isAlreadyMatched = (pair: Item) => {
-    return matchedPairs.includes(pair.id);
+
+    for (let index = 0; index < matchedPairs.length; index++) {
+      const element = matchedPairs[index];
+      
+      if (element === pair.id) return true;
+    }
+
+    return false;
   };
 
   const pick = (pair: Item) => {
@@ -66,7 +89,7 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
 
     if (selectedPair && selectedPair.id !== pair.id) {
       if (isCorrectPair(selectedPair, pair)) {
-        setMatchedPairs([...matchedPairs, selectedPair.id, pair.id]);
+        setMatchedPairs((prev) => [...prev, selectedPair.id, pair.id]);
       } else {
         if (!hasError) setHasError(true);
         setErrorsPairs([selectedPair!.id, pair.id]);
@@ -83,8 +106,10 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
 
   useEffect(() => {
     if (matchedPairs.length === pairs.length * 2) {
-      setMatchedPairs([]);
-      onCompleted?.(hasError);
+      setTimeout(() => {
+        setMatchedPairs(() => []);
+        onCompleted?.(hasError);
+      }, TEST_DELAY);
     }
   }, [matchedPairs]);
 
@@ -95,7 +120,7 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
         {pairs.map((pair) => (
           <View key={pair[0].id} style={styles.row}>
             <FindPairItem 
-              isError={errorsPairs.includes(pair[0].id)}
+              isError={isInclude(errorsPairs, pair[0].id)}
               isSelect={pair[0].id === selectedPair?.id}
               isCorrect={isMatched(pair[0].id)}
               onPress={() => pick({ ...pair[0], index: 0 })}
@@ -103,7 +128,7 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
               {pair[0].title}
             </FindPairItem>
             <FindPairItem 
-              isError={errorsPairs.includes(pair[1].id)}
+              isError={isInclude(errorsPairs, pair[1].id)}
               isSelect={pair[1].id === selectedPair?.id}
               isCorrect={isMatched(pair[1].id)}
               onPress={() => pick({ ...pair[1], index: 1 })}
