@@ -5,6 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Feather";
 
+import LanguageButton from "@/entities/profile/language-button/language-button";
 import { useThemeContext } from "@/hooks/theme-context";
 import { Theme } from "@/shared/constants/profile";
 import Button from "@/shared/ui/button/button";
@@ -36,6 +37,11 @@ const ProfilePage: React.FC = () => {
 
     updateTheme(Theme.Auto);
   };
+
+  const langs = [
+    { title: "Русский", key: "ru" },
+    { title: "English", key: "en" }
+  ];
 
   return (
     <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.color1 }]}>
@@ -86,18 +92,15 @@ const ProfilePage: React.FC = () => {
       <Text style={[styles.sectionTitle, { color: colors.color4 }]}>{t("profile.language")}</Text>
 
       <View style={styles.sectionButtonsColumn}>
-        <Button
-          customStyles={{ width: "100%" }}
-          title={"Русский"}
-          onClick={() => setLanguage("ru")}
-          type={i18n.language === "ru" ? "general" : "inactive"}
-        />
-        <Button
-          customStyles={{ width: "100%" }}
-          title={"English"}
-          onClick={() => setLanguage("en")}
-          type={i18n.language === "en" ? "general" : "inactive"}
-        />
+        {langs.map(lang => (
+          <LanguageButton 
+            key={lang.key}
+            langKey={lang.key}
+            onPress={() => setLanguage(lang.key)}
+            active={i18n.language === lang.key}>
+            {lang.title}
+          </LanguageButton>
+        ))}
       </View>
     </View>
   );
@@ -134,6 +137,6 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "column",
     alignItems: "center",
-    gap: 0,
+    gap: 12,
   },
 });
