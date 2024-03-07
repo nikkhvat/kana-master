@@ -96,44 +96,44 @@ const lettersTableHandakuon = {
 };
 
 const lettersTableYoon = {
-  "d1a354dd-03db-4143-8883-bfd21f0c63bf": { id: "d1a354dd-03db-4143-8883-bfd21f0c63bf", ka: "キャ", hi: "きゃ", en: "KYA", ru: "KYA"},
-  "4f2017b1-ae1d-4630-ba8a-4ce5d55b556f": { id: "4f2017b1-ae1d-4630-ba8a-4ce5d55b556f", ka: "キュ", hi: "きゅ", en: "KYU", ru: "KYU"},
-  "578f764c-1bdc-4ad6-a89b-daecde53d680": { id: "578f764c-1bdc-4ad6-a89b-daecde53d680", ka: "キョ", hi: "きょ", en: "KYO", ru: "KYO"},
-  "01bc1499-155f-46b7-bbf4-a64d973de743": { id: "01bc1499-155f-46b7-bbf4-a64d973de743", ka: "シャ", hi: "しゃ", en: "SHA", ru: "SHA" },
-  "fa4fb436-a0fc-413d-abbf-27e5f8d0b941": { id: "fa4fb436-a0fc-413d-abbf-27e5f8d0b941", ka: "シュ", hi: "しゅ", en: "SHU", ru: "SHU" },
-  "e69b7da1-daaf-4dfc-81b7-0693f48ad97d": { id: "e69b7da1-daaf-4dfc-81b7-0693f48ad97d", ka: "ショ", hi: "しょ", en: "SHO", ru: "SHO" },
-  "57dd1702-6b32-473b-aac6-bafd6344b59c": { id: "57dd1702-6b32-473b-aac6-bafd6344b59c", ka: "チャ", hi: "ちゃ", en: "CHA", ru: "CHA" },
-  "78245c5d-c44b-461d-8734-18a1ead49b93": { id: "78245c5d-c44b-461d-8734-18a1ead49b93", ka: "チュ", hi: "ちゅ", en: "CHU", ru: "CHU" },
-  "3ea7d433-fd0a-42f1-a049-e51f8c890fab": { id: "3ea7d433-fd0a-42f1-a049-e51f8c890fab", ka: "チョ", hi: "ちょ", en: "CHO", ru: "CHO" },
-  "f50bbf46-cbd3-4652-b32d-a7ea63d71073": { id: "f50bbf46-cbd3-4652-b32d-a7ea63d71073", ka: "ニャ", hi: "にゃ", en: "NYA", ru: "NYA" },
-  "a8684a65-29d7-468d-bf54-16a1a5c1dc57": { id: "a8684a65-29d7-468d-bf54-16a1a5c1dc57", ka: "ニュ", hi: "にゅ", en: "NYU", ru: "NYU" },
-  "108f5fcc-b005-451f-8004-7ca2e0c295c3": { id: "108f5fcc-b005-451f-8004-7ca2e0c295c3", ka: "ニョ", hi: "にょ", en: "NYO", ru: "NYO" },
-  "d765162e-6fb9-4213-bc8c-928a77f6db6e": { id: "d765162e-6fb9-4213-bc8c-928a77f6db6e", ka: "ヒャ", hi: "ひゃ", en: "HYA", ru: "HYA" },
-  "16699951-c484-42e4-889a-8170e46c36cd": { id: "16699951-c484-42e4-889a-8170e46c36cd", ka: "ヒュ", hi: "ひゅ", en: "HYU", ru: "HYU" },
-  "6334c6a8-3b58-411a-9698-476078765d85": { id: "6334c6a8-3b58-411a-9698-476078765d85", ka: "ヒョ", hi: "ひょ", en: "HYO", ru: "HYO" },
-  "1c2c7c7f-1058-4665-9c5c-db5371ecc80c": { id: "1c2c7c7f-1058-4665-9c5c-db5371ecc80c", ka: "ミャ", hi: "みゃ", en: "MYA", ru: "MYA" },
-  "32c07e97-0d48-457b-b9ea-c235ea5f0805": { id: "32c07e97-0d48-457b-b9ea-c235ea5f0805", ka: "ミュ", hi: "みゅ", en: "MYU", ru: "MYU" },
-  "3d4e3138-74d7-48c7-8275-fcd18ff4d470": { id: "3d4e3138-74d7-48c7-8275-fcd18ff4d470", ka: "ミョ", hi: "みょ", en: "MYO", ru: "MYO" },
-  "3342a4aa-9f35-46f1-9e6b-490897f5f9c0": { id: "3342a4aa-9f35-46f1-9e6b-490897f5f9c0", ka: "リャ", hi: "りゃ", en: "RYA", ru: "RYA" },
-  "74fe5cce-74ab-4335-8c6c-49e5906711be": { id: "74fe5cce-74ab-4335-8c6c-49e5906711be", ka: "リュ", hi: "りゅ", en: "RYU", ru: "RYU" },
-  "3aa9f1c6-21d3-419f-ad97-fda28085a281": { id: "3aa9f1c6-21d3-419f-ad97-fda28085a281", ka: "リョ", hi: "りょ", en: "RYO", ru: "RYO" },
+  "d1a354dd-03db-4143-8883-bfd21f0c63bf": { id: "d1a354dd-03db-4143-8883-bfd21f0c63bf", ka: "キャ", hi: "きゃ", en: "KYA", ru: "КЯ"},
+  "4f2017b1-ae1d-4630-ba8a-4ce5d55b556f": { id: "4f2017b1-ae1d-4630-ba8a-4ce5d55b556f", ka: "キュ", hi: "きゅ", en: "KYU", ru: "КЮ"},
+  "578f764c-1bdc-4ad6-a89b-daecde53d680": { id: "578f764c-1bdc-4ad6-a89b-daecde53d680", ka: "キョ", hi: "きょ", en: "KYO", ru: "КЁ"},
+  "01bc1499-155f-46b7-bbf4-a64d973de743": { id: "01bc1499-155f-46b7-bbf4-a64d973de743", ka: "シャ", hi: "しゃ", en: "SHA", ru: "ША" },
+  "fa4fb436-a0fc-413d-abbf-27e5f8d0b941": { id: "fa4fb436-a0fc-413d-abbf-27e5f8d0b941", ka: "シュ", hi: "しゅ", en: "SHU", ru: "ШУ" },
+  "e69b7da1-daaf-4dfc-81b7-0693f48ad97d": { id: "e69b7da1-daaf-4dfc-81b7-0693f48ad97d", ka: "ショ", hi: "しょ", en: "SHO", ru: "ШО" },
+  "57dd1702-6b32-473b-aac6-bafd6344b59c": { id: "57dd1702-6b32-473b-aac6-bafd6344b59c", ka: "チャ", hi: "ちゃ", en: "CHA", ru: "ЧА" },
+  "78245c5d-c44b-461d-8734-18a1ead49b93": { id: "78245c5d-c44b-461d-8734-18a1ead49b93", ka: "チュ", hi: "ちゅ", en: "CHU", ru: "ЧУ" },
+  "3ea7d433-fd0a-42f1-a049-e51f8c890fab": { id: "3ea7d433-fd0a-42f1-a049-e51f8c890fab", ka: "チョ", hi: "ちょ", en: "CHO", ru: "ЧО" },
+  "f50bbf46-cbd3-4652-b32d-a7ea63d71073": { id: "f50bbf46-cbd3-4652-b32d-a7ea63d71073", ka: "ニャ", hi: "にゃ", en: "NYA", ru: "НЯ" },
+  "a8684a65-29d7-468d-bf54-16a1a5c1dc57": { id: "a8684a65-29d7-468d-bf54-16a1a5c1dc57", ka: "ニュ", hi: "にゅ", en: "NYU", ru: "НЮ" },
+  "108f5fcc-b005-451f-8004-7ca2e0c295c3": { id: "108f5fcc-b005-451f-8004-7ca2e0c295c3", ka: "ニョ", hi: "にょ", en: "NYO", ru: "НЁ" },
+  "d765162e-6fb9-4213-bc8c-928a77f6db6e": { id: "d765162e-6fb9-4213-bc8c-928a77f6db6e", ka: "ヒャ", hi: "ひゃ", en: "HYA", ru: "ХЯ" },
+  "16699951-c484-42e4-889a-8170e46c36cd": { id: "16699951-c484-42e4-889a-8170e46c36cd", ka: "ヒュ", hi: "ひゅ", en: "HYU", ru: "ХЮ" },
+  "6334c6a8-3b58-411a-9698-476078765d85": { id: "6334c6a8-3b58-411a-9698-476078765d85", ka: "ヒョ", hi: "ひょ", en: "HYO", ru: "ХЁ" },
+  "1c2c7c7f-1058-4665-9c5c-db5371ecc80c": { id: "1c2c7c7f-1058-4665-9c5c-db5371ecc80c", ka: "ミャ", hi: "みゃ", en: "MYA", ru: "МЯ" },
+  "32c07e97-0d48-457b-b9ea-c235ea5f0805": { id: "32c07e97-0d48-457b-b9ea-c235ea5f0805", ka: "ミュ", hi: "みゅ", en: "MYU", ru: "МЮ" },
+  "3d4e3138-74d7-48c7-8275-fcd18ff4d470": { id: "3d4e3138-74d7-48c7-8275-fcd18ff4d470", ka: "ミョ", hi: "みょ", en: "MYO", ru: "МЁ" },
+  "3342a4aa-9f35-46f1-9e6b-490897f5f9c0": { id: "3342a4aa-9f35-46f1-9e6b-490897f5f9c0", ka: "リャ", hi: "りゃ", en: "RYA", ru: "РЯ" },
+  "74fe5cce-74ab-4335-8c6c-49e5906711be": { id: "74fe5cce-74ab-4335-8c6c-49e5906711be", ka: "リュ", hi: "りゅ", en: "RYU", ru: "РЮ" },
+  "3aa9f1c6-21d3-419f-ad97-fda28085a281": { id: "3aa9f1c6-21d3-419f-ad97-fda28085a281", ka: "リョ", hi: "りょ", en: "RYO", ru: "РЁ" },
   // dakuten
-  "94cb6083-8132-426b-8388-36199c7fd9a3": { id: "94cb6083-8132-426b-8388-36199c7fd9a3", ka: "ギャ", hi: "ぎゃ", en: "GYA", ru: "GYA" },
-  "0b0ff0f8-509d-45ed-8847-ea3ea4f415a5": { id: "0b0ff0f8-509d-45ed-8847-ea3ea4f415a5", ka: "ギュ", hi: "ぎゅ", en: "GYU", ru: "GYU" },
-  "3d03b236-004b-4077-8a47-518840cfc8aa": { id: "3d03b236-004b-4077-8a47-518840cfc8aa", ka: "ギョ", hi: "ぎょ", en: "GYO", ru: "GYO" },
-  "d0cc30d4-a773-4520-bc91-0d0b15433230": { id: "d0cc30d4-a773-4520-bc91-0d0b15433230", ka: "ジャ", hi: "じゃ", en: "JA", ru: "JA" },
-  "f357d6b0-aa4f-4693-8b29-fb0aeec31870": { id: "f357d6b0-aa4f-4693-8b29-fb0aeec31870", ka: "ジュ", hi: "じゅ", en: "JU", ru: "JU" },
-  "2da51f90-28ec-4eb3-be27-aceb72d1a851": { id: "2da51f90-28ec-4eb3-be27-aceb72d1a851", ka: "ジョ", hi: "じょ", en: "JO", ru: "JO" },
-  "65bc1325-2759-478b-b091-52875971d270": { id: "65bc1325-2759-478b-b091-52875971d270", ka: "ヂャ", hi: "ぢゃ", en: "JA", ru: "JA" },
-  "3500260f-59ec-4483-b58c-7e78004d7303": { id: "3500260f-59ec-4483-b58c-7e78004d7303", ka: "ヂュ", hi: "ぢゅ", en: "JU", ru: "JU" },
-  "22b50fcf-c8cc-4ed2-90d6-04ce2af2e7ac": { id: "22b50fcf-c8cc-4ed2-90d6-04ce2af2e7ac", ka: "ヂョ", hi: "ぢょ", en: "JO", ru: "JO" },
-  "f4e5e435-69a8-48ca-8366-e46481581dc4": { id: "f4e5e435-69a8-48ca-8366-e46481581dc4", ka: "ビャ", hi: "びゃ", en: "BYA", ru: "BYA" },
-  "5b38a9ea-62cd-4341-8ecc-bb02c7affd67": { id: "5b38a9ea-62cd-4341-8ecc-bb02c7affd67", ka: "ビュ", hi: "びゅ", en: "BYU", ru: "BYU" },
-  "74876afc-d65c-42cf-9589-0db573fb752e": { id: "74876afc-d65c-42cf-9589-0db573fb752e", ka: "ビョ", hi: "びょ", en: "BYO", ru: "BYO" },
+  "94cb6083-8132-426b-8388-36199c7fd9a3": { id: "94cb6083-8132-426b-8388-36199c7fd9a3", ka: "ギャ", hi: "ぎゃ", en: "GYA", ru: "ГЯ" },
+  "0b0ff0f8-509d-45ed-8847-ea3ea4f415a5": { id: "0b0ff0f8-509d-45ed-8847-ea3ea4f415a5", ka: "ギュ", hi: "ぎゅ", en: "GYU", ru: "ГЮ" },
+  "3d03b236-004b-4077-8a47-518840cfc8aa": { id: "3d03b236-004b-4077-8a47-518840cfc8aa", ka: "ギョ", hi: "ぎょ", en: "GYO", ru: "ГЁ" },
+  "d0cc30d4-a773-4520-bc91-0d0b15433230": { id: "d0cc30d4-a773-4520-bc91-0d0b15433230", ka: "ジャ", hi: "じゃ", en: "JA", ru: "ДЖА" },
+  "f357d6b0-aa4f-4693-8b29-fb0aeec31870": { id: "f357d6b0-aa4f-4693-8b29-fb0aeec31870", ka: "ジュ", hi: "じゅ", en: "JU", ru: "ДЖУ" },
+  "2da51f90-28ec-4eb3-be27-aceb72d1a851": { id: "2da51f90-28ec-4eb3-be27-aceb72d1a851", ka: "ジョ", hi: "じょ", en: "JO", ru: "ДЖО" },
+  "65bc1325-2759-478b-b091-52875971d270": { id: "65bc1325-2759-478b-b091-52875971d270", ka: "ヂャ", hi: "ぢゃ", en: "JA", ru: "ДЖА" },
+  "3500260f-59ec-4483-b58c-7e78004d7303": { id: "3500260f-59ec-4483-b58c-7e78004d7303", ka: "ヂュ", hi: "ぢゅ", en: "JU", ru: "ДЖУ" },
+  "22b50fcf-c8cc-4ed2-90d6-04ce2af2e7ac": { id: "22b50fcf-c8cc-4ed2-90d6-04ce2af2e7ac", ka: "ヂョ", hi: "ぢょ", en: "JO", ru: "ДЖО" },
+  "f4e5e435-69a8-48ca-8366-e46481581dc4": { id: "f4e5e435-69a8-48ca-8366-e46481581dc4", ka: "ビャ", hi: "びゃ", en: "BYA", ru: "БЯ" },
+  "5b38a9ea-62cd-4341-8ecc-bb02c7affd67": { id: "5b38a9ea-62cd-4341-8ecc-bb02c7affd67", ka: "ビュ", hi: "びゅ", en: "BYU", ru: "БЮ" },
+  "74876afc-d65c-42cf-9589-0db573fb752e": { id: "74876afc-d65c-42cf-9589-0db573fb752e", ka: "ビョ", hi: "びょ", en: "BYO", ru: "БЁ" },
   // handakuten
-  "8be1debc-5346-4979-bfde-913a90ab0122": { id: "8be1debc-5346-4979-bfde-913a90ab0122", ka: "ピャ", hi: "ぴゃ", en: "PYA", ru: "PYA" },
-  "ce908138-f0b0-4fee-9cfa-78a6f2a6cb3a": { id: "ce908138-f0b0-4fee-9cfa-78a6f2a6cb3a", ka: "ピュ", hi: "ぴゅ", en: "PYU", ru: "PYU" },
-  "45435756-de47-4f76-89b7-17d27aee49c7": { id: "45435756-de47-4f76-89b7-17d27aee49c7", ka: "ピョ", hi: "ぴょ", en: "PYO", ru: "PYO" }, 
+  "8be1debc-5346-4979-bfde-913a90ab0122": { id: "8be1debc-5346-4979-bfde-913a90ab0122", ka: "ピャ", hi: "ぴゃ", en: "PYA", ru: "ПЯ" },
+  "ce908138-f0b0-4fee-9cfa-78a6f2a6cb3a": { id: "ce908138-f0b0-4fee-9cfa-78a6f2a6cb3a", ka: "ピュ", hi: "ぴゅ", en: "PYU", ru: "ПЮ" },
+  "45435756-de47-4f76-89b7-17d27aee49c7": { id: "45435756-de47-4f76-89b7-17d27aee49c7", ka: "ピョ", hi: "ぴょ", en: "PYO", ru: "ПЁ" }, 
 };
 
 export const lettersTableById = {
@@ -259,64 +259,64 @@ export const handakuon: ILetter[][] = [
 
 export const yoon: ILetter[][] = [
   [
-    { id: "d1a354dd-03db-4143-8883-bfd21f0c63bf", ka: "キャ", hi: "きゃ", en: "KYA", ru: "KYA"},
-    { id: "4f2017b1-ae1d-4630-ba8a-4ce5d55b556f", ka: "キュ", hi: "きゅ", en: "KYU", ru: "KYU"},
-    { id: "578f764c-1bdc-4ad6-a89b-daecde53d680", ka: "キョ", hi: "きょ", en: "KYO", ru: "KYO"}
+    { id: "d1a354dd-03db-4143-8883-bfd21f0c63bf", ka: "キャ", hi: "きゃ", en: "KYA", ru: "КЯ"},
+    { id: "4f2017b1-ae1d-4630-ba8a-4ce5d55b556f", ka: "キュ", hi: "きゅ", en: "KYU", ru: "КЮ"},
+    { id: "578f764c-1bdc-4ad6-a89b-daecde53d680", ka: "キョ", hi: "きょ", en: "KYO", ru: "КЁ"}
   ],
   [
-    { id: "01bc1499-155f-46b7-bbf4-a64d973de743", ka: "シャ", hi: "しゃ", en: "SHA", ru: "SHA"},
-    { id: "fa4fb436-a0fc-413d-abbf-27e5f8d0b941", ka: "シュ", hi: "しゅ", en: "SHU", ru: "SHU"},
-    { id: "e69b7da1-daaf-4dfc-81b7-0693f48ad97d", ka: "ショ", hi: "しょ", en: "SHO", ru: "SHO"}
+    { id: "01bc1499-155f-46b7-bbf4-a64d973de743", ka: "シャ", hi: "しゃ", en: "SHA", ru: "ША"},
+    { id: "fa4fb436-a0fc-413d-abbf-27e5f8d0b941", ka: "シュ", hi: "しゅ", en: "SHU", ru: "ШУ"},
+    { id: "e69b7da1-daaf-4dfc-81b7-0693f48ad97d", ka: "ショ", hi: "しょ", en: "SHO", ru: "ШО"}
   ],
   [
-    { id: "57dd1702-6b32-473b-aac6-bafd6344b59c", ka: "チャ", hi: "ちゃ", en: "CHA", ru: "CHA"},
-    { id: "78245c5d-c44b-461d-8734-18a1ead49b93", ka: "チュ", hi: "ちゅ", en: "CHU", ru: "CHU"},
-    { id: "3ea7d433-fd0a-42f1-a049-e51f8c890fab", ka: "チョ", hi: "ちょ", en: "CHO", ru: "CHO"}
+    { id: "57dd1702-6b32-473b-aac6-bafd6344b59c", ka: "チャ", hi: "ちゃ", en: "CHA", ru: "ЧА"},
+    { id: "78245c5d-c44b-461d-8734-18a1ead49b93", ka: "チュ", hi: "ちゅ", en: "CHU", ru: "ЧУ"},
+    { id: "3ea7d433-fd0a-42f1-a049-e51f8c890fab", ka: "チョ", hi: "ちょ", en: "CHO", ru: "ЧО"}
   ],
   [
-    { id: "f50bbf46-cbd3-4652-b32d-a7ea63d71073", ka: "ニャ", hi: "にゃ", en: "NYA", ru: "NYA"},
-    { id: "a8684a65-29d7-468d-bf54-16a1a5c1dc57", ka: "ニュ", hi: "にゅ", en: "NYU", ru: "NYU"},
-    { id: "108f5fcc-b005-451f-8004-7ca2e0c295c3", ka: "ニョ", hi: "にょ", en: "NYO", ru: "NYO"}
+    { id: "f50bbf46-cbd3-4652-b32d-a7ea63d71073", ka: "ニャ", hi: "にゃ", en: "NYA", ru: "НЯ"},
+    { id: "a8684a65-29d7-468d-bf54-16a1a5c1dc57", ka: "ニュ", hi: "にゅ", en: "NYU", ru: "НЮ"},
+    { id: "108f5fcc-b005-451f-8004-7ca2e0c295c3", ka: "ニョ", hi: "にょ", en: "NYO", ru: "НЁ"}
   ],
   [
-    { id: "d765162e-6fb9-4213-bc8c-928a77f6db6e", ka: "ヒャ", hi: "ひゃ", en: "HYA", ru: "HYA"},
-    { id: "16699951-c484-42e4-889a-8170e46c36cd", ka: "ヒュ", hi: "ひゅ", en: "HYU", ru: "HYU"},
-    { id: "6334c6a8-3b58-411a-9698-476078765d85", ka: "ヒョ", hi: "ひょ", en: "HYO", ru: "HYO"}
+    { id: "d765162e-6fb9-4213-bc8c-928a77f6db6e", ka: "ヒャ", hi: "ひゃ", en: "HYA", ru: "ХЯ"},
+    { id: "16699951-c484-42e4-889a-8170e46c36cd", ka: "ヒュ", hi: "ひゅ", en: "HYU", ru: "ХЮ"},
+    { id: "6334c6a8-3b58-411a-9698-476078765d85", ka: "ヒョ", hi: "ひょ", en: "HYO", ru: "ХЁ"}
   ],
   [
-    { id: "1c2c7c7f-1058-4665-9c5c-db5371ecc80c", ka: "ミャ", hi: "みゃ", en: "MYA", ru: "MYA"},
-    { id: "32c07e97-0d48-457b-b9ea-c235ea5f0805", ka: "ミュ", hi: "みゅ", en: "MYU", ru: "MYU"},
-    { id: "3d4e3138-74d7-48c7-8275-fcd18ff4d470", ka: "ミョ", hi: "みょ", en: "MYO", ru: "MYO"}
+    { id: "1c2c7c7f-1058-4665-9c5c-db5371ecc80c", ka: "ミャ", hi: "みゃ", en: "MYA", ru: "МЯ"},
+    { id: "32c07e97-0d48-457b-b9ea-c235ea5f0805", ka: "ミュ", hi: "みゅ", en: "MYU", ru: "МЮ"},
+    { id: "3d4e3138-74d7-48c7-8275-fcd18ff4d470", ka: "ミョ", hi: "みょ", en: "MYO", ru: "МЁ"}
   ],
   [
-    { id: "3342a4aa-9f35-46f1-9e6b-490897f5f9c0", ka: "リャ", hi: "りゃ", en: "RYA", ru: "RYA"},
-    { id: "74fe5cce-74ab-4335-8c6c-49e5906711be", ka: "リュ", hi: "りゅ", en: "RYU", ru: "RYU"},
-    { id: "3aa9f1c6-21d3-419f-ad97-fda28085a281", ka: "リョ", hi: "りょ", en: "RYO", ru: "RYO"}
+    { id: "3342a4aa-9f35-46f1-9e6b-490897f5f9c0", ka: "リャ", hi: "りゃ", en: "RYA", ru: "РЯ"},
+    { id: "74fe5cce-74ab-4335-8c6c-49e5906711be", ka: "リュ", hi: "りゅ", en: "RYU", ru: "РЮ"},
+    { id: "3aa9f1c6-21d3-419f-ad97-fda28085a281", ka: "リョ", hi: "りょ", en: "RYO", ru: "РЁ"}
   ],
   [
-    { id: "94cb6083-8132-426b-8388-36199c7fd9a3", ka: "ギャ", hi: "ぎゃ", en: "GYA", ru: "GYA" },
-    { id: "0b0ff0f8-509d-45ed-8847-ea3ea4f415a5", ka: "ギュ", hi: "ぎゅ", en: "GYU", ru: "GYU" },
-    { id: "3d03b236-004b-4077-8a47-518840cfc8aa", ka: "ギョ", hi: "ぎょ", en: "GYO", ru: "GYO" },
+    { id: "94cb6083-8132-426b-8388-36199c7fd9a3", ka: "ギャ", hi: "ぎゃ", en: "GYA", ru: "ГЯ" },
+    { id: "0b0ff0f8-509d-45ed-8847-ea3ea4f415a5", ka: "ギュ", hi: "ぎゅ", en: "GYU", ru: "ГЮ" },
+    { id: "3d03b236-004b-4077-8a47-518840cfc8aa", ka: "ギョ", hi: "ぎょ", en: "GYO", ru: "ГЁ" },
   ],
   [
-    { id: "d0cc30d4-a773-4520-bc91-0d0b15433230", ka: "ジャ", hi: "じゃ", en: "JA", ru: "JA" },
-    { id: "f357d6b0-aa4f-4693-8b29-fb0aeec31870", ka: "ジュ", hi: "じゅ", en: "JU", ru: "JU" },
-    { id: "2da51f90-28ec-4eb3-be27-aceb72d1a851", ka: "ジョ", hi: "じょ", en: "JO", ru: "JO" },
+    { id: "d0cc30d4-a773-4520-bc91-0d0b15433230", ka: "ジャ", hi: "じゃ", en: "JA", ru: "ДЖА" },
+    { id: "f357d6b0-aa4f-4693-8b29-fb0aeec31870", ka: "ジュ", hi: "じゅ", en: "JU", ru: "ДЖУ" },
+    { id: "2da51f90-28ec-4eb3-be27-aceb72d1a851", ka: "ジョ", hi: "じょ", en: "JO", ru: "ДЖО" },
   ],
   [
-    { id: "65bc1325-2759-478b-b091-52875971d270", ka: "ヂャ", hi: "ぢゃ", en: "JA", ru: "JA" },
-    { id: "3500260f-59ec-4483-b58c-7e78004d7303", ka: "ヂュ", hi: "ぢゅ", en: "JU", ru: "JU" },
-    { id: "22b50fcf-c8cc-4ed2-90d6-04ce2af2e7ac", ka: "ヂョ", hi: "ぢょ", en: "JO", ru: "JO" },
+    { id: "65bc1325-2759-478b-b091-52875971d270", ka: "ヂャ", hi: "ぢゃ", en: "JA", ru: "ДЖА" },
+    { id: "3500260f-59ec-4483-b58c-7e78004d7303", ka: "ヂュ", hi: "ぢゅ", en: "JU", ru: "ДЖУ" },
+    { id: "22b50fcf-c8cc-4ed2-90d6-04ce2af2e7ac", ka: "ヂョ", hi: "ぢょ", en: "JO", ru: "ДЖО" },
   ],
   [
-    { id: "f4e5e435-69a8-48ca-8366-e46481581dc4", ka: "ビャ", hi: "びゃ", en: "BYA", ru: "BYA" },
-    { id: "5b38a9ea-62cd-4341-8ecc-bb02c7affd67", ka: "ビュ", hi: "びゅ", en: "BYU", ru: "BYU" },
-    { id: "74876afc-d65c-42cf-9589-0db573fb752e", ka: "ビョ", hi: "びょ", en: "BYO", ru: "BYO" }, 
+    { id: "f4e5e435-69a8-48ca-8366-e46481581dc4", ka: "ビャ", hi: "びゃ", en: "BYA", ru: "БЯ" },
+    { id: "5b38a9ea-62cd-4341-8ecc-bb02c7affd67", ka: "ビュ", hi: "びゅ", en: "BYU", ru: "БЮ" },
+    { id: "74876afc-d65c-42cf-9589-0db573fb752e", ka: "ビョ", hi: "びょ", en: "BYO", ru: "БЁ" }, 
   ],
   [
-    { id: "8be1debc-5346-4979-bfde-913a90ab0122", ka: "ピャ", hi: "ぴゃ", en: "PYA", ru: "PYA" },
-    { id: "ce908138-f0b0-4fee-9cfa-78a6f2a6cb3a", ka: "ピュ", hi: "ぴゅ", en: "PYU", ru: "PYU" },
-    { id: "45435756-de47-4f76-89b7-17d27aee49c7", ka: "ピョ", hi: "ぴょ", en: "PYO", ru: "PYO" }, 
+    { id: "8be1debc-5346-4979-bfde-913a90ab0122", ka: "ピャ", hi: "ぴゃ", en: "PYA", ru: "ПЯ" },
+    { id: "ce908138-f0b0-4fee-9cfa-78a6f2a6cb3a", ka: "ピュ", hi: "ぴゅ", en: "PYU", ru: "ПЮ" },
+    { id: "45435756-de47-4f76-89b7-17d27aee49c7", ka: "ピョ", hi: "ぴょ", en: "PYO", ru: "ПЁ" }, 
   ]
 ];
 

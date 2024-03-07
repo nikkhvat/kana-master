@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 
+import { useTranslation } from "react-i18next";
 import { Dimensions, View, TouchableOpacity, Text, StyleSheet } from "react-native";
 
 import { useThemeContext } from "@/hooks/theme-context";
 import { Alphabet } from "@/shared/constants/kana";
 import { dakuon, handakuon, base, yoon, LettersKeys } from "@/shared/data/lettersTable";
-
 interface EducationKanaTableProps {
   kana: "hiragana" | "katakana";
   type: Alphabet;
@@ -34,6 +34,10 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({ kana, type, onC
 
   const { colors } = useThemeContext();
 
+  const { i18n: { language } } = useTranslation();
+
+  const lang = language === "ru" ? "ru" : "en";
+
   return (
     <View style={[styles.container, { borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.color2 }]}>
       {letters && letters.length > 1 && (
@@ -51,7 +55,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({ kana, type, onC
               ]}
             >
               <Text style={[styles.symbol, { fontSize: 13, color: colors.color3 }]}>
-                {cell.en.length === 2 ? cell.en[1] : cell.en.length === 1 ? cell.en[0] : cell.en[2]}
+                {cell?.[lang].length === 2 ? cell?.[lang][1] : cell?.[lang].length === 1 ? cell?.[lang][0] : cell.en[2]}
               </Text>
             </TouchableOpacity>
           ))}
@@ -75,9 +79,9 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({ kana, type, onC
               <Text style={[styles.symbol, { fontSize: 13, color: colors.color3 }]}>
                 {"-"}
                 {row[0] !== null &&
-                  (row[0].en.length < 3
-                    ? row[0].en[0]
-                    : row[0].en[0] + row[0].en[1])}
+                  (row[0]?.[lang].length < 3
+                    ? row[0]?.[lang][0]
+                    : row[0]?.[lang][0] + row[0]?.[lang][1])}
               </Text>
             </TouchableOpacity>
           </View>
@@ -101,7 +105,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({ kana, type, onC
                     <Text style={[styles.symbol, { fontSize: 17, color: colors.color4 }]}>
                       {cell && cell[kana === "hiragana" ? "hi" : "ka"]}
                     </Text>
-                    {cell && <Text style={[styles.subText, {color: colors.color4}]}>{cell.en.toUpperCase()}</Text>}
+                    {cell && <Text style={[styles.subText, { color: colors.color4 }]}>{cell?.[lang].toUpperCase()}</Text>}
                   </TouchableOpacity>
                 ))}
         </View>

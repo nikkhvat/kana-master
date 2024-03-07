@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Audio } from "expo-av";
+import { useTranslation } from "react-i18next";
 import { Dimensions, Modal, StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -54,6 +55,10 @@ const EducationShowKanaModal: React.FC<EducationShowKanaModalProps> = ({
 
   const { colors } = useThemeContext();
 
+  const { i18n: { language } } = useTranslation();
+
+  const lang = language === "ru" ? "ru" : "en";
+
   const THEME = colors._theme === "dark" ? "DARK" : "LIGHT";
 
   const playSound = async (enKey: string) => {
@@ -98,7 +103,7 @@ const EducationShowKanaModal: React.FC<EducationShowKanaModalProps> = ({
         </View>
         {letter !== null && <View style={styles.titleContainer}>
           <Text style={[styles.title, { color: colors.color4 }]}>{kana} ({getTypeById(letter.id)})</Text>
-          <Text style={[styles.subTitle, { color: colors.color4 }]}>{letter.en.toUpperCase()}</Text>
+          <Text style={[styles.subTitle, { color: colors.color4 }]}>{letter?.[lang].toUpperCase()}</Text>
           {getImagePath(type === "yoon" ? letter.id : `${kana === "hiragana" ? "H" : "K"}-${letter.en}`, THEME)}
         </View>}
 
