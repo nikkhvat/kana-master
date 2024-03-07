@@ -5,7 +5,7 @@ import * as Haptics from "expo-haptics";
 import { CardMode, Kana, KanaAlphabet, PracticeScreenMode, QuestionTypeBuildingWord, QuestionTypeChooseLetter, QuestionTypeChooseWord, QuestionTypeFindPairWord, TestMode } from "@/shared/constants/kana";
 import { ILetter, LettersKeys, lettersTableById } from "@/shared/data/lettersTable";
 import { Word } from "@/shared/data/words";
-import { shuffleArray } from "@/shared/helpers/letters";
+import { getRandomLetter, shuffleArray } from "@/shared/helpers/letters";
 import { getAnswers, getRandomWords } from "@/shared/helpers/words";
 import { AnyQuestion, Question } from "@/shared/types/questions";
 import { RootState } from "@/store/store";
@@ -73,7 +73,9 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
     kana: KanaAlphabet,
     mode: "romanji" | "kana",
     kanaWords: Word[],
-    hiraWords: Word[]
+    hiraWords: Word[],
+    kanaLetters: ILetter[],
+    hiraLetters: ILetter[],
   ): AnyQuestion => {
     const type =
       questionTypes[Math.floor(Math.random() * questionTypes.length)];
@@ -106,6 +108,35 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
         };
       }
       case TestMode.WordBuilding: {
+
+        const shuffle = (mode === "romanji" ? word.romanji : word.kana).split("");
+
+        if (shuffle.length < 5) {
+          const lettersToAdd = 5 - shuffle.length;
+
+          if (mode === "romanji") {
+            for (let i = 0; i < lettersToAdd; i++) {
+              if (kana === KanaAlphabet.Hiragana) {
+                const randomLetter = getRandomLetter([hiraLetters]);
+                shuffle.push(randomLetter.en);
+              } else {
+                const randomLetter = getRandomLetter([kanaLetters]);
+                shuffle.push(randomLetter.en);
+              }
+            }
+          } else {
+            for (let i = 0; i < lettersToAdd; i++) {
+              if (kana === KanaAlphabet.Hiragana) {
+                const randomLetter = getRandomLetter([hiraLetters]);
+                shuffle.push(randomLetter.hi);
+              } else {
+                const randomLetter = getRandomLetter([kanaLetters]);
+                shuffle.push(randomLetter.ka);
+              }
+            }
+          }
+        }
+
         return {
           type: QuestionTypeBuildingWord,
           title: `Выбери ${mode === "romanji"
@@ -115,9 +146,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
               : "катакану"
             }`,
           romanji: mode === "romanji" ? word.kana : word.romanji,
-          shuffle: shuffleArray(
-            (mode === "romanji" ? word.romanji : word.kana).split("")
-          ),
+          shuffle: shuffleArray(shuffle.map(item => item.toLowerCase())),
           translate: word.translate,
           kana: mode === "romanji" ? word.romanji : word.kana,
         };
@@ -244,7 +273,16 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
 
             if (word !== null) {
               addedQuestionHira.push(word?.romanji);
-              questions.push(generateWordQuestion(word, cardTypes, KanaAlphabet.Hiragana, "kana", kanaWords, hiraWords));
+              questions.push(
+                generateWordQuestion(
+                  word, 
+                  cardTypes, 
+                  KanaAlphabet.Hiragana, 
+                  "kana", 
+                  kanaWords, 
+                  hiraWords,
+                  kanaLetters as ILetter[],
+                  hiraLetters as ILetter[]));
             }
             continue;
           }
@@ -254,7 +292,16 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
             if (word !== null) {
               addedQuestionHira.push(word?.romanji);
               questions.push(
-                generateWordQuestion(word, cardTypes, KanaAlphabet.Hiragana, "romanji", kanaWords, hiraWords)
+                generateWordQuestion(
+                  word, 
+                  cardTypes, 
+                  KanaAlphabet.Hiragana, 
+                  "romanji", 
+                  kanaWords, 
+                  hiraWords,
+                  kanaLetters as ILetter[],
+                  hiraLetters as ILetter[]
+                )
               );
             }
             continue;
@@ -264,7 +311,16 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
             if (word !== null) {
               addedQuestionKana.push(word?.romanji);
               questions.push(
-                generateWordQuestion(word, cardTypes, KanaAlphabet.Katakana, "kana", kanaWords, hiraWords)
+                generateWordQuestion(
+                  word, 
+                  cardTypes, 
+                  KanaAlphabet.Katakana, 
+                  "kana", 
+                  kanaWords, 
+                  hiraWords,
+                  kanaLetters as ILetter[],
+                  hiraLetters as ILetter[]
+                )
               );
             }
 
@@ -281,7 +337,9 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
                   KanaAlphabet.Katakana,
                   "romanji",
                   kanaWords,
-                  hiraWords
+                  hiraWords,
+                  kanaLetters as ILetter[],
+                  hiraLetters as ILetter[]
                 )
               );
             }

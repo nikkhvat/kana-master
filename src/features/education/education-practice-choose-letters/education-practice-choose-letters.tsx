@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { View, Text, TouchableOpacity, Pressable, StyleSheet } from "react-native";
 
 import { useThemeContext } from "@/hooks/theme-context";
+import { TEST_DELAY } from "@/shared/constants/kana";
 
 interface ChooseLettersProps {
   title: string;
@@ -16,7 +17,6 @@ interface ChooseLettersProps {
   onFinish?: (hasError: boolean) => void;
 }
 
-const DELAY = 500;
 
 const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
   title,
@@ -35,10 +35,8 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
   const [shuffleLetters, setShuffleLetters] = useState(shuffle);
 
   useEffect(() => {
-    setTimeout(() => {
-      setShuffleLetters(shuffle);
-      setTitle(`${title} ${romanji} (${translate})`);
-    }, DELAY);
+    setShuffleLetters(shuffle);
+    setTitle(`${title} ${romanji} (${translate})`);
   }, [title, shuffle, romanji, translate]);
 
   const emptyLetters = useMemo(() => letters.map(() => null), [letters]);
@@ -71,10 +69,10 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
         element?.index === data.index && element.letter === data.letter
     );
 
-  const reset = () => {
+  function reset() {
     setSelectedLetters(emptyLetters);
     setTrueAnswers(emptyLetters);
-  };
+  }
 
   useEffect(() => {
     if (selectedLetters.every((letter) => letter !== null)) {
@@ -83,17 +81,17 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
       );
 
       setTrueAnswers(answers);
-
       const hasError = answers.some((answer) => !answer);
-
-      onFinish?.(hasError);
-
-      setTimeout(reset, DELAY);
+      
+      setTimeout(() => {
+        onFinish?.(hasError);
+      }, TEST_DELAY);
+      
     }
   }, [selectedLetters]);
 
   useEffect(() => {
-    setTimeout(reset, DELAY);
+    reset();
   }, [kana]);
 
   return (
