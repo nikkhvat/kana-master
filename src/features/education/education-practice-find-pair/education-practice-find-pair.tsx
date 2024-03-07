@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
+import FindPairItem from "@/entities/education/practice/find-pair/item/item";
 import { useThemeContext } from "@/hooks/theme-context";
+import { TEST_DELAY } from "@/shared/constants/kana";
 
 interface EducationPracticeFindPairProps {
   pairs: {
@@ -71,7 +73,7 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
         onError?.();
         setTimeout(() => {
           setErrorsPairs(() => []);
-        }, 500);
+        }, TEST_DELAY);
       }
       setSelectedPair(null);
     } else {
@@ -81,6 +83,7 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
 
   useEffect(() => {
     if (matchedPairs.length === pairs.length * 2) {
+      setMatchedPairs([]);
       onCompleted?.(hasError);
     }
   }, [matchedPairs]);
@@ -89,35 +92,24 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
     <View style={styles.container}>
       <Text style={[styles.question, {color: colors.color4}]}>{title}</Text>
       <View style={styles.pairs}>
-        {pairs.map((pair, rowIndex) => (
+        {pairs.map((pair) => (
           <View key={pair[0].id} style={styles.row}>
-            {pair.map((item, colIndex) => (
-              <TouchableOpacity
-                key={item.id}
-                style={[
-                  styles.item,
-                  {
-                    borderColor: isCorrectPair(item as Item, pair[1 - colIndex] as Item)
-                      ? colors.second_color2
-                      : errorsPairs.includes(item.id)
-                        ? colors.second_color1
-                        : item.id === selectedPair?.id
-                          ? colors.second_color2
-                          : colors.color3,
-                    backgroundColor: isCorrectPair(item as Item, pair[1 - colIndex] as Item)
-                      ? colors.second_color2
-                      : errorsPairs.includes(item.id)
-                        ? colors.second_color1
-                        : item.id === selectedPair?.id
-                          ? "transparent"
-                          : "transparent",
-                  },
-                ]}
-                onPress={() => pick({ ...item, index: colIndex })}
-              >
-                <Text style={[styles.text, { color: colors.color4 }]}>{item.title}</Text>
-              </TouchableOpacity>
-            ))}
+            <FindPairItem 
+              isError={errorsPairs.includes(pair[0].id)}
+              isSelect={pair[0].id === selectedPair?.id}
+              isCorrect={isMatched(pair[0].id)}
+              onPress={() => pick({ ...pair[0], index: 0 })}
+            >
+              {pair[0].title}
+            </FindPairItem>
+            <FindPairItem 
+              isError={errorsPairs.includes(pair[1].id)}
+              isSelect={pair[1].id === selectedPair?.id}
+              isCorrect={isMatched(pair[1].id)}
+              onPress={() => pick({ ...pair[1], index: 1 })}
+            >
+              {pair[1].title}
+            </FindPairItem>
           </View>
         ))}
       </View>
