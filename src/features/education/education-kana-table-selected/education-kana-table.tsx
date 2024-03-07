@@ -1,7 +1,9 @@
 import React, { useCallback, useMemo } from "react";
 
+import { useTranslation } from "react-i18next";
 import { Dimensions, View, Text, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 
+import Cell from "@/entities/kana/cell/cell";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useThemeContext } from "@/hooks/theme-context";
 import { Alphabet } from "@/shared/constants/kana";
@@ -18,6 +20,10 @@ interface EducationKanaTableProps {
   last?: boolean
 }
 
+const screenWidth = Dimensions.get("window").width;
+const itemWidth = (screenWidth / 6) - 14.5;
+const itemWidthLong = (screenWidth / 3) - (itemWidth / 3) - 23;
+
 const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
   kana,
   type,
@@ -26,6 +32,10 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
   last
 }) => {
   const dispatch = useAppDispatch();
+
+  const { i18n: { language } } = useTranslation();
+
+  const lang = language === "ru" ? "ru" : "en";
 
   const { colors } = useThemeContext();
 
@@ -117,84 +127,46 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
     [data, selectedLetters]
   );
 
-  const screenWidth = Dimensions.get("window").width;
-
-  const itemWidth = (screenWidth / 6) - 15;
-  const itemWidthLong = (screenWidth / 3) - (itemWidth / 3) - 23;
-
-  const isInfo = isEditMode !== true;
-  const isPlus = isEditMode === true;
-
   return (
     <View style={[styles.container, { borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.color2 }]}>
       {letters.length > 1 && (
         <View style={styles.rowButtons}>
           {letters[0].items.map((cell, cellIndex) => {
             return (
-              <TouchableOpacity
-                key={`plus_${cellIndex}`}
-                style={[
-                  styles.cell,
-                  {
-                    width: letters[0].items.length === 3 ? itemWidthLong : itemWidth,
-                    height: itemWidth,
-                    borderWidth: 0,
-                  }]}
+              <Cell
+                key={`${cellIndex}/plus`}
+                isLong={letters[0].items.length === 3}
+                widthStandart={itemWidth}
+                widthLong={itemWidthLong}
+                lang={lang}
+                kana={kana}
+                cell={null}
+                isPlus
                 onPress={() => onPlus?.("cell", cellIndex, type)}
-              >
-                <Text
-                  style={[
-                    styles.symbol, 
-                    {
-                      fontSize: isEditMode !== true ? 13 : 22,
-                      color: isEditMode ? colors.color5 : isInfo ? colors.color3 : colors.color4,
-                    }]}
-                >
-                  {isEditMode && "+"}
-                  {!isEditMode && "-"}
-                  {!isEditMode && cell.data.en.length === 1 && cell.data.en[0]}
-                  {!isEditMode && cell.data.en.length === 2 && cell.data.en[1]}
-                  {!isEditMode && cell.data.en.length === 3 && cell.data.en[2]}
-                </Text>
-              </TouchableOpacity>
+                isStartOfLine={isEditMode ? "+" : "-"}
+              />
             );
           })}
         </View>
       )}
 
+
       <ScrollView>
         {letters.map((row, rowIndex) => (
           <View key={`row-${rowIndex}`} style={[styles.row, { marginTop: 10 }]}>
             <View style={styles.rowButtons}>
-              <TouchableOpacity
-                style={{
-                  borderRadius: 12,
-                  borderWidth: 1,
-                  borderColor: "transparent",
-                  width: itemWidth,
-                  height: itemWidth,
-                  backgroundColor: "transparent",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+              <Cell
+                key={`${rowIndex}/start_of_line`}
+                isLong={false}
+                widthStandart={itemWidth}
+                widthLong={itemWidthLong}
+                lang={lang}
+                kana={kana}
+                cell={null}
+                isPlus
                 onPress={() => onPlus?.("row", rowIndex, type)}
-              >
-                <Text
-                  style={{
-                    fontSize: isEditMode !== true ? 13 : 22,
-                    color: isEditMode ? colors.color5 : isInfo ? colors.color3 : colors.color4,
-                  }}
-                >
-                  {isEditMode && "+"}
-                  {!isEditMode && "-"}
-                  {!isEditMode &&
-                    row.items[0] !== null &&
-                    (row.items[0].data.en.length < 3
-                      ? row.items[0].data.en[0]
-                      : row.items[0].data.en[0] + row.items[0].data.en[1])}
-                </Text>
-              </TouchableOpacity>
+                isStartOfLine={isEditMode ? "+" : "-"}
+              />
             </View>
             {(
               row.items[0].data.en === "YA" ? [row.items[0], null, row.items[1], null, row.items[2]] :
@@ -202,46 +174,17 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
                   row.items[0].data.en === "N" ? [null, null, row.items[0], null, null]
                     : row.items).map((cell, cellIndex) => {
                       return (
-                        <TouchableOpacity
-                          key={`${rowIndex}-${cellIndex}`}
-                          style={[
-                            styles.cell,
-                            {
-                              borderRadius: 12,
-                              borderWidth: cell === null ? 0 : 1,
-                              borderColor: cell === null ? "transparent" : colors.color2,
-                              width: cell === null ? itemWidth : row.items.length === 3 && row.items[0].data.en !== "YA" ? itemWidthLong : itemWidth,
-                              height: itemWidth,
-                              backgroundColor: !cell || !cell.active || isInfo
-                                ? "transparent"
-                                : isPlus
-                                  ? colors.second_color3
-                                  : colors.second_color4,
-                              flexDirection: "column",
-                              alignItems: "center",
-                              justifyContent: "center",
-                          }]}
-                          onPress={() => {
-                            if (cell !== null) {
-                              if (isEditMode) onPress?.([cell.data, rowIndex, cellIndex, type]);
-                              else onClick?.(cell.data.id);
-                            }
-                          }}
-                        >
-                          <Text
-                            style={[
-                              styles.symbol, 
-                              {
-                                fontSize: 17,
-                                color: !cell || !cell.active || isEditMode ? colors.color4 : colors.color5,
-                              }]}
-                          >
-                            {cell !== null && cell.data[kana === "hiragana" ? "hi" : "ka"]}
-                          </Text>
-                          <Text style={[styles.subText, { color: colors.color4 }]}>
-                            {cell !== null && cell.data.en.toUpperCase()}
-                          </Text>
-                        </TouchableOpacity>
+                        <Cell
+                          key={`${rowIndex}/${cellIndex}`}
+                          onPress={() => cell?.data && onPress?.([cell.data, rowIndex, cellIndex, type])}
+                          isLong={row.items.length === 3 && row.items[0].data.en !== "YA"}
+                          widthStandart={itemWidth}
+                          widthLong={itemWidthLong}
+                          lang={lang}
+                          kana={kana}
+                          cell={cell?.data}
+                          active={cell?.active}
+                        />
                       );
                     })}
           </View>
@@ -282,8 +225,5 @@ const styles = StyleSheet.create({
   },
   symbol: {
     fontWeight: "400",
-  },
-  subText: {
-    fontSize: 13,
   },
 });

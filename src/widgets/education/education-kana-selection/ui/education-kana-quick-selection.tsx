@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 
+import { useTranslation } from "react-i18next";
 import { Modal, View, ScrollView, Pressable, Text, SectionList, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -32,6 +33,7 @@ const EducationKanaSelection: React.FC<EducationKanaSelectionProps> = ({ closeMo
     []
   );
 
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   
   return (
@@ -41,7 +43,9 @@ const EducationKanaSelection: React.FC<EducationKanaSelectionProps> = ({ closeMo
           <Pressable onPress={closeModal} style={{ padding: 14, margin: -14 }}>
             <Text style={{ color: colors.color4, fontSize: 17, fontWeight: "400" }}>Close</Text>
           </Pressable>
-          <Text style={{ color: colors.color4, fontSize: 17, fontWeight: "700" }}>Hiragana</Text>
+          <Text style={{ color: colors.color4, fontSize: 17, fontWeight: "700" }}>
+            {activeTab === "hiragana" ? t("kana.hiragana") : t("kana.katakana")}
+          </Text>
           <Pressable onPress={() => dispatch(resetKanaSelected())} style={{ padding: 14, margin: -14 }}>
             <Text style={{ color: colors.second_color3, fontSize: 17, fontWeight: "400" }}>Reset</Text>
           </Pressable>
@@ -56,13 +60,8 @@ const EducationKanaSelection: React.FC<EducationKanaSelectionProps> = ({ closeMo
                 isEditMode={true} 
                 type={section.type as Alphabet}
                 kana={activeTab}
+                last={section.type === "yoon"}
               />
-              {/* <MemoizedEducationKanaTable
-                type={item as Alphabet}
-                kana={activeTab}
-                onClick={openModal}
-                last={item === "yoon"}
-              /> */}
             </React.Suspense>
           )}
           renderSectionHeader={({ section: { title } }) => (
@@ -73,7 +72,14 @@ const EducationKanaSelection: React.FC<EducationKanaSelectionProps> = ({ closeMo
         />
       </View>
       <View style={{ position: "absolute", bottom: 0, height: 100, width: "100%", paddingTop: 5, backgroundColor: colors.color1, borderColor: colors.color2, borderTopWidth: 1, flexDirection: "row", alignItems: "flex-start", justifyContent: "center", paddingHorizontal: 20 }}>
-        <Switcher activeTab={activeTab} setActiveTab={(val) => setActiveTab(val as "hiragana" | "katakana")} options={["hiragana", "katakana"]} />
+        <Switcher 
+          activeTab={activeTab} 
+          setActiveTab={(val) => setActiveTab(val as "hiragana" | "katakana")} 
+          options={["hiragana", "katakana"]}
+          translate={[
+            t("kana.hiragana"),
+            t("kana.katakana"),
+          ]} />
       </View>
     </Modal>
   );
