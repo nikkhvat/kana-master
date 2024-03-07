@@ -1,12 +1,13 @@
-import React, { createContext, useContext, ReactNode, useState, FunctionComponent } from "react";
+import React, { createContext, useContext, ReactNode, useState, useEffect, FunctionComponent } from "react";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Appearance } from "react-native";
 
 import { Theme } from "@/shared/constants/profile";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
 
-type Colors = typeof darkTheme
+type Colors = typeof darkTheme;
 
 const colors = {
   "dark": darkTheme,
@@ -41,11 +42,8 @@ const getColors = (theme: Theme) => {
   }
 
   if (theme === Theme.Auto) {
-
     const themeDetected = Appearance.getColorScheme();
-
     if (themeDetected === null || themeDetected === undefined) return colors["ligth"];
-
     if (themeDetected === "dark") return colors["dark"];
     if (themeDetected === "light") return colors["ligth"];
   }
@@ -56,8 +54,26 @@ const getColors = (theme: Theme) => {
 export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(Theme.Light);
 
-  const updateTheme = (theme: Theme) => {
-    setTheme(theme);
+  useEffect(() => {
+    // Load theme from AsyncStorage on component mount
+    const loadThemeFromStorage = async () => {
+      try {
+        const storedTheme = await AsyncStorage.getItem("app_theme");
+        if (storedTheme) {
+          setTheme(JSON.parse(storedTheme));
+        }
+      } catch (error) {
+        console.error("Error loading theme from storage:", error);
+      }
+    };
+
+    loadThemeFromStorage();
+  }, []);
+
+  const updateTheme = (newTheme: Theme) => {
+    // Save new theme settings to AsyncStorage
+    AsyncStorage.setItem("app_theme", JSON.stringify(newTheme));
+    setTheme(newTheme);
   };
 
   const colors = getColors(theme);
@@ -76,4 +92,3 @@ export const useThemeContext = () => {
 
   return context;
 };
-

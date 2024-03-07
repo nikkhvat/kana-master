@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
@@ -23,6 +23,10 @@ const ProfilePage: React.FC = () => {
   const { colors, updateTheme, theme, themeString } = useThemeContext();  
 
   const [themeTab, setThemeTab] = useState<string>(themeString);
+
+  useEffect(() => {    
+    setThemeTab(themeString);
+  }, [themeString]);
 
   const onUpdateTheme = (theme: string) => {
     setThemeTab(theme);

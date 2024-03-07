@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { View, Text, StyleSheet, Animated, Pressable, Dimensions } from "react-native";
 
@@ -19,12 +19,17 @@ const Switcher: React.FC<SwitcherProps> = ({ activeTab, setActiveTab, options, t
   const screenWidth = ((Dimensions.get("window").width - 44) / options.length);
 
   const handlePress = (index: number) => {
+    setActiveTab(options[index]);
+  };
+
+  useEffect(() => {
+    const index = options.indexOf(activeTab);
+
     Animated.spring(animatedValue, {
       toValue: index,
       useNativeDriver: true,
     }).start();
-    setActiveTab(options[index]);
-  };
+  }, [activeTab, options]);
 
   return (
     <View style={[styles.content]}>

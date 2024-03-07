@@ -13,7 +13,7 @@
   "dependencies": {
     "@benjeau/react-native-draw": "^0.8.3",
     "@formatjs/intl-pluralrules": "^5.2.12",
-    "@react-native-async-storage/async-storage": "^1.22.2",
+    "@react-native-async-storage/async-storage": "^1.22.3",
     "@react-native-picker/picker": "2.6.1",
     "@react-native/metro-config": "^0.73.5",
     "@react-navigation/bottom-tabs": "^6.5.12",
