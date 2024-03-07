@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -17,7 +18,6 @@ import ProfilePage from "@/pages/profile/profile";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
-
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
@@ -74,7 +74,23 @@ function BottomTabNavigator() {
 }
 
 const Layout = () => {
-  const { colors } = useThemeContext();  
+  const { colors } = useThemeContext();
+  const { i18n } = useTranslation();  
+
+  useEffect(() => {
+    const loadTheme = async () => {
+      try {
+        const savedLang = await AsyncStorage.getItem("lang");
+        if (savedLang) {
+          i18n.changeLanguage(savedLang);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    loadTheme();
+  }, []);
 
   return (
     <>

@@ -55,7 +55,6 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({ children 
   const [theme, setTheme] = useState<Theme>(Theme.Light);
 
   useEffect(() => {
-    // Load theme from AsyncStorage on component mount
     const loadThemeFromStorage = async () => {
       try {
         const storedTheme = await AsyncStorage.getItem("app_theme");
@@ -71,7 +70,6 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({ children 
   }, []);
 
   const updateTheme = (newTheme: Theme) => {
-    // Save new theme settings to AsyncStorage
     AsyncStorage.setItem("app_theme", JSON.stringify(newTheme));
     setTheme(newTheme);
   };

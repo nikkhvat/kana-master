@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Icon from "react-native-vector-icons/Feather";
 
 import LanguageButton from "@/entities/profile/language-button/language-button";
 import { useThemeContext } from "@/hooks/theme-context";
 import { Theme } from "@/shared/constants/profile";
-import Button from "@/shared/ui/button/button";
 import Switcher from "@/shared/ui/switcher/switcher";
+
 
 
 const ProfilePage: React.FC = () => {
@@ -17,11 +17,12 @@ const ProfilePage: React.FC = () => {
 
   const { t, i18n } = useTranslation();
 
-  const setLanguage = (lang: string) => {
+  const setLanguage = async (lang: string) => {
+    await AsyncStorage.setItem("lang", lang);
     i18n.changeLanguage(lang);
   };
 
-  const { colors, updateTheme, theme, themeString } = useThemeContext();  
+  const { colors, updateTheme, themeString } = useThemeContext();  
 
   const [themeTab, setThemeTab] = useState<string>(themeString);
 
@@ -48,37 +49,6 @@ const ProfilePage: React.FC = () => {
       <Text style={[styles.title, { color: colors.color4 }]}>{t("tabs.profile")}</Text>
 
       <Text style={[styles.sectionTitle, { color: colors.color4 }]}>{t("profile.theme")}</Text>
-
-      {/* <View style={styles.sectionButtons}>
-        <Button
-          customStyles={{ marginTop: 15, flex: 1 }}
-          onClick={() => updateTheme(Theme.Light)}
-          type={theme === Theme.Light ? "general" : "inactive"}
-          icon={
-            <Icon 
-              name={"sun"} 
-              size={24} 
-              color={colors._theme === "dark" ? theme === Theme.Light ? colors.color1 : colors.color4 : theme === Theme.Light ? colors.color1 : colors.color4} 
-          />}
-        />
-        <Button
-          customStyles={{ marginTop: 15, flex: 1 }}
-          onClick={() => updateTheme(Theme.Dark)}
-          type={theme === Theme.Dark ? "general" : "inactive"}
-          icon={
-            <Icon 
-              name={"moon"} 
-              size={24} 
-              color={colors._theme === "light" ? colors.color4 : colors.color1} 
-          />}
-        />
-        <Button
-          customStyles={{ flex: 1 }}
-          title={t("profile.auto")}
-          onClick={() => updateTheme(Theme.Auto)}
-          type={theme === Theme.Auto ? "general" : "inactive"}
-        />
-      </View> */}
 
       <Switcher
         activeTab={themeTab}
