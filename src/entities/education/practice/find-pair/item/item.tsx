@@ -33,7 +33,7 @@ const FindPairItem: React.FC<FindPairItemProps> = ({
       borderColor: isCorrect
           ? colors.second_color2 
           : isError ? colors.second_color1
-          : isSelect ? colors.second_color2 : colors.color3,
+          : isSelect ? colors.second_color2 : colors.color2,
       backgroundColor: isCorrect ? colors.second_color2
           : isError ? colors.second_color1
           : isSelect ? "transparent" : "transparent",
