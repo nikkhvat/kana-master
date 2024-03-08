@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 
 import { useTranslation } from "react-i18next";
-import { Modal, View, ScrollView, Pressable, Text, SectionList, StyleSheet } from "react-native";
+import { Modal, View, Pressable, Text, SectionList, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import EducationKanaTableSelected from "@/features/education/education-kana-table-selected/education-kana-table";
@@ -15,8 +15,6 @@ interface EducationKanaSelectionProps {
   closeModal: () => void;
   show: boolean;
 }
-
-const MemoizedEducationKanaTable = React.memo(EducationKanaTableSelected);
 
 const EducationKanaSelection: React.FC<EducationKanaSelectionProps> = ({ closeModal, show }) => {
   const dispatch = useAppDispatch();
@@ -39,7 +37,7 @@ const EducationKanaSelection: React.FC<EducationKanaSelectionProps> = ({ closeMo
   return (
     <Modal visible={show} presentationStyle="pageSheet" animationType="slide" onRequestClose={closeModal}>
       <View style={{ flex: 1, backgroundColor: colors.color1, paddingBottom: 70 }}>
-        <View style={{ height: 52, flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingLeft: 20, paddingRight: 20, borderColor: colors.color2, borderBottomWidth: 1 }}>
+        <View style={{ height: 52, flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingLeft: 20, paddingRight: 20 }}>
           <Pressable onPress={closeModal} style={{ padding: 14, margin: -14 }}>
             <Text style={{ color: colors.color4, fontSize: 17, fontWeight: "400" }}>Close</Text>
           </Pressable>

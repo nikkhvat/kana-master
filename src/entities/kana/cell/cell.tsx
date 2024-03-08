@@ -40,7 +40,7 @@ const Cell: React.FC<CellProps> = ({
 
   return (
     <TouchableOpacity
-      onPress={() => cell && onPress?.(cell.id)}
+      onPress={() => (cell) ? onPress?.(cell.id) : onPress?.("")}
       style={[
         styles.cell,
         {

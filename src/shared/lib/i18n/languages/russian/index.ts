@@ -28,8 +28,8 @@ const Russian = {
 	},
 
 	testing: {
-		cardMode: "Режим карточек",
-		difficultyLevel: "Усложнения",
+		cardMode: "Тип карточек",
+		difficultyLevel: "Режим",
 		start: "Начать тестирование"
 	},
 
@@ -39,7 +39,7 @@ const Russian = {
 	},
 
 	wordGame: {
-		cardMode: "Режим карточек",
+		cardMode: "Тип карточек",
 		mode: "Режим",
 		start: "Начать",
 

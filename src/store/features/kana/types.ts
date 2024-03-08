@@ -1,4 +1,3 @@
-import { KanaSection } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import { Word } from "@/shared/data/words";
 

@@ -72,10 +72,6 @@ const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
               backgroundColor:
                 fullProgress <= 40 ? colors.second_color1 : colors.second_color2,
             }
-            // [
-            // styles.timerStroke,
-            // ,
-          // ]
           }
         />
       </View>

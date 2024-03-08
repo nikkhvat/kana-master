@@ -16,7 +16,6 @@ interface EducationKanaTableProps {
   kana: "hiragana" | "katakana";
   type: Alphabet;
   isEditMode?: boolean;
-  onClick?: (id: LettersKeys) => void
   last?: boolean
 }
 
@@ -28,7 +27,6 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
   kana,
   type,
   isEditMode,
-  onClick = () => { },
   last
 }) => {
   const dispatch = useAppDispatch();
@@ -97,6 +95,9 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
 
   const onPlus = useCallback(
     (type: "row" | "cell", index: number, alphabet: Alphabet) => {
+
+      console.log("call onPlus");
+
       const dataMap = {
         base: base,
         dakuon: dakuon,
@@ -119,7 +120,7 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
 
       onToggleSome(letters, alphabet);
     },
-    [onToggleSome]
+    []
   );
 
   const letters = useMemo(

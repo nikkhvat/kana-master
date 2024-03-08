@@ -28,7 +28,7 @@ const AnswerCard: React.FC<AnswerCardProps> = ({
   const { colors } = useThemeContext();
 
   const cardColor = redMarked ? colors.second_color1 : greenMarked ? colors.second_color2 : colors.color2;
-  const textColor = (redMarked || greenMarked) ? colors.color1 : colors.color4;
+  const textColor = (redMarked || greenMarked) ? colors.color5 : colors.color4;
 
   
   return (
