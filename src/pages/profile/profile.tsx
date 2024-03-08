@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Icon from "react-native-vector-icons/Feather";
 
 import LanguageButton from "@/entities/profile/language-button/language-button";
 import { useThemeContext } from "@/hooks/theme-context";
@@ -57,7 +58,22 @@ const ProfilePage: React.FC = () => {
           "light",
           "auto",
         ]}
-        setActiveTab={onUpdateTheme} />
+        setActiveTab={onUpdateTheme}
+        translate={[
+          <Icon
+            key={"moon"}
+            name={"moon"}
+            size={24}
+            color={colors._theme === "light" ? colors.color4 : colors.color4}
+          />,
+          <Icon
+            key={"sun"}
+            name={"sun"}
+            size={24}
+            color={colors._theme === "dark" ? colors.color4 : colors.color4}
+          />,
+          "auto",
+        ]} />
 
       <Text style={[styles.sectionTitle, { color: colors.color4 }]}>{t("profile.language")}</Text>
 

@@ -7,7 +7,7 @@ import { useThemeContext } from "@/hooks/theme-context";
 interface SwitcherProps {
   activeTab: string;
   options: string[];
-  translate?: string[];
+  translate?: string[] | React.ReactNode[];
   setActiveTab: (val: string) => void;
   width?: number;
 }
