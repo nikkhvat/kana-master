@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { RootState } from "@/app/store";
 import EducationModeChange, { EducationModeChangeProps } from "@/features/education/education-mode-change/education-mode-change";
@@ -12,6 +12,7 @@ import { useAppSelector } from "@/hooks/redux";
 import { CardMode, DifficultyLevelType, PracticeScreenMode } from "@/shared/constants/kana";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
+import Switcher from "@/shared/ui/switcher/switcher";
 
 
 type PracticeNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
@@ -28,6 +29,8 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
   const letters = useAppSelector((state: RootState) => state.kana.selected);
   const [cardModeState, setCardModeState] = useState<EducationModeChangeProps["buttons"]>([[], []]);
   const [difficultyLevelState, setDifficultyLevelState] = useState<EducationModeChangeProps["buttons"]>([[], []]);
+
+  const [timerDeration, setTimerDeration] = useState<"fast" | "medium" | "slow">("medium");
 
   const hiraLength = letters.base.hiragana.length +
     letters.dakuon.hiragana.length +
@@ -126,6 +129,16 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
     setBtnArray(newBtnArray);
   };
 
+  const keysCardModeState = getActiveFromArray(
+    cardModeState,
+    "active"
+  );
+
+  const keysDifficultyLevelState = getActiveFromArray(
+    difficultyLevelState,
+    "weak"
+  );
+
   return (
     <View style={[styles.container, { width: screenWidth - 40 }]}>
       <ScrollView showsVerticalScrollIndicator={false} >
@@ -168,25 +181,32 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
           }
         />
 
+        {keysDifficultyLevelState.includes(DifficultyLevelType.TimeTest) && 
+          <Switcher
+            activeTab={timerDeration}
+            options={[
+              "fast",
+              "medium",
+              "slow",
+            ]}
+            translate={[
+              t("wordGame.timer.fast"),
+              t("wordGame.timer.medium"),
+              t("wordGame.timer.slow"),
+            ]}
+            setActiveTab={setTimerDeration as () => void} />}
+
         <Button
           customStyles={{ marginTop: 60, marginBottom: 15 }}
           title={t("testing.start")}
           type={selectedLetters >= 5 ? "general" : "disabled"}
           fontSize={17}
           onClick={() => {
-            const keysCardModeState = getActiveFromArray(
-              cardModeState,
-              "active"
-            );
-            const keysDifficultyLevelState = getActiveFromArray(
-              difficultyLevelState,
-              "weak"
-            );
-
             navigation.navigate("Practice", {
               keysCardModeState,
               keysModeState: [],
               keysDifficultyLevelState,
+              timerDeration: timerDeration,
               mode: PracticeScreenMode.Testing,
             });
           }}

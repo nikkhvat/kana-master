@@ -34,7 +34,7 @@ const English = {
 	},
 
 	difficultyLevel: {
-		timeTest: "Time test",
+		timeTest: "Timer",
 		oneAttempt: "One attempt",
 	},
 
@@ -46,6 +46,12 @@ const English = {
 		choice: "Choice",
 		wordBuilding: "Word building",
 		findThePair: "Find the pair",
+
+		timer: {
+			fast: "3s",
+			medium: "5s",
+			slow: "7s",
+		}
 	},
 
 	kana: {

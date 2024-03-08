@@ -48,12 +48,15 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
   const {
     keysCardModeState,
     keysModeState,
+    timerDeration,
     keysDifficultyLevelState,
     mode
   } = route.params;
 
   const IS_TIMER = keysDifficultyLevelState.includes(DifficultyLevelType.TimeTest);
   const ONE_ATTEMPT = keysDifficultyLevelState.includes(DifficultyLevelType.OneAttempt);
+
+  const TIMER_SPEED = timerDeration === "fast" ? 3 : timerDeration === "slow" ? 7 : 5;
 
   const stats = useStats({
     cardModeState: keysCardModeState,
@@ -115,7 +118,7 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
           <EducationPracticeTimer
             currentIndex={currentIndex}
             onTimerEnd={endTime}
-            initial={5}
+            initial={TIMER_SPEED}
           />}
       </View>
 

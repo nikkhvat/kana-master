@@ -14,7 +14,7 @@ interface EducationPracticeTimerProps {
 const screenWidth = Dimensions.get("window").width;
 
 const progressBarWidth = screenWidth - 40 - 95;
-const progressBarWidthItem = (screenWidth - 40 - 95) / 5;
+
 
 const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
   initial = 5,
@@ -25,6 +25,8 @@ const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
 
   const animatedValue = useRef(new Animated.Value(5)).current;
   const [timeLeft, setTimeLeft] = useState(initial);
+
+  const progressBarWidthItem = (screenWidth - 40 - 95) / initial;
 
   const set = (val: number) => {
     Animated.timing(animatedValue, {

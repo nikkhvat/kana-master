@@ -34,7 +34,7 @@ const Russian = {
 	},
 
 	difficultyLevel: {
-		timeTest: "На время",
+		timeTest: "Таймер",
 		oneAttempt: "Одна попытка",
 	},
 
@@ -46,6 +46,12 @@ const Russian = {
 		choice: "Выбор",
 		wordBuilding: "Составить слово",
 		findThePair: "Найти пару",
+
+		timer: {
+			fast: "3с",
+			medium: "5с",
+			slow: "7с",
+		}
 	},
 
 	kana: {

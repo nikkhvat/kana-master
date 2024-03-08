@@ -9,6 +9,7 @@ export type RootStackParamList = {
     keysModeState: TestMode[], 
     keysDifficultyLevelState: DifficultyLevelType[]
     mode: PracticeScreenMode.Testing | PracticeScreenMode.WordGame
+    timerDeration?: "fast" | "medium" | "slow"
    };
   LearningPage: undefined;
   ChooseAlphabet: {
