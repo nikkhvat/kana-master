@@ -4,6 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 
+import { RootState } from "@/app/store";
 import SelectButton, { SelectButtonState } from "@/entities/education/kana-quick-selection/SelectButton/select-button";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useThemeContext } from "@/hooks/theme-context";
@@ -11,7 +12,6 @@ import { Kana, KanaMode, KanaSection, LETTERS_COUNT } from "@/shared/constants/k
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
 import { countAvailableWords, setKanaSelected } from "@/store/features/kana/slice";
-import { RootState } from "@/store/store";
 
 type ChooseAlphabetNavigationProp = StackNavigationProp<RootStackParamList, "ChooseAlphabet">;
 

@@ -10,6 +10,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/hooks/theme-context";
 import EducationKanaQuickSelectionPage from "@/pages/education/education-kana-quick-selection/education-kana-quick-selection";
+import EducationLearning from "@/pages/education/education-learning/ui/education-learning";
 import EducationPracticePage from "@/pages/education/education-practice/ui/education-practice";
 import EducationResultPage from "@/pages/education/education-result/education-result";
 import EducationWelcome from "@/pages/education/education-welcome/education-welcome";
@@ -18,6 +19,7 @@ import ProfilePage from "@/pages/profile/profile";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
 
@@ -94,9 +96,7 @@ const Layout = () => {
 
   return (
     <>
-      <StatusBar
-        barStyle={colors._theme === "dark" ? "light-content" : "dark-content"}
-      />
+      <StatusBar barStyle={colors._theme === "dark" ? "light-content" : "dark-content"} />
       <NavigationContainer
         theme={colors._theme === "dark" ? { dark: true, colors: darkTheme } : { dark: false, colors: lightTheme }} >
         <Stack.Navigator>
@@ -113,6 +113,17 @@ const Layout = () => {
           <Stack.Screen
             name="Practice"
             component={EducationPracticePage}
+            options={{
+              title: "Practice",
+              headerTransparent: true,
+              gestureEnabled: false,
+              headerTitle: "",
+              headerBackVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="LearningPage"
+            component={EducationLearning}
             options={{
               title: "Learning",
               headerTransparent: true,

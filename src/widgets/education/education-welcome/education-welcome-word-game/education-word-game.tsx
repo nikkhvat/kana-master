@@ -5,86 +5,79 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 
+import { RootState } from "@/app/store";
 import EducationModeChange, { EducationModeChangeProps } from "@/features/education/education-mode-change/education-mode-change";
-import EducationKanaSelectedCard from "@/features/education/education-selected-card/education-kana-selected-card";
+import KanaSelectedCard from "@/features/education/education-selected-card/education-kana-selected-card";
 import { useAppSelector } from "@/hooks/redux";
-import { CardMode, DifficultyLevelType, PracticeScreenMode } from "@/shared/constants/kana";
+import { CardMode, PracticeScreenMode, TestMode } from "@/shared/constants/kana";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
-import { RootState } from "@/store/store";
 
 
-type PracticeNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
+type WordBuildingNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
-interface PracticeProps {
-  navigation: PracticeNavigationProp;
+interface WordBuildingProps {
+  navigation: WordBuildingNavigationProp;
 }
 
 const screenWidth = Dimensions.get("window").width;
 
-const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
+const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
   const { t } = useTranslation();
   
-  const letters = useAppSelector((state: RootState) => state.kana.selected);
   const [cardModeState, setCardModeState] = useState<EducationModeChangeProps["buttons"]>([[], []]);
-  const [difficultyLevelState, setDifficultyLevelState] = useState<EducationModeChangeProps["buttons"]>([[], []]);
+  const [modeState, setModeState] = useState<EducationModeChangeProps["buttons"]>([]);
+
+  const selectedWords = useAppSelector((state: RootState) => state.kana.selectedWords);
+
+  const isHira = selectedWords.hiragana.length > 10;
+  const isKata = selectedWords.katakana.length > 10;
 
   useEffect(() => {
-    const isHira =
-      letters.base.hiragana.length > 0 ||
-      letters.dakuon.hiragana.length > 0 ||
-      letters.handakuon.hiragana.length > 0 ||
-      letters.yoon.hiragana.length > 0;
-
-    const isKata =
-      letters.base.katakana.length > 0 ||
-      letters.dakuon.katakana.length > 0 ||
-      letters.handakuon.katakana.length > 0 ||
-      letters.yoon.katakana.length > 0;
-    
     setCardModeState(() => [
       [
         { title: "Hira → Romaji", key: CardMode.hiraganaToRomaji, type: isHira ? "active" : "inactive", condition: isHira },
         { title: "Romaji → Hira", key: CardMode.romajiToHiragana, type: "inactive", condition: isHira },
-        { title: "Hira → Kata", key: CardMode.hiraganaToKatakana, type: "inactive", condition: isHira && isKata },
       ],
       [
         { title: "Kata → Romaji", key: CardMode.katakanaToRomaji, type: isKata ? "active" : "inactive", condition: isKata },
         { title: "Romaji → Kata", key: CardMode.romajiToKatakana, type: "inactive", condition: isKata },
-        { title: "Kata → Hira", key: CardMode.katakanaToHiragana, type: "inactive", condition: isHira && isKata },
       ],
     ]);
-    
-    setDifficultyLevelState(() => [
-      [{ title: t("difficultyLevel.timeTest"), key: DifficultyLevelType.TimeTest, condition: true, type: "inactive" }],
-      [{ title: t("difficultyLevel.oneAttempt"), key: DifficultyLevelType.OneAttempt, condition: true, type: "inactive" }],
+
+    setModeState([
+      [
+        { 
+          title: t("wordGame.choice"), 
+          key: TestMode.Choice, 
+          type: "active", 
+          condition: isHira || isKata,
+        },
+        { 
+          title: t("wordGame.wordBuilding"), 
+          key: TestMode.WordBuilding, 
+          type: "active", 
+          condition: isHira || isKata,
+        },
+      ],
+      [{ 
+        title: t("wordGame.findThePair"), 
+        key: TestMode.FindPair, 
+        type: "active", 
+        condition: isHira || isKata,
+      }],
     ]);
-  }, [letters, t]);
+  }, [selectedWords]);
 
-
-  const getActiveFromArray = (objects: any, active: string) => {
-    const array = [];
-
-    for (let i = 0; i < objects.length; i++) {
-      const object = objects[i];
-      
-      for (let j = 0; j < object.length; j++) {
-        const element = object[j];
-        
-        if (element.type === active) {
-          array.push(element.key);
-        }
-      }
-    }
-
-    return array;
-  };
-
-  
-  
   const toggleButtonState = (
     btnArray: typeof cardModeState,
-    setBtnArray: (cards: any) => void,
+    setBtnArray: (
+      data: {
+        title: string;
+        type: "active" | "inactive" | "weak" | "general";
+        key: string;
+      }[][]
+    ) => void,
     indexGroup: number,
     indexButton: number,
     active: "active" | "inactive" | "weak" | "general",
@@ -115,20 +108,38 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
     setBtnArray(newBtnArray);
   };
 
+  
+  const getActiveFromArray = (
+    objects: any,
+    active: string
+  ) => {
+    const array = [];
+
+    for (let i = 0; i < objects.length; i++) {
+      const object = objects[i];
+
+      for (let j = 0; j < object.length; j++) {
+        const element = object[j];
+
+        if (element.type === active) {
+          array.push(element.key);
+        }
+      }
+    }
+
+    return array;
+  };
+
+  const toChooseAlphabetScreen = () => navigation.navigate("ChooseAlphabet", {
+    screen: "WordBuilding",
+  });
+
   return (
     <View style={[styles.container, { width: screenWidth - 40 }]}>
       <ScrollView showsVerticalScrollIndicator={false} >
-        <EducationKanaSelectedCard
-          imageSource={"practice"}
-          onEdit={() =>
-            navigation.navigate("ChooseAlphabet", {
-              screen: "Practice",
-            })
-          }
-        />
-
+        <KanaSelectedCard imageSource={"wordgame"} onEdit={toChooseAlphabetScreen} />
         <EducationModeChange
-          title={t("testing.cardMode")}
+          title={t("wordGame.cardMode")}
           buttons={cardModeState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
@@ -141,42 +152,38 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
             )
           }
         />
-
         <EducationModeChange
-          title={t("testing.difficultyLevel")}
-          buttons={difficultyLevelState}
+          title={t("wordGame.mode")}
+          buttons={modeState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
-              difficultyLevelState,
-              setDifficultyLevelState,
+              modeState,
+              setModeState,
               groupIndex,
               btnIndex,
-              "weak",
-              "no_one"
+              "active",
+              "has_one"
             )
           }
         />
 
         <Button
           customStyles={{ marginTop: 60, marginBottom: 15 }}
-          title={t("testing.start")}
-          type={"general"}
+          title={t("wordGame.start")}
+          type={(isHira || isKata) ? "general" : "disabled"}
           fontSize={17}
           onClick={() => {
             const keysCardModeState = getActiveFromArray(
               cardModeState,
               "active"
             );
-            const keysDifficultyLevelState = getActiveFromArray(
-              difficultyLevelState,
-              "weak"
-            );
+            const keysModeState = getActiveFromArray(modeState, "active");
 
             navigation.navigate("Practice", {
               keysCardModeState,
-              keysModeState: [],
-              keysDifficultyLevelState,
-              mode: PracticeScreenMode.Testing,
+              keysModeState,
+              keysDifficultyLevelState: [],
+              mode: PracticeScreenMode.WordGame,
             });
           }}
         />
@@ -185,7 +192,7 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
   );
 };
 
-export default EducationPractice;
+export default EducationWordGame;
 
 const styles = StyleSheet.create({
   container: {

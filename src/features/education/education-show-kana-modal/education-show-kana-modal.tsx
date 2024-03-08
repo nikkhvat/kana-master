@@ -102,9 +102,13 @@ const EducationShowKanaModal: React.FC<EducationShowKanaModalProps> = ({
           />
         </View>
         {letter !== null && <View style={styles.titleContainer}>
-          <Text style={[styles.title, { color: colors.color4 }]}>{kana} ({getTypeById(letter.id)})</Text>
-          <Text style={[styles.subTitle, { color: colors.color4 }]}>{letter?.[lang].toUpperCase()}</Text>
-          {getImagePath(type === "yoon" ? letter.id : `${kana === "hiragana" ? "H" : "K"}-${letter.en}`, THEME)}
+          <Text style={[styles.title, { color: colors.color4 }]}>
+            {kana} ({getTypeById(letter.id)})
+          </Text>
+          <Text style={[styles.subTitle, { color: colors.color4 }]}>
+            {letter?.[lang].toUpperCase()}
+          </Text>
+          {getImagePath(letter.id, THEME)}
         </View>}
 
         {letter !== null && <View style={styles.buttonContainer}>

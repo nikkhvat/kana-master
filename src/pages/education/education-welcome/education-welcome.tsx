@@ -7,9 +7,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useThemeContext } from "@/hooks/theme-context";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
-import EducationLearning from "@/widgets/education/education-welcome-learning/education-learning";
-import EducationPractice from "@/widgets/education/education-welcome-practice/education-practice";
-import EducationWordGame from "@/widgets/education/education-welcome-word-game/education-word-game";
+import EducationLearning from "@/widgets/education/education-welcome/education-welcome-learning/education-learning";
+import EducationPractice from "@/widgets/education/education-welcome/education-welcome-practice/education-practice";
+import EducationWordGame from "@/widgets/education/education-welcome/education-welcome-word-game/education-word-game";
 
 const screenWidth = Dimensions.get("window").width - 40;
 

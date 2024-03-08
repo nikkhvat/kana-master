@@ -1,50 +1,87 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Animated, Dimensions } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/hooks/theme-context";
 
 interface EducationPracticeTimerProps {
-  onTimerEnd?: () => void
-  initial: number
-  currentIndex: number
+  onTimerEnd?: () => void;
+  initial: number;
+  currentIndex: number;
 }
+
+const screenWidth = Dimensions.get("window").width;
+
+const progressBarWidth = screenWidth - 40 - 95;
+const progressBarWidthItem = (screenWidth - 40 - 95) / 5;
 
 const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
   initial = 5,
-  onTimerEnd
+  onTimerEnd,
+  currentIndex,
 }) => {
   const { colors } = useThemeContext();
 
+  const animatedValue = useRef(new Animated.Value(5)).current;
   const [timeLeft, setTimeLeft] = useState(initial);
 
+  const set = (val: number) => {
+    Animated.timing(animatedValue, {
+      toValue: val * progressBarWidthItem,
+      duration: 500,
+      useNativeDriver: false,
+      delay: 0,
+    }).start();
+
+    setTimeLeft(val);
+  };
+
   useEffect(() => {
-    if (timeLeft === 0) {
-      setTimeLeft(0);
+    set(initial);
+  }, [currentIndex]);
+
+  useEffect(() => {
+    if (timeLeft === -1) {
       onTimerEnd?.();
+      set(initial);
     }
 
-    if (!timeLeft) return;
-
     const intervalId = setInterval(() => {
-
-      setTimeLeft(timeLeft - 1);
+      set(timeLeft - 1);
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [onTimerEnd, timeLeft]);
+  }, [timeLeft, currentIndex]);
 
   const fullProgress = (timeLeft / initial) * 100;
 
   return (
     <View style={styles.container}>
-      <View style={[styles.timerContainer, {backgroundColor: colors.color2}]}>
-        <View style={[styles.timerStroke, { width: `${fullProgress}%`, backgroundColor: colors.second_color2 }]} />
+      <View style={[
+        styles.timerContainer, 
+        { backgroundColor: colors.color2, width: progressBarWidth }
+      ]}>
+        <Animated.View
+          style={
+            {
+              ...styles.timerStroke,
+              width: animatedValue,
+              backgroundColor:
+                fullProgress <= 40 ? colors.second_color1 : colors.second_color2,
+            }
+            // [
+            // styles.timerStroke,
+            // ,
+          // ]
+          }
+        />
       </View>
       <View style={styles.timerTextContainer}>
         <Icon name={"timer-outline"} size={24} color={colors.color4} />
-        <Text style={[styles.timerTime, { color: colors.color4 }]}>00:0{timeLeft}</Text>
+        <Text style={[styles.timerTime, { color: colors.color4 }]}>
+          00:0{timeLeft}
+        </Text>
       </View>
     </View>
   );
@@ -56,7 +93,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    gap: 15
+    gap: 15,
   },
   timerContainer: {
     flex: 1,

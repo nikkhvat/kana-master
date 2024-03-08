@@ -5,73 +5,97 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 
+import { RootState } from "@/app/store";
 import EducationModeChange, { EducationModeChangeProps } from "@/features/education/education-mode-change/education-mode-change";
-import KanaSelectedCard from "@/features/education/education-selected-card/education-kana-selected-card";
+import EducationKanaSelectedCard from "@/features/education/education-selected-card/education-kana-selected-card";
 import { useAppSelector } from "@/hooks/redux";
-import { CardMode, PracticeScreenMode, TestMode } from "@/shared/constants/kana";
+import { CardMode, DifficultyLevelType, PracticeScreenMode } from "@/shared/constants/kana";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
-import { RootState } from "@/store/store";
 
 
-type WordBuildingNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
+type PracticeNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
-interface WordBuildingProps {
-  navigation: WordBuildingNavigationProp;
+interface PracticeProps {
+  navigation: PracticeNavigationProp;
 }
 
 const screenWidth = Dimensions.get("window").width;
 
-const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
+const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
   const { t } = useTranslation();
   
   const letters = useAppSelector((state: RootState) => state.kana.selected);
-
   const [cardModeState, setCardModeState] = useState<EducationModeChangeProps["buttons"]>([[], []]);
-  const [modeState, setModeState] = useState<EducationModeChangeProps["buttons"]>([]);
+  const [difficultyLevelState, setDifficultyLevelState] = useState<EducationModeChangeProps["buttons"]>([[], []]);
+
+  const hiraLength = letters.base.hiragana.length +
+    letters.dakuon.hiragana.length +
+    letters.handakuon.hiragana.length +
+    letters.yoon.hiragana.length;
+  
+  const kataLength = letters.base.katakana.length +
+    letters.dakuon.katakana.length +
+    letters.handakuon.katakana.length +
+    letters.yoon.katakana.length;
+
+  const selectedLetters = hiraLength + kataLength;
+    
+  const isHira = hiraLength > 0;
+  const isKata = kataLength > 0;
 
   useEffect(() => {
-    const isHira =
-      letters.base.hiragana.length > 0 ||
-      letters.dakuon.hiragana.length > 0 ||
-      letters.handakuon.hiragana.length > 0 ||
-      letters.yoon.hiragana.length > 0;
-
-    const isKata =
-      letters.base.katakana.length > 0 ||
-      letters.dakuon.katakana.length > 0 ||
-      letters.handakuon.katakana.length > 0 ||
-      letters.yoon.katakana.length > 0;
-
+    
     setCardModeState(() => [
       [
         { title: "Hira → Romaji", key: CardMode.hiraganaToRomaji, type: isHira ? "active" : "inactive", condition: isHira },
         { title: "Romaji → Hira", key: CardMode.romajiToHiragana, type: "inactive", condition: isHira },
+        { title: "Hira → Kata", key: CardMode.hiraganaToKatakana, type: "inactive", condition: isHira && isKata },
       ],
       [
         { title: "Kata → Romaji", key: CardMode.katakanaToRomaji, type: isKata ? "active" : "inactive", condition: isKata },
         { title: "Romaji → Kata", key: CardMode.romajiToKatakana, type: "inactive", condition: isKata },
+        { title: "Kata → Hira", key: CardMode.katakanaToHiragana, type: "inactive", condition: isHira && isKata },
       ],
     ]);
+    
+    setDifficultyLevelState(() => [
+      [{ 
+        title: t("difficultyLevel.timeTest"), 
+        key: DifficultyLevelType.TimeTest, 
+        condition: selectedLetters >= 5, 
+        type: "inactive" 
+      }],
+      [{ 
+        title: t("difficultyLevel.oneAttempt"), 
+        key: DifficultyLevelType.OneAttempt, 
+        condition: selectedLetters >= 5, 
+        type: "inactive" 
+      }],
+    ]);
+  }, [letters, t]);
 
-    setModeState([
-      [
-        { title: t("wordGame.choice"), key: TestMode.Choice, type: "active", condition: true },
-        { title: t("wordGame.wordBuilding"), key: TestMode.WordBuilding, type: "active", condition: true },
-      ],
-      [{ title: t("wordGame.findThePair"), key: TestMode.FindPair, type: "active", condition: true }],
-    ]);
-  }, [letters]);
+  const getActiveFromArray = (objects: any, active: string) => {
+    const array = [];
+
+    for (let i = 0; i < objects.length; i++) {
+      const object = objects[i];
+      
+      for (let j = 0; j < object.length; j++) {
+        const element = object[j];
+        
+        if (element.type === active) {
+          array.push(element.key);
+        }
+      }
+    }
+
+    return array;
+  };
 
   const toggleButtonState = (
     btnArray: typeof cardModeState,
-    setBtnArray: (
-      data: {
-        title: string;
-        type: "active" | "inactive" | "weak" | "general";
-        key: string;
-      }[][]
-    ) => void,
+    setBtnArray: (cards: any) => void,
     indexGroup: number,
     indexButton: number,
     active: "active" | "inactive" | "weak" | "general",
@@ -102,41 +126,20 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
     setBtnArray(newBtnArray);
   };
 
-  
-  const getActiveFromArray = (
-    objects: any,
-    active: string
-  ) => {
-    const array = [];
-
-    for (let i = 0; i < objects.length; i++) {
-      const object = objects[i];
-
-      for (let j = 0; j < object.length; j++) {
-        const element = object[j];
-
-        if (element.type === active) {
-          array.push(element.key);
-        }
-      }
-    }
-
-    return array;
-  };
-
   return (
     <View style={[styles.container, { width: screenWidth - 40 }]}>
       <ScrollView showsVerticalScrollIndicator={false} >
-        <KanaSelectedCard
-          imageSource={"wordgame"}
+        <EducationKanaSelectedCard
+          imageSource={"practice"}
           onEdit={() =>
             navigation.navigate("ChooseAlphabet", {
-              screen: "WordBuilding",
+              screen: "Practice",
             })
           }
         />
+
         <EducationModeChange
-          title={t("wordGame.cardMode")}
+          title={t("testing.cardMode")}
           buttons={cardModeState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
@@ -149,38 +152,42 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
             )
           }
         />
+
         <EducationModeChange
-          title={t("wordGame.mode")}
-          buttons={modeState}
+          title={t("testing.difficultyLevel")}
+          buttons={difficultyLevelState}
           onButtonClick={(groupIndex: number, btnIndex: number) =>
             toggleButtonState(
-              modeState,
-              setModeState,
+              difficultyLevelState,
+              setDifficultyLevelState,
               groupIndex,
               btnIndex,
-              "active",
-              "has_one"
+              "weak",
+              "no_one"
             )
           }
         />
 
         <Button
           customStyles={{ marginTop: 60, marginBottom: 15 }}
-          title={t("wordGame.start")}
-          type={"general"}
+          title={t("testing.start")}
+          type={selectedLetters >= 5 ? "general" : "disabled"}
           fontSize={17}
           onClick={() => {
             const keysCardModeState = getActiveFromArray(
               cardModeState,
               "active"
             );
-            const keysModeState = getActiveFromArray(modeState, "active");
+            const keysDifficultyLevelState = getActiveFromArray(
+              difficultyLevelState,
+              "weak"
+            );
 
             navigation.navigate("Practice", {
               keysCardModeState,
-              keysModeState,
-              keysDifficultyLevelState: [],
-              mode: PracticeScreenMode.WordGame,
+              keysModeState: [],
+              keysDifficultyLevelState,
+              mode: PracticeScreenMode.Testing,
             });
           }}
         />
@@ -189,7 +196,7 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
   );
 };
 
-export default EducationWordGame;
+export default EducationPractice;
 
 const styles = StyleSheet.create({
   container: {

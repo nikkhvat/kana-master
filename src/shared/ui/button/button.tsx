@@ -51,7 +51,11 @@ const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <Pressable onPress={onClick} style={buttonStyle} {...props}>
+    <Pressable 
+      {...props}
+      onPress={() => type !== "disabled" && onClick?.()} 
+      style={buttonStyle}
+    >
       {icon && icon}
       {image === null ? (
         <>

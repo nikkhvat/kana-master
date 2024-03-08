@@ -3,11 +3,12 @@ import React, { useEffect } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useKeepAwake } from "expo-keep-awake";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useEducationPracticeContext } from "../lib/context/education-practice-context";
 
+import { RootState } from "@/app/store";
 import EducationPracticeChooseLetters from "@/features/education/education-practice-choose-letters/education-practice-choose-letters";
 import EducationPracticeChooseValue from "@/features/education/education-practice-choose-value/education-practice-choose-value";
 import EducationPracticeFindPair from "@/features/education/education-practice-find-pair/education-practice-find-pair";
@@ -21,7 +22,6 @@ import { DifficultyLevelType, PracticeScreenMode, QuestionTypeBuildingWord, Ques
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
 import { countAvailableWords } from "@/store/features/kana/slice";
-import { RootState } from "@/store/store";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Practice">;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, "Practice">;
@@ -71,7 +71,8 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
     });
 
     init(generateQuestion);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    return () => {};
   }, []);
 
   // Вызываеться после ответа на вопрос
@@ -107,10 +108,10 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
       <View style={styles.header}>
         <LinearProgressBar
           close={navigation.goBack}
-          current={currentIndex}
+          current={currentIndex + 1}
           all={questions.length}
         />
-        {IS_TIMER && mode === PracticeScreenMode.Testing &&
+        {IS_TIMER && mode === PracticeScreenMode.Testing && !(currentIndex + 1 > questions.length) &&
           <EducationPracticeTimer
             currentIndex={currentIndex}
             onTimerEnd={endTime}

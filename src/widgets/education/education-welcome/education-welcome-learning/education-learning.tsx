@@ -31,7 +31,14 @@ const EducationLearning: React.FC<PracticeProps> = ({ navigation }) => {
       />
 
       <View style={styles.content}>
-        <Button title={t("practice.start")} type={"general"} fontSize={17} />
+        <Button 
+          title={t("practice.start")} 
+          type={"general"} 
+          fontSize={17}
+          onClick={() => {
+            navigation.navigate("LearningPage");
+          }} 
+        />
       </View>
     </View>
   );

@@ -9,9 +9,10 @@ interface ProgressBarProp {
   close?: () => void;
   current: number;
   all: number;
+  title?: string
 }
 
-const LinearProgressBar: React.FC<ProgressBarProp> = ({ close, current, all }) => {
+const LinearProgressBar: React.FC<ProgressBarProp> = ({ close, current, all, title }) => {
   
   const { colors } = useThemeContext();
 
@@ -36,7 +37,7 @@ const LinearProgressBar: React.FC<ProgressBarProp> = ({ close, current, all }) =
           />
         </TouchableOpacity>
         <Text style={[styles.progressBarText, { color: colors.color3 }]}>
-          Question {current} / {all}
+          {title ? title : "Question"} {current} / {all}
         </Text>
       </View>
     </View>

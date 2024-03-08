@@ -2,13 +2,13 @@ import React, { createContext, Dispatch, FC, PropsWithChildren, SetStateAction, 
 
 import * as Haptics from "expo-haptics";
 
+import { RootState } from "@/app/store";
 import { CardMode, Kana, KanaAlphabet, PracticeScreenMode, QuestionTypeBuildingWord, QuestionTypeChooseLetter, QuestionTypeChooseWord, QuestionTypeFindPairWord, TestMode } from "@/shared/constants/kana";
 import { ILetter, LettersKeys, lettersTableById } from "@/shared/data/lettersTable";
 import { Word } from "@/shared/data/words";
 import { getRandomLetter, shuffleArray } from "@/shared/helpers/letters";
 import { getAnswers, getRandomWords } from "@/shared/helpers/words";
 import { AnyQuestion, Question } from "@/shared/types/questions";
-import { RootState } from "@/store/store";
 
 interface generateQuestionsProps {
   mode: PracticeScreenMode,
@@ -52,6 +52,8 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
     callback?: (onFinishPractice: boolean, trueAnswer: boolean) => void,
   ) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
+    if (currentIndex > questions.length - 1) return;
 
     if (currentIndex === questions.length - 1) {
       callback?.(true, trueSelected);
@@ -308,6 +310,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
           }
           case CardMode.katakanaToRomaji: {
             const word = getRandomWords(addedQuestionKana, kanaWords);
+
             if (word !== null) {
               addedQuestionKana.push(word?.romanji);
               questions.push(

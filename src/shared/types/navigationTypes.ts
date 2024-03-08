@@ -10,6 +10,7 @@ export type RootStackParamList = {
     keysDifficultyLevelState: DifficultyLevelType[]
     mode: PracticeScreenMode.Testing | PracticeScreenMode.WordGame
    };
+  LearningPage: undefined;
   ChooseAlphabet: {
     screen: "Learning" | "Practice" | "WordBuilding"
   };
