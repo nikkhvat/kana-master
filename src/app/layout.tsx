@@ -4,9 +4,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createStackNavigator } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { StatusBar } from "react-native";
+import { StatusBar, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/hooks/theme-context";
@@ -17,6 +16,7 @@ import EducationPracticePage from "@/pages/education/education-practice/ui/educa
 import EducationResultPage from "@/pages/education/education-result/education-result";
 import EducationWelcome from "@/pages/education/education-welcome/education-welcome";
 import KanaInfo from "@/pages/education/kana-info/ui";
+import EducationKanaSelection from "@/pages/education/kana-select/ui";
 import Kana from "@/pages/kana/kana";
 import ProfilePage from "@/pages/profile/profile";
 import { darkTheme } from "@/shared/themes/dark";
@@ -62,8 +62,6 @@ function BottomTabNavigator() {
   );
 }
 
-const RootStack = createStackNavigator();
-
 const Layout = () => {
   const { colors } = useThemeContext();
   const { i18n } = useTranslation();  
@@ -95,15 +93,21 @@ const Layout = () => {
           <Stack.Screen name="LearningPage" component={EducationLearning} options={{ title: "Learning", ...headerSettings }} />
           <Stack.Screen name="DrawKana" component={EducationDraw} options={{ headerShown: false }} />
           <Stack.Screen name="Results" component={EducationResultPage} options={{ title: "Results", ...headerSettings }} />
-          <RootStack.Group screenOptions={{ presentation: "modal" }}>
-            <RootStack.Screen 
+          <Stack.Group screenOptions={{ presentation: "modal" }}>
+            <Stack.Screen 
               name="KanaInfo" 
               component={KanaInfo}
               options={{
-                headerTitle: "",
-                headerTransparent: true,
+                header: () => <View></View>,
               }} />
-          </RootStack.Group>
+            <Stack.Screen 
+              name="KanaSelect" 
+              component={EducationKanaSelection}
+              options={{
+                header: () => <View></View>,
+              }}
+            />
+          </Stack.Group>
         </Stack.Navigator>
       </NavigationContainer>
     </>

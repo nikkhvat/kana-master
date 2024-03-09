@@ -1,22 +1,25 @@
 import React, { useMemo, useState } from "react";
 
+import { RouteProp } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Modal, View, Pressable, Text, SectionList, StyleSheet } from "react-native";
+import { View, Pressable, Text, SectionList, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import EducationKanaTableSelected from "@/features/education/education-kana-table-selected/education-kana-table";
 import { useAppDispatch } from "@/hooks/redux";
 import { useThemeContext } from "@/hooks/theme-context";
 import { Alphabet } from "@/shared/constants/kana";
+import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Switcher from "@/shared/ui/switcher/switcher";
 import { resetKanaSelected } from "@/store/features/kana/slice";
 
-interface EducationKanaSelectionProps {
-  closeModal: () => void;
-  show: boolean;
+interface KanaInfoProps {
+  route: RouteProp<RootStackParamList, "KanaSelect">;
+  navigation: StackNavigationProp<RootStackParamList, "KanaSelect">;
 }
 
-const EducationKanaSelection: React.FC<EducationKanaSelectionProps> = ({ closeModal, show }) => {
+const EducationKanaSelection: React.FC<KanaInfoProps> = ({ route, navigation }) => {
   const dispatch = useAppDispatch();
   const { colors } = useThemeContext();
   const [activeTab, setActiveTab] = useState<"hiragana" | "katakana">("hiragana");
@@ -33,12 +36,12 @@ const EducationKanaSelection: React.FC<EducationKanaSelectionProps> = ({ closeMo
 
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  
+
   return (
-    <Modal visible={show} presentationStyle="pageSheet" animationType="slide" onRequestClose={closeModal}>
+    <>
       <View style={{ flex: 1, backgroundColor: colors.color1, paddingBottom: 70 }}>
         <View style={{ height: 52, flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingLeft: 20, paddingRight: 20 }}>
-          <Pressable onPress={closeModal} style={{ padding: 14, margin: -14 }}>
+          <Pressable onPress={navigation.goBack} style={{ padding: 14, margin: -14 }}>
             <Text style={{ color: colors.color4, fontSize: 17, fontWeight: "400" }}>Close</Text>
           </Pressable>
           <Text style={{ color: colors.color4, fontSize: 17, fontWeight: "700" }}>
@@ -54,8 +57,8 @@ const EducationKanaSelection: React.FC<EducationKanaSelectionProps> = ({ closeMo
           keyExtractor={(item, index) => item + index}
           renderItem={({ section }) => (
             <React.Suspense fallback={<View />}>
-              <EducationKanaTableSelected 
-                isEditMode={true} 
+              <EducationKanaTableSelected
+                isEditMode={true}
                 type={section.type as Alphabet}
                 kana={activeTab}
                 last={section.type === "yoon"}
@@ -70,16 +73,16 @@ const EducationKanaSelection: React.FC<EducationKanaSelectionProps> = ({ closeMo
         />
       </View>
       <View style={{ position: "absolute", bottom: 0, height: 100, width: "100%", paddingTop: 5, backgroundColor: colors.color1, borderColor: colors.color2, borderTopWidth: 1, flexDirection: "row", alignItems: "flex-start", justifyContent: "center", paddingHorizontal: 20 }}>
-        <Switcher 
-          activeTab={activeTab} 
-          setActiveTab={(val) => setActiveTab(val as "hiragana" | "katakana")} 
+        <Switcher
+          activeTab={activeTab}
+          setActiveTab={(val) => setActiveTab(val as "hiragana" | "katakana")}
           options={["hiragana", "katakana"]}
           translate={[
             t("kana.hiragana"),
             t("kana.katakana"),
           ]} />
       </View>
-    </Modal>
+    </>
   );
 };
 

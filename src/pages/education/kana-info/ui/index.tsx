@@ -20,7 +20,7 @@ interface KanaInfoProps {
   navigation: StackNavigationProp<RootStackParamList, "KanaInfo">;
 }
 
-const KanaInfo: React.FC<KanaInfoProps> = ({ route, navigation }) => {
+const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
 
   const { id: LetterIdFromParams, kana: kanaFromParams } = route.params;
 

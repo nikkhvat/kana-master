@@ -102,7 +102,6 @@ const DrawKana: React.FC<DrawKanaProps> = ({ letter, kana, back }) => {
         styles.container,
         { 
           backgroundColor: colors.color1,
-          marginTop: 30
         }
       ]} >
       <View style={styles.header}>

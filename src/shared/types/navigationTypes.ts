@@ -17,6 +17,7 @@ export type RootStackParamList = {
   LearningPage: undefined;
   DrawKana: { letter: ILetter, kana: KanaAlphabet };
   KanaInfo: { id: string, kana: KanaAlphabet }
+  KanaSelect: undefined,
   ChooseAlphabet: { screen: "Learning" | "Practice" | "WordBuilding" };
   Results: { stats: Stats };
 };
