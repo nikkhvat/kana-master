@@ -19,6 +19,10 @@ export type RootStackParamList = {
     letter: ILetter
     kana: KanaAlphabet
   };
+  KanaInfo: {
+    id: string
+    kana: KanaAlphabet
+  }
   ChooseAlphabet: {
     screen: "Learning" | "Practice" | "WordBuilding"
   };

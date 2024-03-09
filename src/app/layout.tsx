@@ -4,25 +4,35 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { StatusBar } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/hooks/theme-context";
+import EducationDraw from "@/pages/education/education-draw/education-draw";
 import EducationKanaQuickSelectionPage from "@/pages/education/education-kana-quick-selection/education-kana-quick-selection";
 import EducationLearning from "@/pages/education/education-learning/ui/education-learning";
 import EducationPracticePage from "@/pages/education/education-practice/ui/education-practice";
 import EducationResultPage from "@/pages/education/education-result/education-result";
 import EducationWelcome from "@/pages/education/education-welcome/education-welcome";
+import KanaInfo from "@/pages/education/kana-info/ui";
 import Kana from "@/pages/kana/kana";
 import ProfilePage from "@/pages/profile/profile";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
-import DrawKana from "@/widgets/education/draw-kana/ui/draw-kana";
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
+
+const headerSettings = {
+  headerTitle: "",
+  headerTransparent: true,
+  gestureEnabled: false,
+  headerBackVisible: false,
+};
 
 function BottomTabNavigator() {
   const { t } = useTranslation();
@@ -76,6 +86,8 @@ function BottomTabNavigator() {
   );
 }
 
+const RootStack = createStackNavigator();
+
 const Layout = () => {
   const { colors } = useThemeContext();
   const { i18n } = useTranslation();  
@@ -116,10 +128,7 @@ const Layout = () => {
             component={EducationPracticePage}
             options={{
               title: "Practice",
-              headerTransparent: true,
-              gestureEnabled: false,
-              headerTitle: "",
-              headerBackVisible: false,
+              ...headerSettings
             }}
           />
           <Stack.Screen
@@ -127,15 +136,12 @@ const Layout = () => {
             component={EducationLearning}
             options={{
               title: "Learning",
-              headerTransparent: true,
-              gestureEnabled: false,
-              headerTitle: "",
-              headerBackVisible: false,
+              ...headerSettings
             }}
           />
           <Stack.Screen
             name="DrawKana"
-            component={DrawKana}
+            component={EducationDraw}
             options={{
               headerShown: false
             }}
@@ -145,12 +151,18 @@ const Layout = () => {
             component={EducationResultPage}
             options={{
               title: "Results",
-              headerTransparent: true,
-              gestureEnabled: false,
-              headerTitle: "",
-              headerBackVisible: false,
+              ...headerSettings
             }}
           />
+        <RootStack.Group screenOptions={{ presentation: "modal" }}>
+          <RootStack.Screen 
+            name="KanaInfo" 
+            component={KanaInfo}
+            options={{
+              headerTitle: "",
+              headerTransparent: true,
+            }} />
+        </RootStack.Group>
         </Stack.Navigator>
       </NavigationContainer>
     </>

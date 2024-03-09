@@ -7,14 +7,9 @@ import { SectionList, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import EducationKanaTable from "@/features/education/education-kana-table/education-kana-table";
-import EducationShowKanaModal from "@/features/education/education-show-kana-modal/education-show-kana-modal";
 import { useThemeContext } from "@/hooks/theme-context";
-import { Alphabet } from "@/shared/constants/kana";
-import {
-  LettersKeys, baseFlatLettersId,
-  dakuonFlatLettersId, handakuonFlatLettersId,
-  lettersTableById, yoonFlatLettersId
-} from "@/shared/data/lettersTable";
+import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
+import { LettersKeys } from "@/shared/data/lettersTable";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Switcher from "@/shared/ui/switcher/switcher";
 
@@ -34,40 +29,14 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState<"hiragana" | "katakana">("hiragana");
 
-  const [isModalVisible, setModalVisible] = useState<LettersKeys | null>(null);
-
   const openModal = useCallback((id: LettersKeys) => {
-    setModalVisible(id);
-  }, []);
-
-  const closeModal = () => setModalVisible(null);
-
-  const flatLetters = useMemo(() => [
-    ...baseFlatLettersId,
-    ...dakuonFlatLettersId,
-    ...handakuonFlatLettersId,
-    ...yoonFlatLettersId,
-  ], []);
-
-  const prev = () => {
-    if (isModalVisible === null) return;
-
-    const active = lettersTableById[isModalVisible];
-    const activeIndex = flatLetters.findIndex((element) => element === active.id);
-    if (activeIndex === 0) return;
-
-    setModalVisible(flatLetters[activeIndex - 1]);
-  };
-
-  const next = () => {
-    if (isModalVisible === null) return;
-
-    const active = lettersTableById[isModalVisible];
-    const activeIndex = flatLetters.findIndex((element) => element === active.id);
-    if (flatLetters.length === activeIndex + 1) return;
-
-    setModalVisible(flatLetters[activeIndex + 1]);
-  };
+    navigation.navigate("KanaInfo", {
+      id: id,
+      kana: activeTab === "hiragana" 
+        ? KanaAlphabet.Hiragana 
+        : KanaAlphabet.Katakana
+    });
+  }, [activeTab]);
 
   const sections = useMemo(
     () => [
@@ -121,18 +90,6 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
             <Text style={[styles.name, { color: colors.color4 }]}>{title}</Text>
           </View>
         )}
-      />
-
-      <EducationShowKanaModal
-        type="yoon"
-        show={isModalVisible === null ? false : true}
-        kana={activeTab}
-        changeKata={(kata) => setActiveTab(kata)}
-        letter={lettersTableById[isModalVisible as LettersKeys] || null}
-        drawSymbol={() => { }}
-        closeModal={closeModal}
-        prevLetter={prev}
-        nextLetter={next}
       />
     </View>
   );

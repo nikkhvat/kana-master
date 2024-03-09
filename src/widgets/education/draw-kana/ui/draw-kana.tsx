@@ -1,34 +1,25 @@
 import React, { useState } from "react";
 
-import { RouteProp } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
 import { Canvas, Path, Skia } from "@shopify/react-native-skia";
 import { useTranslation } from "react-i18next";
-import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Pressable, TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   useSharedValue,
   useDerivedValue,
 } from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/hooks/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
-import { dakuonFlatLettersId, handakuonFlatLettersId, yoonFlatLettersId } from "@/shared/data/lettersTable";
+import { ILetter, dakuonFlatLettersId, handakuonFlatLettersId, yoonFlatLettersId } from "@/shared/data/lettersTable";
 import getImage from "@/shared/resources/svgs";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
-import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
 
-
-
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "DrawKana">;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, "DrawKana">;
-
-interface LearnScreenProps {
-  route: LearnScreenRouteProp
-  navigation: HomeScreenNavigationProp
+interface DrawKanaProps {
+  letter: ILetter,
+  kana: KanaAlphabet,
+  back: () => void
 }
 
 const screenWidth = Dimensions.get("window").width;
@@ -36,14 +27,7 @@ const screenWidth = Dimensions.get("window").width;
 const width = screenWidth - 40;
 const height = screenWidth - 40;
 
-const DrawKana: React.FC<LearnScreenProps> = ({ route, navigation }) => {
-
-  const {
-    letter,
-    kana
-  } = route.params;
-
-  const insets = useSafeAreaInsets();
+const DrawKana: React.FC<DrawKanaProps> = ({ letter, kana, back }) => {
   const { colors } = useThemeContext();
   const { i18n: { language } } = useTranslation();
 
@@ -116,19 +100,18 @@ const DrawKana: React.FC<LearnScreenProps> = ({ route, navigation }) => {
     <View
       style={[
         styles.container,
-        {
-          paddingTop: insets.top + 20,
-          backgroundColor: colors.color1
+        { 
+          backgroundColor: colors.color1,
+          marginTop: 30
         }
       ]} >
       <View style={styles.header}>
-        <Pressable style={styles.goBackButton} onPress={() => navigation.goBack()} >
+        <TouchableOpacity style={styles.goBackButton} onPress={back}>
           <Icon
-            onPress={() => navigation.goBack()}
             name={"keyboard-backspace"}
             size={24}
-            color={colors.color3} />
-        </Pressable>
+            color={colors.color4} />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.titleContainer}>
@@ -211,17 +194,14 @@ export default DrawKana;
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    flex: 1,
     padding: 20,
     justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "red"
   },
   header: {
     width: "100%",
     flexDirection: "column",
-    gap: 22
+    gap: 22,
   },
   drawContainer: {
     borderWidth: 1,
@@ -257,7 +237,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingLeft: 20,
     paddingRight: 20,
-    paddingTop: 30,
   },
   title: {
     fontSize: 17,
@@ -278,9 +257,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 15
   },
-  goBackButton: {
-    marginTop: -0,
-    padding: 20,
-    marginLeft: -20,
-  }
+  goBackButton: {}
 });

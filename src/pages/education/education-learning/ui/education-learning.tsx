@@ -36,6 +36,8 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
   const { colors } = useThemeContext();
   const { i18n: { language } } = useTranslation();
 
+  Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+
   const selectedLetters = useAppSelector((state: RootState) => state.kana.selected);
 
   const [kanaArray, setKanaArray] = useState<ILetterWithType[]>([]);
@@ -122,9 +124,6 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
     }
   };
 
-
-  const drawSymbol = (id: string) => {};
-
   const next = () => {
     if (index + 1 < kanaArray.length) {
       setIndex(prev => prev + 1);
@@ -161,7 +160,7 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
         <Button
           customStyles={{ flex: 1, marginTop: 0 }}
           title={"Sound"}
-          onClick={() => playSound(currentLetter?.id)}
+          onClick={() => playSound(currentLetter?.en)}
           type={"inactive"}
           image={"volume-high"}
         />
@@ -169,7 +168,6 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
           customStyles={{ flex: 1, marginTop: 0 }}
           title={"Draw"}
           onClick={() => {
-            drawSymbol(currentLetter?.id);
             navigation.navigate("DrawKana", {
               letter: currentLetter,
               kana: kana === "hiragana" ? KanaAlphabet.Hiragana : KanaAlphabet.Katakana

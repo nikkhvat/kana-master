@@ -18,7 +18,11 @@ const screenWidth = Dimensions.get("window").width;
 const itemWidth = (screenWidth / 6) - 14;
 const itemWidthLong = (screenWidth / 3) - (itemWidth / 3) - 23;
 
-const EducationKanaTable: React.FC<EducationKanaTableProps> = ({ kana, type, onClick = () => { }, last }) => {
+const EducationKanaTable: React.FC<EducationKanaTableProps> = ({ 
+  kana, 
+  type, 
+  onClick = () => { }, 
+  last }) => {
 
   const letters = useMemo(() => {
     switch (type) {
