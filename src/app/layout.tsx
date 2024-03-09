@@ -55,33 +55,9 @@ function BottomTabNavigator() {
         },
       })}
     >
-      <Tab.Screen
-        name="Learning"
-        component={EducationWelcome}
-        options={{
-          title: t("tabs.learning"),
-          headerTransparent: true,
-          headerTitle: "",
-        }}
-      />
-      <Tab.Screen
-        name="Kana"
-        component={Kana}
-        options={{
-          title: t("tabs.kana"),
-          headerTransparent: true,
-          headerTitle: "",
-          lazy: true
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfilePage}
-        options={{
-          title: t("tabs.profile"),
-          headerTransparent: true,
-          headerTitle: "",
-        }} />
+      <Tab.Screen name="Learning" component={EducationWelcome} options={{ title: t("tabs.learning"), headerTransparent: true, headerTitle: "", }} />
+      <Tab.Screen name="Kana" component={Kana} options={{ title: t("tabs.kana"), headerTransparent: true, headerTitle: "", lazy: true }} />
+      <Tab.Screen name="Profile" component={ProfilePage} options={{ title: t("tabs.profile"), headerTransparent: true, headerTitle: "", }} />
     </Tab.Navigator>
   );
 }
@@ -113,56 +89,21 @@ const Layout = () => {
       <NavigationContainer
         theme={colors._theme === "dark" ? { dark: true, colors: darkTheme } : { dark: false, colors: lightTheme }} >
         <Stack.Navigator>
-          <Stack.Screen
-            name="Root"
-            component={BottomTabNavigator}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ChooseAlphabet"
-            component={EducationKanaQuickSelectionPage}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="Practice"
-            component={EducationPracticePage}
-            options={{
-              title: "Practice",
-              ...headerSettings
-            }}
-          />
-          <Stack.Screen
-            name="LearningPage"
-            component={EducationLearning}
-            options={{
-              title: "Learning",
-              ...headerSettings
-            }}
-          />
-          <Stack.Screen
-            name="DrawKana"
-            component={EducationDraw}
-            options={{
-              headerShown: false
-            }}
-          />
-          <Stack.Screen
-            name="Results"
-            component={EducationResultPage}
-            options={{
-              title: "Results",
-              ...headerSettings
-            }}
-          />
-        <RootStack.Group screenOptions={{ presentation: "modal" }}>
-          <RootStack.Screen 
-            name="KanaInfo" 
-            component={KanaInfo}
-            options={{
-              headerTitle: "",
-              headerTransparent: true,
-            }} />
-        </RootStack.Group>
+          <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+          <Stack.Screen name="ChooseAlphabet" component={EducationKanaQuickSelectionPage} options={{ headerShown: false }} />
+          <Stack.Screen name="Practice" component={EducationPracticePage} options={{ title: "Practice", ...headerSettings }} />
+          <Stack.Screen name="LearningPage" component={EducationLearning} options={{ title: "Learning", ...headerSettings }} />
+          <Stack.Screen name="DrawKana" component={EducationDraw} options={{ headerShown: false }} />
+          <Stack.Screen name="Results" component={EducationResultPage} options={{ title: "Results", ...headerSettings }} />
+          <RootStack.Group screenOptions={{ presentation: "modal" }}>
+            <RootStack.Screen 
+              name="KanaInfo" 
+              component={KanaInfo}
+              options={{
+                headerTitle: "",
+                headerTransparent: true,
+              }} />
+          </RootStack.Group>
         </Stack.Navigator>
       </NavigationContainer>
     </>

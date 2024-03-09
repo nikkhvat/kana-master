@@ -15,12 +15,9 @@ import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
 import DrawKana from "@/widgets/education/draw-kana/ui/draw-kana";
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "KanaInfo">;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, "KanaInfo">;
-
 interface KanaInfoProps {
-  route: LearnScreenRouteProp
-  navigation: HomeScreenNavigationProp
+  route: RouteProp<RootStackParamList, "KanaInfo">;
+  navigation: StackNavigationProp<RootStackParamList, "KanaInfo">;
 }
 
 const KanaInfo: React.FC<KanaInfoProps> = ({ route, navigation }) => {

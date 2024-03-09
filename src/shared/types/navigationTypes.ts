@@ -15,16 +15,8 @@ export type RootStackParamList = {
     timerDeration?: "fast" | "medium" | "slow"
    };
   LearningPage: undefined;
-  DrawKana: {
-    letter: ILetter
-    kana: KanaAlphabet
-  };
-  KanaInfo: {
-    id: string
-    kana: KanaAlphabet
-  }
-  ChooseAlphabet: {
-    screen: "Learning" | "Practice" | "WordBuilding"
-  };
+  DrawKana: { letter: ILetter, kana: KanaAlphabet };
+  KanaInfo: { id: string, kana: KanaAlphabet }
+  ChooseAlphabet: { screen: "Learning" | "Practice" | "WordBuilding" };
   Results: { stats: Stats };
 };
