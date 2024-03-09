@@ -1,5 +1,8 @@
+import { ILetter } from "../data/lettersTable";
+
 import { Stats } from "@/hooks/useStats";
-import { CardMode, DifficultyLevelType, PracticeScreenMode, TestMode } from "@/shared/constants/kana";
+import { CardMode, DifficultyLevelType, KanaAlphabet, PracticeScreenMode, TestMode } from "@/shared/constants/kana";
+
 
 export type RootStackParamList = {
   Root: undefined;
@@ -12,6 +15,10 @@ export type RootStackParamList = {
     timerDeration?: "fast" | "medium" | "slow"
    };
   LearningPage: undefined;
+  DrawKana: {
+    letter: ILetter
+    kana: KanaAlphabet
+  };
   ChooseAlphabet: {
     screen: "Learning" | "Practice" | "WordBuilding"
   };

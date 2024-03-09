@@ -19,6 +19,7 @@ import ProfilePage from "@/pages/profile/profile";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
+import DrawKana from "@/widgets/education/draw-kana/ui/draw-kana";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -126,6 +127,17 @@ const Layout = () => {
             component={EducationLearning}
             options={{
               title: "Learning",
+              headerTransparent: true,
+              gestureEnabled: false,
+              headerTitle: "",
+              headerBackVisible: false,
+            }}
+          />
+          <Stack.Screen
+            name="DrawKana"
+            component={DrawKana}
+            options={{
+              title: "Draw Kana",
               headerTransparent: true,
               gestureEnabled: false,
               headerTitle: "",

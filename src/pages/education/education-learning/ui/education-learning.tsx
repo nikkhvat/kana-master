@@ -10,6 +10,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RootState } from "@/app/store";
 import { useAppSelector } from "@/hooks/redux";
 import { useThemeContext } from "@/hooks/theme-context";
+import { KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter, LettersKeys, dakuonFlatLettersId, handakuonFlatLettersId, lettersTableById, yoonFlatLettersId } from "@/shared/data/lettersTable";
 import getSound from "@/shared/resources/sounds";
 import getImage from "@/shared/resources/svgs";
@@ -169,6 +170,10 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
           title={"Draw"}
           onClick={() => {
             drawSymbol(currentLetter?.id);
+            navigation.navigate("DrawKana", {
+              letter: currentLetter,
+              kana: kana === "hiragana" ? KanaAlphabet.Hiragana : KanaAlphabet.Katakana
+            });
           }}
           type={"inactive"}
           image={"gesture-tap-hold"}
