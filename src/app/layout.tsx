@@ -137,11 +137,7 @@ const Layout = () => {
             name="DrawKana"
             component={DrawKana}
             options={{
-              title: "Draw Kana",
-              headerTransparent: true,
-              gestureEnabled: false,
-              headerTitle: "",
-              headerBackVisible: false,
+              headerShown: false
             }}
           />
           <Stack.Screen
