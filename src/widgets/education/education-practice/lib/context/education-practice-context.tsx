@@ -7,7 +7,7 @@ import { CardMode, Kana, KanaAlphabet, PracticeScreenMode, QuestionTypeBuildingW
 import { ILetter, LettersKeys, lettersTableById } from "@/shared/data/lettersTable";
 import { Word } from "@/shared/data/words";
 import { getRandomLetter, shuffleArray } from "@/shared/helpers/letters";
-import { getAnswers, getRandomWords } from "@/shared/helpers/words";
+import { getAnswersWithRandom, getRandomWords } from "@/shared/helpers/words";
 import { AnyQuestion, Question } from "@/shared/types/questions";
 
 interface generateQuestionsProps {
@@ -99,7 +99,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
 
         return {
           type: QuestionTypeChooseWord,
-          title: `Выбери раманджи для ${word.kana}`,
+          title: `Выбери раманджи для ${word.kana} (${word.translate})`,
           questions: shuffleArray([
             { text: word.romanji, key: word.romanji },
             { text: word1.romanji, key: word1.romanji },
@@ -120,20 +120,21 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
             for (let i = 0; i < lettersToAdd; i++) {
               if (kana === KanaAlphabet.Hiragana) {
                 const randomLetter = getRandomLetter([hiraLetters]);
-                shuffle.push(randomLetter.en);
+
+                if (randomLetter !== null) shuffle.push(randomLetter.en);
               } else {
                 const randomLetter = getRandomLetter([kanaLetters]);
-                shuffle.push(randomLetter.en);
+                if (randomLetter !== null) shuffle.push(randomLetter.en);
               }
             }
           } else {
             for (let i = 0; i < lettersToAdd; i++) {
               if (kana === KanaAlphabet.Hiragana) {
                 const randomLetter = getRandomLetter([hiraLetters]);
-                shuffle.push(randomLetter.hi);
+                if (randomLetter !== null) shuffle.push(randomLetter.hi);
               } else {
                 const randomLetter = getRandomLetter([kanaLetters]);
-                shuffle.push(randomLetter.ka);
+                if (randomLetter !== null) shuffle.push(randomLetter.ka);
               }
             }
           }
@@ -207,6 +208,8 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
   };
 
   function getRandomElementsFromArray(arr: Question[], numElements = 25) {
+    if (arr.length === 0) return [];
+
     const tempArray = [...arr];
     const randomElements = [];
 
@@ -226,6 +229,10 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
     keysModeState
   }: generateQuestionsProps): AnyQuestion[] => {
 
+    console.log("selectedLetters.base.katakana", selectedLetters.base.katakana);
+    console.log("selectedLetters.base.hiragana", selectedLetters.base.hiragana);
+    
+
     const kanaLetters = [
       ...selectedLetters.base.katakana,
       ...selectedLetters.dakuon.katakana,
@@ -239,6 +246,10 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
       ...selectedLetters.handakuon.hiragana,
       ...selectedLetters.yoon.hiragana,
     ].map(item => lettersTableById[item as LettersKeys]);
+
+    console.log("------- >", kanaLetters);
+    console.log("------- >", hiraLetters);
+    
 
     const kanaWords: Word[] = selectedWords.katakana;
     const hiraWords: Word[] = selectedWords.hiragana;
@@ -369,50 +380,30 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
         if (keysCardModeState.includes(CardMode.romajiToKatakana)) questionTypes.push(CardMode.romajiToKatakana);
         if (keysCardModeState.includes(CardMode.katakanaToRomaji)) questionTypes.push(CardMode.katakanaToRomaji);
         if (keysCardModeState.includes(CardMode.katakanaToHiragana)) questionTypes.push(CardMode.katakanaToHiragana);
-
+        
         for (let i = 0; i < kanaLetters.length; i++) {
-
           const letter = kanaLetters[i] as ILetter;
-
-          const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
-
-          switch (type) {
-            case CardMode.katakanaToHiragana: {
-              questions.push({
-                type: QuestionTypeChooseLetter,
-                symbol: letter.ka,
-                kana: Kana.Katakana,
-                answers: getAnswers([kanaLetters] as ILetter[][], letter, Kana.Hiragana),
-                trueAnswer: letter.id
-              });
-              continue;
-            }
-            case CardMode.katakanaToRomaji: {
-              questions.push({
-                type: QuestionTypeChooseLetter,
-                symbol: letter.ka,
-                kana: Kana.Katakana,
-                answers: getAnswers([kanaLetters] as ILetter[][], letter, Kana.English),
-                trueAnswer: letter.id
-              });
-              continue;
-            }
-            case CardMode.romajiToKatakana: {
-              questions.push({
-                type: QuestionTypeChooseLetter,
-                symbol: letter.en,
-                kana: Kana.English,
-                answers: getAnswers([kanaLetters] as ILetter[][], letter, Kana.Katakana),
-                trueAnswer: letter.id
-              });
-              continue;
-            }
+          if (letter !== undefined) {
+            const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
+            const kanaType  = type === CardMode.romajiToKatakana
+              ? Kana.English : Kana.Katakana;
+  
+            questions.push({
+              type: QuestionTypeChooseLetter,
+              symbol: letter,
+              kana: kanaType,
+              answers: getAnswersWithRandom(
+                [kanaLetters] as ILetter[][], 
+                letter, 
+              ),
+              trueAnswer: letter.id,
+              mode: type
+            });
           }
         }
       }
 
       {
-        // Generation for Hira 
         const questionTypes = [];
 
         if (keysCardModeState.includes(CardMode.hiraganaToKatakana)) questionTypes.push(CardMode.hiraganaToKatakana);
@@ -421,42 +412,22 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
 
         for (let i = 0; i < hiraLetters.length; i++) {
           const letter = hiraLetters[i] as ILetter;
-
           if (letter !== undefined) {
             const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
-
-            switch (type) {
-              case CardMode.hiraganaToKatakana: {
-                questions.push({
-                  type: QuestionTypeChooseLetter,
-                  symbol: letter.hi,
-                  kana: Kana.Hiragana,
-                  answers: getAnswers([hiraLetters] as ILetter[][], letter, Kana.Katakana),
-                  trueAnswer: letter.id
-                });
-                continue;
-              }
-              case CardMode.hiraganaToRomaji: {
-                questions.push({
-                  type: QuestionTypeChooseLetter,
-                  symbol: letter.hi,
-                  kana: Kana.Hiragana,
-                  answers: getAnswers([hiraLetters] as ILetter[][], letter, Kana.English),
-                  trueAnswer: letter.id
-                });
-                continue;
-              }
-              case CardMode.romajiToHiragana: {
-                questions.push({
-                  type: QuestionTypeChooseLetter,
-                  symbol: letter.en,
-                  kana: Kana.English,
-                  answers: getAnswers([hiraLetters] as ILetter[][], letter, Kana.Hiragana),
-                  trueAnswer: letter.id
-                });
-                continue;
-              }
-            }
+            const kanaType = type === CardMode.romajiToHiragana
+              ? Kana.English : Kana.Hiragana;
+              
+            questions.push({
+              type: QuestionTypeChooseLetter,
+              symbol: letter,
+              kana: kanaType,
+              answers: getAnswersWithRandom(
+                [hiraLetters] as ILetter[][],
+                letter,
+              ),
+              trueAnswer: letter.id,
+              mode: type
+            });
           }
         }
       }

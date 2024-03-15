@@ -15,12 +15,10 @@ export const areLettersEqual = (letter1: ILetter, letter2: ILetter): boolean => 
   return letter1.en === letter2.en && letter1.id === letter2.id;
 };
 
-export const getRandomLetter = (letters: ILetter[][]): ILetter => {
+export const getRandomLetter = (letters: ILetter[][]): ILetter | null => {
   const flatArray = letters.flat();
 
-  if (flatArray.length === 0) {
-    throw new Error("Array is empty");
-  }
+  if (flatArray.length === 0) return null;
 
   const randomIndex = Math.floor(Math.random() * flatArray.length);
 
@@ -35,6 +33,8 @@ export const generateRandomLetters = (
   
   while (letters.length < limit) {
     const randomLetter = getRandomLetter(kana);
+    
+    if (randomLetter === null) return letters;
     
     if (!letters.some(letter => letter.en.toUpperCase().trim() === randomLetter.en.toUpperCase().trim()) &&
       (!excludeLetter || randomLetter.en.toUpperCase().trim() !== excludeLetter.en.toUpperCase().trim())) {

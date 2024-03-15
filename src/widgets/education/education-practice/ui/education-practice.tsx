@@ -7,21 +7,21 @@ import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useEducationPracticeContext } from "../lib/context/education-practice-context";
+import { useEducationStatisticContext } from "../lib/context/education-statistic-context";
 
 import { RootState } from "@/app/store";
 import EducationPracticeChooseLetters from "@/entities/education/education-practice-choose-letters/education-practice-choose-letters";
 import EducationPracticeChooseValue from "@/entities/education/education-practice-choose-value/education-practice-choose-value";
 import EducationPracticeFindPair from "@/entities/education/education-practice-find-pair/education-practice-find-pair";
 import EducationPracticeSelectAnswers from "@/entities/education/education-practice-select-answers/education-practice-select-answers";
-import EducationPracticeShowSymbol from "@/entities/education/education-practice-show-symbol/education-practice-show-symbol";
 import EducationPracticeTimer from "@/entities/education/education-practice-timer/education-practice-timer";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { countAvailableWords } from "@/pages/education/kana-quick-selection/model/slice";
 import { DifficultyLevelType, PracticeScreenMode, QuestionTypeBuildingWord, QuestionTypeChooseLetter, QuestionTypeChooseWord, QuestionTypeFindPairWord } from "@/shared/constants/kana";
+import { ILetter } from "@/shared/data/lettersTable";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
-import useStats from "@/widgets/education/education-practice/lib/context/useStats";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Practice">;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, "Practice">;
@@ -58,11 +58,9 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
 
   const TIMER_SPEED = timerDeration === "fast" ? 3 : timerDeration === "slow" ? 7 : 5;
 
-  const stats = useStats({
-    cardModeState: keysCardModeState,
-  });
-
   const { init, submit, questions, currentIndex, generateQuestions } = useEducationPracticeContext();
+
+  const { init: initStat, pickAnswer, getResult } = useEducationStatisticContext();
 
   useEffect(() => {
     const generateQuestion = generateQuestions({
@@ -74,23 +72,46 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
     });
 
     init(generateQuestion);
+    initStat();
 
     return () => {};
   }, []);
 
   // Вызываеться после ответа на вопрос
   const finishCallback = (onFinishPractice: boolean, trueAnswer: boolean) => {
-    stats.recordAnswer(trueAnswer, 10, "questions[index]");
-
     if (onFinishPractice) {
-      const finalStats = stats.getStats();
-      navigation.navigate("Results", { stats: finalStats });
+      const result = getResult();
+      navigation.navigate("Results", { result });
     }
   };
 
   const onSubmit = (trueAnswer: boolean) => submit(trueAnswer, finishCallback);
-  const onError = () => ONE_ATTEMPT && onSubmit(false);
-  const endTime = () => onSubmit(false);
+  const onError = () => {
+    if (ONE_ATTEMPT) {
+      if (isChooseLetter && mode === PracticeScreenMode.Testing) {
+        onSubmitTestQuestion(false);
+      } else {
+        onSubmit(false);
+      }
+    }
+  };
+
+  const endTime = () => onSubmitTestQuestion(false);
+
+  const onSubmitTestQuestion = (correctAnswer: boolean, pickedAnswer?: ILetter) => {
+    if (isChooseLetter && mode === PracticeScreenMode.Testing) {
+      onSubmit(correctAnswer);
+  
+      pickAnswer({
+        correctAnswer: correctAnswer,
+        kana: question.kana,
+        question: question.symbol,
+        last: currentIndex === questions.length - 1,
+        pickedAnswer,
+        mode: question.mode,
+      });
+    }
+  };
 
   const question = questions[currentIndex];
 
@@ -124,11 +145,9 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
 
       {/* Выбор символа (тестирование) */}
       {isChooseLetter && mode === PracticeScreenMode.Testing && <>
-        <EducationPracticeShowSymbol symbol={question.symbol} subtext={question.kana} />
         <EducationPracticeSelectAnswers
-          answers={question.answers}
-          onCompleted={onSubmit}
-          trueAnswer={question.trueAnswer}
+          question={question}
+          onCompleted={onSubmitTestQuestion}
           onError={onError}
         />
       </>}

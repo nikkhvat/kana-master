@@ -45,8 +45,8 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
 
   const selectedLetters = hiraLength + kataLength;
     
-  const isHira = hiraLength > 5;
-  const isKata = kataLength > 5;
+  const isHira = hiraLength >= 5;
+  const isKata = kataLength >= 5;
 
   const toChooseAlphabet = () => navigation.navigate("ChooseAlphabet", {
     screen: "Practice",

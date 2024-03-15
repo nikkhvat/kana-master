@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from "react";
 
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useTranslation } from "react-i18next";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 
 import AnswerCard from "@/entities/education/practice/select-answer/answer-card/answer-card";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { TEST_DELAY } from "@/shared/constants/kana";
-
+import { CardMode, Kana, TEST_DELAY } from "@/shared/constants/kana";
+import { ILetter } from "@/shared/data/lettersTable";
+import { Question } from "@/shared/types/questions";
 interface EducationPracticeSelectAnswersProps {
-  answers: {
-    title: string;
-    id: string;
-  }[];
-  trueAnswer: string | number;
+  question: Question
   onError?: (id: number | string) => void;
-  onCompleted?: (isErrors: boolean) => void;
+  onCompleted?: (isErrors: boolean, pickedAnswer: ILetter) => void;
 }
 
 const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersProps> = ({ 
-  answers, 
-  trueAnswer, 
+  question,
   onError, 
-  onCompleted 
+  onCompleted
 }) => {
   const screenWidth = Dimensions.get("window").width;
+  const { colors } = useThemeContext();
 
   const [errors, setErrors] = useState([] as (string | number)[]);
   const [corrected, setCorrected] = useState(null as string | number | null);
@@ -30,26 +28,26 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
   useEffect(() => {
     setErrors([]);
     setCorrected(null);
-  }, [trueAnswer, answers]);
+  }, [question]);
   
-  const pick = (id: number | string) => {
+  const pick = (letter: ILetter) => {
     if (corrected !== null) return;
 
-    if (errors.includes(id)) return; 
+    if (errors.includes(letter.id)) return; 
 
-    if (id !== trueAnswer) {
-      setErrors((prev) => [...prev, id]);
+    if (letter.id !== question.trueAnswer) {
+      setErrors((prev) => [...prev, letter.id]);
 
       setTimeout(() => {
-        onError?.(id);
+        onError?.(letter.id);
       }, TEST_DELAY);
       return; 
     }
 
-    setCorrected(id);
+    setCorrected(letter.id);
 
     setTimeout(() => {
-      onCompleted?.(errors.length === 0);
+      onCompleted?.(errors.length === 0, letter);
     }, TEST_DELAY);
   };
 
@@ -58,21 +56,53 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
 
   const widthCard = (screenWidth - (20 * 2) - 15) / 2;
 
+  const kana = question.kana;
+  const symbol = question.symbol;
+  const answers = question.answers;
+
+  const { i18n: { language } } = useTranslation();
+
+  const lang = language === "ru" ? "ru" : "en";
+
+  const symbolLable = kana === Kana.English
+    ? symbol.en : kana === Kana.Hiragana
+      ? symbol.hi : symbol.ka;
+
+  const getTitle = (answer: ILetter) => {
+    const isKana = (question.mode === CardMode.hiraganaToKatakana || question.mode === CardMode.romajiToKatakana);
+    const isHira = (question.mode === CardMode.romajiToHiragana || question.mode === CardMode.katakanaToHiragana);
+    
+    return isKana ? answer.ka : isHira ? answer.hi : answer[lang];
+  };
+
+  const getSubTitle = () => {
+    const isHira = (question.mode === CardMode.hiraganaToKatakana || question.mode === CardMode.hiraganaToRomaji);
+    const isKana = (question.mode === CardMode.katakanaToHiragana || question.mode === CardMode.katakanaToRomaji);
+
+    return isKana ? "Katakana" : isHira ? "Hiragana" : "Romanji";
+  };
+
   return (
-    <View style={styles.container}>
-      {answers.map(answer => (
-        <AnswerCard 
-          key={answer.id}
-          value={answer.id}
-          width={widthCard}
-          redMarked={isInCorrectAnswer(answer.id)}
-          greenMarked={isCorrectAnswer(answer.id)}
-          onClick={pick}
-        >
-          {answer.title}
-        </AnswerCard>
-      ))}
-    </View>
+    <>
+      <View>
+        <Text style={[styles.symbol, { color: colors.color4 }]}>{symbolLable}</Text>
+        <Text style={[styles.subText, { color: colors.color3 }]}>{getSubTitle()}</Text>
+      </View>
+      <View style={styles.container}>
+        {answers.map(answer => (
+          <AnswerCard 
+            key={answer.id}
+            value={answer}
+            width={widthCard}
+            redMarked={isInCorrectAnswer(answer.id)}
+            greenMarked={isCorrectAnswer(answer.id)}
+            onClick={pick}
+          >
+            {getTitle(answer)}
+          </AnswerCard>
+        ))}
+      </View>
+    </>
   );
 };
 
@@ -81,7 +111,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 15
-  }
+  },
+  symbol: {
+    textAlign: "center",
+    fontSize: 94,
+  },
+  subText: {
+    textAlign: "center",
+    fontSize: 17,
+    fontWeight: "600",
+  },
 });
 
 

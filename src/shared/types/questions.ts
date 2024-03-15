@@ -1,10 +1,13 @@
-import { Kana, QuestionTypeBuildingWord, QuestionTypeChooseLetter, QuestionTypeChooseWord, QuestionTypeFindPairWord } from "@/shared/constants/kana";
+import { ILetter } from "../data/lettersTable";
+
+import { CardMode, Kana, QuestionTypeBuildingWord, QuestionTypeChooseLetter, QuestionTypeChooseWord, QuestionTypeFindPairWord } from "@/shared/constants/kana";
 
 export type Question = {
 	type: typeof QuestionTypeChooseLetter;
-	symbol: string;
+	mode: CardMode;
+	symbol: ILetter;
 	kana: Kana;
-	answers: { title: string; id: string; }[];
+	answers: ILetter[]
 	trueAnswer: string;
 };
 

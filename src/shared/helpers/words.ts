@@ -1,6 +1,5 @@
 import { generateRandomLetters, shuffleArray } from "./letters";
 
-import { Kana } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import { Word } from "@/shared/data/words";
 
@@ -16,7 +15,7 @@ export const getRandomWords = (
 	return availableWords[randomIndex];
 };
 
-export const getAnswers = (l: ILetter[][], letter: ILetter, kana?: Kana) => {
+export const getAnswersWithRandom = (l: ILetter[][], letter: ILetter) => {
 	return shuffleArray(
 		[
 			letter,
@@ -24,9 +23,6 @@ export const getAnswers = (l: ILetter[][], letter: ILetter, kana?: Kana) => {
 				limit: 3,
 				excludeLetter: letter,
 			}),
-		].map(({ ka, hi, en, id }) => ({
-			title: kana === Kana.Hiragana ? hi : kana === Kana.Katakana ? ka : en,
-			id: id,
-		}))
+		]
 	);
 };

@@ -20,8 +20,9 @@ interface EducationKanaTableProps {
 }
 
 const screenWidth = Dimensions.get("window").width;
-const itemWidth = (screenWidth / 6) - 14.5;
-const itemWidthLong = (screenWidth / 3) - (itemWidth / 3) - 23;
+const screenAdaptiveWidth = screenWidth > 500 ? screenWidth * 0.75 : screenWidth;
+const itemWidth = (screenAdaptiveWidth / 6) - 14;
+const itemWidthLong = (screenAdaptiveWidth / 3) - (itemWidth / 3) - 23;
 
 const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
   kana,

@@ -1,11 +1,12 @@
 import React from "react";
 
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { ILetter } from "@/shared/data/lettersTable";
 
 interface AnswerCardProps {
-  value: string
+  value: ILetter
   children: string
 
   width: number
@@ -13,7 +14,7 @@ interface AnswerCardProps {
   redMarked: boolean
   greenMarked: boolean
 
-  onClick?: (value: string) => void
+  onClick?: (value: ILetter) => void
 }
 
 const AnswerCard: React.FC<AnswerCardProps> = ({

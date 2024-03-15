@@ -2,12 +2,17 @@ import React from "react";
 
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { useTranslation } from "react-i18next";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { CardMode, Kana } from "@/shared/constants/kana";
+import { ILetter } from "@/shared/data/lettersTable";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
+import Button from "@/shared/ui/button/button";
 import CircularProgressBar from "@/shared/ui/progressbar/circular/circular-progress-bar";
+
 
 type LearnResultsNavigationProp = StackNavigationProp<RootStackParamList, "Results">;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, "Results">;
@@ -18,7 +23,7 @@ interface EducationResultProps {
 }
 
 const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation }) => {
-  const { stats } = route.params;
+  const { result } = route.params;
 
   const insets = useSafeAreaInsets();
 
@@ -28,6 +33,28 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
     navigation.navigate("Root");
   };
 
+  const millisecondsToSeconds = (milliseconds: number) => (milliseconds / 10000).toFixed(1);
+
+  const { i18n: { language } } = useTranslation();
+
+  const lang = language === "ru" ? "ru" : "en";
+
+  const getKeyByKana = (letter: ILetter, kana: CardMode) => {
+    const isKana = (kana === CardMode.katakanaToHiragana || kana === CardMode.katakanaToRomaji);
+    const isHira = (kana === CardMode.hiraganaToKatakana || kana === CardMode.hiraganaToRomaji);
+
+    return isKana ? letter.ka : isHira ? letter.hi : letter[lang];
+  };
+
+  const getKeyAnswer = (letter: ILetter, mode: CardMode) => {
+    if (mode === CardMode.hiraganaToKatakana) return `${letter.hi} (${letter.ka})`;
+    if (mode === CardMode.hiraganaToRomaji) return `${letter.hi} (${letter[lang]})`;
+    if (mode === CardMode.romajiToHiragana) return `${letter[lang]} (${letter.hi})`;
+    if (mode === CardMode.katakanaToHiragana) return `${letter.ka} (${letter.hi})`;
+    if (mode === CardMode.katakanaToRomaji) return `${letter.ka} (${letter[lang]})`;
+    if (mode === CardMode.romajiToKatakana) return `${letter[lang]} (${letter.ka})`;
+  };
+
   return (
     <View style={[containerStyles.container, { paddingTop: insets.top, backgroundColor: colors.color1 }]}>
       <Text style={[containerStyles.title, { color: colors.color4 }]}>Practice complete!</Text>
@@ -35,26 +62,59 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
       <View style={[containerStyles.statsCard, { borderColor: colors.color2 }]}>
         <View style={containerStyles.statsGraph}>
           <CircularProgressBar
-            progress={(stats.correctAnswers / stats.totalQuestions) * 100}
+            progress={(result.correctQuestions / result.totalQuestions) * 100}
           />
         </View>
         <View style={containerStyles.statsDescription}>
           <Text style={[containerStyles.statsTitle, { color: colors.color4 }]}>Score</Text>
           <View style={containerStyles.statsSubText}>
-            <Text style={[containerStyles.statsSubTitleLarge, { color: colors.color4 }]}>{stats.correctAnswers + 1}</Text>
-            <Text style={[containerStyles.statsSubTitle, { color: colors.color4 }]}>/ {stats.totalQuestions + 1}</Text>
+            <Text style={[containerStyles.statsSubTitleLarge, { color: colors.color4 }]}>
+              {result.correctQuestions + 1}
+            </Text>
+            <Text style={[containerStyles.statsSubTitle, { color: colors.color4 }]}>
+              / {result.totalQuestions + 1}
+            </Text>
           </View>
-          <Text style={[containerStyles.statsSubTime, { color: colors.color3 }]}>33.3 sec (2.8 sec / question)</Text>
+          <Text style={[containerStyles.statsSubTime, { color: colors.color3 }]}>
+            {millisecondsToSeconds(result.totalTime)} sec ({millisecondsToSeconds(result.avgTime)} sec / question)
+          </Text>
         </View>
       </View>
 
-      {/* <ScrollView style={containerStyles.scroll}>
+      <ScrollView style={containerStyles.scroll}>
+        <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
+          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3}]} >Alpabet:</Text>
+          <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
+            {result.alphabets.map(alphabet => alphabet === Kana.English ? "Romanji" : alphabet).join(", ")}
+          </Text>
+        </View>
+        <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
+          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3}]} >The fastest answer:</Text>
+          <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
+            {getKeyByKana(result.fastesAnswer.answer, result.fastesAnswer.type)}: 
+            {" "}{millisecondsToSeconds(result.fastesAnswer.time)} sec.
+          </Text>
+        </View>
+        <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
+          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >The slowest answer:</Text>
+          <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
+            {getKeyByKana(result.slowestAnswer.answer, result.slowestAnswer.type)}: 
+            {" "}{millisecondsToSeconds(result.slowestAnswer.time)} sec.
+          </Text>
+        </View>
+        <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
+          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >Incorrect answers:</Text>
+          <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
+            {result.incorrect.map(item => `${getKeyAnswer(item.letter, item.mode)}`).join(", ")}
+          </Text>
+        </View>
+      </ScrollView>
 
-      </ScrollView> */}
-
-      <TouchableOpacity style={[{ backgroundColor: colors.color4 }]} onPress={home}>
-        <Text style={[{ color: colors.color1 }]}>Done</Text>
-      </TouchableOpacity>
+      <Button 
+        type={"general"}
+        title={"Done"}
+        onClick={home}
+      />
     </View>
   );
 };
@@ -62,14 +122,13 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
 const containerStyles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingBottom: 30
   },
   title: {
     fontSize: 28,
     fontWeight: "700",
     marginTop: 20,
     marginBottom: 10,
-    marginLeft: 20,
   },
   scroll: {
     padding: 20,
@@ -110,6 +169,26 @@ const containerStyles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "400",
     marginTop: 30,
+  },
+  detailsCard: {
+    width: "100%",
+    minHeight: 84,
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
+    padding: 15,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginTop: 15,
+    gap: 10
+  },
+  detailsCardTitle: {
+    fontSize: 17,
+    fontWeight: "400",
+  },
+  detailsCardValue: {
+    fontSize: 17,
+    fontWeight: "700"
   },
 });
 

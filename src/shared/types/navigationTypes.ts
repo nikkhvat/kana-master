@@ -1,8 +1,7 @@
 import { ILetter } from "../data/lettersTable";
 
 import { CardMode, DifficultyLevelType, KanaAlphabet, PracticeScreenMode, TestMode } from "@/shared/constants/kana";
-import { Stats } from "@/widgets/education/education-practice/lib/context/useStats";
-
+import { ResultInfo } from "@/widgets/education/education-practice/lib/context/education-statistic-context";
 
 export type RootStackParamList = {
   Root: undefined;
@@ -19,5 +18,5 @@ export type RootStackParamList = {
   KanaInfo: { id: string, kana: KanaAlphabet }
   KanaSelect: undefined,
   ChooseAlphabet: { screen: "Learning" | "Practice" | "WordBuilding" };
-  Results: { stats: Stats };
+  Results: { result: ResultInfo }
 };
