@@ -67,13 +67,6 @@ export const LETTERS_COUNT = {
   [KanaSection.YoonKatakana]: 36,
 };
 
-export const HIRA_SECTIONS = [KanaSection.BasicHiragana, KanaSection.DakuonHiragana, KanaSection.HandakuonHiragana, KanaSection.YoonHiragana];
-export const KATA_SECTIONS = [KanaSection.BasicKatakana, KanaSection.DakuonKatakana, KanaSection.HandakuonKatakana, KanaSection.YoonKatakana];
-export const BASIC_SECTIONS = [KanaSection.BasicHiragana, KanaSection.BasicKatakana];
-export const DAKUON_SECTIONS = [KanaSection.DakuonHiragana, KanaSection.DakuonKatakana];
-export const HANDAKUON_SECTIONS = [KanaSection.HandakuonHiragana, KanaSection.HandakuonKatakana];
-export const YOON_SECTIONS = [KanaSection.YoonHiragana, KanaSection.YoonKatakana];
-
 export const TEST_DELAY = 300;
 
 export type Alphabet = "base" | "dakuon" | "handakuon" | "yoon"

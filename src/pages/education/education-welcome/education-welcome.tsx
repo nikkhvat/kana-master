@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useThemeContext } from "@/hooks/theme-context";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import EducationLearning from "@/widgets/education/education-welcome/education-welcome-learning/education-learning";
 import EducationPractice from "@/widgets/education/education-welcome/education-welcome-practice/education-practice";

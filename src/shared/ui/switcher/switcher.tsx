@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 
 import { View, Text, StyleSheet, Animated, Pressable, Dimensions } from "react-native";
 
-import { useThemeContext } from "@/hooks/theme-context";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 
 interface SwitcherProps {
   activeTab: string;
@@ -29,7 +29,7 @@ const Switcher: React.FC<SwitcherProps> = ({ activeTab, setActiveTab, options, t
       toValue: index,
       useNativeDriver: true,
     }).start();
-  }, [activeTab, options]);
+  }, [activeTab, animatedValue, options]);
 
   return (
     <View style={[styles.content]}>
@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     borderRadius: 12,
-    marginTop: 8,
     position: "relative",
   },
   tab: {

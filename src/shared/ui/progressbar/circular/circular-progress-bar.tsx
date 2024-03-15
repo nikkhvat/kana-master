@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import { Svg, Circle } from "react-native-svg";
 
-import { useThemeContext } from "@/hooks/theme-context";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 
 interface CircularProgressBarProps {
   progress: number;

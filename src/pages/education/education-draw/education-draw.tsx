@@ -6,7 +6,7 @@ import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { RootStackParamList } from "@/shared/types/navigationTypes";
-import DrawKana from "@/widgets/education/draw-kana/ui/draw-kana";
+import DrawKana from "@/widgets/kana/draw-kana/ui/draw-kana";
 
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "DrawKana">;

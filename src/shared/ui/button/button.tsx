@@ -1,12 +1,12 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 import { Text, StyleSheet, ViewStyle, TextStyle, TouchableOpacityProps, Pressable } from "react-native";
 import Ionicons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { useThemeContext } from "@/hooks/theme-context";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 
 interface ButtonProps extends TouchableOpacityProps {
-  title?: string;
+  title?: string | ReactNode
   type: "active" | "inactive" | "weak" | "general" | "disabled";
   onClick?: () => void;
   fontSize?: number;
@@ -59,7 +59,10 @@ const Button: React.FC<ButtonProps> = ({
       {icon && icon}
       {image === null ? (
         <>
-          {title && <Text style={textStyle}>{title}</Text>}
+          {title && 
+            typeof title === "string" 
+              ? <Text style={textStyle}>{title}</Text>
+              : title}
         </>
       ) : (
         <Ionicons name={image} size={24} color={colors.color4} />

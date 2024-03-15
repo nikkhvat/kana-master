@@ -2,12 +2,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage"; // or your
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 
-import kanaSlice from "../store/features/kana/slice";
-import profileSlice from "../store/features/profile/slice";
+import kanaSlice from "@/pages/education/kana-quick-selection/model/slice";
 
 const rootReducer = combineReducers({
-  kana: kanaSlice,
-  profile: profileSlice,
+  kana: kanaSlice
 });
 
 const persistConfig = {

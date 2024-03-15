@@ -3,7 +3,7 @@ import React from "react";
 import { Pressable, StyleSheet, View, Text } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { useThemeContext } from "@/hooks/theme-context";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 
 export enum SelectButtonState {
   Text,

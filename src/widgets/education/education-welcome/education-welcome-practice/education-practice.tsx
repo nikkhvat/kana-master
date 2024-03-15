@@ -1,19 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 
 import { RootState } from "@/app/store";
-import EducationModeChange, { EducationModeChangeProps } from "@/features/education/education-mode-change/education-mode-change";
-import EducationKanaSelectedCard from "@/features/education/education-selected-card/education-kana-selected-card";
-import { useAppSelector } from "@/hooks/redux";
+import CardModeSelect from "@/entities/education/card-mode-select/card-mode-select";
+import EducationKanaSelectedCard from "@/entities/education/education-selected-card/education-kana-selected-card";
+import TestModeSelect from "@/entities/education/test-mode-select/test-mode-select";
 import { CardMode, DifficultyLevelType, PracticeScreenMode } from "@/shared/constants/kana";
+import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
-import Switcher from "@/shared/ui/switcher/switcher";
-
 
 type PracticeNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -27,8 +25,9 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
   const { t } = useTranslation();
   
   const letters = useAppSelector((state: RootState) => state.kana.selected);
-  const [cardModeState, setCardModeState] = useState<EducationModeChangeProps["buttons"]>([[], []]);
-  const [difficultyLevelState, setDifficultyLevelState] = useState<EducationModeChangeProps["buttons"]>([[], []]);
+
+  const [cardsMode, setCardMode] = useState<CardMode[]>([]);
+  const [testMode, setTestMode] = useState<DifficultyLevelType[]>([]);
 
   const [timerDeration, setTimerDeration] = useState<"fast" | "medium" | "slow">("medium");
 
@@ -47,169 +46,44 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
   const isHira = hiraLength > 0;
   const isKata = kataLength > 0;
 
-  useEffect(() => {
-    
-    setCardModeState(() => [
-      [
-        { title: "Hira → Romaji", key: CardMode.hiraganaToRomaji, type: isHira ? "active" : "inactive", condition: isHira },
-        { title: "Romaji → Hira", key: CardMode.romajiToHiragana, type: "inactive", condition: isHira },
-        { title: "Hira → Kata", key: CardMode.hiraganaToKatakana, type: "inactive", condition: isHira && isKata },
-      ],
-      [
-        { title: "Kata → Romaji", key: CardMode.katakanaToRomaji, type: isKata ? "active" : "inactive", condition: isKata },
-        { title: "Romaji → Kata", key: CardMode.romajiToKatakana, type: "inactive", condition: isKata },
-        { title: "Kata → Hira", key: CardMode.katakanaToHiragana, type: "inactive", condition: isHira && isKata },
-      ],
-    ]);
-    
-    setDifficultyLevelState(() => [
-      [{ 
-        title: t("difficultyLevel.timeTest"), 
-        key: DifficultyLevelType.TimeTest, 
-        condition: selectedLetters >= 5, 
-        type: "inactive" 
-      }],
-      [{ 
-        title: t("difficultyLevel.oneAttempt"), 
-        key: DifficultyLevelType.OneAttempt, 
-        condition: selectedLetters >= 5, 
-        type: "inactive" 
-      }],
-    ]);
-  }, [letters, t]);
+  const toChooseAlphabet = () => navigation.navigate("ChooseAlphabet", {
+    screen: "Practice",
+  });
 
-  const getActiveFromArray = (objects: any, active: string) => {
-    const array = [];
-
-    for (let i = 0; i < objects.length; i++) {
-      const object = objects[i];
-      
-      for (let j = 0; j < object.length; j++) {
-        const element = object[j];
-        
-        if (element.type === active) {
-          array.push(element.key);
-        }
-      }
-    }
-
-    return array;
-  };
-
-  const toggleButtonState = (
-    btnArray: typeof cardModeState,
-    setBtnArray: (cards: any) => void,
-    indexGroup: number,
-    indexButton: number,
-    active: "active" | "inactive" | "weak" | "general",
-    mode: "has_one" | "no_one"
-  ) => {
-    const newBtnArray = [...btnArray];
-    const currentType = newBtnArray[indexGroup][indexButton].type;
-
-    const isActivePresentInOthers = newBtnArray.some((group, gIndex) =>
-      group.some(
-        (btn, bIndex) =>
-          btn.type === active &&
-          (gIndex !== indexGroup || bIndex !== indexButton)
-      )
-    );
-
-    if (
-      mode === "has_one" &&
-      currentType === active &&
-      !isActivePresentInOthers
-    ) {
-      return;
-    }
-
-    newBtnArray[indexGroup][indexButton].type =
-      currentType === active ? "inactive" : active;
-
-    setBtnArray(newBtnArray);
-  };
-
-  const keysCardModeState = getActiveFromArray(
-    cardModeState,
-    "active"
-  );
-
-  const keysDifficultyLevelState = getActiveFromArray(
-    difficultyLevelState,
-    "weak"
-  );
+  const toPractice = () => navigation.navigate("Practice", {
+    keysCardModeState: cardsMode,
+    keysDifficultyLevelState: testMode,
+    keysModeState: [],
+    timerDeration: timerDeration,
+    mode: PracticeScreenMode.Testing,
+  });
 
   return (
     <View style={[styles.container, { width: screenWidth - 40 }]}>
       <ScrollView showsVerticalScrollIndicator={false} >
-        <EducationKanaSelectedCard
-          imageSource={"practice"}
-          onEdit={() =>
-            navigation.navigate("ChooseAlphabet", {
-              screen: "Practice",
-            })
-          }
+        <EducationKanaSelectedCard 
+          imageSource={"practice"} 
+          onEdit={toChooseAlphabet} 
         />
 
-        <EducationModeChange
-          title={t("testing.cardMode")}
-          buttons={cardModeState}
-          onButtonClick={(groupIndex: number, btnIndex: number) =>
-            toggleButtonState(
-              cardModeState,
-              setCardModeState,
-              groupIndex,
-              btnIndex,
-              "active",
-              "has_one"
-            )
-          }
+        <CardModeSelect
+          hiraAvailable={isHira}
+          kanaAvailable={isKata} 
+          setCards={setCardMode}
         />
 
-        <EducationModeChange
-          title={t("testing.difficultyLevel")}
-          buttons={difficultyLevelState}
-          onButtonClick={(groupIndex: number, btnIndex: number) =>
-            toggleButtonState(
-              difficultyLevelState,
-              setDifficultyLevelState,
-              groupIndex,
-              btnIndex,
-              "weak",
-              "no_one"
-            )
-          }
+        <TestModeSelect 
+          available={isHira || isKata} 
+          setCards={setTestMode}
+          setTimerDeration={setTimerDeration} 
         />
-
-        {keysDifficultyLevelState.includes(DifficultyLevelType.TimeTest) && 
-          <Switcher
-            activeTab={timerDeration}
-            options={[
-              "fast",
-              "medium",
-              "slow",
-            ]}
-            translate={[
-              t("wordGame.timer.fast"),
-              t("wordGame.timer.medium"),
-              t("wordGame.timer.slow"),
-            ]}
-            setActiveTab={setTimerDeration as () => void} />}
 
         <Button
           customStyles={{ marginTop: 60, marginBottom: 15 }}
           title={t("testing.start")}
           type={selectedLetters >= 5 ? "general" : "disabled"}
           fontSize={17}
-          onClick={() => {
-            navigation.navigate("Practice", {
-              keysCardModeState,
-              keysModeState: [],
-              keysDifficultyLevelState,
-              timerDeration: timerDeration,
-              mode: PracticeScreenMode.Testing,
-            });
-          }}
+          onClick={toPractice}
         />
       </ScrollView>
     </View>

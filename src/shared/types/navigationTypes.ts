@@ -1,7 +1,7 @@
 import { ILetter } from "../data/lettersTable";
 
-import { Stats } from "@/hooks/useStats";
 import { CardMode, DifficultyLevelType, KanaAlphabet, PracticeScreenMode, TestMode } from "@/shared/constants/kana";
+import { Stats } from "@/widgets/education/education-practice/lib/context/useStats";
 
 
 export type RootStackParamList = {

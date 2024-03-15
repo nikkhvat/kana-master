@@ -10,6 +10,7 @@
 - **React Native:** For building a cross-platform mobile application.
 - **TypeScript:** For type safety and improved code quality.
 - **React Navigation:** Used for navigating between screens within the app.
+- **Architectural methodology:** Feature-Sliced Design
 
 ## Screenshots
 

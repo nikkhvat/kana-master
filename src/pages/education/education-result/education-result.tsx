@@ -5,7 +5,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { View, Text, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useThemeContext } from "@/hooks/theme-context";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import CircularProgressBar from "@/shared/ui/progressbar/circular/circular-progress-bar";
 

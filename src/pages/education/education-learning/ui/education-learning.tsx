@@ -2,18 +2,17 @@ import React, { useEffect, useState } from "react";
 
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Audio } from "expo-av";
 import { useTranslation } from "react-i18next";
-import { View, StyleSheet, Text, Dimensions } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { RootState } from "@/app/store";
-import { useAppSelector } from "@/hooks/redux";
-import { useThemeContext } from "@/hooks/theme-context";
+import SoundLetter from "@/entities/kana/sound-letter/sound-letter";
+import Symbol from "@/entities/kana/symbol/symbol";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter, LettersKeys, dakuonFlatLettersId, handakuonFlatLettersId, lettersTableById, yoonFlatLettersId } from "@/shared/data/lettersTable";
-import getSound from "@/shared/resources/sounds";
-import getImage from "@/shared/resources/svgs";
+import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
@@ -35,8 +34,6 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
   const insets = useSafeAreaInsets();
   const { colors } = useThemeContext();
   const { i18n: { language } } = useTranslation();
-
-  Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
 
   const selectedLetters = useAppSelector((state: RootState) => state.kana.selected);
 
@@ -85,8 +82,6 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
 
   const lang = language === "ru" ? "ru" : "en";
   
-  const THEME = colors._theme === "dark" ? "DARK" : "LIGHT"; 
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getTypeById = (id: any) => {
     if (yoonFlatLettersId.includes(id)) return "yoon";
@@ -100,37 +95,11 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
 
   const kana = currentLetter?.type;
 
-  const getImagePath = (key: string | undefined, theme: "DARK" | "LIGHT") => {
-    const screenWidth = Dimensions.get("window").width;
-    const key_formated = `${kana === "hiragana" ? "hirigana" : "katakana"}_${theme === "DARK" ? "dark" : "light"}_${key?.replaceAll("-", "_")}`;
-
-    return getImage(key_formated, {
-      width: screenWidth - 24,
-      height: screenWidth - 24,
-    });
-  };
-
-  const playSound = async (enKey: string) => {
-    try {
-      const sound = getSound(enKey);
-
-      const { sound: playbackObject } = await Audio.Sound.createAsync(sound, {
-        shouldPlay: true,
-      });
-
-      playbackObject.playAsync();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const next = () => {
     if (index + 1 < kanaArray.length) {
       setIndex(prev => prev + 1);
     }
   };
-
-  
 
   return (
     <View
@@ -153,17 +122,13 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
       <View style={styles.titleContainer}>
         <Text style={[styles.title, { color: colors.color4 }]}>{kana} ({getTypeById(currentLetter?.id)})</Text>
         <Text style={[styles.subTitle, { color: colors.color4 }]}>{currentLetter?.[lang].toUpperCase()}</Text>
-        {getImagePath(currentLetter?.id, THEME)}
+        <Symbol
+          id={currentLetter?.id}
+          kana={kana === "hiragana" ? "hirigana" : "katakana"} />
       </View>
 
       <View style={styles.buttons}>
-        <Button
-          customStyles={{ flex: 1, marginTop: 0 }}
-          title={"Sound"}
-          onClick={() => playSound(currentLetter?.en)}
-          type={"inactive"}
-          image={"volume-high"}
-        />
+        <SoundLetter id={currentLetter?.en} />
         <Button
           customStyles={{ flex: 1, marginTop: 0 }}
           title={"Draw"}
@@ -250,3 +215,4 @@ const styles = StyleSheet.create({
     width: "100%"
   },
 });
+ 

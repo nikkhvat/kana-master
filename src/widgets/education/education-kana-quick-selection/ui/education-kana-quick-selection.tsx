@@ -6,12 +6,12 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { RootState } from "@/app/store";
 import SelectButton, { SelectButtonState } from "@/entities/education/kana-quick-selection/SelectButton/select-button";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { useThemeContext } from "@/hooks/theme-context";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { countAvailableWords, setKanaSelected } from "@/pages/education/kana-quick-selection/model/slice";
 import { Kana, KanaMode, KanaSection, LETTERS_COUNT } from "@/shared/constants/kana";
+import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
-import { countAvailableWords, setKanaSelected } from "@/store/features/kana/slice";
 
 type ChooseAlphabetNavigationProp = StackNavigationProp<RootStackParamList, "ChooseAlphabet">;
 

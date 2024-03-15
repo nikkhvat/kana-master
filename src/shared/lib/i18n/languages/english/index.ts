@@ -57,6 +57,12 @@ const English = {
 	kana: {
 		hiragana: "Hiragana",
 		katakana: "Katakana"
+	},
+
+	displayStatistics: {
+		title: "Display statistics",
+		turnOn: "Turn on",
+		turnOff: "Turn off",
 	}
 };
 

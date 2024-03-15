@@ -7,12 +7,12 @@ import { View, Pressable, Text, SectionList, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import EducationKanaTableSelected from "@/features/education/education-kana-table-selected/education-kana-table";
-import { useAppDispatch } from "@/hooks/redux";
-import { useThemeContext } from "@/hooks/theme-context";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { resetKanaSelected } from "@/pages/education/kana-quick-selection/model/slice";
 import { Alphabet } from "@/shared/constants/kana";
+import { useAppDispatch } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Switcher from "@/shared/ui/switcher/switcher";
-import { resetKanaSelected } from "@/store/features/kana/slice";
 
 interface KanaInfoProps {
   route: RouteProp<RootStackParamList, "KanaSelect">;
@@ -72,7 +72,20 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ route, navigation }) 
           )}
         />
       </View>
-      <View style={{ position: "absolute", bottom: 0, height: 100, width: "100%", paddingTop: 5, backgroundColor: colors.color1, borderColor: colors.color2, borderTopWidth: 1, flexDirection: "row", alignItems: "flex-start", justifyContent: "center", paddingHorizontal: 20 }}>
+      <View style={{ 
+        position: "absolute", 
+        bottom: 0, 
+        height: 100, 
+        width: "100%", 
+        paddingTop: 15,
+        backgroundColor: colors.color1, 
+        borderColor: colors.color2, 
+        borderTopWidth: 1, 
+        flexDirection: "row", 
+        alignItems: "flex-start", 
+        justifyContent: "center", 
+        paddingHorizontal: 20
+      }}>
         <Switcher
           activeTab={activeTab}
           setActiveTab={(val) => setActiveTab(val as "hiragana" | "katakana")}

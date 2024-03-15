@@ -57,6 +57,12 @@ const Russian = {
 	kana: {
 		hiragana: "Хирагана",
 		katakana: "Катакана"
+	},
+
+	displayStatistics: {
+		title: "Отображать статистику",
+		turnOn: "Включить",
+		turnOff: "Выключить",
 	}
 };
 

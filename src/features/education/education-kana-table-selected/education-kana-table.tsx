@@ -1,16 +1,16 @@
 import React, { useCallback, useMemo } from "react";
 
 import { useTranslation } from "react-i18next";
-import { Dimensions, View, Text, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
+import { Dimensions, View, ScrollView, StyleSheet } from "react-native";
 
 import { RootState } from "@/app/store";
 import Cell from "@/entities/kana/cell/cell";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { useThemeContext } from "@/hooks/theme-context";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { toggleLetter, toggleSome } from "@/pages/education/kana-quick-selection/model/slice";
 import { Alphabet } from "@/shared/constants/kana";
 import { ILetter, dakuon, handakuon, base, yoon, LettersKeys } from "@/shared/data/lettersTable";
 import { getLettersWithStatuses } from "@/shared/helpers/kana";
-import { toggleLetter, toggleSome } from "@/store/features/kana/slice";
+import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 
 interface EducationKanaTableProps {
   kana: "hiragana" | "katakana";

@@ -5,19 +5,19 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
-import { StatusBar, Text, View } from "react-native";
+import { StatusBar, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { useThemeContext } from "@/hooks/theme-context";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import EducationDraw from "@/pages/education/education-draw/education-draw";
-import EducationKanaQuickSelectionPage from "@/pages/education/education-kana-quick-selection/education-kana-quick-selection";
 import EducationLearning from "@/pages/education/education-learning/ui/education-learning";
 import EducationPracticePage from "@/pages/education/education-practice/ui/education-practice";
 import EducationResultPage from "@/pages/education/education-result/education-result";
 import EducationWelcome from "@/pages/education/education-welcome/education-welcome";
-import KanaInfo from "@/pages/education/kana-info/ui";
+import EducationKanaQuickSelectionPage from "@/pages/education/kana-quick-selection/kana-quick-selection";
 import EducationKanaSelection from "@/pages/education/kana-select/ui";
-import Kana from "@/pages/kana/kana";
+import KanaInfo from "@/pages/kana/kana-info/ui";
+import Kana from "@/pages/kana/kana-list/kana-list";
 import ProfilePage from "@/pages/profile/profile";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
@@ -74,12 +74,12 @@ const Layout = () => {
           i18n.changeLanguage(savedLang);
         }
       } catch (error) {
-        console.log(error);
+        return error;
       }
     };
 
     loadTheme();
-  }, []);
+  }, [i18n]);
 
   return (
     <>

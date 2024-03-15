@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Dimensions, View, StyleSheet } from "react-native";
 
 import Cell from "@/entities/kana/cell/cell";
-import { useThemeContext } from "@/hooks/theme-context";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { Alphabet } from "@/shared/constants/kana";
 import { dakuon, handakuon, base, yoon, LettersKeys, ILetter } from "@/shared/data/lettersTable";
 interface EducationKanaTableProps {

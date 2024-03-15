@@ -1,4 +1,4 @@
-import React, { createContext, Dispatch, FC, PropsWithChildren, SetStateAction, useContext, useState } from "react";
+import React, { createContext, FC, PropsWithChildren, useContext, useState } from "react";
 
 import * as Haptics from "expo-haptics";
 
@@ -252,10 +252,15 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
 
       const questionTypes: CardMode[] = [];
 
-      if (keysCardModeState.includes(CardMode.hiraganaToRomaji)) questionTypes.push(CardMode.hiraganaToRomaji);
-      if (keysCardModeState.includes(CardMode.romajiToHiragana)) questionTypes.push(CardMode.romajiToHiragana);
-      if (keysCardModeState.includes(CardMode.katakanaToRomaji)) questionTypes.push(CardMode.katakanaToRomaji);
-      if (keysCardModeState.includes(CardMode.romajiToKatakana)) questionTypes.push(CardMode.romajiToKatakana);
+      if (kanaWords.length > 10) {
+        questionTypes.push(CardMode.katakanaToRomaji);
+        questionTypes.push(CardMode.romajiToKatakana);
+      }
+
+      if (hiraWords.length > 10) {
+        questionTypes.push(CardMode.hiraganaToRomaji);
+        questionTypes.push(CardMode.romajiToHiragana);
+      }
 
       const cardTypes: TestMode[] = [];
 
