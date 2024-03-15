@@ -1,11 +1,11 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { useAppSelector } from "@/shared/model/hooks";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { useAppSelector } from "@/shared/model/hooks";
 import learningImage from "@/shared/resources/preview/learning.jpg";
 import practiceImage from "@/shared/resources/preview/practice.jpg";
 import wordgameImage from "@/shared/resources/preview/wordgame.jpg";
@@ -14,6 +14,8 @@ type EducationKanaSelectedCardProps = {
   imageSource: "learning" | "practice" | "wordgame";
   onEdit?: () => void;
 };
+
+const screenWidth = Dimensions.get("window").width;
 
 const EducationKanaSelectedCard: React.FC<EducationKanaSelectedCardProps> = ({
   imageSource,
@@ -50,15 +52,16 @@ const EducationKanaSelectedCard: React.FC<EducationKanaSelectedCardProps> = ({
           <Text style={[styles.title, { color: colors.color4 }]}>
             {value}
           </Text>
-          <Text style={[styles.label, { color: colors.color4 }]}>
-            {label}
-          </Text>
         </View>
-        <Text style={[styles.subTitle, { color: colors.color3 }]}>
+        {value === 0 && <Text style={[styles.subTitle, { color: colors.color3 }]}>
+          Nothing selected
+        </Text>}
+        {value !== 0 && <Text style={[styles.subTitle, { color: colors.color3 }]}>
+          {label}{" / "}
           {selectedLettersHiragana ? t("kana.hiragana") : " "}
-          {selectedLettersHiragana !== 0 && selectedLettersKatakana !== 0 ? " / " : ""}
+          {selectedLettersHiragana !== 0 && selectedLettersKatakana !== 0 ? " & " : ""}
           {selectedLettersKatakana ? t("kana.katakana") : " "}
-        </Text>
+        </Text>}
         <TouchableOpacity style={[styles.button, { backgroundColor: colors.color4 }]} onPress={onEdit}>
           <Icon name="square-edit-outline" size={24} color={colors.color1} />
         </TouchableOpacity>
@@ -71,7 +74,7 @@ export default EducationKanaSelectedCard;
 
 const styles = StyleSheet.create({
   container: {
-    height: 240,
+    height: screenWidth > 500 ? 360 : 240,
     borderRadius: 20,
     overflow: "hidden",
     flexDirection: "column",
@@ -102,11 +105,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "700",
-  },
-  label: {
-    fontSize: 20,
-    fontWeight: "700",
-    marginBottom: 2
   },
   subTitle: {
     fontSize: 13,

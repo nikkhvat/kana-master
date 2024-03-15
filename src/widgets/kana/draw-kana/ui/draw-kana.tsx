@@ -198,6 +198,8 @@ const styles = StyleSheet.create({
   },
   drawContainerImage: {
     position: "absolute",
+    left: screenWidth > 500 ? "25%" : 0,
+    top: screenWidth > 500 ? "25%" : 0,
     opacity: 0.3
   },
   drawContainerLeftBlock: {

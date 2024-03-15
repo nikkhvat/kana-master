@@ -15,8 +15,9 @@ interface EducationKanaTableProps {
 }
 
 const screenWidth = Dimensions.get("window").width;
-const itemWidth = (screenWidth / 6) - 14;
-const itemWidthLong = (screenWidth / 3) - (itemWidth / 3) - 23;
+const screenAdaptiveWidth = screenWidth > 500 ? screenWidth * 0.75 : screenWidth;
+const itemWidth = (screenAdaptiveWidth / 6) - 14;
+const itemWidthLong = (screenAdaptiveWidth / 3) - (itemWidth / 3) - 23;
 
 const EducationKanaTable: React.FC<EducationKanaTableProps> = ({ 
   kana, 
@@ -57,7 +58,9 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
   };
 
   return (
-    <View style={[styles.container, { borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.color2 }]}>
+    <View style={[
+      styles.container, 
+      { borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.color2 }]}>
       {letters && letters.length > 1 && (
         <View style={styles.rowButtons}>
           {letters[0].map((cell, cellIndex) => (
@@ -118,6 +121,8 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     paddingBottom: 30,
     gap: 9,
+    width: "100%",
+    alignItems: "center",
   },
   row: {
     flexDirection: "row",

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import SettingsLanguage from "@/features/settings/settings-language/settings-language";
@@ -9,6 +9,7 @@ import SettingsStatistics from "@/features/settings/settings-statistics/settings
 import SettingsTheme from "@/features/settings/settings-theme/settings-theme";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 
+const screenWidth = Dimensions.get("window").width;
 
 const ProfilePage: React.FC = () => {
   const insets = useSafeAreaInsets();
@@ -33,6 +34,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     backgroundColor: "red",
+    marginHorizontal: screenWidth > 500 ? "12.5%" : 0
   },
   title: {
     fontSize: 28,

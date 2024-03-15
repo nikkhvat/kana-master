@@ -6,6 +6,7 @@ import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 
 import { RootState } from "@/app/store";
 import KanaSelectedCard from "@/entities/education/education-selected-card/education-kana-selected-card";
+import StartPracticeButton from "@/entities/education/start-practice-button/start-practice-button";
 import WordGameModeSelect from "@/entities/education/word-game-mode-select/word-game-mode-select";
 import { PracticeScreenMode, TestMode } from "@/shared/constants/kana";
 import { useAppSelector } from "@/shared/model/hooks";
@@ -30,6 +31,8 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
 
   const isHira = selectedWords.hiragana.length > 10;
   const isKata = selectedWords.katakana.length > 10;
+
+  const wordsCount = selectedWords.hiragana.length + selectedWords.katakana.length;
 
   const toChooseAlphabetScreen = () => navigation.navigate("ChooseAlphabet", {
     screen: "WordBuilding",
@@ -56,13 +59,12 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
           setMode={setMode}
         />
 
-        <Button
-          customStyles={{ marginTop: 60, marginBottom: 15 }}
-          title={t("wordGame.start")}
-          type={(isHira || isKata) ? "general" : "disabled"}
-          fontSize={17}
-          onClick={toPractice}
-        />
+        <StartPracticeButton
+          conditions={[
+            { condition: wordsCount > 10, text: "* Должно быть доступно больше 10 слов" },
+            { condition: mode.length > 0, text: "* Должен быть выбран хотя бы один" },
+          ]}
+          onPress={toPractice} />
       </ScrollView>
     </View>
   );

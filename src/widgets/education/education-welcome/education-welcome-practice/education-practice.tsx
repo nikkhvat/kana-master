@@ -7,11 +7,12 @@ import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 import { RootState } from "@/app/store";
 import CardModeSelect from "@/entities/education/card-mode-select/card-mode-select";
 import EducationKanaSelectedCard from "@/entities/education/education-selected-card/education-kana-selected-card";
+import StartPracticeButton from "@/entities/education/start-practice-button/start-practice-button";
 import TestModeSelect from "@/entities/education/test-mode-select/test-mode-select";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { CardMode, DifficultyLevelType, PracticeScreenMode } from "@/shared/constants/kana";
 import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
-import Button from "@/shared/ui/button/button";
 
 type PracticeNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -23,6 +24,7 @@ const screenWidth = Dimensions.get("window").width;
 
 const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
   const { t } = useTranslation();
+  const { colors } = useThemeContext();
   
   const letters = useAppSelector((state: RootState) => state.kana.selected);
 
@@ -43,8 +45,8 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
 
   const selectedLetters = hiraLength + kataLength;
     
-  const isHira = hiraLength > 0;
-  const isKata = kataLength > 0;
+  const isHira = hiraLength > 5;
+  const isKata = kataLength > 5;
 
   const toChooseAlphabet = () => navigation.navigate("ChooseAlphabet", {
     screen: "Practice",
@@ -78,13 +80,12 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
           setTimerDeration={setTimerDeration} 
         />
 
-        <Button
-          customStyles={{ marginTop: 60, marginBottom: 15 }}
-          title={t("testing.start")}
-          type={selectedLetters >= 5 ? "general" : "disabled"}
-          fontSize={17}
-          onClick={toPractice}
-        />
+        <StartPracticeButton 
+          conditions={[
+            { condition: selectedLetters >= 5, text: "* Должно быть выбранно больше 5 символов" },
+            { condition: cardsMode.length > 0, text: "* Должен быть выбран хотя бы один тип карточки" },
+          ]} 
+          onPress={toPractice} />
       </ScrollView>
     </View>
   );
@@ -95,5 +96,5 @@ export default EducationPractice;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  }
+  },
 });

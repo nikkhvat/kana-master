@@ -10,6 +10,8 @@ import Layout from "@/app/layout";
 import { ThemeProvider } from "@/features/settings/settings-theme/theme-context";
 
 import "@/shared/lib/i18n/index"; 
+// eslint-disable-next-line import/order
+import { View } from "react-native";
 
 const App = () => {
   return (

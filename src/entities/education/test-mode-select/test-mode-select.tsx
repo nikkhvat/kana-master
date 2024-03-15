@@ -70,6 +70,7 @@ const TestModeSelect: React.FC<CardModeSelectProps> = ({
                 <Button
                   key={btn.key}
                   title={btn.title}
+                  fontSize={15}
                   type={btn.condition
                     ? selectedCardMode.includes(btn.key)
                       ? "weak"
