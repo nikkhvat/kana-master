@@ -22,7 +22,8 @@ interface PickAnswerProps {
   mode: CardMode
 }
 
-export interface ResultInfo {
+export type ResultInfo = {
+  type: "RESULT_PRACTICE",
   alphabets: Kana[]
   fastesAnswer: { answer: ILetter, time: number, type: CardMode },
   slowestAnswer: { answer: ILetter, time: number, type: CardMode },
@@ -112,15 +113,24 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
 
     const incorrect = items
       .filter(item => (!item.correctAnswer && item.pickedAnswer !== undefined))
-      .map(item => ({
-        kana: item.kana,
-        letter: item!.pickedAnswer as ILetter,
-        mode: item.mode
-      }));
+      .map(item => {
+
+        console.log("item", item);
+
+        return {
+          kana: item.kana,
+          letter: item!.pickedAnswer as ILetter,
+          mode: item.mode
+        };
+      });
+
+    console.log("incorrect ->>>",incorrect);
+    
 
     const totalTime = items.reduce((accumulator, currentValue) => accumulator + currentValue.time, 0);
 
     const data: ResultInfo = {
+      type: "RESULT_PRACTICE",
       alphabets: [] as Kana[],
       fastesAnswer: { 
         answer: fastesAnswer.question, 

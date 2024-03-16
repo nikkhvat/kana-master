@@ -1,6 +1,8 @@
 import { ILetter } from "../data/lettersTable";
+import { Word } from "../data/words";
 
 import { CardMode, Kana, QuestionTypeBuildingWord, QuestionTypeChooseLetter, QuestionTypeChooseWord, QuestionTypeFindPairWord } from "@/shared/constants/kana";
+
 
 export type Question = {
 	type: typeof QuestionTypeChooseLetter;
@@ -14,6 +16,7 @@ export type Question = {
 export type QuestionChoice = {
 	type: typeof QuestionTypeChooseWord;
 
+	word: Word;
 	title: string;
 	questions: { text: string; key: string }[];
 	trueKey: string;
@@ -38,3 +41,4 @@ export type QuestionFindPair = {
 };
 
 export type AnyQuestion = Question | QuestionChoice | QuestionWordBuilding | QuestionFindPair
+export type AnyWordGameQuestion = QuestionChoice | QuestionWordBuilding | QuestionFindPair

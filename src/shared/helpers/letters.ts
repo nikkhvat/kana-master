@@ -11,9 +11,7 @@ export const shuffleArray = <T>(array: Array<T>): Array<T> => {
   return arrayCopy;
 };
 
-export const areLettersEqual = (letter1: ILetter, letter2: ILetter): boolean => {
-  return letter1.en === letter2.en && letter1.id === letter2.id;
-};
+export const areLettersEqual = (letter1: ILetter, letter2: ILetter) => letter1.id === letter2.id;
 
 export const getRandomLetter = (letters: ILetter[][]): ILetter | null => {
   const flatArray = letters.flat();

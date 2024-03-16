@@ -14,6 +14,7 @@ import EducationLearning from "@/pages/education/education-learning/ui/education
 import EducationPracticePage from "@/pages/education/education-practice/ui/education-practice";
 import EducationResultPage from "@/pages/education/education-result/education-result";
 import EducationWelcome from "@/pages/education/education-welcome/education-welcome";
+import EducationWordGamePage from "@/pages/education/education-word-game/ui/education-word-game";
 import EducationKanaQuickSelectionPage from "@/pages/education/kana-quick-selection/kana-quick-selection";
 import EducationKanaSelection from "@/pages/education/kana-select/ui";
 import KanaInfo from "@/pages/kana/kana-info/ui";
@@ -90,6 +91,7 @@ const Layout = () => {
             <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="ChooseAlphabet" component={EducationKanaQuickSelectionPage} options={{ headerShown: false }} />
             <Stack.Screen name="Practice" component={EducationPracticePage} options={{ title: "Practice", ...headerSettings }} />
+            <Stack.Screen name="EducationWordGame" component={EducationWordGamePage} options={{ title: "Word Game", ...headerSettings }} />
             <Stack.Screen name="LearningPage" component={EducationLearning} options={{ title: "Learning", ...headerSettings }} />
             <Stack.Screen name="DrawKana" component={EducationDraw} options={{ headerShown: false }} />
             <Stack.Screen name="Results" component={EducationResultPage} options={{ title: "Results", ...headerSettings }} />

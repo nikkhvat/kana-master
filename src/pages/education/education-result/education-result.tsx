@@ -53,10 +53,18 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
     if (mode === CardMode.katakanaToHiragana) return `${letter.ka} (${letter.hi})`;
     if (mode === CardMode.katakanaToRomaji) return `${letter.ka} (${letter[lang]})`;
     if (mode === CardMode.romajiToKatakana) return `${letter[lang]} (${letter.ka})`;
+
+    // return letter[lang];
   };
 
   return (
-    <View style={[containerStyles.container, { paddingTop: insets.top, backgroundColor: colors.color1 }]}>
+    <View style={[
+      containerStyles.container, 
+      { 
+        paddingTop: insets.top, 
+        paddingBottom: insets.bottom, 
+        backgroundColor: colors.color1
+      }]}>
       <Text style={[containerStyles.title, { color: colors.color4 }]}>Practice complete!</Text>
 
       <View style={[containerStyles.statsCard, { borderColor: colors.color2 }]}>
@@ -82,39 +90,65 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
       </View>
 
       <ScrollView style={containerStyles.scroll}>
-        <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
+        <Text style={[containerStyles.metricsTitle, {
+          color: colors.color4
+        }]} >Details</Text>
+        {result.type === "RESULT_PRACTICE" && <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
           <Text style={[containerStyles.detailsCardTitle, { color: colors.color3}]} >Alpabet:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
             {result.alphabets.map(alphabet => alphabet === Kana.English ? "Romanji" : alphabet).join(", ")}
           </Text>
-        </View>
-        <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
+        </View>}
+        {result.type === "RESULT_PRACTICE" && <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
           <Text style={[containerStyles.detailsCardTitle, { color: colors.color3}]} >The fastest answer:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
             {getKeyByKana(result.fastesAnswer.answer, result.fastesAnswer.type)}: 
             {" "}{millisecondsToSeconds(result.fastesAnswer.time)} sec.
           </Text>
-        </View>
-        <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
+        </View>}
+        {result.type === "RESULT_PRACTICE" && <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
           <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >The slowest answer:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
             {getKeyByKana(result.slowestAnswer.answer, result.slowestAnswer.type)}: 
             {" "}{millisecondsToSeconds(result.slowestAnswer.time)} sec.
           </Text>
-        </View>
+        </View>}
+        {result.type === "RESULT_PRACTICE" && result.incorrect.length &&
         <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
           <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >Incorrect answers:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
             {result.incorrect.map(item => `${getKeyAnswer(item.letter, item.mode)}`).join(", ")}
           </Text>
-        </View>
+        </View>}
+        {result.type === "RESULT_WORD_GAME" && result.incorrectWordBuilding.length > 0 &&
+         <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
+          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >Incorrect word building:</Text>
+          <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
+            {result.incorrectWordBuilding.map(item => `${item[0]} (${item[1]})`).join(", ")}
+          </Text>
+        </View>}
+        {result.type === "RESULT_WORD_GAME" && result.incorrectFindThePair.length > 0 &&
+        <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
+          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >Incorrect find the pair:</Text>
+          <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
+            {result.incorrectFindThePair.map(item => `${item[0]} (${item[1]})`).join(", ")}
+          </Text>
+        </View>}
+        {result.type === "RESULT_WORD_GAME" && result.incorrectChoice.length > 0 &&
+        <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
+          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >Incorrect Choice:</Text>
+          <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
+            {result.incorrectChoice.map(item => `${item[0]} (${item[1]})`).join(", ")}
+          </Text>
+        </View>}
       </ScrollView>
-
-      <Button 
-        type={"general"}
-        title={"Done"}
-        onClick={home}
-      />
+      <View style={containerStyles.buttons} >
+        <Button
+          type={"general"}
+          title={"Done"}
+          onClick={home}
+        />
+      </View>
     </View>
   );
 };
@@ -122,13 +156,21 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
 const containerStyles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 30
   },
   title: {
     fontSize: 28,
     fontWeight: "700",
     marginTop: 20,
     marginBottom: 10,
+  },
+  buttons: {
+    paddingHorizontal: 20,
+  },
+  metricsTitle: {
+    fontSize: 17,
+    fontWeight: "700",
+    marginTop: 30,
+    // marginBottom: 15
   },
   scroll: {
     padding: 20,

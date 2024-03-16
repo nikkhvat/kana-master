@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, Pressable, StyleSheet } from "react-nativ
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TEST_DELAY } from "@/shared/constants/kana";
+import { RegistErrorProps } from "@/widgets/education/education-word-game/ui/education-practice";
 
 interface ChooseLettersProps {
   title: string;
@@ -14,6 +15,7 @@ interface ChooseLettersProps {
 
   kana: string;
 
+  onError?: (data: RegistErrorProps) => void;
   onFinish?: (hasError: boolean) => void;
 }
 
@@ -24,7 +26,8 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
   translate,
   kana,
   shuffle,
-  onFinish
+  onFinish,
+  onError
 }) => {
   const { colors } = useThemeContext();
 
@@ -84,6 +87,10 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
       const hasError = answers.some((answer) => !answer);
       
       setTimeout(() => {
+        onError?.({
+          type: "building-word",
+          pair: [kana, romanji]
+        });
         onFinish?.(hasError);
       }, TEST_DELAY);
       

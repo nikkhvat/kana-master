@@ -8,11 +8,12 @@ export type RootStackParamList = {
   Home: undefined;
   Practice: { 
     keysCardModeState: CardMode[], 
-    keysModeState: TestMode[], 
     keysDifficultyLevelState: DifficultyLevelType[]
-    mode: PracticeScreenMode.Testing | PracticeScreenMode.WordGame
     timerDeration?: "fast" | "medium" | "slow"
    };
+  EducationWordGame: {
+    keysModeState: TestMode[],
+  };
   LearningPage: undefined;
   DrawKana: { letter: ILetter, kana: KanaAlphabet };
   KanaInfo: { id: string, kana: KanaAlphabet }

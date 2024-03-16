@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 import FindPairItem from "@/entities/education/practice/find-pair/item/item";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TEST_DELAY } from "@/shared/constants/kana";
+import { RegistErrorProps } from "@/widgets/education/education-word-game/ui/education-practice";
 
 interface EducationPracticeFindPairProps {
   pairs: {
@@ -14,7 +15,7 @@ interface EducationPracticeFindPairProps {
   }[][];
   answers: (string | number)[][];
   onCompleted?: (hasError: boolean) => void;
-  onError?: () => void;
+  onError?: (data: RegistErrorProps) => void;
   title: string;
 }
 
@@ -93,7 +94,10 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
       } else {
         if (!hasError) setHasError(true);
         setErrorsPairs([selectedPair!.id, pair.id]);
-        onError?.();
+        onError?.({
+          type: "find-pair-word",
+          pair: [selectedPair.title, pair.title]
+        });
         setTimeout(() => {
           setErrorsPairs(() => []);
         }, TEST_DELAY);

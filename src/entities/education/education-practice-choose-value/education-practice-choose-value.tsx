@@ -4,19 +4,23 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TEST_DELAY } from "@/shared/constants/kana";
+import { Word } from "@/shared/data/words";
+import { RegistErrorProps } from "@/widgets/education/education-word-game/ui/education-practice";
 
 interface EducationPracticeChooseValueProps {
   title: string;
   answers: { text: string; key: string }[];
   trueAnswer: string;
+  word: Word;
   onCompleted?: (isError: boolean) => void;
-  onError?: (id: string) => void;
+  onError?: (data: RegistErrorProps) => void;
 }
 
 const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> = ({
   title,
   answers = [],
   trueAnswer,
+  word,
   onCompleted,
   onError,
 }) => {
@@ -39,7 +43,10 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
       setErrors((prev) => [...prev, id]);
 
       setTimeout(() => {
-        onError?.(id);
+        onError?.({
+          type: "choose-word",
+          pair: [word?.romanji, word?.kana]
+        });
       }, TEST_DELAY);
       return;
     }
@@ -91,7 +98,9 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
               pick?.(answer.key);
             }}
           >
-            <Text style={[styles.text, { color: cardColor(answer.key)}]}>{answer.text}</Text>
+            <Text style={[styles.text, { color: cardColor(answer.key)}]}>
+              {answer.text}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>

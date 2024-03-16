@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useTranslation } from "react-i18next";
 import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 
 import { RootState } from "@/app/store";
@@ -11,8 +10,6 @@ import WordGameModeSelect from "@/entities/education/word-game-mode-select/word-
 import { PracticeScreenMode, TestMode } from "@/shared/constants/kana";
 import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
-import Button from "@/shared/ui/button/button";
-
 
 type WordBuildingNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -23,8 +20,6 @@ interface WordBuildingProps {
 const screenWidth = Dimensions.get("window").width;
 
 const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
-  const { t } = useTranslation();
-  
   const [mode, setMode] = useState<TestMode[]>([]);
 
   const selectedWords = useAppSelector((state: RootState) => state.kana.selectedWords);
@@ -38,11 +33,8 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
     screen: "WordBuilding",
   });
 
-  const toPractice = () => navigation.navigate("Practice", {
-    keysCardModeState: [],
+  const toPractice = () => navigation.navigate("EducationWordGame", {
     keysModeState: mode,
-    keysDifficultyLevelState: [],
-    mode: PracticeScreenMode.WordGame,
   });
 
   return (
