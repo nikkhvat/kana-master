@@ -18,7 +18,7 @@ import EducationWordGamePage from "@/pages/education/education-word-game/ui/educ
 import EducationKanaQuickSelectionPage from "@/pages/education/kana-quick-selection/kana-quick-selection";
 import EducationKanaSelection from "@/pages/education/kana-select/ui";
 import KanaInfo from "@/pages/kana/kana-info/ui";
-import Kana from "@/pages/kana/kana-list/kana-list";
+import Kana from "@/pages/kana/kana-list/ui/kana-list";
 import ProfilePage from "@/pages/profile/profile";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
