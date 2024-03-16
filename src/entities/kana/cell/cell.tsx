@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { StatisticLevel } from "@/pages/kana/kana-list/model/types";
 import { ILetter } from "@/shared/data/lettersTable";
 
 interface CellProps {
@@ -22,7 +23,7 @@ interface CellProps {
 
   isStartOfLine?: string | null | undefined | false
 
-  indicator?: "green" | "yellow" | "red"
+  indicator?: StatisticLevel
 }
 
 const Cell: React.FC<CellProps> = ({
@@ -41,8 +42,8 @@ const Cell: React.FC<CellProps> = ({
 
   const { colors } = useThemeContext();
 
-  const indicatorColor = indicator === "green"
-    ? colors.second_color2 : indicator === "yellow"
+  const indicatorColor = indicator === StatisticLevel.Green
+    ? colors.second_color2 : indicator === StatisticLevel.Yellow
     ? colors.second_color5 : colors.second_color1;
 
   return (

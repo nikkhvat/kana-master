@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { toggleStatistics } from "@/pages/kana/kana-list/model/slice";
+import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import Switcher from "@/shared/ui/switcher/switcher";
 
 const SettingsStatistics: React.FC = () => {
   const { colors } = useThemeContext();
+  const isEnabledStats = useAppSelector((state) => state.statistics.isEnabled);
 
   const { t } = useTranslation();
 
-  const [enableStatistics, setEnableStatistics] = useState("on");
+  const dispatch = useAppDispatch();
 
-  const onUpdate = (val: string) => {
-    setEnableStatistics(val);
-  };
+  const isEnabled = isEnabledStats ? "en" : "off";
+
 
   return (
     <>
@@ -24,12 +26,12 @@ const SettingsStatistics: React.FC = () => {
       </Text>
 
       <Switcher
-        activeTab={enableStatistics}
+        activeTab={isEnabled}
         options={[
-          "on",
-          "off",
+          "en",
+          "off"
         ]}
-        setActiveTab={onUpdate}
+        setActiveTab={() => dispatch(toggleStatistics())}
         translate={[
           t("displayStatistics.turnOn"),
           t("displayStatistics.turnOff"),
