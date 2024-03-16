@@ -57,6 +57,22 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
         letter?.[lang][0] : letter.en[2]);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const stats: any = {
+    katakana: {
+      "11017078-148a-4a44-b3f7-21d1df02d981": [23, "red"],
+      "51cd83e5-6167-4bcc-a3e6-6b246f2ca2d1": [87, "green"],
+      "8a2655c3-4553-4f58-83db-069439b11154": [53, "yellow"],
+      null: []
+    },
+    hiragana: {
+      "11017078-148a-4a44-b3f7-21d1df02d981": [23, "red"],
+      "51cd83e5-6167-4bcc-a3e6-6b246f2ca2d1": [87, "green"],
+      "8a2655c3-4553-4f58-83db-069439b11154": [53, "yellow"],
+      null: []
+    }
+  };
+
   return (
     <View style={[
       styles.container, 
@@ -103,6 +119,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
                 lang={lang}
                 kana={kana}
                 cell={cell}
+                indicator={cell ? stats[kana]?.[cell.id]?.[1] : undefined}
               />
             ))}
         </View>

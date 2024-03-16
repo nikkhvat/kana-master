@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { ILetter } from "@/shared/data/lettersTable";
@@ -21,6 +21,8 @@ interface CellProps {
   cell: ILetter | null | undefined
 
   isStartOfLine?: string | null | undefined | false
+
+  indicator?: "green" | "yellow" | "red"
 }
 
 const Cell: React.FC<CellProps> = ({
@@ -33,10 +35,15 @@ const Cell: React.FC<CellProps> = ({
   cell,
   isPlus,
   active,
-  isStartOfLine
+  isStartOfLine,
+  indicator
 }) => {
 
   const { colors } = useThemeContext();
+
+  const indicatorColor = indicator === "green"
+    ? colors.second_color2 : indicator === "yellow"
+    ? colors.second_color5 : colors.second_color1;
 
   return (
     <TouchableOpacity
@@ -51,6 +58,7 @@ const Cell: React.FC<CellProps> = ({
         }
       ]}
     >
+      {indicator && <View style={[styles.cellIndicator, { backgroundColor: indicatorColor }]} ></View>}
       {(cell !== null && !isStartOfLine) && <>
         <Text style={[styles.symbol, { fontSize: 17, color: colors.color4 }]}>
           {cell && cell[kana === "hiragana" ? "hi" : "ka"]}
@@ -83,6 +91,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 12,
     borderWidth: 1,
+    position: "relative"
+  },
+  cellIndicator: {
+    position: "absolute",
+    width: 6,
+    height: 6,
+    top: 5,
+    right: 5,
+    borderRadius: 10
   },
   symbol: {
     fontWeight: "400",

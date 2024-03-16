@@ -56,28 +56,28 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
 
   const widthCard = (screenWidth - (20 * 2) - 15) / 2;
 
-  const kana = question.kana;
-  const symbol = question.symbol;
-  const answers = question.answers;
+  const kana = question?.kana;
+  const symbol = question?.symbol;
+  const answers = question?.answers;
 
   const { i18n: { language } } = useTranslation();
 
   const lang = language === "ru" ? "ru" : "en";
 
   const symbolLable = kana === Kana.English
-    ? symbol.en : kana === Kana.Hiragana
-      ? symbol.hi : symbol.ka;
+    ? symbol?.en : kana === Kana.Hiragana
+      ? symbol?.hi : symbol?.ka;
 
   const getTitle = (answer: ILetter) => {
-    const isKana = (question.mode === CardMode.hiraganaToKatakana || question.mode === CardMode.romajiToKatakana);
-    const isHira = (question.mode === CardMode.romajiToHiragana || question.mode === CardMode.katakanaToHiragana);
+    const isKana = (question?.mode === CardMode.hiraganaToKatakana || question?.mode === CardMode.romajiToKatakana);
+    const isHira = (question?.mode === CardMode.romajiToHiragana || question?.mode === CardMode.katakanaToHiragana);
     
     return isKana ? answer.ka : isHira ? answer.hi : answer[lang];
   };
 
   const getSubTitle = () => {
-    const isHira = (question.mode === CardMode.hiraganaToKatakana || question.mode === CardMode.hiraganaToRomaji);
-    const isKana = (question.mode === CardMode.katakanaToHiragana || question.mode === CardMode.katakanaToRomaji);
+    const isHira = (question?.mode === CardMode.hiraganaToKatakana || question?.mode === CardMode.hiraganaToRomaji);
+    const isKana = (question?.mode === CardMode.katakanaToHiragana || question?.mode === CardMode.katakanaToRomaji);
 
     return isKana ? "Katakana" : isHira ? "Hiragana" : "Romanji";
   };
@@ -89,7 +89,7 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
         <Text style={[styles.subText, { color: colors.color3 }]}>{getSubTitle()}</Text>
       </View>
       <View style={styles.container}>
-        {answers.map(answer => (
+        {answers?.length > 0 && answers.map(answer => (
           <AnswerCard 
             key={answer.id}
             value={answer}

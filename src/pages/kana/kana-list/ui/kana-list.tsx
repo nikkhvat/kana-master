@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Dimensions, SectionList, StyleSheet, Text, View } from "react-native";
+import { SectionList, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import EducationKanaTable from "@/features/education/education-kana-table/education-kana-table";
@@ -17,8 +17,6 @@ type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
 }
-
-const screenWidth = Dimensions.get("window").width;
 
 const MemoizedEducationKanaTable = React.memo(EducationKanaTable);
 

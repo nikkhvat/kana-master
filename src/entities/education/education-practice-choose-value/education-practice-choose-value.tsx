@@ -54,7 +54,7 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
     setCorrected(id);
 
     setTimeout(() => {
-      onCompleted?.(errors.length === 0);
+      onCompleted?.(errors.length !== 0);
     }, TEST_DELAY);
   };
 
@@ -76,7 +76,7 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
   };
 
   const cardColor = (id: string): string => {
-    return (isInCorrectAnswer(id) || isCorrectAnswer(id)) ? colors.color1 : colors.color4;
+    return (isInCorrectAnswer(id) || isCorrectAnswer(id)) ? colors.color5 : colors.color4;
   };
 
   return (

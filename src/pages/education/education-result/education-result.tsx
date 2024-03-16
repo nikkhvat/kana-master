@@ -57,6 +57,8 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
     // return letter[lang];
   };
 
+  console.log(result);
+
   return (
     <View style={[
       containerStyles.container, 
@@ -70,14 +72,14 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
       <View style={[containerStyles.statsCard, { borderColor: colors.color2 }]}>
         <View style={containerStyles.statsGraph}>
           <CircularProgressBar
-            progress={((result.correctQuestions + 1) / (result.totalQuestions + 1)) * 100}
+            progress={((result.correctQuestions) / (result.totalQuestions + 1)) * 100}
           />
         </View>
         <View style={containerStyles.statsDescription}>
           <Text style={[containerStyles.statsTitle, { color: colors.color4 }]}>Score</Text>
           <View style={containerStyles.statsSubText}>
             <Text style={[containerStyles.statsSubTitleLarge, { color: colors.color4 }]}>
-              {result.correctQuestions + 1}
+              {result.correctQuestions}
             </Text>
             <Text style={[containerStyles.statsSubTitle, { color: colors.color4 }]}>
               / {result.totalQuestions + 1}
@@ -102,18 +104,18 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
         {result.type === "RESULT_PRACTICE" && <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
           <Text style={[containerStyles.detailsCardTitle, { color: colors.color3}]} >The fastest answer:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
-            {getKeyByKana(result.fastesAnswer.answer, result.fastesAnswer.type)}: 
+            {getKeyByKana(result.fastesAnswer.answer, result.fastesAnswer.type)}:
             {" "}{millisecondsToSeconds(result.fastesAnswer.time)} sec.
           </Text>
         </View>}
         {result.type === "RESULT_PRACTICE" && <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
           <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >The slowest answer:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
-            {getKeyByKana(result.slowestAnswer.answer, result.slowestAnswer.type)}: 
+            {getKeyByKana(result.slowestAnswer.answer, result.slowestAnswer.type)}:
             {" "}{millisecondsToSeconds(result.slowestAnswer.time)} sec.
           </Text>
         </View>}
-        {result.type === "RESULT_PRACTICE" && result.incorrect.length &&
+        {(result.type === "RESULT_PRACTICE" && result.incorrect.length > 0) &&
         <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
           <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >Incorrect answers:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >

@@ -27,7 +27,7 @@ export type ResultInfo = {
   alphabets: Kana[]
   fastesAnswer: { answer: ILetter, time: number, type: CardMode },
   slowestAnswer: { answer: ILetter, time: number, type: CardMode },
-  incorrect: { kana: Kana, letter: ILetter, mode: CardMode }[],
+  incorrect: { letter: ILetter, mode: CardMode }[],
   totalQuestions: number,
   correctQuestions: number
   totalTime: number
@@ -113,19 +113,7 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
 
     const incorrect = items
       .filter(item => (!item.correctAnswer && item.pickedAnswer !== undefined))
-      .map(item => {
-
-        console.log("item", item);
-
-        return {
-          kana: item.kana,
-          letter: item!.pickedAnswer as ILetter,
-          mode: item.mode
-        };
-      });
-
-    console.log("incorrect ->>>",incorrect);
-    
+      .map(item => ({ letter: item!.pickedAnswer as ILetter, mode: item.mode}));
 
     const totalTime = items.reduce((accumulator, currentValue) => accumulator + currentValue.time, 0);
 
