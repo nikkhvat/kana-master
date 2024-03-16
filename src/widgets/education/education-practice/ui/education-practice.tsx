@@ -14,7 +14,8 @@ import EducationPracticeSelectAnswers from "@/entities/education/education-pract
 import EducationPracticeTimer from "@/entities/education/education-practice-timer/education-practice-timer";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { countAvailableWords } from "@/pages/education/kana-quick-selection/model/slice";
-import { DifficultyLevelType, PracticeScreenMode } from "@/shared/constants/kana";
+import { recalculate } from "@/pages/kana/kana-list/model/slice";
+import { CardMode, DifficultyLevelType } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
@@ -65,13 +66,36 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
     init(generateQuestion);
     initStat();
 
-    return () => {};
+    return () => { };
   }, []);
 
   // Вызываеться после ответа на вопрос
-  const finishCallback = (onFinishPractice: boolean, trueAnswer: boolean) => {
+  const finishCallback = (onFinishPractice: boolean) => {
     if (onFinishPractice) {
       const result = getResult();
+
+      dispatch(recalculate({
+        data: result.incorrect.map(item => {
+          const isChapterHiragana = item.mode === CardMode.hiraganaToKatakana || item.mode === CardMode.hiraganaToRomaji || item.mode === CardMode.romajiToHiragana;
+          return {
+            chapter: isChapterHiragana ? "hiragana" : "katakana",
+            id: item.letter.id,
+            isCorrect: false,
+          };
+        })
+      }));
+      
+      dispatch(recalculate({
+        data: result.correct.map(item => {
+          const isChapterHiragana = item.mode === CardMode.hiraganaToKatakana || item.mode === CardMode.hiraganaToRomaji || item.mode === CardMode.romajiToHiragana;
+          return {
+            chapter: isChapterHiragana ? "hiragana" : "katakana",
+            id: item.letter.id,
+            isCorrect: true,
+          };
+        })
+      }));
+
       navigation.navigate("Results", { result });
     }
   };
@@ -79,7 +103,7 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
   const onSubmit = (trueAnswer: boolean) => submit(trueAnswer, finishCallback);
   const onError = () => {
     if (ONE_ATTEMPT) {
-      onSubmitTestQuestion(false);
+      onSubmitTestQuestion(false, question.symbol);
     }
   };
 

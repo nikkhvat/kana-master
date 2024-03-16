@@ -122,7 +122,7 @@ const DrawKana: React.FC<DrawKanaProps> = ({ letter, kana, back }) => {
           {isShowKana && <View style={styles.drawContainerImage} >
             <Symbol
               id={letter?.id}
-              kana={kana === KanaAlphabet.Hiragana ? "hirigana" : "katakana"} />
+              kana={kana === KanaAlphabet.Hiragana ? "hiragana" : "katakana"} />
           </View>}
           <GestureDetector gesture={pan}>
             <Canvas

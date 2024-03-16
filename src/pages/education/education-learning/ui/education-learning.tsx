@@ -124,7 +124,7 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
         <Text style={[styles.subTitle, { color: colors.color4 }]}>{currentLetter?.[lang].toUpperCase()}</Text>
         <Symbol
           id={currentLetter?.id}
-          kana={kana === "hiragana" ? "hirigana" : "katakana"} />
+          kana={kana === "hiragana" ? "hiragana" : "katakana"} />
       </View>
 
       <View style={styles.buttons}>

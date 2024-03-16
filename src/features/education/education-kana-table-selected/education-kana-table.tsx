@@ -97,8 +97,6 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
   const onPlus = useCallback(
     (type: "row" | "cell", index: number, alphabet: Alphabet) => {
 
-      console.log("call onPlus");
-
       const dataMap = {
         base: base,
         dakuon: dakuon,

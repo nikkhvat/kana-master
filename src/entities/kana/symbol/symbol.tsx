@@ -8,7 +8,7 @@ import getImage from "@/shared/resources/svgs";
 
 interface SymbolProps {
   id: string
-  kana: "katakana" | "hirigana"
+  kana: "katakana" | "hiragana"
 }
 
 const Symbol: React.FC<SymbolProps> = ({

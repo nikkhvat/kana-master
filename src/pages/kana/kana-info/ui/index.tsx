@@ -85,7 +85,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
             </Text>
             <Symbol 
               id={letter.id}
-              kana={letterKana === KanaAlphabet.Katakana ? "katakana" : "hirigana"} />
+              kana={letterKana === KanaAlphabet.Katakana ? "katakana" : "hiragana"} />
           </View>}
 
           {letter !== null && <View style={styles.buttonContainer}>

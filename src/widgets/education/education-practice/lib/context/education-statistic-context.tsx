@@ -28,6 +28,7 @@ export type ResultInfo = {
   fastesAnswer: { answer: ILetter, time: number, type: CardMode },
   slowestAnswer: { answer: ILetter, time: number, type: CardMode },
   incorrect: { letter: ILetter, mode: CardMode }[],
+  correct: { letter: ILetter, mode: CardMode }[],
   totalQuestions: number,
   correctQuestions: number
   totalTime: number
@@ -114,6 +115,10 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
     const incorrect = items
       .filter(item => (!item.correctAnswer && item.pickedAnswer !== undefined))
       .map(item => ({ letter: item!.pickedAnswer as ILetter, mode: item.mode}));
+    
+    const correct = items
+      .filter(item => (item.correctAnswer && item.pickedAnswer !== undefined))
+      .map(item => ({ letter: item!.pickedAnswer as ILetter, mode: item.mode}));
 
     const totalTime = items.reduce((accumulator, currentValue) => accumulator + currentValue.time, 0);
 
@@ -131,8 +136,9 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
         type: fastesAnswer.mode
       },
       incorrect,
+      correct,
       totalQuestions: items.length,
-      correctQuestions: items.filter(item => item.correctAnswer).length,
+      correctQuestions: correct.length,
       totalTime,
       avgTime: totalTime / items.length
     };
