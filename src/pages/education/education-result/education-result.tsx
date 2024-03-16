@@ -70,7 +70,7 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
       <View style={[containerStyles.statsCard, { borderColor: colors.color2 }]}>
         <View style={containerStyles.statsGraph}>
           <CircularProgressBar
-            progress={(result.correctQuestions / result.totalQuestions) * 100}
+            progress={((result.correctQuestions + 1) / (result.totalQuestions + 1)) * 100}
           />
         </View>
         <View style={containerStyles.statsDescription}>
@@ -162,6 +162,7 @@ const containerStyles = StyleSheet.create({
     fontWeight: "700",
     marginTop: 20,
     marginBottom: 10,
+    marginLeft: 20
   },
   buttons: {
     paddingHorizontal: 20,
