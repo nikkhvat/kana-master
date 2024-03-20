@@ -47,6 +47,8 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
     trueSelected: boolean,
     callback?: (onFinishPractice: boolean, trueAnswer: boolean) => void,
   ) => {
+    console.log("SUBMI~T");
+    
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
     if (currentIndex > questions.length - 1) return;

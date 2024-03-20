@@ -98,7 +98,6 @@ export default Kana;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
-    // alignItems: "center",
     paddingBottom: 80,
   },
   switcherContainer: {

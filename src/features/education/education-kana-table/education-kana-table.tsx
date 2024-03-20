@@ -95,7 +95,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
               isStartOfLine={getStartOfRow(row[0])}
             />
           </View>
-          {(row[0].en === "YA" ? [row[0], null, row[1], null, row[2]] :
+          {(type !== "base" ? row : row[0].en === "YA" ? [row[0], null, row[1], null, row[2]] :
             row[0].en === "WA" ? [row[0], null, null, null, row[1]] :
             row[0].en === "N" ? [null, null, row[0], null, null] : row).map((cell, cellIndex) => (
               <Cell 
@@ -127,7 +127,6 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     gap: 9,
     width: "100%",
-    alignItems: "center",
   },
   row: {
     flexDirection: "row",

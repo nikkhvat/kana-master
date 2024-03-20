@@ -8,7 +8,7 @@ import Cell from "@/entities/kana/cell/cell";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { toggleLetter, toggleSome } from "@/pages/education/kana-quick-selection/model/slice";
 import { Alphabet } from "@/shared/constants/kana";
-import { ILetter, dakuon, handakuon, base, yoon, LettersKeys } from "@/shared/data/lettersTable";
+import { ILetter, dakuon, handakuon, base, yoon } from "@/shared/data/lettersTable";
 import { getLettersWithStatuses } from "@/shared/helpers/kana";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 
@@ -21,7 +21,7 @@ interface EducationKanaTableProps {
 
 const screenWidth = Dimensions.get("window").width;
 const screenAdaptiveWidth = screenWidth > 500 ? screenWidth * 0.75 : screenWidth;
-const itemWidth = (screenAdaptiveWidth / 6) - 14;
+const itemWidth = (screenAdaptiveWidth / 6) - 15;
 const itemWidthLong = (screenAdaptiveWidth / 3) - (itemWidth / 3) - 23;
 
 const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({

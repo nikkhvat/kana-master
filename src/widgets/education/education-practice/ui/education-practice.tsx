@@ -111,15 +111,16 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
 
   const onSubmitTestQuestion = (correctAnswer: boolean, pickedAnswer?: ILetter) => {
     onSubmit(correctAnswer);
-
-    pickAnswer({
-      correctAnswer: correctAnswer,
-      kana: question.kana,
-      question: question.symbol,
-      last: currentIndex === questions.length - 1,
-      pickedAnswer,
-      mode: question.mode,
-    });
+    if (currentIndex + 1 !== questions.length) {
+      pickAnswer({
+        correctAnswer: correctAnswer,
+        kana: question.kana,
+        question: question.symbol,
+        last: currentIndex === questions.length - 1,
+        pickedAnswer,
+        mode: question.mode,
+      });
+    }
   };
 
   const question = questions[currentIndex];
@@ -140,7 +141,7 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
           current={currentIndex + 1}
           all={questions.length}
         />
-        {IS_TIMER && !(currentIndex + 1 > questions.length) &&
+        {IS_TIMER &&
           <EducationPracticeTimer
             currentIndex={currentIndex}
             onTimerEnd={endTime}
