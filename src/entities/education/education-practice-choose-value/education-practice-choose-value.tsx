@@ -99,7 +99,7 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
             }}
           >
             <Text style={[styles.text, { color: cardColor(answer.key)}]}>
-              {answer.text} ({JSON.stringify(answer.text === trueAnswer)})
+              {answer.text}
             </Text>
           </TouchableOpacity>
         ))}

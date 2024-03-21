@@ -45,7 +45,7 @@ const EducationLearning: React.FC<PracticeProps> = ({ navigation }) => {
       <View style={styles.content}>
         <StartPracticeButton
           conditions={[
-            { condition: selectedLetters > 5, text: "* Должно быть выбрано больше 5 слов" },
+            { condition: selectedLetters >= 5, text: "* Должно быть выбрано больше 5" },
           ]}
           onPress={() => {
             navigation.navigate("LearningPage");

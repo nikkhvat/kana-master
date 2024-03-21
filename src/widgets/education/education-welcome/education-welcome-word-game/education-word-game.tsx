@@ -39,7 +39,7 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
 
   return (
     <View style={[styles.container, { width: screenWidth - 40 }]}>
-      <ScrollView showsVerticalScrollIndicator={false} >
+      <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} >
         <KanaSelectedCard 
           imageSource={"wordgame"} 
           onEdit={toChooseAlphabetScreen}
@@ -51,13 +51,14 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
           setMode={setMode}
         />
 
-        <StartPracticeButton
-          conditions={[
-            { condition: wordsCount > 10, text: "* Должно быть доступно больше 10 слов" },
-            { condition: mode.length > 0, text: "* Должен быть выбран хотя бы один режим" },
-          ]}
-          onPress={toPractice} />
       </ScrollView>
+      <StartPracticeButton
+        absolute
+        conditions={[
+          { condition: wordsCount > 10, text: "* Должно быть доступно больше 10 слов" },
+          { condition: mode.length > 0, text: "* Должен быть выбран хотя бы один режим" },
+        ]}
+        onPress={toPractice} />
     </View>
   );
 };
@@ -66,6 +67,9 @@ export default EducationWordGame;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  scroll: {
     flex: 1,
   }
 });

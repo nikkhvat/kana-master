@@ -11,12 +11,14 @@ interface StartPracticeButtonProps {
     condition: boolean,
     text: string
   }[]
+  absolute?: boolean
   onPress: () => void
 }
 
 const StartPracticeButton: React.FC<StartPracticeButtonProps> = ({
   conditions,
-  onPress
+  onPress,
+  absolute
 }) => {
   const { t } = useTranslation();
   const { colors } = useThemeContext();
@@ -25,7 +27,7 @@ const StartPracticeButton: React.FC<StartPracticeButtonProps> = ({
   const error = conditions.filter((el) => !el.condition);
 
   return (
-    <View style={{ marginTop: someError ? 33 : 60 }} >
+    <View style={[{ marginTop: someError ? 33 : 60 }, absolute && styles.absolute]} >
       {someError && <Text style={[styles.hint, { color: colors.color3 }]} >
         {error[0]?.text}
       </Text>}
@@ -49,5 +51,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     width: "100%",
     textAlign: "center"
+  },
+  absolute: {
+    margin: 0,
+    marginTop: 0
   }
 });
