@@ -48,50 +48,79 @@ export const EducationStatisticContext = createContext<EducationStatisticContext
 
 export const useEducationStatisticContext = () => useContext(EducationStatisticContext);
 
+let items: StatsItem[] = [];
+
 export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [items, setItems] = useState<StatsItem[]>([]);
   const [errors, setErrors] = useState<RegistErrorProps[]>([]);
   const [time, setTime] = useState<number>(0);
 
 
   const init = () => {
+    items = [];
     const now = new Date().getTime();
     setTime(now);
   };
 
-  const pickAnswer = ({
-    correctAnswer,
-    last,
-  }: PickAnswerProps) => {
+  const pickAnswer = ({ correctAnswer }: PickAnswerProps) => {
     const now = new Date().getTime();
-    setItems(prev => [...prev, {
+
+    items.push({
       time: now - time,
       correctAnswer,
-    }]);
-
-    if (last) {
-      setTime(now);
-    }
+    });
   };
 
   const registrError = (data: RegistErrorProps) => {
     setErrors(prev => [...prev, data]);
   };
 
+  function removeDuplicates(arr: string[][]): string[][] {
+    const uniqueMap: Map<string, boolean> = new Map();
+    const result: string[][] = [];
+
+    arr.forEach(innerArr => {
+      const key = innerArr[0];
+      if (!uniqueMap.has(key)) {
+        uniqueMap.set(key, true);
+        result.push(innerArr);
+      }
+    });
+
+    return result;
+  }
+
+
   const getResult = (): ResultInfoWordGame => {
     const totalTime = items.reduce((accumulator, currentValue) => accumulator + currentValue.time, 0);
 
+    const totalQuestions = items.length;
+    let correctQuestions = 0;
+
+    items.filter(item => item.correctAnswer).length;
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      
+      if (item.correctAnswer) {
+        console.log("correctQuestions");
+        
+        correctQuestions++;
+      }
+    }
+
     const data: ResultInfoWordGame = {
       type: "RESULT_WORD_GAME",
-      totalQuestions: items.length,
-      correctQuestions: items.filter(item => item.correctAnswer).length,
+      totalQuestions: totalQuestions,
+      correctQuestions: correctQuestions,
       totalTime,
       avgTime: totalTime / items.length,
-      incorrectWordBuilding: errors.filter(prev => prev.type === "building-word").map(item => ([item.pair[0], item.pair[1]])),
-      incorrectFindThePair: errors.filter(prev => prev.type === "find-pair-word").map(item => ([item.pair[0], item.pair[1]])),
-      incorrectChoice: errors.filter(prev => prev.type === "choose-word").map(item => ([item.pair[0], item.pair[1]])),
+      incorrectWordBuilding: removeDuplicates(errors.filter(prev => prev.type === "building-word").map(item => ([item.pair[0], item.pair[1]]))),
+      incorrectFindThePair: removeDuplicates(errors.filter(prev => prev.type === "find-pair-word").map(item => ([item.pair[0], item.pair[1]]))),
+      incorrectChoice: removeDuplicates(errors.filter(prev => prev.type === "choose-word").map(item => ([item.pair[0], item.pair[1]]))),
     };
 
+    console.log(JSON.stringify(data, null, 2));
+    
 
     return data;
   };

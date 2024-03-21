@@ -70,17 +70,17 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
       <View style={[containerStyles.statsCard, { borderColor: colors.color2 }]}>
         <View style={containerStyles.statsGraph}>
           <CircularProgressBar
-            progress={((result.correctQuestions + 1) / (result.totalQuestions + 1)) * 100}
+            progress={((result.correctQuestions) / (result.totalQuestions)) * 100}
           />
         </View>
         <View style={containerStyles.statsDescription}>
           <Text style={[containerStyles.statsTitle, { color: colors.color4 }]}>Score</Text>
           <View style={containerStyles.statsSubText}>
             <Text style={[containerStyles.statsSubTitleLarge, { color: colors.color4 }]}>
-              {result.correctQuestions + 1}
+              {result.correctQuestions}
             </Text>
             <Text style={[containerStyles.statsSubTitle, { color: colors.color4 }]}>
-              / {result.totalQuestions + 1}
+              / {result.totalQuestions}
             </Text>
           </View>
           <Text style={[containerStyles.statsSubTime, { color: colors.color3 }]}>

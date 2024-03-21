@@ -51,14 +51,16 @@ export const EducationStatisticContext = createContext<EducationStatisticContext
 
 export const useEducationStatisticContext = () => useContext(EducationStatisticContext);
 
+let items: StatsItem[] = [];
+
 export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [items, setItems] = useState<StatsItem[]>([]);
   const [time, setTime] = useState<number>(0);
 
 
   const init = () => {
     const now = new Date().getTime();
     setTime(now);
+    items = [];
   };
 
   const pickAnswer = ({
@@ -70,14 +72,14 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
     mode,
   }: PickAnswerProps) => {
     const now = new Date().getTime();
-    setItems(prev => [...prev, {
+    items.push({
       time: now - time,
       correctAnswer,
       kana,
       question,
       pickedAnswer,
       mode
-    }]);
+    });
 
     if (last) {
       setTime(now);
@@ -122,6 +124,19 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
 
     const totalTime = items.reduce((accumulator, currentValue) => accumulator + currentValue.time, 0);
 
+    const totalQuestions = items.length;
+    let correctQuestions = 0;
+
+    items.filter(item => item.correctAnswer).length;
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+
+      if (item.correctAnswer) {
+        correctQuestions++;
+      }
+    }
+
     const data: ResultInfo = {
       type: "RESULT_PRACTICE",
       alphabets: [] as Kana[],
@@ -137,8 +152,8 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
       },
       incorrect,
       correct,
-      totalQuestions: items.length,
-      correctQuestions: correct.length,
+      totalQuestions: totalQuestions,
+      correctQuestions: correctQuestions,
       totalTime,
       avgTime: totalTime / items.length
     };

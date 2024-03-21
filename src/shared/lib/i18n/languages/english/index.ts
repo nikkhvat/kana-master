@@ -1,6 +1,6 @@
 const English = {
 	tabs: {
-		profile: "Profile",
+		profile: "Settings",
 		learning: "Learning",
 		kana: "Kana",
 	},

@@ -38,38 +38,51 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
     setCards(initial);
   }, [hiraAvailable, kanaAvailable, setCards]);
 
-  const textStyle = [styles.text, { color: colors.color5 }];
+  enum CardType {
+    Active,
+    Incative,
+    Disbled
+  }
 
-  const icon = <Icon 
+  const getTextStyle = (type: CardType) => [
+    styles.text, 
+    { 
+      color: type === CardType.Active ? colors.color5 :
+        type === CardType.Incative ? colors.color4 : colors.color3
+    }
+  ];
+
+  const icon = (type: CardType) => <Icon 
     name={"chevron-right"} 
     size={16}
-    color={colors.color5} />;
+    color={type === CardType.Active ? colors.color5 :
+      type === CardType.Incative ? colors.color4 : colors.color3} />;
 
   const cards =[
     [
       {
-        title: <View style={styles.line} >
-          <Text style={textStyle}>あ</Text>
-          {icon}
-          <Text style={textStyle}>A</Text>
+        title: (type: CardType) => <View style={styles.line} >
+          <Text style={getTextStyle(type)}>あ</Text>
+          {icon(type)}
+          <Text style={getTextStyle(type)}>A</Text>
         </View>,
         key: CardMode.hiraganaToRomaji,
         condition: hiraAvailable
       },
       {
-        title: <View style={styles.line} >
-          <Text style={textStyle}>A</Text>
-          {icon}
-          <Text style={textStyle}>あ</Text>
+        title: (type: CardType) => <View style={styles.line} >
+          <Text style={getTextStyle(type)}>A</Text>
+          {icon(type)}
+          <Text style={getTextStyle(type)}>あ</Text>
         </View>,
         key: CardMode.romajiToHiragana,
         condition: hiraAvailable
       },
       {
-        title: <View style={styles.line} >
-          <Text style={textStyle}>あ</Text>
-          {icon}
-          <Text style={textStyle}>ア</Text>
+        title: (type: CardType) => <View style={styles.line} >
+          <Text style={getTextStyle(type)}>あ</Text>
+          {icon(type)}
+          <Text style={getTextStyle(type)}>ア</Text>
         </View>,
         key: CardMode.hiraganaToKatakana,
         condition: hiraAvailable && kanaAvailable
@@ -77,28 +90,28 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
     ],
     [
       {
-        title: <View style={styles.line} >
-          <Text style={textStyle}>ア</Text>
-          {icon}
-          <Text style={textStyle}>A</Text>
+        title: (type: CardType) => <View style={styles.line} >
+          <Text style={getTextStyle(type)}>ア</Text>
+          {icon(type)}
+          <Text style={getTextStyle(type)}>A</Text>
         </View>,
         key: CardMode.katakanaToRomaji,
         condition: kanaAvailable
       },
       {
-        title: <View style={styles.line} >
-          <Text style={textStyle}>A</Text>
-          {icon}
-          <Text style={textStyle}>ア</Text>
+        title: (type: CardType) => <View style={styles.line} >
+          <Text style={getTextStyle(type)}>A</Text>
+          {icon(type)}
+          <Text style={getTextStyle(type)}>ア</Text>
         </View>,
         key: CardMode.romajiToKatakana,
         condition: kanaAvailable
       },
       {
-        title: <View style={styles.line} >
-          <Text style={textStyle}>ア</Text>
-          {icon}
-          <Text style={textStyle}>あ</Text>
+        title: (type: CardType) => <View style={styles.line} >
+          <Text style={getTextStyle(type)}>ア</Text>
+          {icon(type)}
+          <Text style={getTextStyle(type)}>あ</Text>
         </View>,
         key: CardMode.katakanaToHiragana,
         condition: hiraAvailable && kanaAvailable
@@ -125,7 +138,10 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
             {column.map((btn) => (
               <Button
                 key={btn.key}
-                title={btn.title}
+                title={btn.title(btn.condition ? selectedCardMode.includes(btn.key)
+                  ? CardType.Active
+                  : CardType.Incative 
+                  : CardType.Disbled)}
                 type={btn.condition 
                     ? selectedCardMode.includes(btn.key) 
                       ? "active" 

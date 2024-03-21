@@ -43,7 +43,8 @@ const styles = StyleSheet.create({
   key: {
     fontSize: 15,
     fontWeight: "500",
-    textTransform: "uppercase"
+    textTransform: "uppercase",
+    width: 22,
   },
   title: {
     fontSize: 15,
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     paddingLeft: 10,
-    gap: 10
+    gap: 10,
   },
   line: {
     width: 1,

@@ -35,30 +35,26 @@ const headerSettings = {
   headerBackVisible: false,
 };
 
+const icons = {
+  Learning: "school-outline",
+  Settings: "cog-outline",
+  Kana: "syllabary-hiragana",
+};
+
+type KeysIcon = "Learning" | "Settings" | "Kana"
+
 function BottomTabNavigator() {
   const { t } = useTranslation();
 
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName = "home";
-
-          if (route.name === "Learning") {
-            iconName = focused ? "school-outline" : "school-outline";
-          } else if (route.name === "Profile") {
-            iconName = focused ? "account-outline" : "account-outline";
-          } else if (route.name === "Kana") {
-            iconName = focused ? "syllabary-hiragana" : "syllabary-hiragana";
-          }
-
-          return <Icon name={iconName} size={size} color={color} />;
-        },
+        tabBarIcon: ({ color, size }) => <Icon name={icons[route.name as KeysIcon]} size={size} color={color} />
       })}
     >
       <Tab.Screen name="Learning" component={EducationWelcome} options={{ title: t("tabs.learning"), headerTransparent: true, headerTitle: "", }} />
       <Tab.Screen name="Kana" component={Kana} options={{ title: t("tabs.kana"), headerTransparent: true, headerTitle: "", lazy: true }} />
-      <Tab.Screen name="Profile" component={ProfilePage} options={{ title: t("tabs.profile"), headerTransparent: true, headerTitle: "", }} />
+      <Tab.Screen name="Settings" component={ProfilePage} options={{ title: t("tabs.profile"), headerTransparent: true, headerTitle: "", }} />
     </Tab.Navigator>
   );
 }

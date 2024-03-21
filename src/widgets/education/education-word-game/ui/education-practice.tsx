@@ -15,7 +15,7 @@ import EducationPracticeChooseValue from "@/entities/education/education-practic
 import EducationPracticeFindPair from "@/entities/education/education-practice-find-pair/education-practice-find-pair";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { countAvailableWords } from "@/pages/education/kana-quick-selection/model/slice";
-import { QuestionTypeBuildingWord, QuestionTypeChooseWord, QuestionTypeFindPairWord } from "@/shared/constants/kana";
+import { QuestionTypeBuildingWord, QuestionTypeChooseWord, QuestionTypeFindPairWord, TEST_DELAY } from "@/shared/constants/kana";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
@@ -68,15 +68,14 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
 
   // Вызываеться после ответа на вопрос
   const finishCallback = (onFinishPractice: boolean, trueAnswer: boolean) => {
-    pickAnswer({
-      correctAnswer: trueAnswer,
-      last: !!onFinishPractice,
-    });
+    pickAnswer({ correctAnswer: trueAnswer });
 
-    if (onFinishPractice) {
-      const result = getResult();
-      navigation.navigate("Results", { result });
-    }
+    setTimeout(() => {
+      if (onFinishPractice) {
+        const result = getResult();
+        navigation.navigate("Results", { result });
+      }
+    }, TEST_DELAY);
   };
 
   const onSubmit = (trueAnswer: boolean) => submit(trueAnswer, finishCallback);

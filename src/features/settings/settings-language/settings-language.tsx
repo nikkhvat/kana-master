@@ -19,6 +19,11 @@ const SettingsLanguage: React.FC = () => {
 
   const langs = [
     { title: "English", key: "en" },
+    { title: "Español", key: "es" }, // es
+    { title: "Français", key: "fr" }, // fr
+    { title: "Deutsch", key: "de" }, // de
+    { title: "Italiano", key: "it" }, // it
+    { title: "Português", key: "pt" }, // pt
     { title: "Русский", key: "ru" },
   ];
 

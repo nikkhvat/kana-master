@@ -47,8 +47,6 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
     trueSelected: boolean,
     callback?: (onFinishPractice: boolean, trueAnswer: boolean) => void,
   ) => {
-    console.log("SUBMI~T");
-    
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
     if (currentIndex > questions.length - 1) return;
@@ -165,8 +163,8 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
       }
     }
 
-    if (questions.length > 20) {
-      return shuffleArray(getRandomElementsFromArray(questions, 25));
+    if (questions.length > 10) {
+      return shuffleArray(getRandomElementsFromArray(questions, 10));
     } else {
       return shuffleArray(questions);
     }
