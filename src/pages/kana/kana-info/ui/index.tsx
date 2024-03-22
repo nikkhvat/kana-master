@@ -3,7 +3,7 @@ import React, { useMemo, useState } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 
 import SoundLetter from "@/entities/kana/sound-letter/sound-letter";
 import Symbol from "@/entities/kana/symbol/symbol";
@@ -18,6 +18,8 @@ interface KanaInfoProps {
   route: RouteProp<RootStackParamList, "KanaInfo">;
   navigation: StackNavigationProp<RootStackParamList, "KanaInfo">;
 }
+
+const screenHeight = Dimensions.get("window").height;
 
 const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
 
@@ -100,6 +102,14 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
               />
             </View>
             <View style={styles.buttons}>
+              {screenHeight < 700 && 
+                <Button
+                  customStyles={{ width: 50, marginTop: 0 }}
+                  title={"Sound"}
+                  type={"inactive"}
+                  image={"chevron-left"}
+                  onClick={() => prevLetter()}
+                />}
               <Button
                 customStyles={{ flex: 1, marginTop: 0 }}
                 title={`${letterKana === KanaAlphabet.Katakana ? "katakana" : "hiragana"} →`}
@@ -108,10 +118,18 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
                 }}
                 type={"inactive"}
               />
+              {screenHeight < 700 &&
+                <Button
+                  customStyles={{ width: 50, marginTop: 0 }}
+                  title={"Draw"}
+                  type={"inactive"}
+                  image={"chevron-right"}
+                  onClick={() => nextLetter()}
+                />}
             </View>
           </View>}
 
-          <View style={styles.buttons}>
+          {screenHeight > 700 && <View style={styles.buttons}>
             <Button
               customStyles={{ width: 50 }}
               title={"Sound"}
@@ -126,7 +144,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
               image={"chevron-right"}
               onClick={() => nextLetter()}
             />
-          </View>
+          </View>}
         </View>
         : 
         <DrawKana 

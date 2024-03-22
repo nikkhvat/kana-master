@@ -23,7 +23,6 @@ const SettingsLanguage: React.FC = () => {
     { title: "Français", key: "fr" }, // fr
     { title: "Deutsch", key: "de" }, // de
     { title: "Italiano", key: "it" }, // it
-    { title: "Português", key: "pt" }, // pt
     { title: "Русский", key: "ru" },
   ];
 

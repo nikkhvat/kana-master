@@ -62,7 +62,7 @@ const TestModeSelect: React.FC<CardModeSelectProps> = ({
   return (
     <>
       <View style={styles.container}>
-        <Text style={[styles.title, { color: colors.color4 }]}>{t("testing.cardMode")}</Text>
+        <Text style={[styles.title, { color: colors.color4 }]}>{t("testing.testMode")}</Text>
         <View style={styles.buttonsContainer}>
           {cards.map((column, columnIndex) => (
             <View key={`column-${columnIndex}`} style={styles.column}>

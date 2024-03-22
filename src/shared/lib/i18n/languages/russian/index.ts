@@ -29,6 +29,7 @@ const Russian = {
 
 	testing: {
 		cardMode: "Тип карточек",
+		testMode: "Режим",
 		difficultyLevel: "Режим",
 		start: "Начать тестирование"
 	},

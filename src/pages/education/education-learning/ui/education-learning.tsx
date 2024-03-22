@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Dimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import SafeLayout from "@/app/safeLayout";
 import { RootState } from "@/app/store";
 import SoundLetter from "@/entities/kana/sound-letter/sound-letter";
 import Symbol from "@/entities/kana/symbol/symbol";
@@ -16,7 +17,6 @@ import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
-
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "LearningPage">;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, "LearningPage">;
@@ -30,8 +30,9 @@ interface ILetterWithType extends ILetter {
   type: "katakana" | "hiragana"
 }
 
+const screenHeight = Dimensions.get("window").height;
+
 const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) => {
-  const insets = useSafeAreaInsets();
   const { colors } = useThemeContext();
   const { i18n: { language } } = useTranslation();
 
@@ -102,14 +103,8 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
   };
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          paddingTop: insets.top + 20,
-          backgroundColor: colors.color1
-        }
-      ]} >
+    <SafeLayout
+      style={styles.container} >
       <View style={styles.header}>
         <LinearProgressBar
           close={navigation.goBack}
@@ -124,42 +119,83 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
         <Text style={[styles.subTitle, { color: colors.color4 }]}>{currentLetter?.[lang].toUpperCase()}</Text>
         <Symbol
           id={currentLetter?.id}
-          kana={kana === "hiragana" ? "hiragana" : "katakana"} />
-      </View>
-
-      <View style={styles.buttons}>
-        <SoundLetter id={currentLetter?.en} />
-        <Button
-          customStyles={{ flex: 1, marginTop: 0 }}
-          title={"Draw"}
-          onClick={() => {
-            navigation.navigate("DrawKana", {
-              letter: currentLetter,
-              kana: kana === "hiragana" ? KanaAlphabet.Hiragana : KanaAlphabet.Katakana
-            });
-          }}
-          type={"inactive"}
-          image={"gesture-tap-hold"}
+          kana={kana === "hiragana" ? "hiragana" : "katakana"} 
         />
       </View>
 
-      <View style={styles.buttonsContainer}>
-        {index + 1 < kanaArray.length ?
+      {screenHeight > 700 && <>
+        <View style={styles.buttons}>
+          <SoundLetter id={currentLetter?.en} />
           <Button
-            title={"Next"}
-            type={"general"}
-            fontSize={17}
-            onClick={next}
-          /> 
-        :
-          <Button
-            title={"Complete"}
-            type={"general"}
-            fontSize={17}
-            onClick={navigation.goBack}
-          />}
-      </View>
-    </View>
+            customStyles={{ flex: 0.5, marginTop: 0 }}
+            title={"Draw"}
+            onClick={() => {
+              navigation.navigate("DrawKana", {
+                letter: currentLetter,
+                kana: kana === "hiragana" ? KanaAlphabet.Hiragana : KanaAlphabet.Katakana
+              });
+            }}
+            type={"inactive"}
+            image={"gesture-tap-hold"}
+          />
+        </View>
+
+        <View style={styles.buttonsContainer}>
+          {index + 1 < kanaArray.length ?
+            <Button
+              title={"Next"}
+              type={"general"}
+              fontSize={17}
+              onClick={next}
+            />
+            :
+            <Button
+              title={"Complete"}
+              type={"general"}
+              fontSize={17}
+              onClick={navigation.goBack}
+            />}
+        </View>
+      </>}
+      
+      {screenHeight < 700 && <>
+        <View style={styles.buttons}>
+          <View style={{flex: 1, flexDirection: "row", gap: 15 }} >
+            <SoundLetter customStyles={{ flex: 0.50, marginTop: 0 }} id={currentLetter?.en} />
+            <Button
+              customStyles={{ flex: 0.50, marginTop: 0 }}
+              title={"Draw"}
+              onClick={() => {
+                navigation.navigate("DrawKana", {
+                  letter: currentLetter,
+                  kana: kana === "hiragana" ? KanaAlphabet.Hiragana : KanaAlphabet.Katakana
+                });
+              }}
+              type={"inactive"}
+              image={"gesture-tap-hold"}
+            />
+          </View>
+          <View style={styles.buttonsContainer}>
+            {index + 1 < kanaArray.length ?
+              <Button
+                customStyles={{ flex: 1, marginTop: 0 }}
+                title={"Next"}
+                type={"general"}
+                fontSize={17}
+                onClick={next}
+              />
+              :
+              <Button
+                customStyles={{ flex: 1, marginTop: 0 }}
+                title={"Complete"}
+                type={"general"}
+                fontSize={17}
+                onClick={navigation.goBack}
+              />}
+          </View>
+        </View>
+      </>}
+    </SafeLayout>
   );
 };
 
@@ -167,11 +203,7 @@ export default EducationLearning;
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
     flex: 1,
-    padding: 20,
-    justifyContent: "flex-start",
-    alignItems: "center",
   },
   header: {
     width: "100%",
@@ -204,15 +236,14 @@ const styles = StyleSheet.create({
   buttons: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 15,
     gap: 15
   },
   buttonsContainer: {
     flex: 1,
     flexDirection: "column",
     justifyContent: "flex-end",
-    paddingBottom: 15,
-    width: "100%"
+    width: "100%",
+    marginTop: 0
   },
 });
  

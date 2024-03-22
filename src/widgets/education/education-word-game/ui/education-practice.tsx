@@ -9,6 +9,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useEducationPracticeContext } from "../lib/context/education-practice-context";
 import { useEducationStatisticContext } from "../lib/context/education-statistic-context";
 
+import SafeLayout from "@/app/safeLayout";
 import { RootState } from "@/app/store";
 import EducationPracticeChooseLetters from "@/entities/education/education-practice-choose-letters/education-practice-choose-letters";
 import EducationPracticeChooseValue from "@/entities/education/education-practice-choose-value/education-practice-choose-value";
@@ -87,12 +88,10 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
   const isChooseWord = question?.type === QuestionTypeChooseWord;
 
   return (
-    <View
+    <SafeLayout
       style={[
         styles.container,
         {
-          paddingTop: insets.top + 20,
-          paddingBottom: insets.bottom,
           backgroundColor: colors.color1
         }
       ]} >
@@ -136,7 +135,7 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
           word={question.word}
           trueAnswer={question.trueKey}
         />}
-    </View>
+    </SafeLayout>
   );
 }
 
@@ -144,9 +143,7 @@ export default EducationWordGame;
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
     flex: 1,
-    padding: 20,
     justifyContent: "space-between",
     alignItems: "center"
   },

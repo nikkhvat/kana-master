@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
-import { useTranslation } from "react-i18next";
 import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 
 import { RootState } from "@/app/store";
@@ -9,8 +8,7 @@ import CardModeSelect from "@/entities/education/card-mode-select/card-mode-sele
 import EducationKanaSelectedCard from "@/entities/education/education-selected-card/education-kana-selected-card";
 import StartPracticeButton from "@/entities/education/start-practice-button/start-practice-button";
 import TestModeSelect from "@/entities/education/test-mode-select/test-mode-select";
-import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { CardMode, DifficultyLevelType, PracticeScreenMode } from "@/shared/constants/kana";
+import { CardMode, DifficultyLevelType } from "@/shared/constants/kana";
 import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 
@@ -23,9 +21,6 @@ interface PracticeProps {
 const screenWidth = Dimensions.get("window").width;
 
 const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
-  const { t } = useTranslation();
-  const { colors } = useThemeContext();
-  
   const letters = useAppSelector((state: RootState) => state.kana.selected);
 
   const [cardsMode, setCardMode] = useState<CardMode[]>([]);

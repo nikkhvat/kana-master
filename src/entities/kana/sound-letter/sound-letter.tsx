@@ -7,10 +7,12 @@ import Button from "@/shared/ui/button/button";
 
 interface SoundLetterProps {
   id: string
+  customStyles?: Record<string, string | number>;
 }
 
 const SoundLetter: React.FC<SoundLetterProps> = ({
-  id
+  id,
+  customStyles = {}
 }) => {
   Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
 
@@ -31,7 +33,7 @@ const SoundLetter: React.FC<SoundLetterProps> = ({
 
   return (
     <Button
-      customStyles={{ flex: 1, marginTop: 0 }}
+      customStyles={{flex: 1, marginTop: 0, ...customStyles}}
       title={"Sound"}
       onClick={() => playSound(id)}
       type={"inactive"}

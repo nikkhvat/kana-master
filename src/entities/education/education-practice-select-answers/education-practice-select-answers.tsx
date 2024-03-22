@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   },
   symbol: {
     textAlign: "center",
-    fontSize: 94,
+    fontSize: 84,
   },
   subText: {
     textAlign: "center",

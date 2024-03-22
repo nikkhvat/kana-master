@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
-import { StatusBar, View } from "react-native";
+import { Pressable, StatusBar, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
@@ -49,7 +49,15 @@ function BottomTabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => <Icon name={icons[route.name as KeysIcon]} size={size} color={color} />
+        tabBarIcon: 
+          ({ color, size }) => <Icon name={icons[route.name as KeysIcon]} size={size} color={color} />,
+        tabBarButton: 
+          (props) => <Pressable {...props} style={[props.style, { height: 45, marginTop: 5 }]} />,
+        tabBarStyle: {
+          height: 60,
+          flexDirection: "column",
+          alignItems: "center"
+        }
       })}
     >
       <Tab.Screen name="Learning" component={EducationWelcome} options={{ title: t("tabs.learning"), headerTransparent: true, headerTitle: "", }} />

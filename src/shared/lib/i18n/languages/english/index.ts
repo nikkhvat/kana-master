@@ -28,7 +28,8 @@ const English = {
 	},
 
 	testing: {
-		cardMode: "Card mode",
+		cardMode: "Cards",
+		testMode: "Mode",
 		difficultyLevel: "Difficulty level",
 		start: "Start"
 	},

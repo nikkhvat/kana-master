@@ -9,6 +9,7 @@ interface EducationPracticeTimerProps {
   onTimerEnd?: () => void;
   initial: number;
   currentIndex: number;
+  customStyles?: Record<string, string | number>;
 }
 
 const screenWidth = Dimensions.get("window").width;
@@ -20,6 +21,7 @@ const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
   initial = 5,
   onTimerEnd,
   currentIndex,
+  customStyles = {}
 }) => {
   const { colors } = useThemeContext();
 
@@ -59,7 +61,7 @@ const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
   const fullProgress = (timeLeft / initial) * 100;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, customStyles]}>
       <View style={[
         styles.timerContainer, 
         { backgroundColor: colors.color2, width: progressBarWidth }

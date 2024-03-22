@@ -3,12 +3,13 @@ import React, { useEffect } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useKeepAwake } from "expo-keep-awake";
-import { StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useEducationPracticeContext } from "../lib/context/education-practice-context";
 import { useEducationStatisticContext } from "../lib/context/education-statistic-context";
 
+import SafeLayout from "@/app/safeLayout";
 import { RootState } from "@/app/store";
 import EducationPracticeSelectAnswers from "@/entities/education/education-practice-select-answers/education-practice-select-answers";
 import EducationPracticeTimer from "@/entities/education/education-practice-timer/education-practice-timer";
@@ -29,11 +30,12 @@ interface LearnScreenProps {
   navigation: HomeScreenNavigationProp
 }
 
+const screenHeight = Dimensions.get("window").height;
+
 function EducationPractice({ route, navigation }: LearnScreenProps) {
   useKeepAwake();
 
   const dispatch = useAppDispatch();
-  const insets = useSafeAreaInsets();
   const { colors } = useThemeContext();
 
   useEffect(() => {
@@ -126,35 +128,31 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
   const question = questions[currentIndex];
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          paddingTop: insets.top + 20,
-          paddingBottom: insets.bottom,
-          backgroundColor: colors.color1
-        }
-      ]} >
-      <View style={styles.header}>
-        <LinearProgressBar
-          close={navigation.goBack}
-          current={currentIndex + 1}
-          all={questions.length}
-        />
-        {IS_TIMER &&
-          <EducationPracticeTimer
-            currentIndex={currentIndex}
-            onTimerEnd={endTime}
-            initial={TIMER_SPEED}
-          />}
-      </View>
+    <SafeLayout style={[styles.container, { 
+      backgroundColor: colors.color1,
+      gap: screenHeight < 700 ? 0 : 22
+    } ]}>
+        <View style={styles.header}>
+          <LinearProgressBar
+            close={navigation.goBack}
+            current={currentIndex + 1}
+            all={questions.length}
+          />
+          {IS_TIMER &&
+            <EducationPracticeTimer
+              customStyles={{}}
+              currentIndex={currentIndex}
+              onTimerEnd={endTime}
+              initial={TIMER_SPEED}
+            />}
+        </View>
 
-      <EducationPracticeSelectAnswers
-        question={question}
-        onCompleted={onSubmitTestQuestion}
-        onError={onError}
-      />
-    </View>
+        <EducationPracticeSelectAnswers
+          question={question}
+          onCompleted={onSubmitTestQuestion}
+          onError={onError}
+        />
+    </SafeLayout>
   );
 }
 
@@ -162,15 +160,12 @@ export default EducationPractice;
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
     flex: 1,
-    padding: 20,
     justifyContent: "space-between",
     alignItems: "center"
   },
   header: {
     width: "100%",
     flexDirection: "column",
-    gap: 22
   }
 });

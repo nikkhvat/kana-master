@@ -151,7 +151,7 @@ const EducationKanaQuickSelection: React.FC<EducationKanaQuickSelectionProps> = 
         )}
       </View>
 
-      <ScrollView style={styles.scroll}>
+      <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.kanaStatContainer}>
           <View style={[styles.kanaCard, { borderColor: colors.color2 }]}>
             <Text style={[styles.kanaCardTitle, { color: colors.color4 }]}>Hiragana</Text>
@@ -259,6 +259,7 @@ const styles = StyleSheet.create({
   scroll: {
     paddingLeft: 20,
     paddingRight: 20,
+    paddingBottom: 165
   },
   kanaStatContainer: {
     width: "100%",

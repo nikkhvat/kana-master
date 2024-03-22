@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { RootState } from "@/app/store";
 import KanaSelectedCard from "@/entities/education/education-selected-card/education-kana-selected-card";
 import StartPracticeButton from "@/entities/education/start-practice-button/start-practice-button";
 import WordGameModeSelect from "@/entities/education/word-game-mode-select/word-game-mode-select";
-import { PracticeScreenMode, TestMode } from "@/shared/constants/kana";
+import { TestMode } from "@/shared/constants/kana";
 import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 
@@ -18,6 +18,7 @@ interface WordBuildingProps {
 }
 
 const screenWidth = Dimensions.get("window").width;
+const screenHeight = Dimensions.get("window").height;
 
 const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
   const [mode, setMode] = useState<TestMode[]>([]);
@@ -51,14 +52,20 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
           setMode={setMode}
         />
 
+        {screenHeight <= 750 && <StartPracticeButton
+          conditions={[
+            { condition: wordsCount > 10, text: "* Должно быть доступно больше 10 слов" },
+            { condition: mode.length > 0, text: "* Должен быть выбран хотя бы один режим" },
+          ]}
+          onPress={toPractice} />}
       </ScrollView>
-      <StartPracticeButton
+      {screenHeight > 750 && <StartPracticeButton
         absolute
         conditions={[
           { condition: wordsCount > 10, text: "* Должно быть доступно больше 10 слов" },
           { condition: mode.length > 0, text: "* Должен быть выбран хотя бы один режим" },
         ]}
-        onPress={toPractice} />
+        onPress={toPractice} />}
     </View>
   );
 };

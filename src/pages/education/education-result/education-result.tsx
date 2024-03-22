@@ -144,6 +144,7 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
       </ScrollView>
       <View style={containerStyles.buttons} >
         <Button
+          customStyles={{ marginBottom: insets.bottom }}
           type={"general"}
           title={"Done"}
           onClick={home}
@@ -166,6 +167,7 @@ const containerStyles = StyleSheet.create({
   },
   buttons: {
     paddingHorizontal: 20,
+    paddingBottom: 20,
   },
   metricsTitle: {
     fontSize: 17,
