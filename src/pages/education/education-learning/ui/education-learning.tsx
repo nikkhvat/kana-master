@@ -4,7 +4,6 @@ import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { View, StyleSheet, Text, Dimensions } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import SafeLayout from "@/app/safeLayout";
 import { RootState } from "@/app/store";
@@ -27,12 +26,14 @@ interface LearnScreenProps {
 }
 
 interface ILetterWithType extends ILetter {
-  type: "katakana" | "hiragana"
+  type: KanaAlphabet.Hiragana | KanaAlphabet.Katakana
 }
 
 const screenHeight = Dimensions.get("window").height;
 
 const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) => {
+  const { t } = useTranslation();
+
   const { colors } = useThemeContext();
   const { i18n: { language } } = useTranslation();
 
@@ -59,7 +60,7 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
       const selectedLetter = selectedLettersHiraganaArray[i];
       
       const letter = lettersTableById[selectedLetter as LettersKeys] as ILetterWithType;
-      letter.type = "hiragana";
+      letter.type = KanaAlphabet.Hiragana;
 
       if (letter) {
         kanaArray.push(letter);
@@ -70,7 +71,7 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
       const selectedLetter = selectedLettersKatakanaArray[i];
       
       const letter = lettersTableById[selectedLetter as LettersKeys] as ILetterWithType;
-      letter.type = "katakana";
+      letter.type = KanaAlphabet.Katakana;
 
       if (letter) {
         kanaArray.push(letter);
@@ -85,12 +86,13 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
   
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getTypeById = (id: any) => {
-    if (yoonFlatLettersId.includes(id)) return "yoon";
-    if (handakuonFlatLettersId.includes(id)) return "handakuon";
-    if (dakuonFlatLettersId.includes(id)) return "dakuon";
+    if (yoonFlatLettersId.includes(id)) return t("kana.yoon");
+    if (handakuonFlatLettersId.includes(id)) return t("kana.handakuon");
+    if (dakuonFlatLettersId.includes(id)) return t("kana.dakuon");
 
-    return "basic";
+    return t("kana.basic");
   };
+
 
   const currentLetter = kanaArray[index];
 
@@ -110,16 +112,19 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
           close={navigation.goBack}
           current={index + 1}
           all={kanaArray.length || 0}
-          title="Kana"
+          title={t("kana.kana")}
         />
       </View>
 
       <View style={styles.titleContainer}>
-        <Text style={[styles.title, { color: colors.color4 }]}>{kana} ({getTypeById(currentLetter?.id)})</Text>
+        <Text style={[styles.title, { color: colors.color4 }]}>
+          {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")} {" "}
+          ({getTypeById(currentLetter?.id)})
+        </Text>
         <Text style={[styles.subTitle, { color: colors.color4 }]}>{currentLetter?.[lang].toUpperCase()}</Text>
         <Symbol
           id={currentLetter?.id}
-          kana={kana === "hiragana" ? "hiragana" : "katakana"} 
+          kana={kana}
         />
       </View>
 
@@ -127,12 +132,12 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
         <View style={styles.buttons}>
           <SoundLetter id={currentLetter?.en} />
           <Button
-            customStyles={{ flex: 0.5, marginTop: 0 }}
+            customStyles={{ flex: 1, marginTop: 0 }}
             title={"Draw"}
             onClick={() => {
               navigation.navigate("DrawKana", {
                 letter: currentLetter,
-                kana: kana === "hiragana" ? KanaAlphabet.Hiragana : KanaAlphabet.Katakana
+                kana: kana
               });
             }}
             type={"inactive"}
@@ -143,14 +148,14 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
         <View style={styles.buttonsContainer}>
           {index + 1 < kanaArray.length ?
             <Button
-              title={"Next"}
+              title={t("common.next")}
               type={"general"}
               fontSize={17}
               onClick={next}
             />
             :
             <Button
-              title={"Complete"}
+              title={t("common.finish")}
               type={"general"}
               fontSize={17}
               onClick={navigation.goBack}
@@ -168,7 +173,7 @@ const EducationLearning: React.FC<LearnScreenProps> = ({ route, navigation }) =>
               onClick={() => {
                 navigation.navigate("DrawKana", {
                   letter: currentLetter,
-                  kana: kana === "hiragana" ? KanaAlphabet.Hiragana : KanaAlphabet.Katakana
+                  kana: kana
                 });
               }}
               type={"inactive"}

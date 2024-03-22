@@ -5,11 +5,11 @@ import { Dimensions, View, StyleSheet } from "react-native";
 
 import Cell from "@/entities/kana/cell/cell";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { Alphabet } from "@/shared/constants/kana";
+import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
 import { dakuon, handakuon, base, yoon, LettersKeys, ILetter } from "@/shared/data/lettersTable";
 import { useAppSelector } from "@/shared/model/hooks";
 interface EducationKanaTableProps {
-  kana: "hiragana" | "katakana";
+  kana: KanaAlphabet.Hiragana | KanaAlphabet.Katakana
   type: Alphabet;
   onClick?: (id: LettersKeys) => void;
   last?: boolean;

@@ -24,30 +24,24 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
 
   const insets = useSafeAreaInsets();
-  const [activeTab, setActiveTab] = useState<"hiragana" | "katakana">("hiragana");
+  const [activeTab, setActiveTab] = useState<KanaAlphabet>(KanaAlphabet.Hiragana);
 
   const openModal = useCallback((id: LettersKeys) => {
     navigation.navigate("KanaInfo", {
       id: id,
-      kana: activeTab === "hiragana" 
-        ? KanaAlphabet.Hiragana 
-        : KanaAlphabet.Katakana
+      kana: activeTab
     });
   }, [activeTab, navigation]);
 
   const sections = useMemo(
     () => [
-      { title: "Basic", data: ["base"] },
-      { title: "Dakuon", data: ["dakuon"] },
-      { title: "Handakuon", data: ["handakuon"] },
-      { title: "Yoon", data: ["yoon"] },
+      { title: t("kana.basic"), data: ["base"] },
+      { title: t("kana.dakuon"), data: ["dakuon"] },
+      { title: t("kana.handakuon"), data: ["handakuon"] },
+      { title: t("kana.yoon"), data: ["yoon"] },
     ],
-    []
+    [t]
   );
-
-  const toggleTab = (val: string) => {
-    setActiveTab(val as "hiragana" | "katakana");
-  };
 
   const { colors } = useThemeContext();  
 
@@ -55,12 +49,12 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
     <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.color1 }]}>
       <Text style={[styles.title, { color: colors.color4 }]}>{t("tabs.kana")}</Text>
       <View style={styles.switcherContainer}>
-        <Switcher
+        <Switcher<KanaAlphabet>
           activeTab={activeTab}
-          setActiveTab={toggleTab}
+          setActiveTab={setActiveTab}
           options={[
-            "hiragana", 
-            "katakana"
+            KanaAlphabet.Hiragana, 
+            KanaAlphabet.Katakana
           ]}
           translate={[
             t("kana.hiragana"),

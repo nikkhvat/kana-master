@@ -16,7 +16,7 @@ import EducationPracticeTimer from "@/entities/education/education-practice-time
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { countAvailableWords } from "@/pages/education/kana-quick-selection/model/slice";
 import { recalculate } from "@/pages/kana/kana-list/model/slice";
-import { CardMode, DifficultyLevelType } from "@/shared/constants/kana";
+import { CardMode, DifficultyLevelType, KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
@@ -80,7 +80,7 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
         data: result.incorrect.map(item => {
           const isChapterHiragana = item.mode === CardMode.hiraganaToKatakana || item.mode === CardMode.hiraganaToRomaji || item.mode === CardMode.romajiToHiragana;
           return {
-            chapter: isChapterHiragana ? "hiragana" : "katakana",
+            chapter: isChapterHiragana ? KanaAlphabet.Hiragana : KanaAlphabet.Katakana,
             id: item.letter.id,
             isCorrect: false,
           };
@@ -91,7 +91,7 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
         data: result.correct.map(item => {
           const isChapterHiragana = item.mode === CardMode.hiraganaToKatakana || item.mode === CardMode.hiraganaToRomaji || item.mode === CardMode.romajiToHiragana;
           return {
-            chapter: isChapterHiragana ? "hiragana" : "katakana",
+            chapter: isChapterHiragana ? KanaAlphabet.Hiragana : KanaAlphabet.Katakana,
             id: item.letter.id,
             isCorrect: true,
           };

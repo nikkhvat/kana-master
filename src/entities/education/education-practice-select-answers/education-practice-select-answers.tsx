@@ -21,6 +21,7 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
 }) => {
   const screenWidth = Dimensions.get("window").width;
   const { colors } = useThemeContext();
+  const { t } = useTranslation();
 
   const [errors, setErrors] = useState([] as (string | number)[]);
   const [corrected, setCorrected] = useState(null as string | number | null);
@@ -65,7 +66,7 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
   const lang = language === "ru" ? "ru" : "en";
 
   const symbolLable = kana === Kana.English
-    ? symbol?.en : kana === Kana.Hiragana
+    ? symbol?.[lang] : kana === Kana.Hiragana
       ? symbol?.hi : symbol?.ka;
 
   const getTitle = (answer: ILetter) => {
@@ -79,7 +80,7 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
     const isHira = (question?.mode === CardMode.hiraganaToKatakana || question?.mode === CardMode.hiraganaToRomaji);
     const isKana = (question?.mode === CardMode.katakanaToHiragana || question?.mode === CardMode.katakanaToRomaji);
 
-    return isKana ? "Katakana" : isHira ? "Hiragana" : "Romanji";
+    return isKana ? t("kana.katakana") : isHira ? t("kana.hiragana") : t("kana.romanji");
   };
 
   return (

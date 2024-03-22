@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 
@@ -25,6 +26,8 @@ const EducationKanaQuickSelection: React.FC<EducationKanaQuickSelectionProps> = 
   navigation,
 }) => {
   const dispatch = useAppDispatch();
+  const { colors } = useThemeContext();
+  const { t } = useTranslation();
 
   const SHOW_ALLOWED_WORDS = screen === "WordBuilding";
 
@@ -130,15 +133,13 @@ const EducationKanaQuickSelection: React.FC<EducationKanaQuickSelectionProps> = 
   ) => {
     dispatch(setKanaSelected(value));
   };
-
-  const { colors } = useThemeContext();
   
   return (
     <View>
       <View style={[styles.infoContainer, { borderColor: colors.color2}]}>
         <View style={styles.infoBlock}>
           <Text style={[styles.infoTitle, { color: colors.color4 }]}>{selectedLetters}</Text>
-          <Text style={[styles.infoSubTitle, { color: colors.color4 }]}>Entries in scope</Text>
+          <Text style={[styles.infoSubTitle, { color: colors.color4 }]}>{t("quickSelectKana.entriesInScope")}</Text>
         </View>
         {SHOW_ALLOWED_WORDS && <View style={[styles.verticalBorder, { backgroundColor: colors.color2 }]} />}
         {SHOW_ALLOWED_WORDS && (
@@ -146,7 +147,7 @@ const EducationKanaQuickSelection: React.FC<EducationKanaQuickSelectionProps> = 
             <Text style={[styles.infoTitle, { color: colors.color4 }]}>
               {hiraganaSelectedWords.length + katakanaSelectedWords.length}
             </Text>
-            <Text style={[styles.infoSubTitle, { color: colors.color4 }]}>Available words</Text>
+            <Text style={[styles.infoSubTitle, { color: colors.color4 }]}>{t("quickSelectKana.availableWords")}</Text>
           </View>
         )}
       </View>
@@ -154,31 +155,31 @@ const EducationKanaQuickSelection: React.FC<EducationKanaQuickSelectionProps> = 
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.kanaStatContainer}>
           <View style={[styles.kanaCard, { borderColor: colors.color2 }]}>
-            <Text style={[styles.kanaCardTitle, { color: colors.color4 }]}>Hiragana</Text>
+            <Text style={[styles.kanaCardTitle, { color: colors.color4 }]}>{t("kana.hiragana")}</Text>
             <Text style={[styles.kanaCardSubTitle, { color: colors.second_color3 }]}>{selectedLettersHiragana}</Text>
           </View>
           <View style={[styles.kanaCard, { borderColor: colors.color2 }]}>
-            <Text style={[styles.kanaCardTitle, { color: colors.color4 }]}>Katakana</Text>
+            <Text style={[styles.kanaCardTitle, { color: colors.color4 }]}>{t("kana.katakana")}</Text>
             <Text style={[styles.kanaCardSubTitle, { color: colors.second_color3 }]}>{selectedLettersKatakana}</Text>
           </View>
         </View>
 
-        <Text style={[styles.selectionTitle, {color: colors.color4}]}>Kana quick selection</Text>
+        <Text style={[styles.selectionTitle, { color: colors.color4 }]}>{t("quickSelectKana.title")}</Text>
 
         <View style={styles.selectionContainer}>
           <View style={styles.selectionRow}>
             <SelectButton type={SelectButtonState.Empty} />
             <SelectButton selected={IS_HIRA_SELECTED} onPress={() => set(Kana.Hiragana)} type={SelectButtonState.Text}>
-              Hiragana
+              {t("kana.hiragana")}
             </SelectButton>
             <SelectButton selected={IS_KANA_SELECTED} onPress={() => set(Kana.Katakana)} type={SelectButtonState.Text}>
-              Katakana
+              {t("kana.katakana")}
             </SelectButton>
           </View>
 
           <View style={styles.selectionRow}>
             <SelectButton selected={IS_BASIC} onPress={() => set(KanaMode.Basic)} type={SelectButtonState.Text}>
-              Basic
+              {t("kana.basic")}
             </SelectButton>
             <SelectButton selected={IS_BASIC_HIRA} onPress={() => set(KanaSection.BasicHiragana)} type={SelectButtonState.Icon} />
             <SelectButton selected={IS_BASIC_KATA} onPress={() => set(KanaSection.BasicKatakana)} type={SelectButtonState.Icon} />
@@ -186,7 +187,7 @@ const EducationKanaQuickSelection: React.FC<EducationKanaQuickSelectionProps> = 
           
           <View style={styles.selectionRow}>
             <SelectButton selected={IS_DAKUON} onPress={() => set(KanaMode.Dakuon)} type={SelectButtonState.Text}>
-              Dakuon
+              {t("kana.dakuon")}
             </SelectButton>
             <SelectButton selected={IS_DAKUON_HIRA} onPress={() => set(KanaSection.DakuonHiragana)} type={SelectButtonState.Icon} />
             <SelectButton selected={IS_DAKUON_KATA} onPress={() => set(KanaSection.DakuonKatakana)} type={SelectButtonState.Icon} />
@@ -194,7 +195,7 @@ const EducationKanaQuickSelection: React.FC<EducationKanaQuickSelectionProps> = 
           
           <View style={styles.selectionRow}>
             <SelectButton selected={IS_HANDAKUON} onPress={() => set(KanaMode.Handakuon)} type={SelectButtonState.Text}>
-              Handakuon
+              {t("kana.handakuon")}
             </SelectButton>
             <SelectButton selected={IS_HANDAKUON_HIRA} onPress={() => set(KanaSection.HandakuonHiragana)} type={SelectButtonState.Icon} />
             <SelectButton selected={IS_HANDAKUON_KATA} onPress={() => set(KanaSection.HandakuonKatakana)} type={SelectButtonState.Icon} /> 
@@ -202,7 +203,7 @@ const EducationKanaQuickSelection: React.FC<EducationKanaQuickSelectionProps> = 
           
           <View style={styles.selectionRow}>
             <SelectButton selected={IS_YOON} onPress={() => set(KanaMode.Yoon)} type={SelectButtonState.Text}>
-              Yoon
+              {t("kana.yoon")}
             </SelectButton>
             <SelectButton selected={IS_YOON_HIRA} onPress={() => set(KanaSection.YoonHiragana)} type={SelectButtonState.Icon} />
             <SelectButton selected={IS_YOON_KATA} onPress={() => set(KanaSection.YoonKatakana)} type={SelectButtonState.Icon} />
@@ -211,7 +212,7 @@ const EducationKanaQuickSelection: React.FC<EducationKanaQuickSelectionProps> = 
 
         <Button
           customStyles={{ marginTop: 60, marginBottom: 15 }}
-          title={"Confirm"}
+          title={t("quickSelectKana.confirm")}
           type={"general"}
           fontSize={17}
           onClick={() => {

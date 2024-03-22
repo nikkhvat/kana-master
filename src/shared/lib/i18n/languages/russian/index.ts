@@ -1,4 +1,11 @@
 const Russian = {
+	common: {
+		close: "Закрыть",
+		reset: "Сбросить",
+		next: "Дальше",
+		finish: "Закончить"
+	},
+
 	tabs: {
 		profile: "Настройки",
 		learning: "Обучение",
@@ -24,7 +31,9 @@ const Russian = {
 	},
 
 	practice: {
-		start: "Начать обучение"
+		start: "Начать обучение",
+
+		question: "Вопрос"
 	},
 
 	testing: {
@@ -57,13 +66,60 @@ const Russian = {
 
 	kana: {
 		hiragana: "Хирагана",
-		katakana: "Катакана"
+		katakana: "Катакана",
+		romanji: "Ромадзи",
+
+		basic: "Основное",
+		dakuon: "Дакуон",
+		handakuon: "Хандакуон",
+		yoon: "Юон",
+
+		kana: "Слог"
+	},
+
+	selectKana: {
+		words: "Слов",
+		letters: "Слогов",
+		nothing: "Нечего не выбранно"
+	},
+
+	quickSelectKana: {
+		title: "Быстрый выбор",
+		confirm: "Подтвердить",
+
+		entriesInScope: "Доступный слогов",
+		availableWords: "Доступный слов",
 	},
 
 	displayStatistics: {
 		title: "Отображать статистику",
 		turnOn: "Включить",
 		turnOff: "Выключить",
+	},
+
+	result: {
+		title: "Практика окончена",
+		score: "Счёт",
+
+		sec: "cек.",
+		min: "мин.",
+
+		question: "вопрос",
+
+		details: "Подробнее",
+
+		alpabet: "Алфавит",
+
+		fastestAnswer: "Самый быстрый ответ",
+		slowestAnswer: "Самый медленный ответ",
+
+		incorrectAnswers: "Неверные ответы",
+
+		incorrectWordBuilding: "Неверные ответы в составлении слов",
+		incorrectFindPair: "Неверные ответы в выборе пары",
+		incorrectChoice: "Неверные ответы в выборе слов",
+
+		done: "Закончить"
 	}
 };
 

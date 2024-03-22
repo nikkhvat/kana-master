@@ -23,6 +23,7 @@ interface KanaInfoProps {
 const screenHeight = Dimensions.get("window").height;
 
 const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
+  const { t } = useTranslation();
 
   const insets = useSafeAreaInsets();
 
@@ -66,11 +67,11 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getTypeById = (id: any) => {
-    if (yoonFlatLettersId.includes(id)) return "yoon";
-    if (handakuonFlatLettersId.includes(id)) return "handakuon";
-    if (dakuonFlatLettersId.includes(id)) return "dakuon";
+    if (yoonFlatLettersId.includes(id)) return t("kana.yoon");
+    if (handakuonFlatLettersId.includes(id)) return t("kana.handakuon");
+    if (dakuonFlatLettersId.includes(id)) return t("kana.dakuon");
 
-    return "basic";
+    return t("kana.basic");
   };
 
   const drawSymbol = () => {
@@ -83,14 +84,13 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
         <View style={[styles.container, { backgroundColor: colors.color1 }]}>
           {letter !== null && <View style={styles.titleContainer}>
             <Text style={[styles.title, { color: colors.color4 }]}>
-              {letterKana} ({getTypeById(letter.id)})
+              {letterKana === KanaAlphabet.Katakana ? t("kana.katakana") : t("kana.hiragana")}{" "}
+              ({getTypeById(letter.id)})
             </Text>
             <Text style={[styles.subTitle, { color: colors.color4 }]}>
               {letter?.[lang].toUpperCase()}
             </Text>
-            <Symbol 
-              id={letter.id}
-              kana={letterKana === KanaAlphabet.Katakana ? "katakana" : "hiragana"} />
+            <Symbol id={letter.id} kana={letterKana} />
           </View>}
 
           {letter !== null && <View style={styles.buttonContainer}>
@@ -115,7 +115,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
                 />}
               <Button
                 customStyles={{ flex: 1, marginTop: 0 }}
-                title={`${letterKana === KanaAlphabet.Katakana ? "katakana" : "hiragana"} →`}
+                title={`${letterKana === KanaAlphabet.Katakana ? t("kana.katakana") : t("kana.hiragana") } →`}
                 onClick={() => {
                   setLetterKana(letterKana === KanaAlphabet.Hiragana ? KanaAlphabet.Katakana : KanaAlphabet.Hiragana);
                 }}

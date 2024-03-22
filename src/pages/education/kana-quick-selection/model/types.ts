@@ -1,3 +1,4 @@
+import { KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import { Word } from "@/shared/data/words";
 
@@ -34,7 +35,7 @@ export interface toggleLetterAction {
   payload: {
     letter: ILetter,
     alphabet: "base" | "dakuon" | "handakuon" | "yoon",
-    kana: "katakana" | "hiragana"
+    kana: KanaAlphabet.Hiragana | KanaAlphabet.Katakana
   }
 }
 
@@ -43,6 +44,6 @@ export interface toggleLettersAction {
   payload: {
     letter: ILetter[],
     alphabet: "base" | "dakuon" | "handakuon" | "yoon",
-    kana: "katakana" | "hiragana"
+    kana: KanaAlphabet.Hiragana | KanaAlphabet.Katakana
   }
 }

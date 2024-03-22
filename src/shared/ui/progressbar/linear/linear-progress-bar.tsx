@@ -1,9 +1,11 @@
 import React from "react";
 
+import { useTranslation } from "react-i18next";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+
 
 interface ProgressBarProp {
   close?: () => void;
@@ -13,7 +15,7 @@ interface ProgressBarProp {
 }
 
 const LinearProgressBar: React.FC<ProgressBarProp> = ({ close, current, all, title }) => {
-  
+  const { t } = useTranslation();
   const { colors } = useThemeContext();
 
   return (
@@ -37,7 +39,7 @@ const LinearProgressBar: React.FC<ProgressBarProp> = ({ close, current, all, tit
           />
         </TouchableOpacity>
         <Text style={[styles.progressBarText, { color: colors.color3 }]}>
-          {title ? title : "Question"} {current} / {all}
+          {title ? title : t("practice.question")} {current} / {all}
         </Text>
       </View>
     </View>

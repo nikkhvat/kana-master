@@ -1,12 +1,13 @@
 import React from "react";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { KanaAlphabet } from "@/shared/constants/kana";
 import getImage from "@/shared/resources/svgs";
 
 
 interface SymbolProps {
   id: string
-  kana: "katakana" | "hiragana"
+  kana: KanaAlphabet.Hiragana | KanaAlphabet.Katakana
   width?: number
   height?: number
 }

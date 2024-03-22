@@ -1,18 +1,21 @@
-import React, { useEffect, useRef } from "react";
+import React, {useEffect, useRef } from "react";
 
 import { View, Text, StyleSheet, Animated, Pressable, Dimensions } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 
-interface SwitcherProps {
-  activeTab: string;
-  options: string[];
-  translate?: string[] | React.ReactNode[];
-  setActiveTab: (val: string) => void;
+interface SwitcherProps<T extends string > {
+  activeTab: T;
+  options: T[];
+  translate?: (React.ReactNode | string)[];
+  setActiveTab: (val: T) => void;
   width?: number;
 }
 
-const Switcher: React.FC<SwitcherProps> = ({ activeTab, setActiveTab, options, translate }) => {
+function Switcher<T extends string>(props: SwitcherProps<T>) {
+
+  const { activeTab, setActiveTab, options, translate } = props;
+
   const { colors } = useThemeContext();
   const animatedValue = useRef(new Animated.Value(0)).current;
 
@@ -36,7 +39,7 @@ const Switcher: React.FC<SwitcherProps> = ({ activeTab, setActiveTab, options, t
       <View style={[styles.tabs, { backgroundColor: colors.second_color4 }]}>
         {options.map((tab, index) => (
           <Pressable
-            key={tab}
+            key={tab as string}
             onPress={() => handlePress(index)}
             style={[
               styles.tab,
@@ -44,7 +47,9 @@ const Switcher: React.FC<SwitcherProps> = ({ activeTab, setActiveTab, options, t
             ]}
           >
             <Text style={[styles.tabText, { color: colors.color4 }]}>
-              {(translate && translate.length === options.length) ? translate[index] : tab}
+              {(translate && translate.length === options.length) 
+                ? translate[index]
+                : tab}
             </Text>
           </Pressable>
         ))}
@@ -68,7 +73,7 @@ const Switcher: React.FC<SwitcherProps> = ({ activeTab, setActiveTab, options, t
       </View>
     </View>
   );
-};
+}
 
 export default Switcher;
 

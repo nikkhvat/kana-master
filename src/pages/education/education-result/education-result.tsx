@@ -25,6 +25,7 @@ interface EducationResultProps {
 const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation }) => {
   const { result } = route.params;
 
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
   const { colors } = useThemeContext();
@@ -65,7 +66,7 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
         paddingBottom: insets.bottom, 
         backgroundColor: colors.color1
       }]}>
-      <Text style={[containerStyles.title, { color: colors.color4 }]}>Practice complete!</Text>
+      <Text style={[containerStyles.title, { color: colors.color4 }]}>{t("result.title")}</Text>
 
       <View style={[containerStyles.statsCard, { borderColor: colors.color2 }]}>
         <View style={containerStyles.statsGraph}>
@@ -74,7 +75,7 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
           />
         </View>
         <View style={containerStyles.statsDescription}>
-          <Text style={[containerStyles.statsTitle, { color: colors.color4 }]}>Score</Text>
+          <Text style={[containerStyles.statsTitle, { color: colors.color4 }]}>{t("result.score")}</Text>
           <View style={containerStyles.statsSubText}>
             <Text style={[containerStyles.statsSubTitleLarge, { color: colors.color4 }]}>
               {result.correctQuestions}
@@ -84,7 +85,10 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
             </Text>
           </View>
           <Text style={[containerStyles.statsSubTime, { color: colors.color3 }]}>
-            {millisecondsToSeconds(result.totalTime)} sec ({millisecondsToSeconds(result.avgTime)} sec / question)
+            {millisecondsToSeconds(result.totalTime)} 
+            {" "}{t("result.sec")}{" "}
+            ({millisecondsToSeconds(result.avgTime)} 
+            {" "}{t("result.sec")} / {t("result.question")})
           </Text>
         </View>
       </View>
@@ -92,61 +96,65 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
       <ScrollView style={containerStyles.scroll}>
         <Text style={[containerStyles.metricsTitle, {
           color: colors.color4
-        }]} >Details</Text>
+        }]} >{t("result.details")}</Text>
         {result.type === "RESULT_PRACTICE" && <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
-          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3}]} >Alpabet:</Text>
+          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.alpabet")}:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
-            {result.alphabets.map(alphabet => alphabet === Kana.English ? "Romanji" : alphabet).join(", ")}
+            {result.alphabets.map(alphabet => 
+              alphabet === Kana.English 
+              ? t("kana.romanji") 
+              : alphabet === Kana.Hiragana 
+              ? t("kana.hiragana")
+              : t("kana.katakana")).join(", ")}
           </Text>
         </View>}
         {result.type === "RESULT_PRACTICE" && <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
-          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3}]} >The fastest answer:</Text>
+          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3}]} >{t("result.fastestAnswer")}:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
             {getKeyByKana(result.fastesAnswer.answer, result.fastesAnswer.type)}:
-            {" "}{millisecondsToSeconds(result.fastesAnswer.time)} sec.
+            {" "}{millisecondsToSeconds(result.fastesAnswer.time)} {t("result.sec")}
           </Text>
         </View>}
         {result.type === "RESULT_PRACTICE" && <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
-          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >The slowest answer:</Text>
+          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.slowestAnswer")}:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
             {getKeyByKana(result.slowestAnswer.answer, result.slowestAnswer.type)}:
-            {" "}{millisecondsToSeconds(result.slowestAnswer.time)} sec.
+            {" "}{millisecondsToSeconds(result.slowestAnswer.time)} {t("result.sec")}
           </Text>
         </View>}
         {(result.type === "RESULT_PRACTICE" && result.incorrect.length > 0) &&
         <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
-          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >Incorrect answers:</Text>
+          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.incorrectAnswers")}:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
             {result.incorrect.map(item => `${getKeyAnswer(item.letter, item.mode)}`).join(", ")}
           </Text>
         </View>}
         {result.type === "RESULT_WORD_GAME" && result.incorrectWordBuilding.length > 0 &&
          <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
-          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >Incorrect word building:</Text>
+          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.incorrectWordBuilding")}:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
             {result.incorrectWordBuilding.map(item => `${item[0]} (${item[1]})`).join(", ")}
           </Text>
         </View>}
         {result.type === "RESULT_WORD_GAME" && result.incorrectFindThePair.length > 0 &&
         <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
-          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >Incorrect find the pair:</Text>
+          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.incorrectFindPair")}:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
             {result.incorrectFindThePair.map(item => `${item[0]} (${item[1]})`).join(", ")}
           </Text>
         </View>}
         {result.type === "RESULT_WORD_GAME" && result.incorrectChoice.length > 0 &&
         <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
-          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >Incorrect Choice:</Text>
+          <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.incorrectChoice")}:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
             {result.incorrectChoice.map(item => `${item[0]} (${item[1]})`).join(", ")}
           </Text>
         </View>}
       </ScrollView>
-      <View style={containerStyles.buttons} >
+      <View style={[containerStyles.buttons, {marginBottom: insets.bottom}]} >
         <Button
-          customStyles={{ marginBottom: insets.bottom }}
           type={"general"}
-          title={"Done"}
+          title={t("result.done")}
           onClick={home}
         />
       </View>
@@ -167,13 +175,11 @@ const containerStyles = StyleSheet.create({
   },
   buttons: {
     paddingHorizontal: 20,
-    paddingBottom: 20,
   },
   metricsTitle: {
     fontSize: 17,
     fontWeight: "700",
     marginTop: 30,
-    // marginBottom: 15
   },
   scroll: {
     padding: 20,

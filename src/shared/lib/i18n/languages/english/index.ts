@@ -1,4 +1,11 @@
 const English = {
+	common: {
+		close: "Close",
+		reset: "Reset",
+		next: "Next",
+		finish: "Finish"
+	},
+
 	tabs: {
 		profile: "Settings",
 		learning: "Learning",
@@ -24,7 +31,9 @@ const English = {
 	},
 
 	practice: {
-		start: "Start"
+		start: "Start",
+
+		question: "Question"
 	},
 
 	testing: {
@@ -57,13 +66,60 @@ const English = {
 
 	kana: {
 		hiragana: "Hiragana",
-		katakana: "Katakana"
+		katakana: "Katakana",
+		romanji: "Romanji",
+
+		basic: "Basic",
+		dakuon: "Dakuon",
+		handakuon: "Handakuon",
+		yoon: "Yoon",
+
+		kana: "Kana"
+	},
+
+	selectKana: {
+		words: "Words",
+		letters: "Letters",
+		nothingSelected: "Nothing selected"
+	},
+
+	quickSelectKana: {
+		title: "Kana quick selection",
+		confirm: "Confirm",
+
+		entriesInScope: "Entries in scope",
+		availableWords: "Available words",
 	},
 
 	displayStatistics: {
 		title: "Display statistics",
 		turnOn: "Turn on",
 		turnOff: "Turn off",
+	},
+
+	result: {
+		title: "Practice complete",
+		score: "Score",
+
+		sec: "sec.",
+		min: "min.",
+		
+		question: "Question",
+
+		details: "Details",
+
+		alpabet: "Alphabet",
+
+		fastestAnswer: "Fastest answer",
+		slowestAnswer: "Slowest answer",
+
+		incorrectAnswers: "Incorrect answers",
+
+		incorrectWordBuilding: "Incorrect word building answers",
+		incorrectFindPair: "Incorrect find pair answers",
+		incorrectChoice: "Incorrect choice answers",
+
+		done: "Done"
 	}
 };
 

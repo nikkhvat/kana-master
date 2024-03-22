@@ -1,4 +1,4 @@
-/* eslint-disable react/react-in-jsx-scope */
+import React from "react";
 /* eslint-disable import/order */
 
 import Hiragana_dark_dakuon_2dc3667e_c4cb_4d04_adc8_f3c5603d6b3d from "../kana/hiragana/dark/dakuon/2dc3667e-c4cb-4d04-adc8-f3c5603d6b3d.svg";

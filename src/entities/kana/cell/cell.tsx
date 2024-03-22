@@ -4,6 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { StatisticLevel } from "@/pages/kana/kana-list/model/types";
+import { KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 
 interface CellProps {
@@ -17,7 +18,7 @@ interface CellProps {
   onPress?: (id: string) => void
 
   lang: "ru" | "en",
-  kana: "hiragana" | "katakana"
+  kana: KanaAlphabet.Hiragana | KanaAlphabet.Katakana
 
   cell: ILetter | null | undefined
 
@@ -62,7 +63,7 @@ const Cell: React.FC<CellProps> = ({
       {indicator && <View style={[styles.cellIndicator, { backgroundColor: indicatorColor }]} ></View>}
       {(cell !== null && !isStartOfLine) && <>
         <Text style={[styles.symbol, { fontSize: 17, color: colors.color4 }]}>
-          {cell && cell[kana === "hiragana" ? "hi" : "ka"]}
+          {cell && cell[kana === KanaAlphabet.Hiragana ? "hi" : "ka"]}
         </Text>
         {cell && 
           <Text 

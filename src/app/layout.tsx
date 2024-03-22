@@ -75,7 +75,7 @@ const Layout = () => {
   const { i18n } = useTranslation();  
 
   useEffect(() => {
-    const loadTheme = async () => {
+    const loadLang = async () => {
       try {
         const savedLang = await AsyncStorage.getItem("lang");
         if (savedLang) {
@@ -86,7 +86,7 @@ const Layout = () => {
       }
     };
 
-    loadTheme();
+    loadLang();
   }, [i18n]);
 
   return (

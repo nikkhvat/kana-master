@@ -28,6 +28,7 @@ const height = screenWidth - 40;
 
 const DrawKana: React.FC<DrawKanaProps> = ({ letter, kana, back }) => {
   const { colors } = useThemeContext();
+  const { t } = useTranslation();
   const { i18n: { language } } = useTranslation();
 
   const lang = language === "ru" ? "ru" : "en";
@@ -75,11 +76,11 @@ const DrawKana: React.FC<DrawKanaProps> = ({ letter, kana, back }) => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getTypeById = (id: any) => {
-    if (yoonFlatLettersId.includes(id)) return "yoon";
-    if (handakuonFlatLettersId.includes(id)) return "handakuon";
-    if (dakuonFlatLettersId.includes(id)) return "dakuon";
+    if (yoonFlatLettersId.includes(id)) return t("kana.yoon");
+    if (handakuonFlatLettersId.includes(id)) return t("kana.handakuon");
+    if (dakuonFlatLettersId.includes(id)) return t("kana.dakuon");
 
-    return "basic";
+    return t("kana.basic");
   };
 
   return (
@@ -100,7 +101,9 @@ const DrawKana: React.FC<DrawKanaProps> = ({ letter, kana, back }) => {
       </View>
 
       <View style={styles.titleContainer}>
-        <Text style={[styles.title, { color: colors.color4 }]}>{kana} ({getTypeById(letter?.id)})</Text>
+        <Text style={[styles.title, { color: colors.color4 }]}>
+          {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")} {" "}
+          ({getTypeById(letter?.id)})</Text>
         <Text style={[styles.subTitle, { color: colors.color4 }]}>{letter?.[lang].toUpperCase()}</Text>
       </View>
 
@@ -123,9 +126,7 @@ const DrawKana: React.FC<DrawKanaProps> = ({ letter, kana, back }) => {
             width,
             height,
           }]} >
-            <Symbol
-              id={letter?.id}
-              kana={kana === KanaAlphabet.Hiragana ? "hiragana" : "katakana"} />
+            <Symbol id={letter?.id} kana={kana} />
           </View>}
           <GestureDetector gesture={pan}>
             <Canvas

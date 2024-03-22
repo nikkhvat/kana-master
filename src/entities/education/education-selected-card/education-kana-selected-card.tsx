@@ -43,7 +43,7 @@ const EducationKanaSelectedCard: React.FC<EducationKanaSelectedCardProps> = ({
   
   const label = 
     imageSource === "wordgame"
-    ? "Words" : "Letters";
+      ? t("selectKana.words") : t("selectKana.letters");
 
   return (
     <ImageBackground source={preview} resizeMode="cover" style={styles.container}>
@@ -54,7 +54,7 @@ const EducationKanaSelectedCard: React.FC<EducationKanaSelectedCardProps> = ({
           </Text>
         </View>
         {value === 0 && <Text style={[styles.subTitle, { color: colors.color3 }]}>
-          Nothing selected
+          {t("selectKana.nothingSelected")}
         </Text>}
         {value !== 0 && <Text style={[styles.subTitle, { color: colors.color3 }]}>
           {label}{" / "}

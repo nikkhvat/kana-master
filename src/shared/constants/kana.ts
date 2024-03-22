@@ -31,8 +31,8 @@ export enum Kana {
 }
 
 export enum KanaAlphabet {
-  Hiragana = "Hiragana",
-  Katakana = "Katakana",
+  Hiragana = "hiragana",
+  Katakana = "katakana",
 }
 
 export enum KanaSection {

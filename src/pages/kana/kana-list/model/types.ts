@@ -1,3 +1,5 @@
+import { KanaAlphabet } from "@/shared/constants/kana";
+
 export interface InitialState {
   rawStatistics: {
     hiragana: StatisticChapterRaw
@@ -32,7 +34,7 @@ export interface RecalculateAction {
   type: string
   payload: {
     data: {
-      chapter: "hiragana" | "katakana"
+      chapter: KanaAlphabet.Hiragana | KanaAlphabet.Katakana
       id: string
       isCorrect: boolean
     }[]
