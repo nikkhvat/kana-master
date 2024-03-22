@@ -39,8 +39,15 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ route, navigation }) 
 
   return (
     <>
-      <View style={{ flex: 1, backgroundColor: colors.color1, paddingBottom: 50 }}>
-        <View style={{ height: 52, flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingLeft: 20, paddingRight: 20 }}>
+      <View style={{ flex: 1, backgroundColor: colors.color1, paddingBottom: 40 + insets.bottom }}>
+        <View style={{ 
+            height: 52,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            paddingLeft: 20,
+            paddingRight: 20
+          }} >
           <Pressable onPress={navigation.goBack} style={{ padding: 14, margin: -14 }}>
             <Text style={{ color: colors.color4, fontSize: 17, fontWeight: "400" }}>Close</Text>
           </Pressable>
@@ -51,7 +58,7 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ route, navigation }) 
             <Text style={{ color: colors.second_color3, fontSize: 17, fontWeight: "400" }}>Reset</Text>
           </Pressable>
         </View>
-        <View style={[styles.lineContainer, { top: insets.top + 70, backgroundColor: colors.color2 }]} />
+        <View style={[styles.lineContainer, { top: 90, backgroundColor: colors.color2 }]} />
         <SectionList
           sections={sections}
           keyExtractor={(item, index) => item + index}
@@ -74,7 +81,7 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ route, navigation }) 
       </View>
       <View style={{ 
         position: "absolute", 
-        bottom: 0, 
+        bottom: insets.bottom, 
         width: "100%", 
         paddingTop: 15,
         paddingBottom: 15,
@@ -84,7 +91,7 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ route, navigation }) 
         flexDirection: "row", 
         alignItems: "flex-start", 
         justifyContent: "center", 
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
       }}>
         <Switcher
           activeTab={activeTab}

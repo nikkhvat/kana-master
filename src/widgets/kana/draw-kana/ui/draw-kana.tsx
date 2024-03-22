@@ -119,7 +119,10 @@ const DrawKana: React.FC<DrawKanaProps> = ({ letter, kana, back }) => {
               borderBottomColor: colors.color2,
             }]} ></View>
           </>}
-          {isShowKana && <View style={styles.drawContainerImage} >
+          {isShowKana && <View style={[styles.drawContainerImage, {
+            width,
+            height,
+          }]} >
             <Symbol
               id={letter?.id}
               kana={kana === KanaAlphabet.Hiragana ? "hiragana" : "katakana"} />
@@ -198,8 +201,9 @@ const styles = StyleSheet.create({
   },
   drawContainerImage: {
     position: "absolute",
-    left: screenWidth > 500 ? "25%" : 0,
-    top: screenWidth > 500 ? "25%" : 0,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     opacity: 0.3
   },
   drawContainerLeftBlock: {

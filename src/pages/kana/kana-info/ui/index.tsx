@@ -4,6 +4,7 @@ import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import SoundLetter from "@/entities/kana/sound-letter/sound-letter";
 import Symbol from "@/entities/kana/symbol/symbol";
@@ -22,6 +23,8 @@ interface KanaInfoProps {
 const screenHeight = Dimensions.get("window").height;
 
 const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
+
+  const insets = useSafeAreaInsets();
 
   const { id: LetterIdFromParams, kana: kanaFromParams } = route.params;
 
@@ -129,7 +132,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
             </View>
           </View>}
 
-          {screenHeight > 700 && <View style={styles.buttons}>
+          {screenHeight > 700 && <View style={[styles.buttons, { paddingBottom: insets.bottom }]}>
             <Button
               customStyles={{ width: 50 }}
               title={"Sound"}

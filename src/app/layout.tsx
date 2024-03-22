@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 import { Pressable, StatusBar, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
@@ -23,6 +24,7 @@ import ProfilePage from "@/pages/profile/profile";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
+
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -45,6 +47,7 @@ type KeysIcon = "Learning" | "Settings" | "Kana"
 
 function BottomTabNavigator() {
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
 
   return (
     <Tab.Navigator
@@ -54,7 +57,7 @@ function BottomTabNavigator() {
         tabBarButton: 
           (props) => <Pressable {...props} style={[props.style, { height: 45, marginTop: 5 }]} />,
         tabBarStyle: {
-          height: 60,
+          height: 60 + insets.bottom,
           flexDirection: "column",
           alignItems: "center"
         }

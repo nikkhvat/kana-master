@@ -67,6 +67,16 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
       { borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.color2 }]}>
       {letters && letters.length > 1 && (
         <View style={styles.rowButtons}>
+          <Cell
+            key={"0/start_of_line"}
+            isLong={false}
+            widthStandart={itemWidth}
+            widthLong={itemWidthLong}
+            lang={lang}
+            kana={kana}
+            cell={null}
+            isStartOfLine={""}
+          />
           {letters[0].map((cell, cellIndex) => (
             <Cell
               key={`${cellIndex}/start_of_column`}
@@ -127,6 +137,7 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     gap: 9,
     width: "100%",
+    alignItems: "center"
   },
   row: {
     flexDirection: "row",
