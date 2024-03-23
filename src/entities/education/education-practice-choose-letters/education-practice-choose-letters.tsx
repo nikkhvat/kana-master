@@ -74,7 +74,7 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
   useEffect(() => {
     if (selectedLetters.every((letter) => letter !== null)) {
       const answers = letters.map(
-        (letter, index) => letter === selectedLetters[index]?.letter
+        (letter, index) => letter?.toUpperCase() === selectedLetters[index]?.letter?.toUpperCase()
       );
 
       setTrueAnswers(answers);
@@ -89,7 +89,7 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
         }
         onFinish?.(hasError);
       }, TEST_DELAY);
-
+      
     }
   }, [selectedLetters]);
 
