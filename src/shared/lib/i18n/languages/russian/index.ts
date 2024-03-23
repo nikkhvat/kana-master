@@ -47,7 +47,7 @@ const Russian = {
 	},
 
 	testing: {
-		cardMode: "Тип карточек",
+		cardMode: "Карточки",
 		testMode: "Режим",
 		difficultyLevel: "Режим",
 		start: "Начать тестирование"
@@ -64,7 +64,7 @@ const Russian = {
 		start: "Начать",
 
 		choice: "Выбор",
-		wordBuilding: "Составить слово",
+		wordBuilding: "Составь слово",
 		findThePair: "Сопоставь пару",
 	},
 
@@ -91,8 +91,8 @@ const Russian = {
 		title: "Быстрый выбор",
 		confirm: "Подтвердить",
 
-		entriesInScope: "Доступный слогов",
-		availableWords: "Доступный слов",
+		entriesInScope: "Доступно слогов",
+		availableWords: "Доступно слов",
 	},
 
 	displayStatistics: {

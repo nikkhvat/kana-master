@@ -91,7 +91,7 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
 
     const displayKana = isKana ? t("kana.katakana") : isHira ? t("kana.hiragana") : t("kana.romanji");
 
-    return displayKana + ` (${getTypeById(symbol.id)})`;
+    return displayKana + ` (${getTypeById(symbol?.id)})`;
   };
 
 
