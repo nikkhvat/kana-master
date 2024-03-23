@@ -58,8 +58,6 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
 
 
   const init = () => {
-    console.log("TEST START");
-    
     const now = new Date().getTime();
     setTime(now);
     items = [];
@@ -83,7 +81,6 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
       mode
     });
 
-    console.log("PICK ANSWER, correctAnswer: ", correctAnswer);
     setTime(now);
   };
 
@@ -112,11 +109,6 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
   };
 
   const getResult = (): ResultInfo => {
-    console.log("MAKE GENERATE RESULT");
-    
-
-    console.log("items", JSON.stringify(items, null, 2));
-
     const fastesAnswer = findFastesAnswer(items);
     const slowestAnswer = findSlowestsAnswer(items);
 

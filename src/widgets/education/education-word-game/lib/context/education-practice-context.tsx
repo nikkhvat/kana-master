@@ -2,11 +2,15 @@ import React, { createContext, FC, PropsWithChildren, useContext, useState } fro
 
 import * as Haptics from "expo-haptics";
 
+import generateChoiceAnswer from "../helpers/generate-choice-answer";
+import generateFindThePair from "../helpers/generate-find-the-pair";
+import generateWordBuilding from "../helpers/generate-word-building";
+
 import { RootState } from "@/app/store";
-import { CardMode, KanaAlphabet, QuestionTypeBuildingWord, QuestionTypeChooseWord, QuestionTypeFindPairWord, TestMode } from "@/shared/constants/kana";
+import { CardMode, KanaAlphabet, TestMode, WordBuildingType } from "@/shared/constants/kana";
 import { ILetter, LettersKeys, lettersTableById } from "@/shared/data/lettersTable";
 import { Word } from "@/shared/data/words";
-import { getRandomLetter, shuffleArray } from "@/shared/helpers/letters";
+import { shuffleArray } from "@/shared/helpers/letters";
 import { getRandomWords } from "@/shared/helpers/words";
 import { AnyWordGameQuestion } from "@/shared/types/questions";
 
@@ -40,11 +44,6 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
   const [currentIndex, setQuestionIndex] = useState(0);
   const [questions, setQuestions] = useState<AnyWordGameQuestion[]>([]);
 
-  // Когда отвечаешь на вопрос вызываеться эта функция
-  // параметр trueSelected: правильный ли ответ
-  // callback передаёться
-  // > onFinishPractice - true если вопросы закончились
-  // > trueAnswer - true если вопросы был правильный 
   const submit = (
     trueSelected: boolean,
     callback?: (onFinishPractice: boolean, trueAnswer: boolean) => void,
@@ -61,11 +60,9 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
     }
   };
 
-  // Передаёться масив вопросов 
   const init = (questions: AnyWordGameQuestion[]) => {
     setQuestions(questions);
   };
-
 
   const generateWordQuestion = (
     word: Word,
@@ -82,126 +79,19 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
 
     switch (type) {
       case TestMode.Choice: {
-        const word1 = getRandomWords(
-          [word.romanji],
-          kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
-        );
-        const word2 = getRandomWords(
-          [word.romanji, word1.romanji],
-          kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
-        );
-        const word3 = getRandomWords(
-          [word.romanji, word1.romanji, word2.romanji],
-          kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
-        );
-
-        return {
-          type: QuestionTypeChooseWord,
-          word: word,
-          title: `Выбери раманджи для ${word.kana} (${word.translate})`,
-          questions: shuffleArray([
-            { text: word.romanji, key: word.romanji },
-            { text: word1.romanji, key: word1.romanji },
-            { text: word2.romanji, key: word2.romanji },
-            { text: word3.romanji, key: word3.romanji },
-          ]),
-          trueKey: word.romanji,
-        };
+        return generateChoiceAnswer({ word, kanaWords, hiraWords, kana });
       }
       case TestMode.WordBuilding: {
-
-        const shuffle = (mode === "romanji" ? word.romanji : word.kana).split("");
-
-        if (shuffle.length < 5) {
-          const lettersToAdd = 5 - shuffle.length;
-
-          if (mode === "romanji") {
-            for (let i = 0; i < lettersToAdd; i++) {
-              if (kana === KanaAlphabet.Hiragana) {
-                const randomLetter = getRandomLetter([hiraLetters]);
-
-                if (randomLetter !== null) shuffle.push(randomLetter.en);
-              } else {
-                const randomLetter = getRandomLetter([kanaLetters]);
-                if (randomLetter !== null) shuffle.push(randomLetter.en);
-              }
-            }
-          } else {
-            for (let i = 0; i < lettersToAdd; i++) {
-              if (kana === KanaAlphabet.Hiragana) {
-                const randomLetter = getRandomLetter([hiraLetters]);
-                if (randomLetter !== null) shuffle.push(randomLetter.hi);
-              } else {
-                const randomLetter = getRandomLetter([kanaLetters]);
-                if (randomLetter !== null) shuffle.push(randomLetter.ka);
-              }
-            }
-          }
-        }
-
-        return {
-          type: QuestionTypeBuildingWord,
-          title: `Выбери ${mode === "romanji"
-            ? "романджи"
-            : kana === KanaAlphabet.Hiragana
-              ? "хиригану"
-              : "катакану"
-            }`,
-          romanji: mode === "romanji" ? word.kana : word.romanji,
-          shuffle: shuffleArray(shuffle.map(item => item.toLowerCase())),
-          translate: word.translate,
-          kana: mode === "romanji" ? word.romanji : word.kana,
-        };
+        return generateWordBuilding({
+          word,
+          kanaLetters,
+          hiraLetters,
+          selectKana: mode === "romanji" ? WordBuildingType.Romanji : WordBuildingType.Kana,
+          selectKanaType: kana,
+        });
       }
       case TestMode.FindPair: {
-        const word1 = getRandomWords(
-          [word.romanji],
-          kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
-        );
-        const word2 = getRandomWords(
-          [word.romanji, word1.romanji],
-          kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
-        );
-        const word3 = getRandomWords(
-          [word.romanji, word1.romanji, word2.romanji],
-          kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
-        );
-
-        const kanaElements = [
-          word?.kana,
-          word1?.kana,
-          word2?.kana,
-          word3?.kana,
-        ];
-        const romanjiElements = [
-          word?.romanji,
-          word1?.romanji,
-          word2?.romanji,
-          word3?.romanji,
-        ];
-
-        kanaElements.sort(() => Math.random() - 0.5);
-        romanjiElements.sort(() => Math.random() - 0.5);
-
-        const shuffledPairs = kanaElements.map((kana, index) => {
-          return [
-            { title: kana, id: kana },
-            { title: romanjiElements[index], id: romanjiElements[index] },
-          ];
-        });
-
-        return {
-          type: QuestionTypeFindPairWord,
-          title: `Сопоставь ${kana === KanaAlphabet.Hiragana ? "хиригану" : "катакану"
-            } с романдзи.`,
-          pairs: shuffledPairs,
-          answers: [
-            [word?.kana, word?.romanji],
-            [word1?.kana, word1?.romanji],
-            [word2?.kana, word2?.romanji],
-            [word3?.kana, word3?.romanji],
-          ],
-        };
+        return generateFindThePair({ word, kanaWords, hiraWords, kana });
       }
     }
   };

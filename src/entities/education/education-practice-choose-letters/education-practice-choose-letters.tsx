@@ -1,19 +1,15 @@
 import React, { useEffect, useMemo, useState } from "react";
 
+import { useTranslation } from "react-i18next";
 import { View, Text, TouchableOpacity, Pressable, StyleSheet } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { TEST_DELAY } from "@/shared/constants/kana";
+import { KanaAlphabet, TEST_DELAY, WordBuildingType } from "@/shared/constants/kana";
+import { QuestionWordBuilding } from "@/shared/types/questions";
 import { RegistErrorProps } from "@/widgets/education/education-word-game/ui/education-practice";
 
 interface ChooseLettersProps {
-  title: string;
-
-  romanji: string;
-  shuffle: string[];
-  translate: string;
-
-  kana: string;
+  question: QuestionWordBuilding;
 
   onError?: (data: RegistErrorProps) => void;
   onFinish?: (hasError: boolean) => void;
@@ -21,26 +17,23 @@ interface ChooseLettersProps {
 
 
 const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
-  title,
-  romanji,
-  translate,
-  kana,
-  shuffle,
+  question,
   onFinish,
   onError
 }) => {
+  const { t } = useTranslation();
   const { colors } = useThemeContext();
 
-  const letters = useMemo(() => kana.split(""), [kana]);
+  const {
+    title,
+    buildingWord,
+    shaffledLetters,
+    translate,
+    selectKana,
+    selectKanaType,
+  } = question;
 
-  const [questionTitle, setTitle] = useState(`${title} ${romanji} (${translate})`);
-
-  const [shuffleLetters, setShuffleLetters] = useState(shuffle);
-
-  useEffect(() => {
-    setShuffleLetters(shuffle);
-    setTitle(`${title} ${romanji} (${translate})`);
-  }, [title, shuffle, romanji, translate]);
+  const letters = buildingWord.split("");
 
   const emptyLetters = useMemo(() => letters.map(() => null), [letters]);
 
@@ -72,6 +65,7 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
         element?.index === data.index && element.letter === data.letter
     );
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   function reset() {
     setSelectedLetters(emptyLetters);
     setTrueAnswers(emptyLetters);
@@ -85,25 +79,41 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
 
       setTrueAnswers(answers);
       const hasError = answers.some((answer) => !answer);
-      
+
       setTimeout(() => {
-        onError?.({
-          type: "building-word",
-          pair: [kana, romanji]
-        });
+        if (hasError) {
+          onError?.({
+            type: "building-word",
+            pair: [title, buildingWord]
+          });
+        }
         onFinish?.(hasError);
       }, TEST_DELAY);
-      
+
     }
   }, [selectedLetters]);
 
   useEffect(() => {
     reset();
-  }, [kana]);
+  }, [title]);
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.question, { color: colors.color4 }]}>{questionTitle}</Text>
+      <Text style={[styles.question, { color: colors.color4 }]}>
+        {t("common.select")} 
+        {" "}
+        {selectKana === WordBuildingType.Romanji
+          ? t("kana.romanji")?.toLowerCase()
+          : selectKanaType === KanaAlphabet.Hiragana
+            ? t("kana.hiragana")?.toLowerCase()
+            : t("kana.katakana")?.toLowerCase()}
+        {" "}
+        {t("common.for")}
+        {" "}
+        {title}
+        {" "}
+        ({translate})
+      </Text>
 
       <View style={styles.content}>
         <Pressable onPress={reset} style={styles.wordContainer}>
@@ -129,7 +139,7 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
         </Pressable>
 
         <View style={styles.chooseLettersContainer}>
-          {shuffleLetters.map((letter, index) => {
+          {shaffledLetters.map((letter, index) => {
             const data = { index: index, letter: letter };
             const selected = isSelected(data);
 
@@ -203,6 +213,7 @@ const styles = StyleSheet.create({
   },
   letter: {
     fontSize: 22,
+    textTransform: "uppercase",
   },
   chooseLettersContainer: {
     flexDirection: "row",
@@ -224,5 +235,6 @@ const styles = StyleSheet.create({
   },
   chooseLettersText: {
     fontSize: 22,
+    textTransform: "uppercase",
   },
 });

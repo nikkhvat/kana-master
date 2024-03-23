@@ -1,22 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 
+import { useTranslation } from "react-i18next";
 import { View, Text, StyleSheet } from "react-native";
 
 import FindPairItem from "@/entities/education/practice/find-pair/item/item";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { TEST_DELAY } from "@/shared/constants/kana";
+import { KanaAlphabet, TEST_DELAY } from "@/shared/constants/kana";
+import { QuestionFindPair } from "@/shared/types/questions";
 import { RegistErrorProps } from "@/widgets/education/education-word-game/ui/education-practice";
 
 interface EducationPracticeFindPairProps {
-  pairs: {
-    title: string;
-    id: number | string;
-  }[][];
-  answers: (string | number)[][];
   onCompleted?: (hasError: boolean) => void;
   onError?: (data: RegistErrorProps) => void;
-  title: string;
+  question: QuestionFindPair
 }
 
 type Item = {
@@ -26,12 +23,17 @@ type Item = {
 };
 
 const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
-  pairs,
-  answers,
+  question,
   onCompleted,
   onError,
-  title,
 }) => {
+
+  const { 
+    pairs,
+    kana,
+    answers,
+  } = question;
+  const { t } = useTranslation();
   const { colors } = useThemeContext();
 
   const [hasError, setHasError] = useState(false);
@@ -119,7 +121,18 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.question, {color: colors.color4}]}>{title}</Text>
+      <Text style={[styles.question, {color: colors.color4}]}>
+        {t("common.match")}
+        {" "}
+        {kana === KanaAlphabet.Hiragana 
+          ? t("kana.hiragana")?.toLowerCase()
+          : t("kana.katakana")?.toLowerCase()
+          }
+        {" "}
+        {t("common.with")}
+        {" "}
+        {t("kana.romanji")?.toLowerCase()}
+      </Text>
       <View style={styles.pairs}>
         {pairs.map((pair) => (
           <View key={pair[0].id} style={styles.row}>

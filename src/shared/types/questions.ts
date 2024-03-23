@@ -1,7 +1,7 @@
 import { ILetter } from "../data/lettersTable";
 import { Word } from "../data/words";
 
-import { CardMode, Kana, QuestionTypeBuildingWord, QuestionTypeChooseLetter, QuestionTypeChooseWord, QuestionTypeFindPairWord } from "@/shared/constants/kana";
+import { CardMode, Kana, KanaAlphabet, QuestionTypeBuildingWord, QuestionTypeChooseLetter, QuestionTypeChooseWord, QuestionTypeFindPairWord, WordBuildingType } from "@/shared/constants/kana";
 
 
 export type Question = {
@@ -26,17 +26,18 @@ export type QuestionWordBuilding = {
 	type: typeof QuestionTypeBuildingWord;
 
 	title: string;
-	romanji: string;
+	buildingWord: string;
+	shaffledLetters: string[];
 	translate: string;
-	kana: string;
-	shuffle: string[];
+	selectKana: WordBuildingType,
+	selectKanaType: KanaAlphabet,
 };
 
 export type QuestionFindPair = {
 	type: typeof QuestionTypeFindPairWord;
 
-	title: string
 	pairs: { title: string; id: string; }[][]
+	kana: KanaAlphabet
 	answers: string[][]
 };
 

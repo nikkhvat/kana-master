@@ -65,7 +65,7 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
 
   const lang = language === "ru" ? "ru" : "en";
 
-  const symbolLable = kana === Kana.English
+  const symbolLable = kana === Kana.Romanji
     ? symbol?.[lang] : kana === Kana.Hiragana
       ? symbol?.hi : symbol?.ka;
 

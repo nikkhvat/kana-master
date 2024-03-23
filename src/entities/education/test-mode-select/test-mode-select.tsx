@@ -93,9 +93,9 @@ const TestModeSelect: React.FC<CardModeSelectProps> = ({
             "slow",
           ]}
           translate={[
-            t("wordGame.timer.fast"),
-            t("wordGame.timer.medium"),
-            t("wordGame.timer.slow"),
+            t("practice.timer.fast"),
+            t("practice.timer.medium"),
+            t("practice.timer.slow"),
           ]}
           setActiveTab={setTimer as () => void} />}
     </>

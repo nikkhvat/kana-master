@@ -102,8 +102,6 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
       const item = items[i];
       
       if (item.correctAnswer) {
-        console.log("correctQuestions");
-        
         correctQuestions++;
       }
     }
@@ -118,9 +116,6 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
       incorrectFindThePair: removeDuplicates(errors.filter(prev => prev.type === "find-pair-word").map(item => ([item.pair[0], item.pair[1]]))),
       incorrectChoice: removeDuplicates(errors.filter(prev => prev.type === "choose-word").map(item => ([item.pair[0], item.pair[1]]))),
     };
-
-    console.log(JSON.stringify(data, null, 2));
-    
 
     return data;
   };

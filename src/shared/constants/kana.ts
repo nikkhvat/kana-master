@@ -27,12 +27,17 @@ export enum PracticeScreenMode {
 export enum Kana {
   Hiragana = "Hiragana",
   Katakana = "Katakana",
-  English = "English"
+  Romanji = "Romanji"
 }
 
 export enum KanaAlphabet {
   Hiragana = "hiragana",
   Katakana = "katakana",
+}
+
+export enum WordBuildingType {
+  Kana = "kana",
+  Romanji = "romanji"
 }
 
 export enum KanaSection {

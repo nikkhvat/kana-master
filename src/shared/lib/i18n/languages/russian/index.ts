@@ -3,7 +3,11 @@ const Russian = {
 		close: "Закрыть",
 		reset: "Сбросить",
 		next: "Дальше",
-		finish: "Закончить"
+		finish: "Закончить",
+		select: "Выбери",
+		match: "Сопоставь",
+		for: "для",
+		with: "с",
 	},
 
 	tabs: {
@@ -33,7 +37,13 @@ const Russian = {
 	practice: {
 		start: "Начать обучение",
 
-		question: "Вопрос"
+		question: "Вопрос",
+
+		timer: {
+			fast: "3с",
+			medium: "5с",
+			slow: "7с",
+		}
 	},
 
 	testing: {
@@ -55,13 +65,7 @@ const Russian = {
 
 		choice: "Выбор",
 		wordBuilding: "Составить слово",
-		findThePair: "Найти пару",
-
-		timer: {
-			fast: "3с",
-			medium: "5с",
-			slow: "7с",
-		}
+		findThePair: "Сопоставь пару",
 	},
 
 	kana: {

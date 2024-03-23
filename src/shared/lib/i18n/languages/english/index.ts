@@ -3,7 +3,11 @@ const English = {
 		close: "Close",
 		reset: "Reset",
 		next: "Next",
-		finish: "Finish"
+		finish: "Finish",
+		select: "Select",
+		match: "Match",
+		for: "for",
+		with: "with",
 	},
 
 	tabs: {
@@ -33,7 +37,13 @@ const English = {
 	practice: {
 		start: "Start",
 
-		question: "Question"
+		question: "Question",
+
+		timer: {
+			fast: "3s",
+			medium: "5s",
+			slow: "7s",
+		}
 	},
 
 	testing: {
@@ -54,14 +64,8 @@ const English = {
 		start: "Start",
 
 		choice: "Choice",
-		wordBuilding: "Word building",
-		findThePair: "Find the pair",
-
-		timer: {
-			fast: "3s",
-			medium: "5s",
-			slow: "7s",
-		}
+		wordBuilding: "Word Building",
+		findThePair: "Match The Pair",
 	},
 
 	kana: {

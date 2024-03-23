@@ -38,7 +38,6 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
   useKeepAwake();
 
   const dispatch = useAppDispatch();
-  const insets = useSafeAreaInsets();
   const { colors } = useThemeContext();
 
   useEffect(() => {
@@ -106,24 +105,13 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
       {/* Выбор пары (игра слов) */}
       {isFindPair &&
         <EducationPracticeFindPair
-          pairs={question.pairs}
-          answers={question.answers}
+          question={question}
           onCompleted={(isError) => onSubmit(!isError)}
           onError={registrError}
-          title={question.title}
         />}
 
       {/* Составить слово из предложенных букв (игра слов) */}
-      {isBuildingWord &&
-        <EducationPracticeChooseLetters
-          title={question.title}
-          romanji={question.romanji}
-          translate={question.translate}
-          kana={question.kana}
-          shuffle={question.shuffle}
-          onError={registrError}
-          onFinish={(isError) => onSubmit(!isError)}
-        />}
+      {isBuildingWord && <EducationPracticeChooseLetters question={question} onError={registrError} onFinish={(isError) => onSubmit(!isError)} />}
 
       {/* Составить слово из предложенных букв (игра слов) */}
       {isChooseWord &&

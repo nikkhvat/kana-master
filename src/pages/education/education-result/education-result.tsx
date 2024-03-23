@@ -101,7 +101,7 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
           <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.alpabet")}:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
             {result.alphabets.map(alphabet => 
-              alphabet === Kana.English 
+              alphabet === Kana.Romanji 
               ? t("kana.romanji") 
               : alphabet === Kana.Hiragana 
               ? t("kana.hiragana")

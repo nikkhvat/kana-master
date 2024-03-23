@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 
+import { useTranslation } from "react-i18next";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TEST_DELAY } from "@/shared/constants/kana";
 import { Word } from "@/shared/data/words";
 import { RegistErrorProps } from "@/widgets/education/education-word-game/ui/education-practice";
+
 
 interface EducationPracticeChooseValueProps {
   title: string;
@@ -24,6 +26,7 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
   onCompleted,
   onError,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useThemeContext();
 
   const [errors, setErrors] = useState([] as (string | number)[]);
@@ -81,7 +84,15 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.question, { color: colors.color4 }]}>{title}</Text>
+      <Text style={[styles.question, { color: colors.color4 }]}>
+        {t("common.select")}
+        {" "}
+        {t("kana.romanji")?.toLowerCase()}
+        {" "}
+        {t("common.for")}
+        {" "}
+        {title}
+      </Text>
 
       <View style={styles.columns}>
         {answers.map((answer) => (

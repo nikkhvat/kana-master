@@ -115,7 +115,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
             
             const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
             const kanaType  = type === CardMode.romajiToKatakana
-              ? Kana.English : Kana.Katakana;
+              ? Kana.Romanji : Kana.Katakana;
   
             questions.push({
               type: QuestionTypeChooseLetter,
@@ -146,7 +146,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
           if (letter !== undefined) {
             const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
             const kanaType = type === CardMode.romajiToHiragana
-              ? Kana.English : Kana.Hiragana;
+              ? Kana.Romanji : Kana.Hiragana;
             
             questions.push({
               type: QuestionTypeChooseLetter,
