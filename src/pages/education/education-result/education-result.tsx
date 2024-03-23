@@ -34,7 +34,7 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
     navigation.navigate("Root");
   };
 
-  const millisecondsToSeconds = (milliseconds: number) => (milliseconds / 10000).toFixed(1);
+  const millisecondsToSeconds = (milliseconds: number) => (milliseconds / 1000).toFixed(1);
 
   const { i18n: { language } } = useTranslation();
 
