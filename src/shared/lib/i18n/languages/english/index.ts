@@ -124,6 +124,13 @@ const English = {
 		incorrectChoice: "Incorrect choice answers",
 
 		done: "Done"
+	},
+
+	tooltip: {
+		syllablesSelectMoreThan5: "* Should be selected more than 5 syllables",
+		cardSelectAtLeastOne: "* At least one card type must be selected",
+		wordsSelectMoreThan10: "* Should be available more than 10 words",
+		modeSelectAtLeastOne: "* At least one mode must be selected",
 	}
 };
 

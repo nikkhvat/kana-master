@@ -124,6 +124,13 @@ const Russian = {
 		incorrectChoice: "Неверные ответы в выборе слов",
 
 		done: "Закончить"
+	},
+
+	tooltip: {
+		syllablesSelectMoreThan5: "* Должно быть выбранно больше 5 слогов",
+		cardSelectAtLeastOne: "* Должен быть выбран хотя бы один тип карточки",
+		wordsSelectMoreThan10: "* Должно быть доступно больше 10 слов",
+		modeSelectAtLeastOne: "* Должен быть выбран хотя бы один режим",
 	}
 };
 

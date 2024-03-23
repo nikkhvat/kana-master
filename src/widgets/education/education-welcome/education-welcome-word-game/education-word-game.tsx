@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
+import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 
 import { RootState } from "@/app/store";
 import KanaSelectedCard from "@/entities/education/education-selected-card/education-kana-selected-card";
@@ -21,6 +22,7 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
+  const { t } = useTranslation();
   const [mode, setMode] = useState<TestMode[]>([]);
 
   const selectedWords = useAppSelector((state: RootState) => state.kana.selectedWords);
@@ -54,16 +56,16 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
 
         {screenHeight <= 750 && <StartPracticeButton
           conditions={[
-            { condition: wordsCount > 10, text: "* Должно быть доступно больше 10 слов" },
-            { condition: mode.length > 0, text: "* Должен быть выбран хотя бы один режим" },
+            { condition: wordsCount > 10, text: t("tooltip.wordsSelectMoreThan10") },
+            { condition: mode.length > 0, text: t("tooltip.modeSelectAtLeastOne") },
           ]}
           onPress={toPractice} />}
       </ScrollView>
       {screenHeight > 750 && <StartPracticeButton
         absolute
         conditions={[
-          { condition: wordsCount > 10, text: "* Должно быть доступно больше 10 слов" },
-          { condition: mode.length > 0, text: "* Должен быть выбран хотя бы один режим" },
+          { condition: wordsCount > 10, text: t("tooltip.wordsSelectMoreThan10") },
+          { condition: mode.length > 0, text: t("tooltip.modeSelectAtLeastOne") },
         ]}
         onPress={toPractice} />}
     </View>

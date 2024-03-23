@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
+import { useTranslation } from "react-i18next";
 import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 
 import { RootState } from "@/app/store";
@@ -12,6 +13,7 @@ import { CardMode, DifficultyLevelType } from "@/shared/constants/kana";
 import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 
+
 type PracticeNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
 interface PracticeProps {
@@ -21,6 +23,8 @@ interface PracticeProps {
 const screenWidth = Dimensions.get("window").width;
 
 const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
+  const { t } = useTranslation();
+  
   const letters = useAppSelector((state: RootState) => state.kana.selected);
 
   const [cardsMode, setCardMode] = useState<CardMode[]>([]);
@@ -75,8 +79,8 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
 
         <StartPracticeButton 
           conditions={[
-            { condition: selectedLetters >= 5, text: "* Должно быть выбранно больше 5 символов" },
-            { condition: cardsMode.length > 0, text: "* Должен быть выбран хотя бы один тип карточки" },
+            { condition: selectedLetters >= 5, text: t("tooltip.syllablesSelectMoreThan5") },
+            { condition: cardsMode.length > 0, text: t("tooltip.cardSelectAtLeastOne") },
           ]} 
           onPress={toPractice} />
       </ScrollView>
