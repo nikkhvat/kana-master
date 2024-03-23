@@ -34,7 +34,16 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
     navigation.navigate("Root");
   };
 
-  const millisecondsToSeconds = (milliseconds: number) => (milliseconds / 1000).toFixed(1);
+  const millisecondsToSeconds = (milliseconds: number) => {
+    const totalSeconds = milliseconds / 1000;
+    if (totalSeconds >= 60) {
+      const minutes = Math.floor(totalSeconds / 60);
+      const remainingSeconds = totalSeconds % 60;
+      return `${minutes.toFixed(0)} ${t("result.min")} ${remainingSeconds.toFixed(0)} ${t("result.sec")}`;
+    } else {
+      return `${totalSeconds.toFixed(0)} ${t("result.sec")}`;
+    }
+  };
 
   const { i18n: { language } } = useTranslation();
 
@@ -86,9 +95,8 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
           </View>
           <Text style={[containerStyles.statsSubTime, { color: colors.color3 }]}>
             {millisecondsToSeconds(result.totalTime)} 
-            {" "}{t("result.sec")}{" "}
-            ({millisecondsToSeconds(result.avgTime)} 
-            {" "}{t("result.sec")} / {t("result.question")})
+            {" "}
+            ({millisecondsToSeconds(result.avgTime)} / {t("result.question")?.toLocaleLowerCase()})
           </Text>
         </View>
       </View>
@@ -112,14 +120,14 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
           <Text style={[containerStyles.detailsCardTitle, { color: colors.color3}]} >{t("result.fastestAnswer")}:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
             {getKeyByKana(result.fastesAnswer.answer, result.fastesAnswer.type)}:
-            {" "}{millisecondsToSeconds(result.fastesAnswer.time)} {t("result.sec")}
+            {" "}{millisecondsToSeconds(result.fastesAnswer.time)}
           </Text>
         </View>}
         {result.type === "RESULT_PRACTICE" && <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
           <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.slowestAnswer")}:</Text>
           <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
             {getKeyByKana(result.slowestAnswer.answer, result.slowestAnswer.type)}:
-            {" "}{millisecondsToSeconds(result.slowestAnswer.time)} {t("result.sec")}
+            {" "}{millisecondsToSeconds(result.slowestAnswer.time)}
           </Text>
         </View>}
         {(result.type === "RESULT_PRACTICE" && result.incorrect.length > 0) &&
