@@ -3,8 +3,9 @@ import React, { useMemo, useState } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import SoundLetter from "@/entities/kana/sound-letter/sound-letter";
 import Symbol from "@/entities/kana/symbol/symbol";
@@ -82,6 +83,9 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
     <>
       {isDrawSymbol === false ?
         <View style={[styles.container, { backgroundColor: colors.color1 }]}>
+          <Pressable style={styles.close} onPress={navigation.goBack} >
+            <Icon name={"close"} size={24} color={colors.color4} />
+          </Pressable>
           {letter !== null && <View style={styles.titleContainer}>
             <Text style={[styles.title, { color: colors.color4 }]}>
               {letterKana === KanaAlphabet.Katakana ? t("kana.katakana") : t("kana.hiragana")}{" "}
@@ -209,4 +213,11 @@ const styles = StyleSheet.create({
     marginTop: 15,
     gap: 15
   },
+  close: {
+    marginTop: 5,
+    marginLeft: 10,
+    position: "absolute",
+    padding: 10,
+    zIndex: 9,
+  }
 });

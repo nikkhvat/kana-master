@@ -102,7 +102,8 @@ const DrawKana: React.FC<DrawKanaProps> = ({ letter, kana, back }) => {
 
       <View style={styles.titleContainer}>
         <Text style={[styles.title, { color: colors.color4 }]}>
-          {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")} {" "}
+          {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")}
+          {" "}
           ({getTypeById(letter?.id)})</Text>
         <Text style={[styles.subTitle, { color: colors.color4 }]}>{letter?.[lang].toUpperCase()}</Text>
       </View>
