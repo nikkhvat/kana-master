@@ -119,7 +119,7 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
 
       onToggleSome(letters, alphabet);
     },
-    []
+    [onToggleSome]
   );
 
   const letters = useMemo(

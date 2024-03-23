@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { InitialState, toggleLetterAction, toggleLettersAction } from "./types";
 
-import { Kana, KanaMode, KanaSection, LETTERS_COUNT } from "@/shared/constants/kana";
+import { Kana, KanaAlphabet, KanaMode, KanaSection, LETTERS_COUNT } from "@/shared/constants/kana";
 import { LettersKeys, baseFlatLettersId, dakuonFlatLettersId, handakuonFlatLettersId, lettersTableById, yoonFlatLettersId } from "@/shared/data/lettersTable";
 import { words } from "@/shared/data/words";
 import { findWordsFromArray } from "@/shared/helpers/word";
@@ -73,7 +73,9 @@ export const kanaSlice = createSlice({
       const { alphabet, kana, letter } = action.payload;
       let local = state.selected[alphabet][kana];
 
-      const selectedLettersSet = new Set(state.selected[alphabet][kana]);
+      const kanaKey = kana === KanaAlphabet.Hiragana ? "hiragana" : "katakana";
+
+      const selectedLettersSet = new Set(state.selected[alphabet][kanaKey]);
 
       let isActive = true;
 
@@ -93,7 +95,7 @@ export const kanaSlice = createSlice({
         }
       });
 
-      state.selected[alphabet][kana] = local;
+      state.selected[alphabet][kanaKey] = local;
       updateSelectedLetters(state);
     },
     toggleLetter: (state, action: toggleLetterAction) => {
