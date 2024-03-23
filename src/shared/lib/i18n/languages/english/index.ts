@@ -59,7 +59,6 @@ const English = {
 	},
 
 	wordGame: {
-		cardMode: "Card mode",
 		mode: "Mode",
 		start: "Start",
 

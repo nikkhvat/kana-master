@@ -12,7 +12,7 @@ import { ILetter, LettersKeys, lettersTableById } from "@/shared/data/lettersTab
 import { Word } from "@/shared/data/words";
 import { shuffleArray } from "@/shared/helpers/letters";
 import { getRandomWords } from "@/shared/helpers/words";
-import { AnyWordGameQuestion } from "@/shared/types/questions";
+import { AnyWordGameQuestion, Maybe } from "@/shared/types/questions";
 
 interface generateQuestionsProps {
   selectedLetters: RootState["kana"]["selected"]
@@ -73,7 +73,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
     hiraWords: Word[],
     kanaLetters: ILetter[],
     hiraLetters: ILetter[],
-  ): AnyWordGameQuestion => {
+  ): Maybe<AnyWordGameQuestion> => {
     const type =
       questionTypes[Math.floor(Math.random() * questionTypes.length)];
 
@@ -127,12 +127,12 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
 
     const questionTypes: CardMode[] = [];
 
-    if (kanaWords.length > 10) {
+    if (kanaWords.length >= 10) {
       questionTypes.push(CardMode.katakanaToRomaji);
       questionTypes.push(CardMode.romajiToKatakana);
     }
 
-    if (hiraWords.length > 10) {
+    if (hiraWords.length >= 10) {
       questionTypes.push(CardMode.hiraganaToRomaji);
       questionTypes.push(CardMode.romajiToHiragana);
     }
@@ -148,32 +148,32 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
 
     for (let i = 0; i < questionsCount; i++) {
       const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
-
-      const wordList = (type === CardMode.hiraganaToRomaji || type === CardMode.romajiToHiragana) ? hiraWords : kanaWords;
+      
       const alphabet = (type === CardMode.hiraganaToRomaji || type === CardMode.romajiToHiragana) ? KanaAlphabet.Hiragana : KanaAlphabet.Katakana;
       const mode = (type === CardMode.hiraganaToRomaji || type === CardMode.katakanaToRomaji) ? "kana" : "romanji";
 
-      
-      const word = getRandomWords(addedQuestionHira, wordList);
-      if (word !== null) {
+      const word = getRandomWords(addedQuestionHira, [hiraWords, kanaWords].flat());
 
+      if (word !== null && word !== undefined) {
         if (type === CardMode.hiraganaToRomaji || type === CardMode.romajiToHiragana) {
           addedQuestionHira.push(word?.romanji);
         } else {
           addedQuestionKana.push(word?.romanji);
         }
 
-        questions.push(
-          generateWordQuestion(
-            word,
-            cardTypes,
-            alphabet,
-            mode,
-            kanaWords,
-            hiraWords,
-            kanaLetters as ILetter[],
-            hiraLetters as ILetter[])
-          );
+        const question = generateWordQuestion(
+          word,
+          cardTypes,
+          alphabet,
+          mode,
+          kanaWords,
+          hiraWords,
+          kanaLetters as ILetter[],
+          hiraLetters as ILetter[]);
+        
+        if (question !== null) {
+          questions.push(question);
+        }
       }
     }
 

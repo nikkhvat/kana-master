@@ -21,11 +21,11 @@ const generateWordBuilding = ({
   selectKanaType,
 }: GenerateWordBuildingProps): QuestionWordBuilding => {
   const originalWord = selectKana === WordBuildingType.Romanji
-    ? word.kana
-    : word.romanji;
+    ? word?.kana
+    : word?.romanji;
   const originalSelect = selectKana === WordBuildingType.Romanji
-    ? word.romanji
-    : word.kana;
+    ? word?.romanji
+    : word?.kana;
 
   const needToAddLength = 5 - originalWord.length;
   const shaffledLetters = originalSelect.split("");

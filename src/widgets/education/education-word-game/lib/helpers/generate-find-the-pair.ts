@@ -1,7 +1,7 @@
 import { KanaAlphabet, QuestionTypeFindPairWord } from "@/shared/constants/kana";
 import { Word } from "@/shared/data/words";
 import { getRandomWords } from "@/shared/helpers/words";
-import { QuestionFindPair } from "@/shared/types/questions";
+import { Maybe, QuestionFindPair } from "@/shared/types/questions";
 
 interface GenerateFindThePairProps {
   word: Word,
@@ -16,19 +16,14 @@ const generateFindThePair = ({
   kanaWords, 
   hiraWords,
   kana,
-}: GenerateFindThePairProps): QuestionFindPair => {
-  const word1 = getRandomWords(
-    [word.romanji],
-    kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
-  );
-  const word2 = getRandomWords(
-    [word.romanji, word1.romanji],
-    kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
-  );
-  const word3 = getRandomWords(
-    [word.romanji, word1.romanji, word2.romanji],
-    kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
-  );
+}: GenerateFindThePairProps): Maybe<QuestionFindPair> => {
+  const words = kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords;
+
+  if (words.length === 0) return null;
+
+  const word1 = getRandomWords([word.romanji], words);
+  const word2 = getRandomWords([word.romanji, word1.romanji], words);
+  const word3 = getRandomWords([word.romanji, word1.romanji, word2.romanji], words);
 
   const kanaElements = [
     word?.kana,

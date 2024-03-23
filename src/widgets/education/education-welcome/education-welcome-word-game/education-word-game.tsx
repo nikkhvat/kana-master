@@ -27,8 +27,8 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
 
   const selectedWords = useAppSelector((state: RootState) => state.kana.selectedWords);
 
-  const isHira = selectedWords.hiragana.length > 10;
-  const isKata = selectedWords.katakana.length > 10;
+  const isHira = selectedWords.hiragana.length >= 10;
+  const isKata = selectedWords.katakana.length >= 10;
 
   const wordsCount = selectedWords.hiragana.length + selectedWords.katakana.length;
 
@@ -56,7 +56,7 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
 
         {screenHeight <= 750 && <StartPracticeButton
           conditions={[
-            { condition: wordsCount > 10, text: t("tooltip.wordsSelectMoreThan10") },
+            { condition: wordsCount >= 10, text: t("tooltip.wordsSelectMoreThan10") },
             { condition: mode.length > 0, text: t("tooltip.modeSelectAtLeastOne") },
           ]}
           onPress={toPractice} />}
@@ -64,7 +64,7 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
       {screenHeight > 750 && <StartPracticeButton
         absolute
         conditions={[
-          { condition: wordsCount > 10, text: t("tooltip.wordsSelectMoreThan10") },
+          { condition: wordsCount >= 10, text: t("tooltip.wordsSelectMoreThan10") },
           { condition: mode.length > 0, text: t("tooltip.modeSelectAtLeastOne") },
         ]}
         onPress={toPractice} />}

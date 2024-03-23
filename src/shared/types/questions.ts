@@ -3,6 +3,7 @@ import { Word } from "../data/words";
 
 import { CardMode, Kana, KanaAlphabet, QuestionTypeBuildingWord, QuestionTypeChooseLetter, QuestionTypeChooseWord, QuestionTypeFindPairWord, WordBuildingType } from "@/shared/constants/kana";
 
+export type Maybe<T> = T | null;
 
 export type Question = {
 	type: typeof QuestionTypeChooseLetter;

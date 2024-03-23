@@ -2,7 +2,7 @@ import { KanaAlphabet, QuestionTypeChooseWord } from "@/shared/constants/kana";
 import { Word } from "@/shared/data/words";
 import { shuffleArray } from "@/shared/helpers/letters";
 import { getRandomWords } from "@/shared/helpers/words";
-import { QuestionChoice } from "@/shared/types/questions";
+import { Maybe, QuestionChoice } from "@/shared/types/questions";
 
 interface GenerateChoiceAnswerProps {
   word: Word,
@@ -17,19 +17,14 @@ const generateChoiceAnswer = ({
   kanaWords, 
   hiraWords,
   kana,
-}: GenerateChoiceAnswerProps): QuestionChoice => {
-  const word1 = getRandomWords(
-    [word.romanji],
-    kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
-  );
-  const word2 = getRandomWords(
-    [word.romanji, word1.romanji],
-    kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
-  );
-  const word3 = getRandomWords(
-    [word.romanji, word1.romanji, word2.romanji],
-    kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords
-  );
+}: GenerateChoiceAnswerProps): Maybe<QuestionChoice> => {
+  const words = kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords;
+
+  if (words.length === 0) return null;
+
+  const word1 = getRandomWords([word.romanji], words);
+  const word2 = getRandomWords([word.romanji, word1.romanji], words);
+  const word3 = getRandomWords([word.romanji, word1.romanji, word2.romanji], words);
 
   return {
     type: QuestionTypeChooseWord,
