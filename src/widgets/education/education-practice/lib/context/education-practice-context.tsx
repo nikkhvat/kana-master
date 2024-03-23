@@ -49,12 +49,13 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
   ) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
+    
     if (currentIndex > questions.length - 1) return;
-
+    
+    setQuestionIndex((prev) => prev + 1);
     if (currentIndex === questions.length - 1) {
       callback?.(true, trueSelected);
     } else {
-      setQuestionIndex((prev) => prev + 1);
       callback?.(false, trueSelected);
     }
   };

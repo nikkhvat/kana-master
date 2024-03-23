@@ -9,6 +9,7 @@ interface EducationPracticeTimerProps {
   onTimerEnd?: () => void;
   initial: number;
   currentIndex: number;
+  questions: number;
   customStyles?: Record<string, string | number>;
 }
 
@@ -21,6 +22,7 @@ const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
   initial = 5,
   onTimerEnd,
   currentIndex,
+  questions,
   customStyles = {}
 }) => {
   const { colors } = useThemeContext();
@@ -47,8 +49,10 @@ const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
 
   useEffect(() => {
     if (timeLeft === -1) {
-      onTimerEnd?.();
-      set(initial);
+      if (currentIndex < questions) {
+        onTimerEnd?.();
+        set(initial);
+      }
     }
 
     const intervalId = setInterval(() => {

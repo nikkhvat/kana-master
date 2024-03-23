@@ -112,8 +112,7 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
   const endTime = () => onSubmitTestQuestion(false);
 
   const onSubmitTestQuestion = (correctAnswer: boolean, pickedAnswer?: ILetter) => {
-    onSubmit(correctAnswer);
-    if (currentIndex + 1 !== questions.length) {
+    if (currentIndex < questions.length) {
       pickAnswer({
         correctAnswer: correctAnswer,
         kana: question.kana,
@@ -122,6 +121,7 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
         pickedAnswer,
         mode: question.mode,
       });
+      onSubmit(correctAnswer);
     }
   };
 
@@ -142,6 +142,7 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
             <EducationPracticeTimer
               customStyles={{}}
               currentIndex={currentIndex}
+              questions={questions.length}
               onTimerEnd={endTime}
               initial={TIMER_SPEED}
             />}
