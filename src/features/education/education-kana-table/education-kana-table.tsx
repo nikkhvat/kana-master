@@ -106,7 +106,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
             />
           </View>
           {(type !== "base" ? row : row[0].en === "YA" ? [row[0], null, row[1], null, row[2]] :
-            row[0].en === "WA" ? [row[0], null, null, null, row[1]] :
+            row[0].en === "WA" ? [row[0], row[1], null, row[2], row[3]] :
             row[0].en === "N" ? [null, null, row[0], null, null] : row).map((cell, cellIndex) => (
               <Cell 
                 key={`${rowIndex}/${cellIndex}`}

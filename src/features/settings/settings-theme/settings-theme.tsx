@@ -30,23 +30,23 @@ const SettingsTheme: React.FC = () => {
       <Switcher
         activeTab={themeTab}
         options={[
-          "dark",
           "light",
+          "dark",
           "auto",
         ]}
         setActiveTab={onUpdateTheme}
         translate={[
           <Icon
-            key={"moon"}
-            name={"moon"}
-            size={24}
-            color={colors._theme === "light" ? colors.color4 : colors.color4}
-          />,
-          <Icon
             key={"sun"}
             name={"sun"}
             size={24}
             color={colors._theme === "dark" ? colors.color4 : colors.color4}
+          />,
+          <Icon
+            key={"moon"}
+            name={"moon"}
+            size={24}
+            color={colors._theme === "light" ? colors.color4 : colors.color4}
           />,
           t("profile.auto"),
         ]} />

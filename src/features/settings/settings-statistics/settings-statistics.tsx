@@ -28,13 +28,13 @@ const SettingsStatistics: React.FC = () => {
       <Switcher
         activeTab={isEnabled}
         options={[
-          "en",
-          "off"
+          "off",
+          "en"
         ]}
         setActiveTab={() => dispatch(toggleStatistics())}
         translate={[
-          t("displayStatistics.turnOn"),
           t("displayStatistics.turnOff"),
+          t("displayStatistics.turnOn"),
         ]} />
     </>
   );

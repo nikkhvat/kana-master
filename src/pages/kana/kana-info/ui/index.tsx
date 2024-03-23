@@ -119,7 +119,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
                 />}
               <Button
                 customStyles={{ flex: 1, marginTop: 0 }}
-                title={`${letterKana === KanaAlphabet.Katakana ? t("kana.katakana") : t("kana.hiragana") } →`}
+                title={`${letterKana === KanaAlphabet.Hiragana ? t("kana.katakana") : t("kana.hiragana") } →`}
                 onClick={() => {
                   setLetterKana(letterKana === KanaAlphabet.Hiragana ? KanaAlphabet.Katakana : KanaAlphabet.Hiragana);
                 }}

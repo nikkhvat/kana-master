@@ -115,7 +115,7 @@ const Layout = () => {
                 options={{
                   header: () => <View></View>,
                 }}
-                />
+              />
             </Stack.Group>
           </Stack.Navigator>
         </NavigationContainer>

@@ -6,7 +6,7 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import AnswerCard from "@/entities/education/practice/select-answer/answer-card/answer-card";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { CardMode, Kana, TEST_DELAY } from "@/shared/constants/kana";
-import { ILetter } from "@/shared/data/lettersTable";
+import { ILetter, dakuonFlatLettersId, handakuonFlatLettersId, yoonFlatLettersId } from "@/shared/data/lettersTable";
 import { Question } from "@/shared/types/questions";
 interface EducationPracticeSelectAnswersProps {
   question: Question
@@ -76,18 +76,32 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
     return isKana ? answer.ka : isHira ? answer.hi : answer[lang];
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getTypeById = (id: any) => {
+    if (yoonFlatLettersId.includes(id)) return t("kana.yoon");
+    if (handakuonFlatLettersId.includes(id)) return t("kana.handakuon");
+    if (dakuonFlatLettersId.includes(id)) return t("kana.dakuon");
+
+    return t("kana.basic");
+  };
+
   const getSubTitle = () => {
     const isHira = (question?.mode === CardMode.hiraganaToKatakana || question?.mode === CardMode.hiraganaToRomaji);
     const isKana = (question?.mode === CardMode.katakanaToHiragana || question?.mode === CardMode.katakanaToRomaji);
 
-    return isKana ? t("kana.katakana") : isHira ? t("kana.hiragana") : t("kana.romanji");
+    const displayKana = isKana ? t("kana.katakana") : isHira ? t("kana.hiragana") : t("kana.romanji");
+
+    return displayKana + ` (${getTypeById(symbol.id)})`;
   };
+
 
   return (
     <>
       <View>
         <Text style={[styles.symbol, { color: colors.color4 }]}>{symbolLable}</Text>
-        <Text style={[styles.subText, { color: colors.color3 }]}>{getSubTitle()}</Text>
+        <Text style={[styles.subText, { color: colors.color3 }]}>
+          {getSubTitle()}
+        </Text>
       </View>
       <View style={styles.container}>
         {answers?.length > 0 && answers.map(answer => (

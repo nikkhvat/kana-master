@@ -84,7 +84,7 @@ const Russian = {
 	selectKana: {
 		words: "Слов",
 		letters: "Слогов",
-		nothingSelected: "Нечего не выбранно"
+		nothingSelected: "Ничего не выбрано"
 	},
 
 	quickSelectKana: {

@@ -75,26 +75,12 @@ const EducationWelcomePage: React.FC<HomeScreenProps> = ({ navigation }) => {
     <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.background }]}>
       <Text style={[styles.title, { color: colors.color4 }]}>{t("tabs.learning")}</Text>
       <View style={styles.header}>
-        <Animated.View style={[
-          styles.tabLine,
-          {
-            backgroundColor: colors.color4,
-            transform: [
-              {
-                translateX: scrollX.interpolate({
-                  inputRange: [0, 2],
-                  outputRange: [0, (screenWidth - 90)],
-                }),
-              },
-            ],
-          }]} >
-
-        </Animated.View>
         {screens.map((item, index) => (
           <TouchableOpacity key={index} style={styles.tab} onPress={() => handleTabPress(item.val)}>
-            <Text style={[styles.tabText, { color: item.val === screen ? colors.color4 : colors.color3, width: 90 }]}>
+            <Text style={[styles.tabText, { color: item.val === screen ? colors.color4 : colors.color3 }]}>
               {item.title}
             </Text>
+            {item.val === screen && <View style={[styles.tabLine, { backgroundColor: colors.color4 }]} />}
           </TouchableOpacity>
         ))}
       </View>
@@ -146,9 +132,9 @@ const styles = StyleSheet.create({
   },
   tabLine: {
     position: "absolute",
-    width: 32,
     height: 2,
-    top: 18,
+    width: 32,
+    top: 4,
   },
   content: {
     gap: 0

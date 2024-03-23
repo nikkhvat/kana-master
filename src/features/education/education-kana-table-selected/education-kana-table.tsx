@@ -170,7 +170,7 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
             </View>
             {(
               row.items[0].data.en === "YA" ? [row.items[0], null, row.items[1], null, row.items[2]] :
-                row.items[0].data.en === "WA" ? [row.items[0], null, null, null, row.items[1]] :
+                row.items[0].data.en === "WA" ? [row.items[0], row.items[1], null, row.items[2], row.items[3]] :
                   row.items[0].data.en === "N" ? [null, null, row.items[0], null, null]
                     : row.items).map((cell, cellIndex) => {
                       return (
