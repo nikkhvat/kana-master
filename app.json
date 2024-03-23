@@ -8,23 +8,38 @@
     "githubUrl": "https://github.com/nikkhvat/kana-master",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#1F1F1F"
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": false,
       "userInterfaceStyle": "automatic",
-      "bundleIdentifier": "pro.khvat.kanamaster"
+      "bundleIdentifier": "pro.khvat.kanamaster",
+      "splash": {
+        "image": "./assets/splash.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#FFFFFF",
+        "dark": {
+          "image": "./assets/splash-dark.png",
+          "resizeMode": "cover",
+          "backgroundColor": "#1F1F1F"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#1F1F1F"
+      },
+      "splash": {
+        "image": "./assets/splash.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#FFFFFF",
+        "dark": {
+          "image": "./assets/splash-dark.png",
+          "resizeMode": "cover",
+          "backgroundColor": "#1F1F1F"
+        }
       }
     },
     "web": {
