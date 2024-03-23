@@ -47,10 +47,8 @@ const EducationKanaQuickSelection: React.FC<EducationKanaQuickSelectionProps> = 
   );
 
   useEffect(() => {
-    if (SHOW_ALLOWED_WORDS) {
-      dispatch(countAvailableWords());
-    }
-  }, [SHOW_ALLOWED_WORDS, dispatch, selected]);
+    dispatch(countAvailableWords());
+  }, [dispatch, selected]);
 
 
   const IS_KANA_SELECTED =
