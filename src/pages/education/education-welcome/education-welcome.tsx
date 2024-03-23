@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
@@ -19,16 +19,19 @@ interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
 }
 
+enum Screen {
+  Learning,
+  Practice,
+  WordBuilding
+}
+
 const EducationWelcomePage: React.FC<HomeScreenProps> = ({ navigation }) => {
-  enum Screen {
-    Learning,
-    Practice,
-    WordBuilding
-  }
-
+  const { colors } = useThemeContext();
   const { t } = useTranslation();
-
+  
   const [screen, setScreen] = useState(Screen.Learning);
+
+  const scrollX = useRef(new Animated.Value(0)).current;
 
   const screens = [
     { title: t("learning.practice"), val: Screen.Learning },
@@ -46,28 +49,52 @@ const EducationWelcomePage: React.FC<HomeScreenProps> = ({ navigation }) => {
     switch (index) {
       case 0:
         setScreen(Screen.Learning);
+        Animated.spring(scrollX, {
+          toValue: index,
+          useNativeDriver: true,
+        }).start();
         break;
       case 1:
         setScreen(Screen.Practice);
+        Animated.spring(scrollX, {
+          toValue: index,
+          useNativeDriver: true,
+        }).start();
         break;
       case 2:
-        setScreen(Screen.WordBuilding);
+        setScreen(Screen.WordBuilding); 
+        Animated.spring(scrollX, {
+          toValue: index,
+          useNativeDriver: true,
+        }).start();
         break;
     }
   };
-
-  const { colors } = useThemeContext();
 
   return (
     <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.background }]}>
       <Text style={[styles.title, { color: colors.color4 }]}>{t("tabs.learning")}</Text>
       <View style={styles.header}>
+        <Animated.View style={[
+          styles.tabLine,
+          {
+            backgroundColor: colors.color4,
+            transform: [
+              {
+                translateX: scrollX.interpolate({
+                  inputRange: [0, 2],
+                  outputRange: [0, (screenWidth - 90)],
+                }),
+              },
+            ],
+          }]} >
+
+        </Animated.View>
         {screens.map((item, index) => (
           <TouchableOpacity key={index} style={styles.tab} onPress={() => handleTabPress(item.val)}>
-            <Text style={[styles.tabText, { color: item.val === screen ? colors.color4 : colors.color3 }]}>
+            <Text style={[styles.tabText, { color: item.val === screen ? colors.color4 : colors.color3, width: 90 }]}>
               {item.title}
             </Text>
-            {item.val === screen && <View style={[styles.tabLine, { backgroundColor: colors.color4 }]} />}
           </TouchableOpacity>
         ))}
       </View>
@@ -119,9 +146,9 @@ const styles = StyleSheet.create({
   },
   tabLine: {
     position: "absolute",
-    height: 2,
     width: 32,
-    top: 4,
+    height: 2,
+    top: 18,
   },
   content: {
     gap: 0
