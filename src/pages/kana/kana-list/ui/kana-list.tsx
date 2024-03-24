@@ -10,6 +10,7 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
 import { LettersKeys } from "@/shared/data/lettersTable";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
+import PageTitle from "@/shared/ui/page-title/page-title";
 import Switcher from "@/shared/ui/switcher/switcher";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
@@ -47,7 +48,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.color1 }]}>
-      <Text style={[styles.title, { color: colors.color4 }]}>{t("tabs.kana")}</Text>
+      <PageTitle style={styles.title} >{t("tabs.kana")}</PageTitle>
       <View style={styles.switcherContainer}>
         <Switcher<KanaAlphabet>
           activeTab={activeTab}
@@ -62,7 +63,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
           ]}
         />
       </View>
-      <View style={[styles.lineContainer, { top: insets.top + 165, backgroundColor: colors.color2 }]} />
+      <View style={[styles.lineContainer, { top: insets.top + 155, backgroundColor: colors.color2 }]} />
       <SectionList
         sections={sections}
         keyExtractor={(item, index) => item + index}
@@ -98,11 +99,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
-    fontSize: 28,
-    fontWeight: "700",
     marginLeft: 20,
-    marginTop: 20,
-    marginBottom: 21,
   },
   nameContainer: {
     paddingLeft: 20,

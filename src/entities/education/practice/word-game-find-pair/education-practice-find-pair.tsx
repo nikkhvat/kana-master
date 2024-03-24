@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View, Text, StyleSheet } from "react-native";
 
-import FindPairItem from "@/entities/education/practice/find-pair/item/item";
+import FindPairItem from "@/entities/education/practice/word-game-find-pair/item/item";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet, TEST_DELAY } from "@/shared/constants/kana";
 import { QuestionFindPair } from "@/shared/types/questions";

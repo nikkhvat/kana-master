@@ -8,15 +8,15 @@ import { EducationPracticeContextProvider } from "@/widgets/education/education-
 import { EducationStatisticContextProvider } from "@/widgets/education/education-practice/lib/context/education-statistic-context";
 import EducationPractice from "@/widgets/education/education-practice/ui/education-practice";
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Practice">;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, "Practice">;
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "EducationPractice">;
+type LearnScreenRouteProp = RouteProp<RootStackParamList, "EducationPractice">;
 
 interface LearnScreenProps {
   route: LearnScreenRouteProp
   navigation: HomeScreenNavigationProp
 }
 
-function EducationPracticePage({ route, navigation }: LearnScreenProps) {
+function TestingPage({ route, navigation }: LearnScreenProps) {
 
   return (
     <EducationPracticeContextProvider>
@@ -29,4 +29,4 @@ function EducationPracticePage({ route, navigation }: LearnScreenProps) {
   );
 }
 
-export default EducationPracticePage;
+export default TestingPage;

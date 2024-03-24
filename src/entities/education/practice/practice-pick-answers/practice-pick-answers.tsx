@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 
-import AnswerCard from "@/entities/education/practice/select-answer/answer-card/answer-card";
+import AnswerCard from "./answer-card/answer-card";
+
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { CardMode, Kana, TEST_DELAY } from "@/shared/constants/kana";
 import { ILetter, dakuonFlatLettersId, handakuonFlatLettersId, yoonFlatLettersId } from "@/shared/data/lettersTable";

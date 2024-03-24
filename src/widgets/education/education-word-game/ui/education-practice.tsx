@@ -4,18 +4,17 @@ import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useKeepAwake } from "expo-keep-awake";
 import { StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useEducationPracticeContext } from "../lib/context/education-practice-context";
 import { useEducationStatisticContext } from "../lib/context/education-statistic-context";
 
-import SafeLayout from "@/app/safeLayout";
+import SafeLayout from "@/app/layouts/safeLayout";
 import { RootState } from "@/app/store";
-import EducationPracticeChooseLetters from "@/entities/education/education-practice-choose-letters/education-practice-choose-letters";
-import EducationPracticeChooseValue from "@/entities/education/education-practice-choose-value/education-practice-choose-value";
-import EducationPracticeFindPair from "@/entities/education/education-practice-find-pair/education-practice-find-pair";
+import EducationPracticeChooseLetters from "@/entities/education/practice/word-game-build-word/word-game-build-word";
+import EducationPracticeChooseValue from "@/entities/education/practice/word-game-choose-value/word-game-choose-value";
+import EducationPracticeFindPair from "@/entities/education/practice/word-game-find-pair/education-practice-find-pair";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { countAvailableWords } from "@/pages/education/kana-quick-selection/model/slice";
+import { countAvailableWords } from "@/pages/kana/kana-quick-selection/model/slice";
 import { QuestionTypeBuildingWord, QuestionTypeChooseWord, QuestionTypeFindPairWord, TEST_DELAY } from "@/shared/constants/kana";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
@@ -91,6 +90,7 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
 
   return (
     <SafeLayout
+      additionalPaddingTop={20}
       style={[
         styles.container,
         {

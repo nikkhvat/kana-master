@@ -13,6 +13,7 @@ const English = {
 	tabs: {
 		profile: "Settings",
 		learning: "Learning",
+		practice: "Practice",
 		kana: "Kana",
 	},
 
@@ -40,9 +41,9 @@ const English = {
 		question: "Question",
 
 		timer: {
-			fast: "3s",
-			medium: "5s",
-			slow: "7s",
+			fast: "3 sec",
+			medium: "5 sec",
+			slow: "7 sec",
 		}
 	},
 
@@ -104,8 +105,8 @@ const English = {
 		title: "Practice complete",
 		score: "Score",
 
-		sec: "sec.",
-		min: "min.",
+		sec: "sec",
+		min: "min",
 		
 		question: "Question",
 

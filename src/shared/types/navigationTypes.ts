@@ -7,11 +7,12 @@ import { ResultInfoWordGame } from "@/widgets/education/education-word-game/lib/
 export type RootStackParamList = {
   Root: undefined;
   Home: undefined;
-  Practice: { 
+  EducationPractice: { 
     keysCardModeState: CardMode[], 
     keysDifficultyLevelState: DifficultyLevelType[]
     timerDeration?: "fast" | "medium" | "slow"
    };
+  Practice: undefined,
   EducationWordGame: {
     keysModeState: TestMode[],
   };

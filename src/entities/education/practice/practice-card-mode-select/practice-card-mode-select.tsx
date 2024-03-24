@@ -54,7 +54,7 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
 
   const icon = (type: CardType) => <Icon 
     name={"chevron-right"} 
-    size={16}
+    size={20}
     color={type === CardType.Active ? colors.color5 :
       type === CardType.Incative ? colors.color4 : colors.color3} />;
 
@@ -184,7 +184,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: "700",
-    fontSize: 15
+    fontSize: 15,
+    width: 13
   },
   line: {
     flexDirection: "row",

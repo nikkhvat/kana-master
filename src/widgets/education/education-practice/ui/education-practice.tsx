@@ -8,21 +8,21 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import { useEducationPracticeContext } from "../lib/context/education-practice-context";
 import { useEducationStatisticContext } from "../lib/context/education-statistic-context";
 
-import SafeLayout from "@/app/safeLayout";
+import SafeLayout from "@/app/layouts/safeLayout";
 import { RootState } from "@/app/store";
-import EducationPracticeSelectAnswers from "@/entities/education/education-practice-select-answers/education-practice-select-answers";
-import EducationPracticeTimer from "@/entities/education/education-practice-timer/education-practice-timer";
+import EducationPracticeSelectAnswers from "@/entities/education/practice/practice-pick-answers/practice-pick-answers";
+import EducationPracticeTimer from "@/entities/education/practice/practice-timer/practice-timer";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { countAvailableWords } from "@/pages/education/kana-quick-selection/model/slice";
 import { recalculate } from "@/pages/kana/kana-list/model/slice";
+import { countAvailableWords } from "@/pages/kana/kana-quick-selection/model/slice";
 import { CardMode, DifficultyLevelType, KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Practice">;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, "Practice">;
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "EducationPractice">;
+type LearnScreenRouteProp = RouteProp<RootStackParamList, "EducationPractice">;
 
 interface LearnScreenProps {
   route: LearnScreenRouteProp
@@ -127,7 +127,7 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
   const question = questions[currentIndex];
 
   return (
-    <SafeLayout style={[styles.container, { 
+    <SafeLayout additionalPaddingTop={20} style={[styles.container, { 
       backgroundColor: colors.color1,
       gap: screenHeight < 700 ? 0 : 22
     } ]}>

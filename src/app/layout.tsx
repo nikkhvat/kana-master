@@ -11,15 +11,15 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import EducationDraw from "@/pages/education/education-draw/education-draw";
-import EducationLearning from "@/pages/education/education-learning/ui/education-learning";
-import EducationPracticePage from "@/pages/education/education-practice/ui/education-practice";
-import EducationResultPage from "@/pages/education/education-result/education-result";
-import EducationWelcome from "@/pages/education/education-welcome/education-welcome";
-import EducationWordGamePage from "@/pages/education/education-word-game/ui/education-word-game";
-import EducationKanaQuickSelectionPage from "@/pages/education/kana-quick-selection/kana-quick-selection";
-import EducationKanaSelection from "@/pages/education/kana-select/ui";
+import LearningList from "@/pages/education/learning/list/learning-list";
+import EducationResultPage from "@/pages/education/practice/education-result/education-result";
+import EducationWordGamePage from "@/pages/education/practice/education-word-game/ui/education-word-game";
+import PracticeWelcomePage from "@/pages/education/practice/practice-welcome/practice-welcome";
+import TestingPage from "@/pages/education/practice/testing/ui/testing";
 import KanaInfo from "@/pages/kana/kana-info/ui";
 import Kana from "@/pages/kana/kana-list/ui/kana-list";
+import EducationKanaQuickSelectionPage from "@/pages/kana/kana-quick-selection/kana-quick-selection";
+import EducationKanaSelection from "@/pages/kana/kana-select/ui";
 import ProfilePage from "@/pages/profile/profile";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
@@ -39,6 +39,7 @@ const headerSettings = {
 
 const icons = {
   Learning: "school-outline",
+  Practice: "list-status",
   Settings: "cog-outline",
   Kana: "syllabary-hiragana",
 };
@@ -63,7 +64,8 @@ function BottomTabNavigator() {
         }
       })}
     >
-      <Tab.Screen name="Learning" component={EducationWelcome} options={{ title: t("tabs.learning"), headerTransparent: true, headerTitle: "", }} />
+      <Tab.Screen name="Learning" component={LearningList} options={{ title: t("tabs.learning"), headerTransparent: true, headerTitle: "", }} />
+      <Tab.Screen name="Practice" component={PracticeWelcomePage} options={{ title: t("tabs.practice"), headerTransparent: true, headerTitle: "", }} />
       <Tab.Screen name="Kana" component={Kana} options={{ title: t("tabs.kana"), headerTransparent: true, headerTitle: "", lazy: true }} />
       <Tab.Screen name="Settings" component={ProfilePage} options={{ title: t("tabs.profile"), headerTransparent: true, headerTitle: "", }} />
     </Tab.Navigator>
@@ -97,9 +99,8 @@ const Layout = () => {
         <Stack.Navigator>
           <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
           <Stack.Screen name="ChooseAlphabet" component={EducationKanaQuickSelectionPage} options={{ headerShown: false }} />
-          <Stack.Screen name="Practice" component={EducationPracticePage} options={{ title: "Practice", ...headerSettings }} />
+          <Stack.Screen name="EducationPractice" component={TestingPage} options={{ title: "Practice", ...headerSettings }} />
           <Stack.Screen name="EducationWordGame" component={EducationWordGamePage} options={{ title: "Word Game", ...headerSettings }} />
-          <Stack.Screen name="LearningPage" component={EducationLearning} options={{ title: "Learning", ...headerSettings }} />
           <Stack.Screen name="DrawKana" component={EducationDraw} options={{ headerShown: false }} />
           <Stack.Screen name="Results" component={EducationResultPage} options={{ title: "Results", ...headerSettings }} />
           <Stack.Group screenOptions={{

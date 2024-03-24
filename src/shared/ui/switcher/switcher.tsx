@@ -79,7 +79,8 @@ export default Switcher;
 
 const styles = StyleSheet.create({
   content: {
-    width: "100%"
+    width: "100%",
+    height: 52
   },
   tabs: {
     padding: 2,
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    height: 46,
+    height: 48,
     borderRadius: 10,
   },
   tabText: {

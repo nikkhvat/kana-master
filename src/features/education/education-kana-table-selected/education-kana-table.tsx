@@ -6,7 +6,7 @@ import { Dimensions, View, ScrollView, StyleSheet } from "react-native";
 import { RootState } from "@/app/store";
 import Cell from "@/entities/kana/cell/cell";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { toggleLetter, toggleSome } from "@/pages/education/kana-quick-selection/model/slice";
+import { toggleLetter, toggleSome } from "@/pages/kana/kana-quick-selection/model/slice";
 import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter, dakuon, handakuon, base, yoon } from "@/shared/data/lettersTable";
 import { getLettersWithStatuses } from "@/shared/helpers/kana";

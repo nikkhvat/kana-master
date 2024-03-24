@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import EducationKanaTableSelected from "@/features/education/education-kana-table-selected/education-kana-table";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { resetKanaSelected } from "@/pages/education/kana-quick-selection/model/slice";
+import { resetKanaSelected } from "@/pages/kana/kana-quick-selection/model/slice";
 import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
 import { useAppDispatch } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";

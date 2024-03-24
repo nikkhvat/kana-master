@@ -5,10 +5,10 @@ import { useTranslation } from "react-i18next";
 import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 
 import { RootState } from "@/app/store";
-import CardModeSelect from "@/entities/education/card-mode-select/card-mode-select";
-import EducationKanaSelectedCard from "@/entities/education/education-selected-card/education-kana-selected-card";
+import EducationKanaSelectedCard from "@/entities/education/practice/education-select-letters/education-select-letters";
+import CardModeSelect from "@/entities/education/practice/practice-card-mode-select/practice-card-mode-select";
+import TestModeSelect from "@/entities/education/practice/practice-test-mode-select/practice-test-mode-select";
 import StartPracticeButton from "@/entities/education/start-practice-button/start-practice-button";
-import TestModeSelect from "@/entities/education/test-mode-select/test-mode-select";
 import { CardMode, DifficultyLevelType } from "@/shared/constants/kana";
 import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
@@ -51,11 +51,15 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
     screen: "Practice",
   });
 
-  const toPractice = () => navigation.navigate("Practice", {
-    keysCardModeState: cardsMode,
-    keysDifficultyLevelState: testMode,
-    timerDeration: timerDeration,
-  });
+  const toPractice = () => {
+    console.log("TO PRACTICE");
+    
+    navigation.navigate("EducationPractice", {
+      keysCardModeState: cardsMode,
+      keysDifficultyLevelState: testMode,
+      timerDeration: timerDeration,
+    });
+  };
 
   return (
     <View style={[styles.container, { width: screenWidth - 40 }]}>

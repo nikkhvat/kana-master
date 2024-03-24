@@ -3,12 +3,13 @@ import React, { useMemo, useState } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import SoundLetter from "@/entities/kana/sound-letter/sound-letter";
 import Symbol from "@/entities/kana/symbol/symbol";
+import SymbolHeader from "@/entities/kana/symbol-header/symbol-header";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter, LettersKeys, baseFlatLettersId, dakuonFlatLettersId, handakuonFlatLettersId, lettersTableById, yoonFlatLettersId } from "@/shared/data/lettersTable";
@@ -59,21 +60,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
   };
 
   const letter = lettersTableById[letterId as LettersKeys];
-
   const { colors } = useThemeContext();
-
-  const { i18n: { language } } = useTranslation();
-
-  const lang = language === "ru" ? "ru" : "en";
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const getTypeById = (id: any) => {
-    if (yoonFlatLettersId.includes(id)) return t("kana.yoon");
-    if (handakuonFlatLettersId.includes(id)) return t("kana.handakuon");
-    if (dakuonFlatLettersId.includes(id)) return t("kana.dakuon");
-
-    return t("kana.basic");
-  };
 
   const drawSymbol = () => {
     setIsDrawSymbol(true);
@@ -86,14 +73,9 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
           <Pressable style={styles.close} onPress={navigation.goBack} >
             <Icon name={"close"} size={24} color={colors.color4} />
           </Pressable>
-          {letter !== null && <View style={styles.titleContainer}>
-            <Text style={[styles.title, { color: colors.color4 }]}>
-              {letterKana === KanaAlphabet.Katakana ? t("kana.katakana") : t("kana.hiragana")}{" "}
-              ({getTypeById(letter.id)})
-            </Text>
-            <Text style={[styles.subTitle, { color: colors.color4 }]}>
-              {letter?.[lang].toUpperCase()}
-            </Text>
+          
+          {letter !== null && <View style={styles.symbolContainer}>
+            <SymbolHeader kana={letterKana} letter={letter as ILetter} />
             <Symbol id={letter.id} kana={letterKana} />
           </View>}
 
@@ -171,9 +153,9 @@ export default KanaInfo;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
+    paddingTop: 20,
     justifyContent: "flex-start",
-    paddingBottom: 30
+    paddingBottom: 20
   },
   header: {
     flexDirection: "row",
@@ -182,23 +164,13 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
-  titleContainer: {
+  symbolContainer: {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     paddingLeft: 20,
     paddingRight: 20,
-    paddingTop: 30,
-  },
-  title: {
-    fontSize: 17,
-    fontWeight: "700",
-    textTransform: "capitalize"
-  },
-  subTitle: {
-    fontSize: 34,
-    fontWeight: "700",
-    marginTop: 15,
+    paddingTop: 24,
   },
   buttonContainer: {
     flex: 1,
@@ -214,7 +186,7 @@ const styles = StyleSheet.create({
     gap: 15
   },
   close: {
-    marginTop: 5,
+    marginTop: 10,
     marginLeft: 10,
     position: "absolute",
     padding: 10,

@@ -10,6 +10,7 @@ interface SafeLayoutProps {
   disableRight?: boolean
   style?: StyleProp<ViewStyle>
   children: ReactNode;
+  additionalPaddingTop?: number
 }
 
 const SafeLayout: React.FC<SafeLayoutProps> = ({
@@ -17,6 +18,7 @@ const SafeLayout: React.FC<SafeLayoutProps> = ({
   disableTop = false,
   disableLeft = false,
   disableRight = false,
+  additionalPaddingTop = 0,
   style = {},
   children
 }) => {
@@ -25,7 +27,7 @@ const SafeLayout: React.FC<SafeLayoutProps> = ({
   return (
     <View style={[
       { 
-        paddingTop: !disableTop ? insets.top + 20 : 0, 
+        paddingTop: !disableTop ? insets.top + additionalPaddingTop : 0, 
         paddingBottom: !disableButton ? insets.bottom + 20 : 0,
         paddingLeft: !disableLeft ? insets.left + 20 : 0,
         paddingRight: !disableRight ? insets.right + 20 : 0

@@ -5,9 +5,9 @@ import { useTranslation } from "react-i18next";
 import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
 
 import { RootState } from "@/app/store";
-import KanaSelectedCard from "@/entities/education/education-selected-card/education-kana-selected-card";
+import KanaSelectedCard from "@/entities/education/practice/education-select-letters/education-select-letters";
+import WordGameModeSelect from "@/entities/education/practice/word-game-mode-select/word-game-mode-select";
 import StartPracticeButton from "@/entities/education/start-practice-button/start-practice-button";
-import WordGameModeSelect from "@/entities/education/word-game-mode-select/word-game-mode-select";
 import { TestMode } from "@/shared/constants/kana";
 import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";

@@ -44,7 +44,7 @@ export default SettingsStatistics;
 
 const styles = StyleSheet.create({
   title: {
-    marginTop: 30,
+    marginTop: 21,
     fontSize: 17,
     fontWeight: "700",
     marginBottom: 15,
