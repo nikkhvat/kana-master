@@ -67,9 +67,7 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
   }, []);
 
   // Вызываеться после ответа на вопрос
-  const finishCallback = (onFinishPractice: boolean, trueAnswer: boolean) => {
-    pickAnswer({ correctAnswer: trueAnswer });
-
+  const finishCallback = (onFinishPractice: boolean) => {
     setTimeout(() => {
       if (onFinishPractice) {
         const result = getResult();
@@ -78,7 +76,12 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
     }, TEST_DELAY);
   };
 
-  const onSubmit = (trueAnswer: boolean) => submit(trueAnswer, finishCallback);
+  const onSubmit = (trueAnswer: boolean) => {
+    if (currentIndex < questions.length) {
+      pickAnswer({ correctAnswer: trueAnswer });
+      submit(trueAnswer, finishCallback);
+    }
+  };
 
   const question = questions[currentIndex];
 
@@ -111,7 +114,11 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
         />}
 
       {/* Составить слово из предложенных букв (игра слов) */}
-      {isBuildingWord && <EducationPracticeChooseLetters question={question} onError={registrError} onFinish={(isError) => onSubmit(!isError)} />}
+      {isBuildingWord && 
+        <EducationPracticeChooseLetters 
+          question={question}
+          onError={registrError}
+          onFinish={(isError) => onSubmit(!isError)} />}
 
       {/* Составить слово из предложенных букв (игра слов) */}
       {isChooseWord &&

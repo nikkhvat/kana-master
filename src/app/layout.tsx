@@ -92,33 +92,36 @@ const Layout = () => {
   return (
     <>
       <StatusBar barStyle={colors._theme === "dark" ? "light-content" : "dark-content"} />
-        <NavigationContainer
-          theme={colors._theme === "dark" ? { dark: true, colors: darkTheme } : { dark: false, colors: lightTheme }} >
-          <Stack.Navigator>
-            <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-            <Stack.Screen name="ChooseAlphabet" component={EducationKanaQuickSelectionPage} options={{ headerShown: false }} />
-            <Stack.Screen name="Practice" component={EducationPracticePage} options={{ title: "Practice", ...headerSettings }} />
-            <Stack.Screen name="EducationWordGame" component={EducationWordGamePage} options={{ title: "Word Game", ...headerSettings }} />
-            <Stack.Screen name="LearningPage" component={EducationLearning} options={{ title: "Learning", ...headerSettings }} />
-            <Stack.Screen name="DrawKana" component={EducationDraw} options={{ headerShown: false }} />
-            <Stack.Screen name="Results" component={EducationResultPage} options={{ title: "Results", ...headerSettings }} />
-            <Stack.Group screenOptions={{ presentation: "modal" }}>
-              <Stack.Screen 
-                name="KanaInfo" 
-                component={KanaInfo}
-                options={{
-                  header: () => <View></View>,
-                }} />
-              <Stack.Screen 
-                name="KanaSelect" 
-                component={EducationKanaSelection}
-                options={{
-                  header: () => <View></View>,
-                }}
-              />
-            </Stack.Group>
-          </Stack.Navigator>
-        </NavigationContainer>
+      <NavigationContainer
+        theme={colors._theme === "dark" ? { dark: true, colors: darkTheme } : { dark: false, colors: lightTheme }} >
+        <Stack.Navigator>
+          <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+          <Stack.Screen name="ChooseAlphabet" component={EducationKanaQuickSelectionPage} options={{ headerShown: false }} />
+          <Stack.Screen name="Practice" component={EducationPracticePage} options={{ title: "Practice", ...headerSettings }} />
+          <Stack.Screen name="EducationWordGame" component={EducationWordGamePage} options={{ title: "Word Game", ...headerSettings }} />
+          <Stack.Screen name="LearningPage" component={EducationLearning} options={{ title: "Learning", ...headerSettings }} />
+          <Stack.Screen name="DrawKana" component={EducationDraw} options={{ headerShown: false }} />
+          <Stack.Screen name="Results" component={EducationResultPage} options={{ title: "Results", ...headerSettings }} />
+          <Stack.Group screenOptions={{
+            presentation: "modal",
+            orientation: "portrait"
+          }}>
+            <Stack.Screen 
+              name="KanaInfo" 
+              component={KanaInfo}
+              options={{
+                header: () => <View></View>,
+              }} />
+            <Stack.Screen 
+              name="KanaSelect" 
+              component={EducationKanaSelection}
+              options={{
+                header: () => <View></View>,
+              }}
+            />
+          </Stack.Group>
+        </Stack.Navigator>
+      </NavigationContainer>
     </>
   );
 };

@@ -59,7 +59,6 @@ const Russian = {
 	},
 
 	wordGame: {
-		cardMode: "Тип карточек",
 		mode: "Режим",
 		start: "Начать",
 
