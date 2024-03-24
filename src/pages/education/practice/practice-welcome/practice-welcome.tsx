@@ -46,17 +46,19 @@ const PracticeWelcomePage: React.FC<HomeScreenProps> = ({ navigation }) => {
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <PageTitle>{t("tabs.practice")}</PageTitle>
-      <Switcher<Screen>
-        activeTab={screen}
-        options={[
-          Screen.Testing,
-          Screen.WordBuilding,
-        ]}
-        translate={[
-          t("learning.testing"),
-          t("learning.wordGame"),
-        ]}
-        setActiveTab={setScreen} />
+      <View style={{ paddingBottom: 20 }} >
+        <Switcher<Screen>
+          activeTab={screen}
+          options={[
+            Screen.Testing,
+            Screen.WordBuilding,
+          ]}
+          translate={[
+            t("learning.testing"),
+            t("learning.wordGame"),
+          ]}
+          setActiveTab={setScreen} />
+      </View>
       <ScrollView
         horizontal
         pagingEnabled

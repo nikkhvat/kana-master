@@ -76,7 +76,9 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
           
           {letter !== null && <View style={styles.symbolContainer}>
             <SymbolHeader kana={letterKana} letter={letter as ILetter} />
-            <Symbol id={letter.id} kana={letterKana} />
+            <View style={{marginTop: 35}} >
+              <Symbol id={letter.id} kana={letterKana} />
+            </View>
           </View>}
 
           {letter !== null && <View style={styles.buttonContainer}>
@@ -153,9 +155,8 @@ export default KanaInfo;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 20,
+    paddingVertical: 20,
     justifyContent: "flex-start",
-    paddingBottom: 20
   },
   header: {
     flexDirection: "row",

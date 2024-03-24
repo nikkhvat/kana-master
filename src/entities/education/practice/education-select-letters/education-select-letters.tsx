@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingBottom: 15,
     position: "relative",
-    marginTop: 20,
     paddingLeft: 15,
     paddingRight: 15,
   },

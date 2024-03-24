@@ -51,9 +51,7 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
     screen: "Practice",
   });
 
-  const toPractice = () => {
-    console.log("TO PRACTICE");
-    
+  const toPractice = () => {    
     navigation.navigate("EducationPractice", {
       keysCardModeState: cardsMode,
       keysDifficultyLevelState: testMode,
