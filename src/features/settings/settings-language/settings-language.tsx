@@ -6,33 +6,24 @@ import { StyleSheet, Text, View } from "react-native";
 
 import LanguageButton from "@/entities/profile/language-button/language-button";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { LanguageKeys, languageList } from "@/shared/constants/language";
 
 const SettingsLanguage: React.FC = () => {
   const { colors } = useThemeContext();  
 
   const { t, i18n } = useTranslation();
 
-  const setLanguage = async (lang: string) => {
+  const setLanguage = async (lang: LanguageKeys) => {
     await AsyncStorage.setItem("lang", lang);
     i18n.changeLanguage(lang);
   };
-
-  const langs = [
-    { title: "English", key: "en" },
-    { title: "Español", key: "es" }, // es
-    { title: "Français", key: "fr" }, // fr
-    { title: "Deutsch", key: "de" }, // de
-    { title: "Italiano", key: "it" }, // it
-    { title: "Русский", key: "ru" },
-  ];
-
 
   return (
     <>
       <Text style={[styles.title, { color: colors.color4 }]}>{t("profile.language")}</Text>
 
       <View style={styles.sectionButtonsColumn}>
-        {langs.map(lang => (
+        {languageList.map(lang => (
           <LanguageButton
             key={lang.key}
             langKey={lang.key}

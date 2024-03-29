@@ -13,6 +13,7 @@ const Russian = {
 	tabs: {
 		profile: "Настройки",
 		learning: "Обучение",
+		practice: "Практика",
 		kana: "Кана",
 	},
 
@@ -28,6 +29,11 @@ const Russian = {
 		language: "Язык приложения"
 	},
 
+	lessons: {
+		start: "Начать",
+		title: "Урок"
+	},
+
 	learning: {
 		practice: "Практика",
 		testing: "Тестирование",
@@ -40,9 +46,9 @@ const Russian = {
 		question: "Вопрос",
 
 		timer: {
-			fast: "3с",
-			medium: "5с",
-			slow: "7с",
+			fast: "3 сек",
+			medium: "5 сек",
+			slow: "7 сек",
 		}
 	},
 
@@ -104,8 +110,8 @@ const Russian = {
 		title: "Практика окончена",
 		score: "Счёт",
 
-		sec: "cек.",
-		min: "мин.",
+		sec: "cек",
+		min: "мин",
 
 		question: "вопрос",
 

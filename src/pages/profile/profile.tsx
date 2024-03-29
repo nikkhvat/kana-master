@@ -1,13 +1,14 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { Dimensions, StyleSheet, Text, View, ScrollView } from "react-native";
+import { Dimensions, StyleSheet, View, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import SettingsLanguage from "@/features/settings/settings-language/settings-language";
 import SettingsStatistics from "@/features/settings/settings-statistics/settings-statistics";
 import SettingsTheme from "@/features/settings/settings-theme/settings-theme";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import PageTitle from "@/shared/ui/page-title/page-title";
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -18,7 +19,7 @@ const ProfilePage: React.FC = () => {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.color1 }]}>
-      <Text style={[styles.title, { color: colors.color4 }]}>{t("tabs.profile")}</Text>
+      <PageTitle style={styles.title} >{t("tabs.profile")}</PageTitle>
 
       <ScrollView contentContainerStyle={styles.scroll} >
         <SettingsStatistics />
@@ -40,10 +41,6 @@ const styles = StyleSheet.create({
     paddingBottom: 80,
   },
   title: {
-    fontSize: 28,
-    fontWeight: "700",
-    marginTop: 20,
-    marginBottom: 10,
     marginLeft: 20
   },
 });

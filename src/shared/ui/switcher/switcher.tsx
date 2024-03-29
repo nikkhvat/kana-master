@@ -3,6 +3,7 @@ import React, {useEffect, useRef } from "react";
 import { View, Text, StyleSheet, Animated, Pressable, Dimensions } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { KanaAlphabet } from "@/shared/constants/kana";
 
 interface SwitcherProps<T extends string > {
   activeTab: T;
@@ -79,7 +80,8 @@ export default Switcher;
 
 const styles = StyleSheet.create({
   content: {
-    width: "100%"
+    width: "100%",
+    height: 52
   },
   tabs: {
     padding: 2,
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    height: 46,
+    height: 48,
     borderRadius: 10,
   },
   tabText: {
