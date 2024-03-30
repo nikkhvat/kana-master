@@ -1,4 +1,4 @@
 
 
 export const TABLET_WIDTH = 500;
-export const TABLET_PADDING = 90;
+export const TABLET_PADDING = 60;
