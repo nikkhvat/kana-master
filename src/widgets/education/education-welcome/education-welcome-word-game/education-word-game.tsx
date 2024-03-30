@@ -8,7 +8,9 @@ import { RootState } from "@/app/store";
 import KanaSelectedCard, { CardType } from "@/entities/education/practice/education-select-letters/education-select-letters";
 import WordGameModeSelect from "@/entities/education/practice/word-game-mode-select/word-game-mode-select";
 import StartPracticeButton from "@/entities/education/start-practice-button/start-practice-button";
+import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
 import { TestMode } from "@/shared/constants/kana";
+import { verticalScale } from "@/shared/helpers/metrics";
 import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 
@@ -41,7 +43,7 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
   });
 
   return (
-    <View style={[styles.container, { width: screenWidth - 40 }]}>
+    <View style={[styles.container, { width: screenWidth - 40 - (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING * 2) : 0) }]}>
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} >
         <KanaSelectedCard 
           imageSource={CardType.WordGame} 

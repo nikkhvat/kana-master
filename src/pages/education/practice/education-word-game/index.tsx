@@ -7,6 +7,7 @@ import { EducationPracticeContextProvider } from "./lib/context/education-practi
 import { EducationStatisticContextProvider } from "./lib/context/education-statistic-context";
 import EducationWordGame from "./ui/education-practice";
 
+import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "EducationWordGame">;
@@ -22,9 +23,11 @@ function EducationWordGamePage({ route, navigation }: LearnScreenProps) {
   return (
     <EducationPracticeContextProvider>
       <EducationStatisticContextProvider>
+        <AdaptiveLayout style={{ flex: 1 }} >
         <EducationWordGame 
           navigation={navigation} 
           route={route} />
+        </AdaptiveLayout>
       </EducationStatisticContextProvider>
     </EducationPracticeContextProvider>
   );

@@ -5,6 +5,7 @@ import { Dimensions, View, StyleSheet } from "react-native";
 
 import Cell from "@/entities/kana/cell/cell";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { TABLET_WIDTH } from "@/shared/constants/app";
 import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
 import { dakuon, handakuon, base, yoon, LettersKeys, ILetter } from "@/shared/data/lettersTable";
 import { useAppSelector } from "@/shared/model/hooks";
@@ -16,7 +17,7 @@ interface EducationKanaTableProps {
 }
 
 const screenWidth = Dimensions.get("window").width;
-const screenAdaptiveWidth = screenWidth > 500 ? screenWidth * 0.75 : screenWidth;
+const screenAdaptiveWidth = screenWidth > TABLET_WIDTH ? screenWidth * 0.75 : screenWidth;
 const itemWidth = (screenAdaptiveWidth / 6) - 14;
 const itemWidthLong = (screenAdaptiveWidth / 3) - (itemWidth / 3) - 23;
 

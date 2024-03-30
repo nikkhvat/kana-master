@@ -20,7 +20,7 @@ interface EducationKanaTableProps {
 }
 
 const screenWidth = Dimensions.get("window").width;
-const screenAdaptiveWidth = screenWidth > 500 ? screenWidth * 0.75 : screenWidth;
+const screenAdaptiveWidth = screenWidth > 500 ? screenWidth * 0.68 : screenWidth;
 const itemWidth = (screenAdaptiveWidth / 6) - 15;
 const itemWidthLong = (screenAdaptiveWidth / 3) - (itemWidth / 3) - 23;
 

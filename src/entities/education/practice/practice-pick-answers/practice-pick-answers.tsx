@@ -6,8 +6,10 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import AnswerCard from "./answer-card/answer-card";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
 import { CardMode, Kana, TEST_DELAY } from "@/shared/constants/kana";
 import { ILetter, dakuonFlatLettersId, handakuonFlatLettersId, yoonFlatLettersId } from "@/shared/data/lettersTable";
+import { verticalScale } from "@/shared/helpers/metrics";
 import { Question } from "@/shared/types/questions";
 interface EducationPracticeSelectAnswersProps {
   question: Question
@@ -56,7 +58,8 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
   const isCorrectAnswer = (id: string): boolean => id === corrected;
   const isInCorrectAnswer = (id: string): boolean => errors.includes(id);
 
-  const widthCard = (screenWidth - (20 * 2) - 15) / 2;
+  const width = screenWidth - (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING * 2) : 0) - (20 * 2);
+  const widthCard = ((width - 15)) / 2;
 
   const kana = question?.kana;
   const symbol = question?.symbol;

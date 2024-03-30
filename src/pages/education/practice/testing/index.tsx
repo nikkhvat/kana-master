@@ -7,6 +7,7 @@ import { EducationPracticeContextProvider } from "./lib/context/education-practi
 import { EducationStatisticContextProvider } from "./lib/context/education-statistic-context";
 import EducationPractice from "./ui/education-practice";
 
+import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "EducationPractice">;
@@ -22,9 +23,11 @@ function TestingPage({ route, navigation }: LearnScreenProps) {
   return (
     <EducationPracticeContextProvider>
       <EducationStatisticContextProvider>
-        <EducationPractice 
-          navigation={navigation} 
-          route={route} />
+        <AdaptiveLayout style={{flex: 1}} >
+          <EducationPractice 
+            navigation={navigation} 
+            route={route} />
+        </AdaptiveLayout>
       </EducationStatisticContextProvider>
     </EducationPracticeContextProvider>
   );

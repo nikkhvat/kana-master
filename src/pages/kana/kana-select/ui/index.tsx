@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { View, Pressable, Text, SectionList, StyleSheet } from "react-native";
+import { View, Text, SectionList, StyleSheet, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import EducationKanaTableSelected from "@/features/education/education-kana-table-selected/education-kana-table";
@@ -37,12 +37,12 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ navigation }) => {
   useEffect(() => {
     navigation.setOptions({
       title: activeTab === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana"),
-      headerLeft: () => <Pressable onPress={navigation.goBack} style={{ padding: 14, margin: -14 }}>
+      headerLeft: () => <TouchableOpacity onPress={navigation.goBack} style={{ padding: 14, margin: -14 }}>
         <Text style={{ color: colors.color4, fontSize: 17, fontWeight: "400" }}>{t("common.close")}</Text>
-      </Pressable>,
-      headerRight: () => <Pressable onPress={() => dispatch(resetKanaSelected())} style={{ padding: 14, margin: -14 }}>
+      </TouchableOpacity>,
+      headerRight: () => <TouchableOpacity onPress={() => dispatch(resetKanaSelected())} style={{ padding: 14, margin: -14 }}>
         <Text style={{ color: colors.second_color3, fontSize: 17, fontWeight: "400" }}>{t("common.reset")}</Text>
-      </Pressable>,
+      </TouchableOpacity>,
       headerShadowVisible: false,
     });
   }, [activeTab, dispatch, navigation, t]);

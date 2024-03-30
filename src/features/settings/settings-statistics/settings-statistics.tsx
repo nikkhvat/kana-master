@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text } from "react-native";
@@ -18,6 +18,7 @@ const SettingsStatistics: React.FC = () => {
 
   const isEnabled = isEnabledStats ? "en" : "off";
 
+  const [a, s] = useState("1");
 
   return (
     <>

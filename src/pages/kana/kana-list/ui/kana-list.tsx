@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { SectionList, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
 import EducationKanaTable from "@/features/education/education-kana-table/education-kana-table";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
@@ -58,41 +59,43 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.color1 }]}>
-      <PageTitle style={styles.title} >{t("tabs.kana")}</PageTitle>
-      <View style={styles.switcherContainer}>
-        <Switcher<KanaAlphabet>
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          options={[
-            KanaAlphabet.Hiragana, 
-            KanaAlphabet.Katakana
-          ]}
-          translate={[
-            t("kana.hiragana"),
-            t("kana.katakana"),
-          ]}
+      <AdaptiveLayout>
+        <PageTitle style={styles.title} >{t("tabs.kana")}</PageTitle>
+        <View style={styles.switcherContainer}>
+          <Switcher<KanaAlphabet>
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            options={[
+              KanaAlphabet.Hiragana, 
+              KanaAlphabet.Katakana
+            ]}
+            translate={[
+              t("kana.hiragana"),
+              t("kana.katakana"),
+            ]}
+          />
+        </View>
+        <View style={[styles.lineContainer, { top: insets.top + 95, backgroundColor: colors.color2 }]} />
+        <SectionList
+          sections={sections}
+          keyExtractor={(item, index) => item + index}
+          renderItem={({ item }) => (
+            <React.Suspense fallback={<View />}>
+              <MemoizedEducationKanaTable
+                type={item as Alphabet}
+                kana={activeTab}
+                onClick={openModal}
+                last={item === "yoon"}
+              />
+            </React.Suspense>
+          )}
+          renderSectionHeader={({ section: { title } }) => (
+            <View style={[styles.nameContainer, { backgroundColor: colors.color1 }]}>
+              <Text style={[styles.name, { color: colors.color4 }]}>{title}</Text>
+            </View>
+          )}
         />
-      </View>
-      <View style={[styles.lineContainer, { top: insets.top + 155, backgroundColor: colors.color2 }]} />
-      <SectionList
-        sections={sections}
-        keyExtractor={(item, index) => item + index}
-        renderItem={({ item }) => (
-          <React.Suspense fallback={<View />}>
-            <MemoizedEducationKanaTable
-              type={item as Alphabet}
-              kana={activeTab}
-              onClick={openModal}
-              last={item === "yoon"}
-            />
-          </React.Suspense>
-        )}
-        renderSectionHeader={({ section: { title } }) => (
-          <View style={[styles.nameContainer, { backgroundColor: colors.color1 }]}>
-            <Text style={[styles.name, { color: colors.color4 }]}>{title}</Text>
-          </View>
-        )}
-      />
+      </AdaptiveLayout>
     </View>
   );
 };

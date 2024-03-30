@@ -9,6 +9,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { StatisticLevel } from "../../kana-list/model/types";
 
+import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
 import SoundLetter from "@/entities/kana/sound-letter/sound-letter";
 import Symbol from "@/entities/kana/symbol/symbol";
 import SymbolHeader from "@/entities/kana/symbol-header/symbol-header";
@@ -97,7 +98,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
   }, [navigation, isDrawSymbol]);
 
   return (
-    <>
+    <AdaptiveLayout style={{ flex: 1 }} >
       {isDrawSymbol === false ?
         <View style={[styles.container, { backgroundColor: colors.color1, }]}>
           
@@ -173,7 +174,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
           letter={letter as ILetter} 
           kana={letterKana} />
         }
-    </>
+    </AdaptiveLayout>
   );
 };
 

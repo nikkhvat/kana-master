@@ -33,7 +33,7 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ progress }) =
           cx={50}
           cy={50}
           r={radius}
-          stroke={progress < 51 ? "#EF625D" : "#60BA53"}
+          stroke={progress < 51 ? colors.second_color1 : colors.second_color2}
           strokeWidth={6}
           fill="transparent"
           strokeDasharray={circumference}

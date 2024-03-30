@@ -6,8 +6,10 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import Symbol from "@/entities/kana/symbol/symbol";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
+import { verticalScale } from "@/shared/helpers/metrics";
 import Button from "@/shared/ui/button/button";
 
 const { width } = Dimensions.get("window");
@@ -16,6 +18,8 @@ interface DrawProps {
   letter: ILetter;
   kana: KanaAlphabet;
 }
+
+const screenWidth = Dimensions.get("window").width;
 
 const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
   const [currentPath, setCurrentPath] = useState<{x: number, y: number}[]>([]);
@@ -26,7 +30,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
 
   const { colors } = useThemeContext();
 
-  const canvasSize = width - 40;
+  const canvasSize = width - 40 - (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0);
   const strokeWidth = 14;
 
   const onTouchEnd = () => {

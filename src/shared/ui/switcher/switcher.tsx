@@ -3,7 +3,8 @@ import React, {useEffect, useRef } from "react";
 import { View, Text, StyleSheet, Animated, Pressable, Dimensions } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { KanaAlphabet } from "@/shared/constants/kana";
+import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
+import { verticalScale } from "@/shared/helpers/metrics";
 
 interface SwitcherProps<T extends string > {
   activeTab: T;
@@ -13,6 +14,8 @@ interface SwitcherProps<T extends string > {
   width?: number;
 }
 
+const screenWidth = Dimensions.get("window").width;
+
 function Switcher<T extends string>(props: SwitcherProps<T>) {
 
   const { activeTab, setActiveTab, options, translate } = props;
@@ -20,7 +23,9 @@ function Switcher<T extends string>(props: SwitcherProps<T>) {
   const { colors } = useThemeContext();
   const animatedValue = useRef(new Animated.Value(0)).current;
 
-  const screenWidth = ((Dimensions.get("window").width - 44) / options.length);
+  const adaptivePadding = screenWidth > TABLET_WIDTH ? (40 + verticalScale(TABLET_PADDING * 2)) : 40;
+
+  const itemWidth = (Dimensions.get("window").width - adaptivePadding - 4) / (options.length);
 
   const handlePress = (index: number) => {
     setActiveTab(options[index]);
@@ -58,12 +63,12 @@ function Switcher<T extends string>(props: SwitcherProps<T>) {
           style={[
             styles.indicator,
             {
-              width: `${100 / options.length}%`,
+              width: itemWidth,
               transform: [
                 {
                   translateX: animatedValue.interpolate({
-                    inputRange: [0, options.length - 1],
-                    outputRange: [0, screenWidth * (options.length - 1)],
+                    inputRange: [0, options.length],
+                    outputRange: [0, itemWidth * options.length],
                   }),
                 },
               ],

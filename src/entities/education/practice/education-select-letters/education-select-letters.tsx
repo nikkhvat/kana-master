@@ -5,6 +5,7 @@ import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View }
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { TABLET_WIDTH } from "@/shared/constants/app";
 import { useAppSelector } from "@/shared/model/hooks";
 import practiceImage from "@/shared/resources/preview/practice.jpg";
 import wordGameImage from "@/shared/resources/preview/wordGame.jpg";
@@ -75,7 +76,7 @@ export default EducationKanaSelectedCard;
 
 const styles = StyleSheet.create({
   container: {
-    height: screenWidth > 500 ? 360 : 240,
+    height: screenWidth > TABLET_WIDTH ? 360 : 240,
     borderRadius: 20,
     overflow: "hidden",
     flexDirection: "column",
