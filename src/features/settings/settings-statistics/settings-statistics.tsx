@@ -18,8 +18,6 @@ const SettingsStatistics: React.FC = () => {
 
   const isEnabled = isEnabledStats ? "en" : "off";
 
-  const [a, s] = useState("1");
-
   return (
     <>
       <Text style={[styles.title, { color: colors.color4 }]}>
