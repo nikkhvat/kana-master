@@ -42,13 +42,8 @@ const DrawKana: React.FC<DrawKanaProps> = ({ letter, kana, back }) => {
       <SymbolHeader 
         kana={kana} 
         letter={letter} />
-
-      {/* <Draw
-        width={width}
-        height={height}
-        letter={letter}
-        kana={kana}
-      /> */}
+        
+      <Draw letter={letter} kana={kana} />
     </View>
   );
 };
