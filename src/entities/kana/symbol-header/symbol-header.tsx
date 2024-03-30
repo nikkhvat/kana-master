@@ -13,12 +13,15 @@ interface SymbolHeaderProps {
   letter: ILetter
 
   hideTitle?: boolean
+
+  indicatorColor?: string | null
 }
 
 const SymbolHeader: React.FC<SymbolHeaderProps> = ({
   kana,
   letter,
-  hideTitle
+  hideTitle,
+  indicatorColor
 }) => {
   const { colors } = useThemeContext();
   const { t } = useTranslation();
@@ -39,8 +42,18 @@ const SymbolHeader: React.FC<SymbolHeaderProps> = ({
     "katakana": t("kana.hiragana"),
   };
   
+  
   return (
     <View style={styles.titleContainer}>
+      {indicatorColor && <View style={[{
+        backgroundColor: indicatorColor,
+        width: 6,
+        height: 6,
+        borderRadius: 6,
+        position: "absolute",
+        top: 15,
+        right: -5
+      }]} />}
       {!hideTitle && <Text style={[styles.title, { color: colors.color4 }]}>
         {title[kana]}
         {" "}

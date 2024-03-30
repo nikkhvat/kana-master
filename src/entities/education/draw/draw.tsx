@@ -27,7 +27,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
   const { colors } = useThemeContext();
 
   const canvasSize = width - 40;
-  const strokeWidth = 12;
+  const strokeWidth = 14;
 
   const onTouchEnd = () => {
     setPaths(prevPaths => [...prevPaths, currentPath]);

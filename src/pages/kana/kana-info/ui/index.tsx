@@ -3,9 +3,11 @@ import React, { useEffect, useMemo, useState } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Dimensions, Pressable, StyleSheet, View, Button as RNButton } from "react-native";
+import { Dimensions, Pressable, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
+import { StatisticLevel } from "../../kana-list/model/types";
 
 import SoundLetter from "@/entities/kana/sound-letter/sound-letter";
 import Symbol from "@/entities/kana/symbol/symbol";
@@ -13,6 +15,7 @@ import SymbolHeader from "@/entities/kana/symbol-header/symbol-header";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter, LettersKeys, baseFlatLettersId, dakuonFlatLettersId, handakuonFlatLettersId, lettersTableById, yoonFlatLettersId } from "@/shared/data/lettersTable";
+import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
 import DrawKana from "@/widgets/kana/draw-kana/ui/draw-kana";
@@ -28,6 +31,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
   const { t } = useTranslation();
 
   const insets = useSafeAreaInsets();
+  const { colors } = useThemeContext();
 
   const { id: LetterIdFromParams, kana: kanaFromParams } = route.params;
 
@@ -40,6 +44,12 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
 
   const [letterId, setLetterId] = useState(LetterIdFromParams);
   const [letterKana, setLetterKana] = useState(kanaFromParams);
+
+  const level = useAppSelector((state) => state.statistics.statistics[kanaFromParams][letterId]);
+
+  const indicatorColor = level === undefined ? null : level?.level === StatisticLevel.Green
+    ? colors.second_color2 : level?.level === StatisticLevel.Yellow
+      ? colors.second_color5 : colors.second_color1;
 
   const [isDrawSymbol, setIsDrawSymbol] = useState(false);
 
@@ -60,15 +70,12 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
   };
 
   const letter = lettersTableById[letterId as LettersKeys];
-  const { colors } = useThemeContext();
 
   const drawSymbol = () => {
     setIsDrawSymbol(true);
   };
 
   useEffect(() => {
-    // Use `setOptions` to update the button that we previously specified
-    // Now the button includes an `onPress` handler to update the count
     navigation.setOptions({
       headerLeft: () => (
         <Pressable onPress={() => {
@@ -85,6 +92,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
           />
         </Pressable>
       ),
+      headerShadowVisible: false,
     });
   }, [navigation, isDrawSymbol]);
 
@@ -94,8 +102,12 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
         <View style={[styles.container, { backgroundColor: colors.color1, }]}>
           
           {letter !== null && <View style={styles.symbolContainer}>
-            <SymbolHeader hideTitle kana={letterKana} letter={letter as ILetter} />
-            <View style={{marginTop: 35}} >
+            <SymbolHeader 
+              indicatorColor={indicatorColor}
+              hideTitle
+              kana={letterKana}
+              letter={letter as ILetter} />
+            <View style={{ marginTop: 35 }} >
               <Symbol id={letter.id} kana={letterKana} />
             </View>
           </View>}

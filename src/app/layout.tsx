@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
-import { Pressable, StatusBar, View } from "react-native";
+import { Pressable, StatusBar } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -99,7 +99,7 @@ const Layout = () => {
       />
       <NavigationContainer
         theme={colors._theme === "dark" ? { dark: true, colors: darkTheme } : { dark: false, colors: lightTheme }} >
-        <Stack.Navigator >
+        <Stack.Navigator>
           <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
           <Stack.Screen name="ChooseAlphabet" component={EducationKanaQuickSelectionPage} options={{ headerShown: false }} />
           <Stack.Screen name="EducationPractice" component={TestingPage} options={{ title: "Practice", ...headerSettings }} />
@@ -122,6 +122,9 @@ const Layout = () => {
               component={EducationKanaSelection}
               options={({ route }) => ({
                 title: route.params.title,
+                contentStyle: {
+                  borderTopWidth: 0,
+                }
               })}
             />
           </Stack.Group>

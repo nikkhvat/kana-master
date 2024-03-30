@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-import { RouteProp } from "@react-navigation/native";
-import { StackHeaderProps, StackNavigationProp } from "@react-navigation/stack";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { View, Pressable, Text, SectionList, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -15,11 +14,10 @@ import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Switcher from "@/shared/ui/switcher/switcher";
 
 interface KanaInfoProps {
-  route: RouteProp<RootStackParamList, "KanaSelect">;
   navigation: StackNavigationProp<RootStackParamList, "KanaSelect">;
 }
 
-const EducationKanaSelection: React.FC<KanaInfoProps> = ({ route, navigation }) => {
+const EducationKanaSelection: React.FC<KanaInfoProps> = ({ navigation }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const { colors } = useThemeContext();
