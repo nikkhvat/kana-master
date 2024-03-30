@@ -1,7 +1,7 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { RouteProp } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { StackHeaderProps, StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { View, Pressable, Text, SectionList, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -36,23 +36,25 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ route, navigation }) 
     [t]
   );
 
+  useEffect(() => {
+    navigation.setOptions({
+      title: activeTab === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana"),
+      headerLeft: () => <Pressable onPress={navigation.goBack} style={{ padding: 14, margin: -14 }}>
+        <Text style={{ color: colors.color4, fontSize: 17, fontWeight: "400" }}>{t("common.close")}</Text>
+      </Pressable>,
+      headerRight: () => <Pressable onPress={() => dispatch(resetKanaSelected())} style={{ padding: 14, margin: -14 }}>
+        <Text style={{ color: colors.second_color3, fontSize: 17, fontWeight: "400" }}>{t("common.reset")}</Text>
+      </Pressable>,
+      headerShadowVisible: false,
+    });
+  }, [activeTab, dispatch, navigation, t]);
+
   const insets = useSafeAreaInsets();
 
   return (
     <>
       <View style={{ flex: 1, backgroundColor: colors.color1, paddingBottom: 40 + insets.bottom }}>
-        <View style={styles.content} >
-          <Pressable onPress={navigation.goBack} style={{ padding: 14, margin: -14 }}>
-            <Text style={{ color: colors.color4, fontSize: 17, fontWeight: "400" }}>{t("common.close")}</Text>
-          </Pressable>
-          <Text style={{ color: colors.color4, fontSize: 17, fontWeight: "700" }}>
-            {activeTab === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")}
-          </Text>
-          <Pressable onPress={() => dispatch(resetKanaSelected())} style={{ padding: 14, margin: -14 }}>
-            <Text style={{ color: colors.second_color3, fontSize: 17, fontWeight: "400" }}>{t("common.reset")}</Text>
-          </Pressable>
-        </View>
-        <View style={[styles.lineContainer, { top: 90, backgroundColor: colors.color2 }]} />
+        <View style={[styles.lineContainer, { top: 40, backgroundColor: colors.color2 }]} />
         <SectionList
           sections={sections}
           keyExtractor={(item, index) => item + index}

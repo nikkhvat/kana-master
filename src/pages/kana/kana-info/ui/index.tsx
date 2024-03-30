@@ -1,9 +1,9 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Dimensions, Pressable, StyleSheet, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, View, Button as RNButton } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -66,16 +66,35 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
     setIsDrawSymbol(true);
   };
 
+  useEffect(() => {
+    // Use `setOptions` to update the button that we previously specified
+    // Now the button includes an `onPress` handler to update the count
+    navigation.setOptions({
+      headerLeft: () => (
+        <Pressable onPress={() => {
+          if (isDrawSymbol) {
+            setIsDrawSymbol(false);
+          } else {
+            navigation.goBack();
+          }
+        }} >
+          <Icon 
+            name={isDrawSymbol ? "keyboard-backspace" : "close"}
+            size={24}
+            color={colors.color4}
+          />
+        </Pressable>
+      ),
+    });
+  }, [navigation, isDrawSymbol]);
+
   return (
     <>
       {isDrawSymbol === false ?
-        <View style={[styles.container, { backgroundColor: colors.color1 }]}>
-          <Pressable style={styles.close} onPress={navigation.goBack} >
-            <Icon name={"close"} size={24} color={colors.color4} />
-          </Pressable>
+        <View style={[styles.container, { backgroundColor: colors.color1, }]}>
           
           {letter !== null && <View style={styles.symbolContainer}>
-            <SymbolHeader kana={letterKana} letter={letter as ILetter} />
+            <SymbolHeader hideTitle kana={letterKana} letter={letter as ILetter} />
             <View style={{marginTop: 35}} >
               <Symbol id={letter.id} kana={letterKana} />
             </View>
@@ -140,10 +159,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
         : 
         <DrawKana 
           letter={letter as ILetter} 
-          kana={letterKana} 
-          back={() => {
-            setIsDrawSymbol(false);
-          }} />
+          kana={letterKana} />
         }
     </>
   );
@@ -155,8 +171,6 @@ export default KanaInfo;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 20,
-    justifyContent: "flex-start",
   },
   header: {
     flexDirection: "row",
@@ -171,7 +185,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingLeft: 20,
     paddingRight: 20,
-    paddingTop: 24,
   },
   buttonContainer: {
     flex: 1,

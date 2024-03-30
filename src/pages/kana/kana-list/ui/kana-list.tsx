@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import EducationKanaTable from "@/features/education/education-kana-table/education-kana-table";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
-import { LettersKeys } from "@/shared/data/lettersTable";
+import { LettersKeys, dakuonFlatLettersId, handakuonFlatLettersId, yoonFlatLettersId } from "@/shared/data/lettersTable";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import PageTitle from "@/shared/ui/page-title/page-title";
 import Switcher from "@/shared/ui/switcher/switcher";
@@ -27,12 +27,22 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const [activeTab, setActiveTab] = useState<KanaAlphabet>(KanaAlphabet.Hiragana);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getTypeById = (id: any) => {
+    if (yoonFlatLettersId.includes(id)) return t("kana.yoon");
+    if (handakuonFlatLettersId.includes(id)) return t("kana.handakuon");
+    if (dakuonFlatLettersId.includes(id)) return t("kana.dakuon");
+
+    return t("kana.basic");
+  };
+
   const openModal = useCallback((id: LettersKeys) => {
     navigation.navigate("KanaInfo", {
       id: id,
-      kana: activeTab
+      kana: activeTab,
+      title: `${activeTab === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")} (${getTypeById(id)})`
     });
-  }, [activeTab, navigation]);
+  }, [activeTab, navigation, t]);
 
   const sections = useMemo(
     () => [

@@ -147,7 +147,7 @@ const EducationKanaQuickSelectionPage: React.FC<EducationKanaQuickSelectionProps
           <Icon name="keyboard-backspace" size={24} color={colors.color4} />
         </Pressable>
         <Pressable 
-          onPress={() => navigation.navigate("KanaSelect")} 
+          onPress={() => navigation.navigate("KanaSelect", { title: "" })} 
           style={{ justifyContent: "center", alignItems: "center", padding: 18, margin: -18 }}
         >
           <Icon name="square-edit-outline" size={24} color={colors.color4} />

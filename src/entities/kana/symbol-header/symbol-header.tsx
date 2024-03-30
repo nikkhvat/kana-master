@@ -11,11 +11,14 @@ import { ILetter, dakuonFlatLettersId, handakuonFlatLettersId, yoonFlatLettersId
 interface SymbolHeaderProps {
   kana: KanaAlphabet,
   letter: ILetter
+
+  hideTitle?: boolean
 }
 
 const SymbolHeader: React.FC<SymbolHeaderProps> = ({
   kana,
-  letter
+  letter,
+  hideTitle
 }) => {
   const { colors } = useThemeContext();
   const { t } = useTranslation();
@@ -38,11 +41,11 @@ const SymbolHeader: React.FC<SymbolHeaderProps> = ({
   
   return (
     <View style={styles.titleContainer}>
-      <Text style={[styles.title, { color: colors.color4 }]}>
+      {!hideTitle && <Text style={[styles.title, { color: colors.color4 }]}>
         {title[kana]}
         {" "}
         ({getTypeById(letter?.id)})
-      </Text>
+      </Text>}
       <Text style={[styles.subTitle, { color: colors.color4 }]}>{letter?.[lang].toUpperCase()}</Text>
     </View>
   );
