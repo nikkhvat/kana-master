@@ -11,6 +11,7 @@ import { QuestionWordBuilding } from "@/shared/types/questions";
 
 interface ChooseLettersProps {
   question: QuestionWordBuilding;
+  hideTitle?: boolean
 
   onError?: (data: RegistErrorProps) => void;
   onFinish?: (hasError: boolean) => void;
@@ -20,7 +21,8 @@ interface ChooseLettersProps {
 const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
   question,
   onFinish,
-  onError
+  onError,
+  hideTitle
 }) => {
   const { t } = useTranslation();
   const { colors } = useThemeContext();
@@ -100,7 +102,7 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.question, { color: colors.color4 }]}>
+      {!hideTitle && <Text style={[styles.question, { color: colors.color4 }]}>
         {t("common.select")} 
         {" "}
         {selectKana === WordBuildingType.Romanji
@@ -114,7 +116,7 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
         {title}
         {" "}
         ({translate})
-      </Text>
+      </Text>}
 
       <View style={styles.content}>
         <Pressable onPress={reset} style={styles.wordContainer}>

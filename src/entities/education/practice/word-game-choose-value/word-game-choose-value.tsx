@@ -4,9 +4,10 @@ import { useTranslation } from "react-i18next";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { RegistErrorProps } from "@/pages/education/practice/education-word-game/ui/education-practice";
 import { TEST_DELAY } from "@/shared/constants/kana";
 import { Word } from "@/shared/data/words";
-import { RegistErrorProps } from "@/widgets/education/education-word-game/ui/education-practice";
+
 
 
 interface EducationPracticeChooseValueProps {
@@ -14,6 +15,7 @@ interface EducationPracticeChooseValueProps {
   answers: { text: string; key: string }[];
   trueAnswer: string;
   word: Word;
+  hideTitle?: boolean
   onCompleted?: (isError: boolean) => void;
   onError?: (data: RegistErrorProps) => void;
 }
@@ -23,6 +25,7 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
   answers = [],
   trueAnswer,
   word,
+  hideTitle,
   onCompleted,
   onError,
 }) => {
@@ -84,7 +87,7 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.question, { color: colors.color4 }]}>
+      {!hideTitle && <Text style={[styles.question, { color: colors.color4 }]}>
         {t("common.select")}
         {" "}
         {t("kana.romanji")?.toLowerCase()}
@@ -92,7 +95,7 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
         {t("common.for")}
         {" "}
         {title}
-      </Text>
+      </Text>}
 
       <View style={styles.columns}>
         {answers.map((answer) => (

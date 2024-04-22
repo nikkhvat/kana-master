@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
@@ -9,11 +10,18 @@ import TopicItem, { TopicItemState } from "@/entities/education/learning/topic-i
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { lessons } from "@/shared/constants/lessons";
+import { ILetter } from "@/shared/data/lettersTable";
+import { RootStackParamList } from "@/shared/types/navigationTypes";
 import PageTitle from "@/shared/ui/page-title/page-title";
 import Switcher from "@/shared/ui/switcher/switcher";
 
 
-const LearningList: React.FC = () => {
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "LearningPage">;
+interface HomeScreenProps {
+  navigation: HomeScreenNavigationProp;
+}
+
+const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
   const { colors } = useThemeContext();
 
@@ -22,6 +30,14 @@ const LearningList: React.FC = () => {
 
   const key = activeTab === KanaAlphabet.Hiragana ? "hi" : "ka";
   
+  const startLesson = (item: {
+    title: ILetter;
+    letters: ILetter[];
+    msg: string;
+  }) => {
+    navigation.navigate("LessonPage", item);
+  };
+
   return (
     <SafeLayout style={{ flex: 1, paddingBottom: 0 }} disableLeft disableRight >
       <AdaptiveLayout style={{ flex: 1, paddingBottom: 0 }} >
@@ -49,6 +65,7 @@ const LearningList: React.FC = () => {
               onClick={() => activeLesson === item.title[key]
                   ? setActiveLesson("")
                 : setActiveLesson(item.title[key])}
+              onStartLesson={() => startLesson(item)}
               key={item.title[key]}
               icon={item.title[key]}
               passed={false}

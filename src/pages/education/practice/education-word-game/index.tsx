@@ -18,7 +18,7 @@ interface LearnScreenProps {
   navigation: HomeScreenNavigationProp
 }
 
-function EducationWordGamePage({ route, navigation }: LearnScreenProps) {
+const EducationWordGamePage = ({ route, navigation }: LearnScreenProps) => {
 
   return (
     <EducationPracticeContextProvider>
@@ -31,6 +31,6 @@ function EducationWordGamePage({ route, navigation }: LearnScreenProps) {
       </EducationStatisticContextProvider>
     </EducationPracticeContextProvider>
   );
-}
+};
 
 export default EducationWordGamePage;

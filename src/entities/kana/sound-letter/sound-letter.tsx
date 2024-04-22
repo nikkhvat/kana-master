@@ -33,7 +33,7 @@ const SoundLetter: React.FC<SoundLetterProps> = ({
 
   return (
     <Button
-      customStyles={{flex: 1, marginTop: 0, ...customStyles}}
+      customStyles={{marginTop: 0, ...customStyles}}
       title={"Sound"}
       onClick={() => playSound(id)}
       type={"inactive"}

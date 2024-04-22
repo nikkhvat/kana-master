@@ -17,6 +17,11 @@ export type RootStackParamList = {
     keysModeState: TestMode[],
   };
   LearningPage: undefined;
+  LessonPage: {
+    title: ILetter
+    letters: ILetter[]
+    msg: string
+  };
   DrawKana: { letter: ILetter, kana: KanaAlphabet };
   Lesson: { symbols: ILetter[], kana: KanaAlphabet };
   KanaInfo: { 

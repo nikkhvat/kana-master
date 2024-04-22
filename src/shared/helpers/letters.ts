@@ -11,6 +11,17 @@ export const shuffleArray = <T>(array: Array<T>): Array<T> => {
   return arrayCopy;
 };
 
+export const shufflePairs = <T>(array: Array<T>[]): Array<T>[] => {
+  const arrayCopy = array.slice();
+
+  for (let i = arrayCopy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arrayCopy[i][1], arrayCopy[j][1]] = [arrayCopy[j][1], arrayCopy[i][1]];
+  }
+
+  return arrayCopy;
+};
+
 export const areLettersEqual = (letter1: ILetter, letter2: ILetter) => letter1.id === letter2.id;
 
 export const getRandomLetter = (letters: ILetter[][]): ILetter | null => {

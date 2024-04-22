@@ -13,6 +13,7 @@ interface SymbolHeaderProps {
   letter: ILetter
 
   hideTitle?: boolean
+  bottomTitle?: boolean
 
   indicatorColor?: string | null
 }
@@ -21,6 +22,7 @@ const SymbolHeader: React.FC<SymbolHeaderProps> = ({
   kana,
   letter,
   hideTitle,
+  bottomTitle,
   indicatorColor
 }) => {
   const { colors } = useThemeContext();
@@ -54,12 +56,17 @@ const SymbolHeader: React.FC<SymbolHeaderProps> = ({
         top: 15,
         right: -5
       }]} />}
-      {!hideTitle && <Text style={[styles.title, { color: colors.color4 }]}>
+      {(!hideTitle && !bottomTitle) && <Text style={[styles.title, { color: colors.color4 }]}>
         {title[kana]}
         {" "}
         ({getTypeById(letter?.id)})
       </Text>}
       <Text style={[styles.subTitle, { color: colors.color4 }]}>{letter?.[lang].toUpperCase()}</Text>
+      {(!hideTitle && bottomTitle) && <Text style={[styles.title, { color: colors.color4 }]}>
+        {title[kana]}
+        {" "}
+        ({getTypeById(letter?.id)})
+      </Text>}
     </View>
   );
 };

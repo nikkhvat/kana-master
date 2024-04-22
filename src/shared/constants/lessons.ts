@@ -1,5 +1,4 @@
 import { ILetter, base } from "../data/lettersTable";
-import { Word } from "../data/words";
 
 import { KanaAlphabet } from "./kana";
 
@@ -12,6 +11,8 @@ export enum LessonScreen {
   BuildWord,
   Finish
 }
+
+export type AnyLesson = LessonSymbol | LessonDraw | LessonMatchSymbols | LessonSelectSymbol | LessonSelectSequenceLetters | LessonBuildWord | LessonFinish
 
 // First screen
 export type LessonSymbol = {
@@ -37,7 +38,7 @@ export type LessonMatchSymbols = {
 // Fourth screen
 export type LessonSelectSymbol = {
   name: LessonScreen.SelectSymbol
-  symbols: ILetter
+  symbols: ILetter[]
   kana: KanaAlphabet
 }
 
@@ -51,7 +52,7 @@ export type LessonSelectSequenceLetters = {
 // Sixth screen
 export type LessonBuildWord = {
   name: LessonScreen.BuildWord
-  word: Word
+  sequence: ILetter[]
   kana: KanaAlphabet
 }
 

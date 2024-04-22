@@ -1,7 +1,10 @@
 import React, { createContext, FC, PropsWithChildren, useContext } from "react";
 
+import { ILetter } from "@/shared/data/lettersTable";
+
+
 interface EducationLessonContextValue {
-  init: () => void;
+  init: (letters: ILetter[]) => void;
 }
 
 export const EducationLessonContext =
@@ -15,8 +18,8 @@ export const useEducationLessonContext = () =>
 export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
-  const init = () => {
-    console.log("INIT");
+  const init = (letters: ILetter[]) => {
+    console.log("INIT", letters);
   };
 
   return (

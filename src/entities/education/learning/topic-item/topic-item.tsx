@@ -27,6 +27,7 @@ interface TopicItemProps {
 
   state?: TopicItemState;
   onClick?: () => void;
+  onStartLesson?: () => void;
 }
 
 const screenWidth = Dimensions.get("window").width;
@@ -41,6 +42,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
   msg,
   kana,
   onClick,
+  onStartLesson,
 }) => {
   const { colors } = useThemeContext();
   const { t } = useTranslation();
@@ -109,9 +111,14 @@ const TopicItem: React.FC<TopicItemProps> = ({
             <Text style={[styles.infoSubTitle, { color: colors.color4 }]} >
               {msg?.replace("{count}", letters.length.toString())}
             </Text>
-            <Button customStyles={{
-              width: 108,
-            }} type={"general"} title={t("lessons.start")} />
+            <Button 
+              onClick={onStartLesson}
+                customStyles={{
+                width: 108,
+              }}
+              type={"general"}
+              title={t("lessons.start")}
+            />
           </View>}
         </View>
       </View>
@@ -188,7 +195,6 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderWidth: 4,
-    borderColor: "green",
   },
   indicatorIcon: {
     width: 54,
@@ -221,7 +227,6 @@ const styles = StyleSheet.create({
     left: 54,
     borderRadius: 4,
     top: 80,
-    backgroundColor: "red",
   },
   openedInfo: {
     width: "100%",

@@ -14,6 +14,7 @@ interface EducationPracticeFindPairProps {
   onCompleted?: (hasError: boolean) => void;
   onError?: (data: RegistErrorProps) => void;
   question: QuestionFindPair
+  hideTitle?: boolean
 }
 
 type Item = {
@@ -24,6 +25,7 @@ type Item = {
 
 const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
   question,
+  hideTitle,
   onCompleted,
   onError,
 }) => {
@@ -121,7 +123,7 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.question, {color: colors.color4}]}>
+      {!hideTitle && <Text style={[styles.question, {color: colors.color4}]}>
         {t("common.match")}
         {" "}
         {kana === KanaAlphabet.Hiragana 
@@ -132,7 +134,7 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
         {t("common.with")}
         {" "}
         {t("kana.romanji")?.toLowerCase()}
-      </Text>
+      </Text>}
       <View style={styles.pairs}>
         {pairs.map((pair) => (
           <View key={pair[0].id} style={styles.row}>
