@@ -115,7 +115,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
 
           {letter !== null && <View style={styles.buttonContainer}>
             <View style={styles.buttons}>
-              <SoundLetter id={letter.en} />
+              <SoundLetter customStyles={{ flex: 1, marginTop: 0 }} id={letter.en} />
               <Button
                 customStyles={{ flex: 1, marginTop: 0 }}
                 title={"Draw"}
@@ -127,8 +127,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
             <View style={styles.buttons}>
               {screenHeight < 700 && 
                 <Button
-                  customStyles={{ width: 50, marginTop: 0 }}
-                  title={"Sound"}
+                  customStyles={{ flex: 1, width: 50, marginTop: 0 }}
                   type={"inactive"}
                   image={"chevron-left"}
                   onClick={() => prevLetter()}
@@ -154,15 +153,13 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
 
           {screenHeight > 700 && <View style={[styles.buttons, { paddingBottom: insets.bottom }]}>
             <Button
-              customStyles={{ width: 50 }}
-              title={"Sound"}
+              customStyles={{ width: 50, }}
               type={"inactive"}
               image={"chevron-left"}
               onClick={() => prevLetter()}
             />
             <Button
               customStyles={{ width: 50 }}
-              title={"Draw"}
               type={"inactive"}
               image={"chevron-right"}
               onClick={() => nextLetter()}
