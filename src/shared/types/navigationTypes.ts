@@ -19,6 +19,7 @@ export type RootStackParamList = {
   LearningPage: undefined;
   LessonPage: {
     title: ILetter
+    id: string
     letters: ILetter[]
     msg: string
     kana: KanaAlphabet

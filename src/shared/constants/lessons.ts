@@ -1,7 +1,5 @@
 import { ILetter, base, dakuon, handakuon, yoon } from "../data/lettersTable";
 
-import { KanaAlphabet } from "./kana";
-
 export enum LessonScreen {
   Symbol,
   Draw,
@@ -61,34 +59,34 @@ const lastMsg = "Научитесь писать последние {count} бу
 
 export const lessons = {
   base: [
-    { title: base[0][0], letters: base[0], msg: firstMsg },
-    { title: base[1][0], letters: base[1], msg: msg },
-    { title: base[2][0], letters: base[2], msg: msg },
-    { title: base[3][0], letters: base[3], msg: msg },
-    { title: base[4][0], letters: base[4], msg: msg },
-    { title: base[5][0], letters: base[5], msg: msg },
-    { title: base[6][0], letters: [base[6], base[7]].flat(), msg: msg },
-    { title: base[8][0], letters: base[8], msg: msg },
-    { title: base[9][0], letters: [base[9], base[10]].flat(), msg: lastMsg },
+    { id: "3a060caa-ac2f-42cb-a901-c19848e9d5c5", title: base[0][0], letters: base[0], msg: firstMsg },
+    { id: "2fa83f16-0848-49ea-a910-3e09dbd95de8", title: base[1][0], letters: base[1], msg: msg },
+    { id: "17da3959-de2c-40e6-a1aa-8cbe5237f818", title: base[2][0], letters: base[2], msg: msg },
+    { id: "f2b99593-28bb-43dd-9983-ea2668af30ab", title: base[3][0], letters: base[3], msg: msg },
+    { id: "404f7e6c-864e-4ec0-8039-f3b59c6e611d", title: base[4][0], letters: base[4], msg: msg },
+    { id: "dea61dc7-dfe3-41c0-890f-028cbf27bf3d", title: base[5][0], letters: base[5], msg: msg },
+    { id: "75a8dbb6-7cfd-4e69-9ad7-20940884aabc", title: base[6][0], letters: [base[6], base[7]].flat(), msg: msg },
+    { id: "83f0bc1e-f901-4b40-a6c6-501fb4726fb4", title: base[8][0], letters: base[8], msg: msg },
+    { id: "608ce336-8437-47b7-942d-5f4e335ef9ba", title: base[9][0], letters: [base[9], base[10]].flat(), msg: lastMsg },
   ],
   dakuon: [
-    { title: dakuon[0][0], letters: dakuon[0], msg: firstMsg },    
-    { title: dakuon[1][0], letters: dakuon[1], msg: msg },    
-    { title: dakuon[2][0], letters: dakuon[2], msg: msg },    
-    { title: dakuon[3][0], letters: dakuon[3], msg: msg },    
-    { title: handakuon[0][0], letters: handakuon[0], msg: lastMsg },    
+    { id: "019edc82-150d-4657-921b-9966b02ab243", title: dakuon[0][0], letters: dakuon[0], msg: firstMsg },    
+    { id: "eed9d727-4ed9-4847-9814-a41704b10d9b", title: dakuon[1][0], letters: dakuon[1], msg: msg },    
+    { id: "b664f984-b17a-4543-9fc6-a3b8e34349cb", title: dakuon[2][0], letters: dakuon[2], msg: msg },    
+    { id: "cae560b8-36b1-4c3e-b775-ceab5cbd71df", title: dakuon[3][0], letters: dakuon[3], msg: msg },    
+    { id: "95790d95-7f7c-448d-8d13-e87fee13a715", title: handakuon[0][0], letters: handakuon[0], msg: lastMsg },    
   ],
   yoon: [
-    { title: yoon[0][0], letters: yoon[0], msg: firstMsg },    
-    { title: yoon[1][0], letters: yoon[1], msg: msg },    
-    { title: yoon[2][0], letters: yoon[2], msg: msg },    
-    { title: yoon[3][0], letters: yoon[3], msg: msg },    
-    { title: yoon[4][0], letters: yoon[4], msg: msg },    
-    { title: yoon[5][0], letters: yoon[5], msg: msg },    
-    { title: yoon[6][0], letters: yoon[6], msg: msg },    
-    { title: yoon[7][0], letters: yoon[7], msg: msg },    
-    { title: yoon[8][0], letters: yoon[8], msg: msg },    
-    { title: yoon[9][0], letters: yoon[9], msg: msg },    
-    { title: yoon[10][0], letters: yoon[10], msg: firstMsg },    
+    { id: "bda8fae8-ad69-414b-bc0d-e7b6947bd196", title: yoon[0][0], letters: yoon[0], msg: firstMsg },    
+    { id: "af9b601a-abd8-4581-ba94-7bd2a2597a55", title: yoon[1][0], letters: yoon[1], msg: msg },    
+    { id: "b78114ca-b87d-47d3-af03-f1a05aad2779", title: yoon[2][0], letters: yoon[2], msg: msg },    
+    { id: "21aba678-901b-42ae-99cb-9ec7aa553ac0", title: yoon[3][0], letters: yoon[3], msg: msg },    
+    { id: "8b3ff09f-5e72-457d-a3c3-3efb4ecb56ad", title: yoon[4][0], letters: yoon[4], msg: msg },    
+    { id: "8a6dd410-c187-4f53-a804-ee858efcf4d2", title: yoon[5][0], letters: yoon[5], msg: msg },    
+    { id: "039da505-a31a-4de8-a0a3-3dec5c4fe951", title: yoon[6][0], letters: yoon[6], msg: msg },    
+    { id: "b2c0e343-e972-49ec-8bdb-b52d44ecca2e", title: yoon[7][0], letters: yoon[7], msg: msg },    
+    { id: "99643e24-7ba5-4862-9aca-a5ec80062b2a", title: yoon[8][0], letters: yoon[8], msg: msg },    
+    { id: "5fdffcc2-39d4-45d1-b6b3-bb2d2a142881", title: yoon[9][0], letters: yoon[9], msg: msg },    
+    { id: "710ecccf-5ef5-4538-8060-52b6e6338ec3", title: yoon[10][0], letters: yoon[10], msg: firstMsg },    
   ]
 };

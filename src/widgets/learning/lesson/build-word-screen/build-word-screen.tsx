@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 
-import EducationPracticeChooseLetters from "@/entities/education/practice/word-game-build-word/word-game-build-word";
+import SequenceBuild from "@/entities/education/practice/sequence-build/sequence-build";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet, QuestionTypeBuildingWord, WordBuildingType } from "@/shared/constants/kana";
 import { LessonBuildWord } from "@/shared/constants/lessons";
@@ -36,7 +36,7 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
         {shafledArray1.map(item => item.ka).join(", ")}
       </Text>
 
-      <EducationPracticeChooseLetters
+      <SequenceBuild
         hideTitle
         question={{
           type: QuestionTypeBuildingWord,
@@ -48,6 +48,10 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
           selectKanaType: kana,
         }}
         onFinish={next} />
+
+      {/* <Text style={{ color: "white" }} >
+        {JSON.stringify(shafledArray)}
+      </Text> */}
     </View>
   );
 };

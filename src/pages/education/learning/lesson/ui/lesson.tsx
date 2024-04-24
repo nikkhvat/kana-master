@@ -4,11 +4,14 @@ import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StyleSheet, View } from "react-native";
 
+import { completeLesson } from "../../model/slice";
 import { useEducationLessonContext } from "../lib/context/education-lesson-context";
 
 import SafeLayout from "@/app/layouts/safeLayout";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonScreen } from "@/shared/constants/lessons";
+import { useAppDispatch } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
 import BuildWordScreen from "@/widgets/learning/lesson/build-word-screen/build-word-screen";
@@ -19,6 +22,7 @@ import SelectLettersScreen from "@/widgets/learning/lesson/select-letters/select
 import SelectSequenceLettersScreen from "@/widgets/learning/lesson/select-sequence-letters/select-sequence-letters";
 import LessonSymbolScreen from "@/widgets/learning/lesson/symbol/symbol";
 
+
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "LessonPage">;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, "LessonPage">;
 
@@ -28,11 +32,20 @@ interface LearnScreenProps {
 }
 
 const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
-  const { letters, kana } = route.params;
+  const { letters, kana, id } = route.params;
+
+  const dispatch = useAppDispatch();
 
   const { colors } = useThemeContext();
 
   const { init, currentScreen, screen, screens, next, retry } = useEducationLessonContext();
+
+  const onComplete = () => {
+    const key = kana === KanaAlphabet.Hiragana ? "hi" : "ka";
+    dispatch(completeLesson(`${key}/${id}`));
+
+    navigation.goBack();
+  };
 
   useEffect(() => {
     init(letters);
@@ -99,8 +112,9 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
           next={next} />}
       
       {currentScreen?.name === LessonScreen.Finish && 
-        <FinishScreen name={LessonScreen.Finish} 
-          next={navigation.goBack}
+        <FinishScreen 
+          name={LessonScreen.Finish} 
+          next={onComplete}
           retry={retry} />}
       </View>
     </SafeLayout>
