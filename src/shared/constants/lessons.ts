@@ -53,9 +53,9 @@ export type LessonFinish = {
   name: LessonScreen.Finish
 }
 
-const firstMsg = "Научитесь писать первые {count} букв хириганы";
-const msg = "Научитесь писать следующие {count} букв хириганы";
-const lastMsg = "Научитесь писать последние {count} букв хириганы";
+const firstMsg = "Learn to write the first {count} hiragana letters";
+const msg = "Learn to write the next {count} hiragana letters";
+const lastMsg = "Learn to write the last {count} hiragana letters";
 
 export const lessons = {
   base: [
