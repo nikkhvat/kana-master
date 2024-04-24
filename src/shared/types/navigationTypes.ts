@@ -21,6 +21,7 @@ export type RootStackParamList = {
     title: ILetter
     letters: ILetter[]
     msg: string
+    kana: KanaAlphabet
   };
   DrawKana: { letter: ILetter, kana: KanaAlphabet };
   Lesson: { symbols: ILetter[], kana: KanaAlphabet };

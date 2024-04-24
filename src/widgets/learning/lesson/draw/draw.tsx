@@ -1,19 +1,24 @@
 import React from "react";
 
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { useTranslation } from "react-i18next";
+import { StyleSheet, Text, View } from "react-native";
 
 import Draw from "@/entities/education/draw/draw";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonDraw } from "@/shared/constants/lessons";
 import Button from "@/shared/ui/button/button";
 
 type LessonDrawScreenProps = LessonDraw & {
   next: () => void
+  kana: KanaAlphabet
 }
 
 const LessonDrawScreen: React.FC<LessonDrawScreenProps> = ({ name, symbol, kana, next }) => {
 
   const { colors } = useThemeContext();
+
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container} >
@@ -21,7 +26,7 @@ const LessonDrawScreen: React.FC<LessonDrawScreenProps> = ({ name, symbol, kana,
         <Text style={[styles.title, {
           color: colors.color4
         }]} >
-          Нарисуйте букву A хириганы в правильной последовательности
+          {t("lesson.drawLetter")} «{symbol.en}» {t("lesson.inTheCorrectSequence")}.
         </Text>
 
         <Draw kana={kana} letter={symbol} />
@@ -30,7 +35,7 @@ const LessonDrawScreen: React.FC<LessonDrawScreenProps> = ({ name, symbol, kana,
       <Button
         customStyles={{ width: "100%" }}
         type={"general"}
-        title={"Next"}
+        title={t("common.next")}
         onClick={next}
       />
     </View>

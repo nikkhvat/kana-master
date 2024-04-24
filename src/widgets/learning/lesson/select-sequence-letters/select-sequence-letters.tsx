@@ -1,14 +1,17 @@
 import React from "react";
 
+import { useTranslation } from "react-i18next";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonSelectSequenceLetters } from "@/shared/constants/lessons";
 import { shuffleArray } from "@/shared/helpers/letters";
 import Button from "@/shared/ui/button/button";
 
 type SelectSequenceLettersProps = LessonSelectSequenceLetters & {
   next: () => void
+  kana: KanaAlphabet
 }
 
 const screenWidth = Dimensions.get("window").width;
@@ -16,6 +19,8 @@ const screenWidth = Dimensions.get("window").width;
 const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ name, sequence, kana, next }) => {
 
   const { colors } = useThemeContext();
+  
+  const { t } = useTranslation();
 
   const shafledArray = shuffleArray(sequence);
   const shafledArray2 = shuffleArray(sequence);
@@ -30,7 +35,11 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
       <Text style={[styles.title, {
         color: colors.color4
       }]} >
-        Выбирите хиригану в слудующим порядке: {shafledArray.map(item => item.ka).join(", ")}
+        {t("common.select")}{" "}
+        {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")}{" "}
+        {t("lesson.inTheFollowingOrder")}{": "}
+        {"\n"}
+        {shafledArray.map(item => item.ka).join(", ")}
       </Text>
 
       <View style={styles.rowButtons} >

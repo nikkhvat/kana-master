@@ -34,6 +34,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
     title: ILetter;
     letters: ILetter[];
     msg: string;
+    kana: KanaAlphabet
   }) => {
     navigation.navigate("LessonPage", item);
   };
@@ -65,7 +66,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
               onClick={() => activeLesson === item.title[key]
                   ? setActiveLesson("")
                 : setActiveLesson(item.title[key])}
-              onStartLesson={() => startLesson(item)}
+              onStartLesson={() => startLesson({ ...item, kana: activeTab })}
               key={item.title[key]}
               icon={item.title[key]}
               passed={false}

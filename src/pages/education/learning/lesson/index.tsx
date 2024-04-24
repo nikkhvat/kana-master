@@ -24,7 +24,7 @@ const LessonPage = ({ route, navigation }: LearnScreenProps) => {
   return (
     <EducationPracticeContextProvider>
       <AdaptiveLayout style={{ flex: 1 }} >
-        <Lesson route={route} navigation={navigation} />
+        <Lesson route={route} navigation={navigation} />  
       </AdaptiveLayout>
     </EducationPracticeContextProvider>
   );

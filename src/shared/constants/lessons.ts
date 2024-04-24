@@ -18,42 +18,36 @@ export type AnyLesson = LessonSymbol | LessonDraw | LessonMatchSymbols | LessonS
 export type LessonSymbol = {
   name: LessonScreen.Symbol
   symbol: ILetter
-  kana: KanaAlphabet
 }
 
 // Second screen
 export type LessonDraw = {
   name: LessonScreen.Draw
   symbol: ILetter
-  kana: KanaAlphabet
 }
 
 // Third screen
 export type LessonMatchSymbols = {
   name: LessonScreen.MatchSymbols
   symbols: ILetter[]
-  kana: KanaAlphabet
 }
 
 // Fourth screen
 export type LessonSelectSymbol = {
   name: LessonScreen.SelectSymbol
   symbols: ILetter[]
-  kana: KanaAlphabet
 }
 
 // Fifth screen
 export type LessonSelectSequenceLetters = {
   name: LessonScreen.SelectSequenceLetters
   sequence: ILetter[]
-  kana: KanaAlphabet
 }
 
 // Sixth screen
 export type LessonBuildWord = {
   name: LessonScreen.BuildWord
   sequence: ILetter[]
-  kana: KanaAlphabet
 }
 
 // Seventh screen

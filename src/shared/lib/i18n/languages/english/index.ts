@@ -3,6 +3,8 @@ const English = {
 		close: "Close",
 		reset: "Reset",
 		next: "Next",
+		retry: "Retry",
+		complete: "Complete",
 		finish: "Finish",
 		select: "Select",
 		match: "Match",
@@ -136,6 +138,14 @@ const English = {
 		cardSelectAtLeastOne: "* At least one card type must be selected",
 		wordsSelectMoreThan10: "* Should be available more than 10 words",
 		modeSelectAtLeastOne: "* At least one mode must be selected",
+	},
+
+	lesson: {
+		rememberWritingAndSoundLetter: "Remember the spelling order and sound of the letter",
+		drawLetter: "Draw letter",
+		inTheCorrectSequence: "in the correct sequence",
+		inTheFollowingOrder: "in the following order",
+		learningComplete: "Learning complete!"
 	}
 };
 

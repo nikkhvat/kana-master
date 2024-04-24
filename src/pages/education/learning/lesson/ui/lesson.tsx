@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -8,9 +8,7 @@ import { useEducationLessonContext } from "../lib/context/education-lesson-conte
 
 import SafeLayout from "@/app/layouts/safeLayout";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { AnyLesson, LessonScreen } from "@/shared/constants/lessons";
-import { ILetter } from "@/shared/data/lettersTable";
+import { LessonScreen } from "@/shared/constants/lessons";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
 import BuildWordScreen from "@/widgets/learning/lesson/build-word-screen/build-word-screen";
@@ -29,85 +27,16 @@ interface LearnScreenProps {
   navigation: HomeScreenNavigationProp
 }
 
-
 const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
-  const { letters } = route.params;
-
-  const { init } = useEducationLessonContext();
+  const { letters, kana } = route.params;
 
   const { colors } = useThemeContext();
+
+  const { init, currentScreen, screen, screens, next, retry } = useEducationLessonContext();
 
   useEffect(() => {
     init(letters);
   }, []);
-
-  const screens: AnyLesson[] = [
-    {
-      name: LessonScreen.Symbol,
-      symbol: { id: "a151eeeb-2537-463c-ae23-d484d1bcb835", ka: "ア", hi: "あ", en: "A", ru: "А" } as ILetter,
-      kana: KanaAlphabet.Hiragana
-    },
-    {
-      name: LessonScreen.Draw,
-      symbol: { id: "a151eeeb-2537-463c-ae23-d484d1bcb835", ka: "ア", hi: "あ", en: "A", ru: "А" } as ILetter,
-      kana: KanaAlphabet.Hiragana
-    },
-    {
-      name: LessonScreen.MatchSymbols,
-      symbols: [
-        { id: "a151eeeb-2537-463c-ae23-d484d1bcb835", ka: "ア", hi: "あ", en: "A", ru: "А" },
-        { id: "11017078-148a-4a44-b3f7-21d1df02d981", ka: "イ", hi: "い", en: "I", ru: "И" },
-      ] as ILetter[],
-      kana: KanaAlphabet.Hiragana
-    },
-    {
-      name: LessonScreen.SelectSymbol,
-      symbols: [
-        { id: "a151eeeb-2537-463c-ae23-d484d1bcb835", ka: "ア", hi: "あ", en: "A", ru: "А" },
-        { id: "11017078-148a-4a44-b3f7-21d1df02d981", ka: "イ", hi: "い", en: "I", ru: "И" },
-      ] as ILetter[],
-      kana: KanaAlphabet.Hiragana
-    },
-    {
-      name: LessonScreen.SelectSequenceLetters,
-      sequence: [
-        { id: "11017078-148a-4a44-b3f7-21d1df02d981", ka: "イ", hi: "い", en: "I", ru: "И" },
-        { id: "a151eeeb-2537-463c-ae23-d484d1bcb835", ka: "ア", hi: "あ", en: "A", ru: "А" },
-        { id: "70680d73-c9f9-4b4e-aac4-c82caa49668c", ka: "エ", hi: "え", en: "E", ru: "Э" },
-        { id: "bcbd90e2-fabc-4dcc-8022-02e5b650c822", ka: "ウ", hi: "う", en: "U", ru: "У" },
-      ],
-      kana: KanaAlphabet.Hiragana
-    },
-    {
-      name: LessonScreen.BuildWord,
-      sequence: [
-        { id: "11017078-148a-4a44-b3f7-21d1df02d981", ka: "イ", hi: "い", en: "I", ru: "И" },
-        { id: "a151eeeb-2537-463c-ae23-d484d1bcb835", ka: "ア", hi: "あ", en: "A", ru: "А" },
-        { id: "70680d73-c9f9-4b4e-aac4-c82caa49668c", ka: "エ", hi: "え", en: "E", ru: "Э" },
-        { id: "bcbd90e2-fabc-4dcc-8022-02e5b650c822", ka: "ウ", hi: "う", en: "U", ru: "У" },
-      ],
-      kana: KanaAlphabet.Hiragana
-    },
-    {
-      name: LessonScreen.Finish,
-    }
-  ];
-
-  const [screen, setScreen] = useState(0);
-
-  const currentScreen = screens[screen];
-
-  const toNext = () => {
-    if (screen + 1 !== screens.length) {
-      setScreen(prev => prev + 1);
-    } else {
-      navigation.goBack();
-    }
-  };
-
-  const retry = () => {
-    setScreen(0);
-  };
 
   return (
     <SafeLayout  
@@ -127,50 +56,52 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
         />}
       </View>
       <View style={styles.container} >
-      {currentScreen.name === LessonScreen.Symbol && 
+      {currentScreen?.name === LessonScreen.Symbol && 
         <LessonSymbolScreen 
           name={LessonScreen.Symbol}
           symbol={currentScreen.symbol}
-          kana={KanaAlphabet.Hiragana}
-          next={toNext} />}
+          kana={kana}
+          next={next} />}
       
-      {currentScreen.name === LessonScreen.Draw && 
+      {currentScreen?.name === LessonScreen.Draw && 
         <LessonDrawScreen 
           name={LessonScreen.Draw}
           symbol={currentScreen.symbol}
-          kana={KanaAlphabet.Hiragana}
-          next={toNext} />}
+          kana={kana}
+          next={next} />}
       
-      {currentScreen.name === LessonScreen.MatchSymbols && 
+      {currentScreen?.name === LessonScreen.MatchSymbols && 
         <MatchLettersScreen 
           name={LessonScreen.MatchSymbols}
           symbols={currentScreen.symbols}
-          kana={KanaAlphabet.Hiragana}
-          next={toNext} />}
+          kana={kana}
+          next={next} />}
       
-      {currentScreen.name === LessonScreen.SelectSymbol && 
+      {currentScreen?.name === LessonScreen.SelectSymbol && 
         <SelectLettersScreen 
           name={LessonScreen.SelectSymbol}
           symbols={currentScreen.symbols}
-          kana={KanaAlphabet.Hiragana}
-          next={toNext} />}
+          kana={kana}
+          next={next} />}
       
-      {currentScreen.name === LessonScreen.SelectSequenceLetters && 
+      {currentScreen?.name === LessonScreen.SelectSequenceLetters && 
         <SelectSequenceLettersScreen
           name={LessonScreen.SelectSequenceLetters}
           sequence={currentScreen.sequence}
-          kana={KanaAlphabet.Hiragana}
-          next={toNext} />}
+          kana={kana}
+          next={next} />}
       
-      {currentScreen.name === LessonScreen.BuildWord && 
+      {currentScreen?.name === LessonScreen.BuildWord && 
         <BuildWordScreen
           name={LessonScreen.BuildWord}
           sequence={currentScreen.sequence}
-          kana={KanaAlphabet.Hiragana}
-          next={toNext} />}
+          kana={kana}
+          next={next} />}
       
-      {currentScreen.name === LessonScreen.Finish && 
-        <FinishScreen name={LessonScreen.Finish} next={toNext} retry={retry} />}
+      {currentScreen?.name === LessonScreen.Finish && 
+        <FinishScreen name={LessonScreen.Finish} 
+          next={navigation.goBack}
+          retry={retry} />}
       </View>
     </SafeLayout>
   );

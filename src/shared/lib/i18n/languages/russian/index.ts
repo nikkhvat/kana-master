@@ -3,6 +3,8 @@ const Russian = {
 		close: "Закрыть",
 		reset: "Сбросить",
 		next: "Дальше",
+		retry: "Повторить",
+		complete: "Закончить",
 		finish: "Закончить",
 		select: "Выбери",
 		match: "Сопоставь",
@@ -136,6 +138,14 @@ const Russian = {
 		cardSelectAtLeastOne: "* Должен быть выбран хотя бы один тип карточки",
 		wordsSelectMoreThan10: "* Должно быть доступно больше 10 слов",
 		modeSelectAtLeastOne: "* Должен быть выбран хотя бы один режим",
+	},
+
+	lesson: {
+		rememberWritingAndSoundLetter: "Запомните порядок написания и звучание слога",
+		drawLetter: "Нарисуйте букву",
+		inTheCorrectSequence: "в правильном порядке",
+		inTheFollowingOrder: "в слудующим порядке",
+		learningComplete: "Урок пройден!"
 	}
 };
 

@@ -1,16 +1,20 @@
 import React from "react";
 
+import { useTranslation } from "react-i18next";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 
 import SoundLetter from "@/entities/kana/sound-letter/sound-letter";
 import Symbol from "@/entities/kana/symbol/symbol";
 import SymbolHeader from "@/entities/kana/symbol-header/symbol-header";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonSymbol } from "@/shared/constants/lessons";
 import Button from "@/shared/ui/button/button";
 
+
 type LessonSymbolScreenProps = LessonSymbol & {
   next: () => void
+  kana: KanaAlphabet
 }
 
 const screenWidth = Dimensions.get("window").width;
@@ -19,13 +23,15 @@ const LessonSymbolScreen: React.FC<LessonSymbolScreenProps> = ({ name, symbol, k
 
   const { colors } = useThemeContext();
 
+  const { t } = useTranslation();
+
   return (
     <View style={styles.container} >
       <View>
         <Text style={[styles.title, {
           color: colors.color4
         }]} >
-          Заполните порядок написания и звуковую форму буквы хириганы.
+          {t("lesson.rememberWritingAndSoundLetter")}
         </Text>
 
         <View style={[styles.symbolContainer, {
@@ -36,15 +42,9 @@ const LessonSymbolScreen: React.FC<LessonSymbolScreenProps> = ({ name, symbol, k
           <Symbol id={symbol?.id} kana={kana} />
         </View>
         <View style={styles.bottomRow}  >
-          <SoundLetter customStyles={{
-            width: 50,
-            height: 50,
-          }} id={symbol.en} />
+          <SoundLetter customStyles={{ width: 50, height: 50 }} id={symbol.en} />
           <View>
-            <SymbolHeader
-              bottomTitle
-              kana={kana}
-              letter={symbol} />
+            <SymbolHeader bottomTitle kana={kana} letter={symbol} />
           </View>
           <View style={{width: 50}} ></View>
         </View>
@@ -53,7 +53,7 @@ const LessonSymbolScreen: React.FC<LessonSymbolScreenProps> = ({ name, symbol, k
       <Button
         customStyles={{ width: "100%" }}
         type={"general"}
-        title={"Next"}
+        title={t("common.next")}
         onClick={next}
       />
     </View>

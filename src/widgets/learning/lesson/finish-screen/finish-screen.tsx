@@ -1,5 +1,6 @@
 import React from "react";
 
+import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
@@ -14,6 +15,7 @@ type FinishScreenProps = LessonFinish & {
 
 const FinishScreen: React.FC<FinishScreenProps> = ({ next, retry }) => {
 
+  const { t } = useTranslation();
   const { colors } = useThemeContext();
   
   return (
@@ -22,7 +24,7 @@ const FinishScreen: React.FC<FinishScreenProps> = ({ next, retry }) => {
         <Text style={[styles.title, {
           color: colors.color4
         }]} >
-          Learning complete!
+          {t("lesson.learningComplete")}
         </Text>
       </View>
 
@@ -30,13 +32,13 @@ const FinishScreen: React.FC<FinishScreenProps> = ({ next, retry }) => {
         <Button
           customStyles={{ width: "100%" }}
           type={"inactive"}
-          title={"Retry"}
+          title={t("common.retry")}
           onClick={retry}
         />
         <Button
           customStyles={{ width: "100%" }}
           type={"general"}
-          title={"Next"}
+          title={t("common.complete")}
           onClick={next}
         />
       </View>
