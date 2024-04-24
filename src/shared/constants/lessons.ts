@@ -1,4 +1,4 @@
-import { ILetter, base } from "../data/lettersTable";
+import { ILetter, base, dakuon, handakuon, yoon } from "../data/lettersTable";
 
 import { KanaAlphabet } from "./kana";
 
@@ -70,5 +70,25 @@ export const lessons = {
     { title: base[6][0], letters: [base[6], base[7]].flat(), msg: msg },
     { title: base[8][0], letters: base[8], msg: msg },
     { title: base[9][0], letters: [base[9], base[10]].flat(), msg: lastMsg },
+  ],
+  dakuon: [
+    { title: dakuon[0][0], letters: dakuon[0], msg: firstMsg },    
+    { title: dakuon[1][0], letters: dakuon[1], msg: msg },    
+    { title: dakuon[2][0], letters: dakuon[2], msg: msg },    
+    { title: dakuon[3][0], letters: dakuon[3], msg: msg },    
+    { title: handakuon[0][0], letters: handakuon[0], msg: lastMsg },    
+  ],
+  yoon: [
+    { title: yoon[0][0], letters: yoon[0], msg: firstMsg },    
+    { title: yoon[1][0], letters: yoon[1], msg: msg },    
+    { title: yoon[2][0], letters: yoon[2], msg: msg },    
+    { title: yoon[3][0], letters: yoon[3], msg: msg },    
+    { title: yoon[4][0], letters: yoon[4], msg: msg },    
+    { title: yoon[5][0], letters: yoon[5], msg: msg },    
+    { title: yoon[6][0], letters: yoon[6], msg: msg },    
+    { title: yoon[7][0], letters: yoon[7], msg: msg },    
+    { title: yoon[8][0], letters: yoon[8], msg: msg },    
+    { title: yoon[9][0], letters: yoon[9], msg: msg },    
+    { title: yoon[10][0], letters: yoon[10], msg: firstMsg },    
   ]
 };

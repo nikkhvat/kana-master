@@ -59,8 +59,8 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
           />
         </View>
         <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} >
-          <Text style={[styles.title, { color: colors.color4 }]} >Chapter 1</Text>
-          <Text style={[styles.subtitle, { color: colors.color4 }]} >2/9 completed</Text>
+          <Text style={[styles.title, { color: colors.color4 }]} >{(t("lesson.chapter"))} 1</Text>
+          <Text style={[styles.subtitle, { color: colors.color4 }]} >2/9 {t("common.completed")}</Text>
           {lessons.base.map((item, index) =>
             <TopicItem 
               onClick={() => activeLesson === item.title[key]
@@ -76,6 +76,42 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
               kana={activeTab}
               state={activeLesson === item.title[key] ? TopicItemState.Opened : TopicItemState.CLosed}
               last={index + 1 === lessons.base.length} />)}
+          
+          <Text style={[styles.title, { color: colors.color4 }]} >{(t("lesson.chapter"))} 2</Text>
+          <Text style={[styles.subtitle, { color: colors.color4 }]} >2/9 {t("common.completed")}</Text>
+          {lessons.dakuon.map((item, index) =>
+            <TopicItem 
+              onClick={() => activeLesson === item.title[key]
+                  ? setActiveLesson("")
+                : setActiveLesson(item.title[key])}
+              onStartLesson={() => startLesson({ ...item, kana: activeTab })}
+              key={item.title[key]}
+              icon={item.title[key]}
+              passed={false}
+              title={(index + 9) + 1}
+              letters={item.letters}
+              msg={item.msg}
+              kana={activeTab}
+              state={activeLesson === item.title[key] ? TopicItemState.Opened : TopicItemState.CLosed}
+              last={index + 1 === lessons.dakuon.length} />)}
+          
+          <Text style={[styles.title, { color: colors.color4 }]} >{(t("lesson.chapter"))} 3</Text>
+          <Text style={[styles.subtitle, { color: colors.color4 }]} >2/9 {t("common.completed")}</Text>
+          {lessons.yoon.map((item, index) =>
+            <TopicItem 
+              onClick={() => activeLesson === item.title[key]
+                  ? setActiveLesson("")
+                : setActiveLesson(item.title[key])}
+              onStartLesson={() => startLesson({ ...item, kana: activeTab })}
+              key={item.title[key]}
+              icon={item.title[key]}
+              passed={false}
+              title={(index + 14) + 1}
+              letters={item.letters}
+              msg={item.msg}
+              kana={activeTab}
+              state={activeLesson === item.title[key] ? TopicItemState.Opened : TopicItemState.CLosed}
+              last={index + 1 === lessons.yoon.length} />)}
         </ScrollView>
         </>
       </AdaptiveLayout>

@@ -5,6 +5,7 @@ const English = {
 		next: "Next",
 		retry: "Retry",
 		complete: "Complete",
+		completed: "completed",
 		finish: "Finish",
 		select: "Select",
 		match: "Match",
@@ -141,6 +142,7 @@ const English = {
 	},
 
 	lesson: {
+		chapter: "Chapter",
 		rememberWritingAndSoundLetter: "Remember the spelling order and sound of the letter",
 		drawLetter: "Draw letter",
 		inTheCorrectSequence: "in the correct sequence",

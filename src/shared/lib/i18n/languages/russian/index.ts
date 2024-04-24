@@ -5,6 +5,7 @@ const Russian = {
 		next: "Дальше",
 		retry: "Повторить",
 		complete: "Закончить",
+		completed: "пройденно",
 		finish: "Закончить",
 		select: "Выбери",
 		match: "Сопоставь",
@@ -141,6 +142,7 @@ const Russian = {
 	},
 
 	lesson: {
+		chapter: "Раздел",
 		rememberWritingAndSoundLetter: "Запомните порядок написания и звучание слога",
 		drawLetter: "Нарисуйте букву",
 		inTheCorrectSequence: "в правильном порядке",
