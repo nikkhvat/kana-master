@@ -4,6 +4,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as NavigationBar from "expo-navigation-bar";
+import * as SystemUI from "expo-system-ui";
 import { useTranslation } from "react-i18next";
 import { Pressable, StatusBar } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -11,7 +13,6 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import LessonPage from "@/pages/education/learning/lesson";
-import Lesson from "@/pages/education/learning/lesson/ui/lesson";
 import LearningList from "@/pages/education/learning/list/learning-list";
 import EducationResultPage from "@/pages/education/practice/education-result/education-result";
 import EducationWordGamePage from "@/pages/education/practice/education-word-game/index";
@@ -25,6 +26,7 @@ import ProfilePage from "@/pages/profile/profile";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
+
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -91,6 +93,9 @@ const Layout = () => {
     loadLang();
   }, [i18n]);
 
+  SystemUI.setBackgroundColorAsync(colors.background);
+  NavigationBar.setBackgroundColorAsync(colors.background);
+
   return (
     <>
       <StatusBar 
@@ -104,12 +109,12 @@ const Layout = () => {
           <Stack.Screen name="ChooseAlphabet" component={EducationKanaQuickSelectionPage} options={{ headerShown: false }} />
           <Stack.Screen name="EducationPractice" component={TestingPage} options={{ title: "Practice", ...headerSettings }} />
           <Stack.Screen name="EducationWordGame" component={EducationWordGamePage} options={{ title: "Word Game", ...headerSettings }} />
-          <Stack.Screen name="Lesson" component={Lesson} options={{ headerShown: false }} />
+          {/* <Stack.Screen name="Lesson" component={Lesson} options={{ headerShown: false }} /> */}
           <Stack.Screen name="LessonPage" component={LessonPage} options={{ ...headerSettings }} />
           <Stack.Screen name="Results" component={EducationResultPage} options={{ title: "Results", ...headerSettings }} />
           <Stack.Group screenOptions={{
             presentation: "modal",
-            orientation: "portrait"
+            orientation: "portrait",
           }}>
             <Stack.Screen 
               name="KanaInfo" 

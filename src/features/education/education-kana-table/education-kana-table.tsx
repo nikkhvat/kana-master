@@ -65,7 +65,9 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
   return (
     <View style={[
       styles.container, 
-      { borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.color2 }]}>
+      { borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.color2 },
+      type === "yoon" ? { marginBottom: 0 } : {}
+      ]}>
       {letters && letters.length > 1 && (
         <View style={styles.rowButtons}>
           <Cell

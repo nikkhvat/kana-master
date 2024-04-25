@@ -31,7 +31,7 @@ export const languageList = [
   { title: LanguageName.en, key: ShortLanguage.EN },
   { title: LanguageName.es, key: ShortLanguage.ES },
   { title: LanguageName.fr, key: ShortLanguage.FR },
+  { title: LanguageName.ru, key: ShortLanguage.RU },
   { title: LanguageName.de, key: ShortLanguage.DE },
   { title: LanguageName.it, key: ShortLanguage.IT },
-  { title: LanguageName.ru, key: ShortLanguage.RU },
 ];

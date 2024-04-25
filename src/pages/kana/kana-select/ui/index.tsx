@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { View, Text, SectionList, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, SectionList, StyleSheet, TouchableOpacity, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import EducationKanaTableSelected from "@/features/education/education-kana-table-selected/education-kana-table";
@@ -36,8 +36,11 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ navigation }) => {
 
   useEffect(() => {
     navigation.setOptions({
+      headerTitleAlign: "center",
       title: activeTab === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana"),
-      headerLeft: () => <TouchableOpacity onPress={navigation.goBack} style={{ padding: 14, margin: -14 }}>
+      headerLeft: () => <TouchableOpacity 
+        onPress={navigation.goBack} 
+        style={{ padding: 14, margin: -14 }}>
         <Text style={{ color: colors.color4, fontSize: 17, fontWeight: "400" }}>{t("common.close")}</Text>
       </TouchableOpacity>,
       headerRight: () => <TouchableOpacity onPress={() => dispatch(resetKanaSelected())} style={{ padding: 14, margin: -14 }}>
@@ -52,7 +55,7 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ navigation }) => {
   return (
     <>
       <View style={{ flex: 1, backgroundColor: colors.color1, paddingBottom: 40 + insets.bottom }}>
-        <View style={[styles.lineContainer, { top: 40, backgroundColor: colors.color2 }]} />
+        {Platform.OS === "ios" && <View style={[styles.lineContainer, { top: 40, backgroundColor: colors.color2 }]} />}
         <SectionList
           sections={sections}
           keyExtractor={(item, index) => item + index}

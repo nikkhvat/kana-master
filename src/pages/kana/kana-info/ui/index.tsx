@@ -78,6 +78,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
 
   useEffect(() => {
     navigation.setOptions({
+      headerTitleAlign: "center",
       headerLeft: () => (
         <Pressable onPress={() => {
           if (isDrawSymbol) {
@@ -93,9 +94,10 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
           />
         </Pressable>
       ),
+      title: letterKana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana"),
       headerShadowVisible: false,
     });
-  }, [navigation, isDrawSymbol]);
+  }, [navigation, isDrawSymbol, letterKana]);
 
   return (
     <AdaptiveLayout style={{ flex: 1 }} >
