@@ -7,7 +7,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as NavigationBar from "expo-navigation-bar";
 import * as SystemUI from "expo-system-ui";
 import { useTranslation } from "react-i18next";
-import { Pressable, StatusBar } from "react-native";
+import { Platform, Pressable, StatusBar } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -93,8 +93,10 @@ const Layout = () => {
     loadLang();
   }, [i18n]);
 
-  SystemUI.setBackgroundColorAsync(colors.background);
-  NavigationBar.setBackgroundColorAsync(colors.background);
+  if (Platform.OS === "android") {
+    SystemUI.setBackgroundColorAsync(colors.background);
+    NavigationBar.setBackgroundColorAsync(colors.background);
+  }
 
   return (
     <>
