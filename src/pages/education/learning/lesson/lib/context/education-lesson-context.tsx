@@ -36,43 +36,43 @@ function generateScreens(letters: ILetter[]): AnyLesson[] {
 
   const addedLetters = [];
 
-  // for (let i = 0; i < letters.length; i++) {
-  //   const letter = letters[i];
-  //   addedLetters.push(letter);
+  for (let i = 0; i < letters.length; i++) {
+    const letter = letters[i];
+    addedLetters.push(letter);
 
-  //   screens.push({ name: LessonScreen.Symbol, symbol: letter });
-  //   screens.push({ name: LessonScreen.Draw, symbol: letter });
+    screens.push({ name: LessonScreen.Symbol, symbol: letter });
+    screens.push({ name: LessonScreen.Draw, symbol: letter });
 
-  //   if (addedLetters.length % 2 === 0) {
-  //     screens.push({
-  //       name: LessonScreen.MatchSymbols,
-  //       symbols: [letter, letters[i - 1]]
-  //     });
-  //   }
-  //   if (addedLetters.length % 3 === 0) {
-  //     screens.push({ name: LessonScreen.SelectSymbol, 
-  //       symbols: shuffleArray([
-  //         letters[i],
-  //         letters[i - 1],
-  //         letters[i - 2],
-  //       ])
-  //     });
-  //     screens.push({
-  //       name: LessonScreen.MatchSymbols,
-  //       symbols: [letter, letters[i - 1]]
-  //     });
-  //   }
+    if (addedLetters.length % 2 === 0) {
+      screens.push({
+        name: LessonScreen.MatchSymbols,
+        symbols: [letter, letters[i - 1]]
+      });
+    }
+    if (addedLetters.length % 3 === 0) {
+      screens.push({ name: LessonScreen.SelectSymbol, 
+        symbols: shuffleArray([
+          letters[i],
+          letters[i - 1],
+          letters[i - 2],
+        ])
+      });
+      screens.push({
+        name: LessonScreen.MatchSymbols,
+        symbols: [letter, letters[i - 1]]
+      });
+    }
     
-  //   if (letters.length -1 === i) {
-  //     screens.push({ name: LessonScreen.SelectSymbol, symbols: shuffleArray(letters).slice(0, 3) });
-  //     screens.push({ name: LessonScreen.SelectSymbol, symbols: shuffleArray(letters).slice(0, 3) });
-  //     screens.push({ name: LessonScreen.MatchSymbols, symbols: shuffleArray(letters).slice(0, 3) });
-  //     screens.push({ name: LessonScreen.MatchSymbols, symbols: shuffleArray(letters).slice(0, 3) });
-  //   }
-  // }
+    if (letters.length -1 === i) {
+      screens.push({ name: LessonScreen.SelectSymbol, symbols: shuffleArray(letters).slice(0, 3) });
+      screens.push({ name: LessonScreen.SelectSymbol, symbols: shuffleArray(letters).slice(0, 3) });
+      screens.push({ name: LessonScreen.MatchSymbols, symbols: shuffleArray(letters).slice(0, 3) });
+      screens.push({ name: LessonScreen.MatchSymbols, symbols: shuffleArray(letters).slice(0, 3) });
+    }
+  }
 
-  // screens.push({ name: LessonScreen.SelectSequenceLetters, sequence: shuffleArray(letters) });
-  // screens.push({ name: LessonScreen.SelectSequenceLetters, sequence: shuffleArray(letters) });
+  screens.push({ name: LessonScreen.SelectSequenceLetters, sequence: shuffleArray(letters) });
+  screens.push({ name: LessonScreen.SelectSequenceLetters, sequence: shuffleArray(letters) });
   screens.push({ name: LessonScreen.BuildWord, sequence: shuffleArray(letters) });
   screens.push({ name: LessonScreen.BuildWord, sequence: shuffleArray(letters) });
   screens.push({ name: LessonScreen.Finish });

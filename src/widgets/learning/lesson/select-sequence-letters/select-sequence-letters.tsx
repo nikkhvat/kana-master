@@ -26,7 +26,7 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
 
   const shafledArray = shuffleArray(sequence);
   const shafledArray2 = shuffleArray(sequence);
-  
+
   const { getRomanji } = useGetRomanji();
 
   const shafledArrayString =  shafledArray.map(item => getRomanji(item)).join(", ");
@@ -42,6 +42,8 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
     next(shafledArrayString !== answer); 
   };
 
+  const rowLength = shafledArrayString.length;
+
   return (
     <View style={styles.container} >
       <Text style={[styles.title, {
@@ -54,12 +56,14 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
         {shafledArray.map(item => getKana(item, kana)).join(", ")}
       </Text>
 
-      <View style={styles.rowButtons} >
+      <View style={[styles.rowButtons, { 
+        flexDirection: rowLength > 18 ? "column" : "row"
+        }]} >
         {btns.map(item => <Button
           key={item}
           customStyles={{ 
-            width: (screenWidth - 55) / 2,
-            height: 50
+            width: rowLength > 18 ? "100%" : (screenWidth - 55) / 2,
+            height: 50,
           }}
           type={"inactive"}
           title={item}
@@ -83,6 +87,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     gap: 15,
+    rowGap: 0
   },
   title: {
     width: "100%",
