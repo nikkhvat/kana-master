@@ -7,6 +7,7 @@ import Draw from "@/entities/education/draw/draw";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonDraw } from "@/shared/constants/lessons";
+import getKana from "@/shared/helpers/getKanaKey";
 import Button from "@/shared/ui/button/button";
 
 type LessonDrawScreenProps = LessonDraw & {
@@ -14,10 +15,8 @@ type LessonDrawScreenProps = LessonDraw & {
   kana: KanaAlphabet
 }
 
-const LessonDrawScreen: React.FC<LessonDrawScreenProps> = ({ name, symbol, kana, next }) => {
-
+const LessonDrawScreen: React.FC<LessonDrawScreenProps> = ({ symbol, kana, next }) => {
   const { colors } = useThemeContext();
-
   const { t } = useTranslation();
 
   return (
@@ -26,7 +25,7 @@ const LessonDrawScreen: React.FC<LessonDrawScreenProps> = ({ name, symbol, kana,
         <Text style={[styles.title, {
           color: colors.color4
         }]} >
-          {t("lesson.drawLetter")} «{symbol.en}» {t("lesson.inTheCorrectSequence")}.
+          {t("lesson.drawLetter")} «{getKana(symbol, kana)}» {t("lesson.inTheCorrectSequence")}.
         </Text>
 
         <Draw kana={kana} letter={symbol} />

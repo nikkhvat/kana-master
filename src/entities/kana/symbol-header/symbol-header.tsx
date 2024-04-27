@@ -6,6 +6,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter, dakuonFlatLettersId, handakuonFlatLettersId, yoonFlatLettersId } from "@/shared/data/lettersTable";
+import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 
 
 interface SymbolHeaderProps {
@@ -27,8 +28,8 @@ const SymbolHeader: React.FC<SymbolHeaderProps> = ({
 }) => {
   const { colors } = useThemeContext();
   const { t } = useTranslation();
-  const { i18n: { language } } = useTranslation();
-  const lang = language === "ru" ? "ru" : "en";
+
+  const { getRomanji } = useGetRomanji();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getTypeById = (id: any) => {
@@ -61,7 +62,9 @@ const SymbolHeader: React.FC<SymbolHeaderProps> = ({
         {" "}
         ({getTypeById(letter?.id)})
       </Text>}
-      <Text style={[styles.subTitle, { color: colors.color4 }]}>{letter?.[lang].toUpperCase()}</Text>
+      <Text style={[styles.subTitle, { color: colors.color4 }]}>
+        {getRomanji(letter).toUpperCase()}
+      </Text>
       {(!hideTitle && bottomTitle) && <Text style={[styles.title, { color: colors.color4 }]}>
         {title[kana]}
         {" "}

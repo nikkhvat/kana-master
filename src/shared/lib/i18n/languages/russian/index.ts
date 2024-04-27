@@ -148,6 +148,18 @@ const Russian = {
 		inTheCorrectSequence: "в правильном порядке",
 		inTheFollowingOrder: "в слудующим порядке",
 		learningComplete: "Урок пройден!"
+	},
+
+	transliterationSystems: {
+		transliterationSystems: "Системы транслитерации",
+		romajiLatin: "Ромадзи (латиница)",
+		transliterationInCyrillic: "Транслитерация на кириллицу",
+
+		russianPhoneticTransliteration: "Русская фонетическая",
+
+		hepburn: "Hepburn (Хепбёрн)",
+		kunreiShiki: "Kunrei-shiki (Кунрей-сики)",
+		nihonShiki: "Nihon-shiki (Нихон-сики)",
 	}
 };
 

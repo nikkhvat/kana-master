@@ -45,8 +45,8 @@ export const generateRandomLetters = (
     
     if (randomLetter === null) return letters;
     
-    if (!letters.some(letter => letter.en.toUpperCase().trim() === randomLetter.en.toUpperCase().trim()) &&
-      (!excludeLetter || randomLetter.en.toUpperCase().trim() !== excludeLetter.en.toUpperCase().trim())) {
+    if (!letters.some(letter => letter.transliterations[0].toUpperCase().trim() === randomLetter.transliterations[0].toUpperCase().trim()) &&
+      (!excludeLetter || randomLetter.transliterations[0].toUpperCase().trim() !== excludeLetter.transliterations[0].toUpperCase().trim())) {
       letters.push(randomLetter);
     }
   }

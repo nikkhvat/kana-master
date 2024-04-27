@@ -10,6 +10,7 @@ import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
 import { CardMode, Kana, TEST_DELAY } from "@/shared/constants/kana";
 import { ILetter, dakuonFlatLettersId, handakuonFlatLettersId, yoonFlatLettersId } from "@/shared/data/lettersTable";
 import { verticalScale } from "@/shared/helpers/metrics";
+import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { Question } from "@/shared/types/questions";
 interface EducationPracticeSelectAnswersProps {
   question: Question
@@ -65,19 +66,17 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
   const symbol = question?.symbol;
   const answers = question?.answers;
 
-  const { i18n: { language } } = useTranslation();
-
-  const lang = language === "ru" ? "ru" : "en";
+  const { getRomanji } = useGetRomanji();
 
   const symbolLable = kana === Kana.Romanji
-    ? symbol?.[lang] : kana === Kana.Hiragana
+    ? getRomanji(symbol) : kana === Kana.Hiragana
       ? symbol?.hi : symbol?.ka;
 
   const getTitle = (answer: ILetter) => {
     const isKatakana = (question?.mode === CardMode.hiraganaToKatakana || question?.mode === CardMode.romajiToKatakana);
     const isHiragana = (question?.mode === CardMode.romajiToHiragana || question?.mode === CardMode.katakanaToHiragana);
     
-    return isKatakana ? answer.ka : isHiragana ? answer.hi : answer[lang];
+    return isKatakana ? answer.ka : isHiragana ? answer.hi : getRomanji(answer);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

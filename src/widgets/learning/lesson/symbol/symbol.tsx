@@ -19,7 +19,7 @@ type LessonSymbolScreenProps = LessonSymbol & {
 
 const screenWidth = Dimensions.get("window").width;
 
-const LessonSymbolScreen: React.FC<LessonSymbolScreenProps> = ({ name, symbol, kana, next }) => {
+const LessonSymbolScreen: React.FC<LessonSymbolScreenProps> = ({ symbol, kana, next }) => {
 
   const { colors } = useThemeContext();
 
@@ -42,7 +42,7 @@ const LessonSymbolScreen: React.FC<LessonSymbolScreenProps> = ({ name, symbol, k
           <Symbol id={symbol?.id} kana={kana} />
         </View>
         <View style={styles.bottomRow}  >
-          <SoundLetter customStyles={{ width: 50, height: 50 }} id={symbol.en} />
+          <SoundLetter customStyles={{ width: 50, height: 50 }} id={symbol.transliterations[0]} />
           <View>
             <SymbolHeader bottomTitle kana={kana} letter={symbol} />
           </View>

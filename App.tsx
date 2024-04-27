@@ -8,8 +8,8 @@ import { store, persistor } from "./src/app/store";
 
 import Layout from "@/app/layout";
 import { ThemeProvider } from "@/features/settings/settings-theme/theme-context";
-
 import "@/shared/lib/i18n/index"; 
+import { TransliterationsProvider } from "@/features/settings/settings-transliterations/context/transliteration";
 
 const App = () => {
   return (
@@ -17,7 +17,9 @@ const App = () => {
       <PersistGate loading={null} persistor={persistor}>
         <SafeAreaProvider>
           <ThemeProvider>
-            <Layout />
+            <TransliterationsProvider>
+              <Layout />
+            </TransliterationsProvider>
           </ThemeProvider>
         </SafeAreaProvider>
       </PersistGate>

@@ -10,6 +10,7 @@ import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { CardMode, Kana } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
+import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
 import CircularProgressBar from "@/shared/ui/progressbar/circular/circular-progress-bar";
@@ -28,6 +29,7 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
 
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const { getRomanji } = useGetRomanji();
 
   const { colors } = useThemeContext();
 
@@ -46,26 +48,21 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
     }
   };
 
-  const { i18n: { language } } = useTranslation();
-
-  const lang = language === "ru" ? "ru" : "en";
 
   const getKeyByKana = (letter: ILetter, kana: CardMode) => {
     const isKatakana = (kana === CardMode.katakanaToHiragana || kana === CardMode.katakanaToRomaji);
     const isHiragana = (kana === CardMode.hiraganaToKatakana || kana === CardMode.hiraganaToRomaji);
 
-    return isKatakana ? letter.ka : isHiragana ? letter.hi : letter[lang];
+    return isKatakana ? letter.ka : isHiragana ? letter.hi : getRomanji(letter);
   };
 
   const getKeyAnswer = (letter: ILetter, mode: CardMode) => {
     if (mode === CardMode.hiraganaToKatakana) return `${letter.hi} (${letter.ka})`;
-    if (mode === CardMode.hiraganaToRomaji) return `${letter.hi} (${letter[lang]})`;
-    if (mode === CardMode.romajiToHiragana) return `${letter[lang]} (${letter.hi})`;
+    if (mode === CardMode.hiraganaToRomaji) return `${letter.hi} (${getRomanji(letter)})`;
+    if (mode === CardMode.romajiToHiragana) return `${getRomanji(letter)} (${letter.hi})`;
     if (mode === CardMode.katakanaToHiragana) return `${letter.ka} (${letter.hi})`;
-    if (mode === CardMode.katakanaToRomaji) return `${letter.ka} (${letter[lang]})`;
-    if (mode === CardMode.romajiToKatakana) return `${letter[lang]} (${letter.ka})`;
-
-    // return letter[lang];
+    if (mode === CardMode.katakanaToRomaji) return `${letter.ka} (${getRomanji(letter)})`;
+    if (mode === CardMode.romajiToKatakana) return `${getRomanji(letter)} (${letter.ka})`;
   };
 
   return (

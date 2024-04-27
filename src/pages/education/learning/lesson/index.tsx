@@ -2,7 +2,6 @@ import React from "react";
 
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Pressable, Text } from "react-native";
 
 import { EducationPracticeContextProvider } from "./lib/context/education-lesson-context";
 import Lesson from "./ui/lesson";

@@ -6,6 +6,8 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { StatisticLevel } from "@/pages/kana/kana-list/model/types";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
+import getKana from "@/shared/helpers/getKanaKey";
+import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 
 interface CellProps {
   isLong: boolean
@@ -47,6 +49,8 @@ const Cell: React.FC<CellProps> = ({
     ? colors.second_color2 : indicator === StatisticLevel.Yellow
     ? colors.second_color5 : colors.second_color1;
 
+  const { getRomanji, key } = useGetRomanji();
+
   return (
     <TouchableOpacity
       onPress={() => (cell) ? onPress?.(cell.id) : onPress?.("")}
@@ -63,14 +67,14 @@ const Cell: React.FC<CellProps> = ({
       {indicator && <View style={[styles.cellIndicator, { backgroundColor: indicatorColor }]} ></View>}
       {(cell !== null && !isStartOfLine) && <>
         <Text style={[styles.symbol, { fontSize: 17, color: colors.color4 }]}>
-          {cell && cell[kana === KanaAlphabet.Hiragana ? "hi" : "ka"]}
+          {cell && getKana(cell, kana)}
         </Text>
         {cell && 
           <Text 
             style={[
               styles.subText, 
               { color: colors.color4 }]} >
-            {cell?.[lang].toUpperCase()}
+            {getRomanji(cell).toUpperCase()}
           </Text>}
       </>}
 

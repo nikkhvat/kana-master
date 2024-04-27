@@ -6,9 +6,10 @@ import { View, Text, StyleSheet } from "react-native";
 
 import FindPairItem from "@/entities/education/practice/word-game-find-pair/item/item";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { RegistErrorProps } from "@/pages/education/practice/education-word-game/ui/education-practice";
 import { KanaAlphabet, TEST_DELAY } from "@/shared/constants/kana";
 import { QuestionFindPair } from "@/shared/types/questions";
-import { RegistErrorProps } from "@/widgets/education/education-word-game/ui/education-practice";
+
 
 interface EducationPracticeFindPairProps {
   onCompleted?: (hasError: boolean) => void;

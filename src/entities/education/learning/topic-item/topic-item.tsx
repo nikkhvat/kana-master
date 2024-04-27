@@ -7,6 +7,8 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
+import getKana from "@/shared/helpers/getKanaKey";
+import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import Button from "@/shared/ui/button/button";
 
 
@@ -49,11 +51,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
 
   const isOpened = state === TopicItemState.Opened;
 
-  const key = kana === KanaAlphabet.Hiragana ? "hi" : "ka";
-
-  const { i18n: { language } } = useTranslation();
-
-  const lang = language === "ru" ? "ru" : "en";
+  const { getRomanji } = useGetRomanji();
 
   return (
     <Pressable style={[styles.container, {
@@ -99,14 +97,15 @@ const TopicItem: React.FC<TopicItemProps> = ({
             {t("lessons.title")} {title}
           </Text>
           <Text style={[styles.subtitle, { color: colors.color4 }]}>
-            {letters.map(item => item[key]).join(", ")}
+            {letters.map(item => getKana(item, kana)).join(", ")}
           </Text>
 
           {state === TopicItemState.Opened && <View style={styles.openedInfo} >
             <View style={[styles.infoLine, { backgroundColor: colors.color2 }]} ></View>
             <Text style={[styles.infoTitle, { color: colors.color4 }]} >
               {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")}:
-              {" "}{letters.map(item => item[lang]).join(", ").toLocaleLowerCase()}
+              {" "}
+              {letters.map(item => getRomanji(item)).join(", ").toLocaleLowerCase()}
             </Text>
             <Text style={[styles.infoSubTitle, { color: colors.color4 }]} >
               {msg?.replace("{count}", letters.length.toString())}
@@ -117,7 +116,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
                 width: 108,
               }}
               type={"general"}
-              title={t("lessons.start")}
+              title={passed ? t("common.retry") : t("lessons.start")}
             />
           </View>}
         </View>

@@ -18,6 +18,8 @@ export const LanguageName = {
   it: "Italiano",
 };
 
+export const languageRomanji: ("en" | "ru")[] = ["en", "ru"];
+
 export const enumerationLanguageList = [
   ShortLanguage.EN,
   ShortLanguage.ES,
@@ -29,9 +31,9 @@ export const enumerationLanguageList = [
 
 export const languageList = [
   { title: LanguageName.en, key: ShortLanguage.EN },
-  { title: LanguageName.es, key: ShortLanguage.ES },
-  { title: LanguageName.fr, key: ShortLanguage.FR },
+  // { title: LanguageName.es, key: ShortLanguage.ES },
+  // { title: LanguageName.fr, key: ShortLanguage.FR },
   { title: LanguageName.ru, key: ShortLanguage.RU },
-  { title: LanguageName.de, key: ShortLanguage.DE },
-  { title: LanguageName.it, key: ShortLanguage.IT },
+  // { title: LanguageName.de, key: ShortLanguage.DE },
+  // { title: LanguageName.it, key: ShortLanguage.IT },
 ];

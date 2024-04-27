@@ -11,6 +11,7 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { lessons } from "@/shared/constants/lessons";
 import { ILetter } from "@/shared/data/lettersTable";
+import getKana from "@/shared/helpers/getKanaKey";
 import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import PageTitle from "@/shared/ui/page-title/page-title";
@@ -78,8 +79,11 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
     kana: KanaAlphabet;
     id: string
   }) => {
+
+    const clonedArray = JSON.parse(JSON.stringify(item.letters));
+
     setActiveLesson(null);
-    navigation.navigate("LessonPage", item);
+    navigation.navigate("LessonPage", { ...item, letters: clonedArray });
   };
 
   return (
@@ -106,54 +110,60 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
           <Text style={[styles.subtitle, { color: colors.color4 }]} >{firstChapterProgress.length}/{firstChapterIds.length} {t("common.completed")}</Text>
           {lessons.base.map((item, index) =>
             <TopicItem 
-              onClick={() => activeLesson === item.title[key]
-                  ? setActiveLesson("")
-                : setActiveLesson(item.title[key])}
+              onClick={() => activeLesson === getKana(item.title, activeTab)
+                ? setActiveLesson("")
+                : setActiveLesson(getKana(item.title, activeTab))}
               onStartLesson={() => startLesson({ ...item, kana: activeTab })}
-              key={item.title[key]}
-              icon={item.title[key]}
+              key={getKana(item.title, activeTab)}
+              icon={getKana(item.title, activeTab)}
               passed={completedLessons.includes(`${key}/${item.id}`)}
               title={index + 1}
               letters={item.letters}
               msg={item.msg}
               kana={activeTab}
-              state={activeLesson === item.title[key] ? TopicItemState.Opened : TopicItemState.CLosed}
+              state={activeLesson === getKana(item.title, activeTab)
+                ? TopicItemState.Opened
+                : TopicItemState.CLosed}
               last={index + 1 === lessons.base.length} />)}
           
           <Text style={[styles.title, { color: colors.color4 }]} >{(t("lesson.chapter"))} 2. {t("kana.dakuon")}</Text>
           <Text style={[styles.subtitle, { color: colors.color4 }]} >{secondChapterProgress.length}/{secondChapterIds.length} {t("common.completed")}</Text>
           {lessons.dakuon.map((item, index) =>
             <TopicItem 
-              onClick={() => activeLesson === item.title[key]
+              onClick={() => activeLesson === getKana(item.title, activeTab)
                   ? setActiveLesson("")
-                : setActiveLesson(item.title[key])}
+                : setActiveLesson(getKana(item.title, activeTab))}
               onStartLesson={() => startLesson({ ...item, kana: activeTab })}
-              key={item.title[key]}
-              icon={item.title[key]}
+              key={getKana(item.title, activeTab)}
+              icon={getKana(item.title, activeTab)}
               passed={false}
               title={(index + 9) + 1}
               letters={item.letters}
               msg={item.msg}
               kana={activeTab}
-              state={activeLesson === item.title[key] ? TopicItemState.Opened : TopicItemState.CLosed}
+              state={activeLesson === getKana(item.title, activeTab)
+                ? TopicItemState.Opened
+                : TopicItemState.CLosed}
               last={index + 1 === lessons.dakuon.length} />)}
           
           <Text style={[styles.title, { color: colors.color4 }]} >{(t("lesson.chapter"))} 3. {t("kana.yoon")}</Text>
           <Text style={[styles.subtitle, { color: colors.color4 }]} >{thirdChapterProgress.length}/{thirdChapterIds.length} {t("common.completed")}</Text>
           {lessons.yoon.map((item, index) =>
             <TopicItem 
-              onClick={() => activeLesson === item.title[key]
+              onClick={() => activeLesson === getKana(item.title, activeTab)
                   ? setActiveLesson("")
-                : setActiveLesson(item.title[key])}
+                : setActiveLesson(getKana(item.title, activeTab))}
               onStartLesson={() => startLesson({ ...item, kana: activeTab })}
-              key={item.title[key]}
-              icon={item.title[key]}
+              key={getKana(item.title, activeTab)}
+              icon={getKana(item.title, activeTab)}
               passed={false}
               title={(index + 14) + 1}
               letters={item.letters}
               msg={item.msg}
               kana={activeTab}
-              state={activeLesson === item.title[key] ? TopicItemState.Opened : TopicItemState.CLosed}
+              state={activeLesson === getKana(item.title, activeTab) 
+                  ? TopicItemState.Opened
+                  : TopicItemState.CLosed}
               last={index + 1 === lessons.yoon.length} />)}
         </ScrollView>
         </>

@@ -7,7 +7,9 @@ import SequenceBuild from "@/entities/education/practice/sequence-build/sequence
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet, QuestionTypeBuildingWord, WordBuildingType } from "@/shared/constants/kana";
 import { LessonBuildWord } from "@/shared/constants/lessons";
+import getKana from "@/shared/helpers/getKanaKey";
 import { shuffleArray } from "@/shared/helpers/letters";
+import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 
 
 type SelectSequenceLettersProps = LessonBuildWord & {
@@ -23,6 +25,8 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
   const shafledArray1 = shuffleArray(sequence);
 
   const { t } = useTranslation();
+  const { getRomanji } = useGetRomanji();
+
 
   return (
     <View style={styles.container} >
@@ -33,7 +37,7 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
         {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")}{" "}
         {t("lesson.inTheFollowingOrder")}{": "}
         {"\n"}
-        {shafledArray1.map(item => item.ka).join(", ")}
+        {shafledArray1.map(item => getKana(item, kana)).join(", ")}
       </Text>
 
       <SequenceBuild
@@ -41,17 +45,13 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
         question={{
           type: QuestionTypeBuildingWord,
           title: "",
-          buildingWord: shafledArray.map(item => item.en).join(""),
-          shaffledLetters: shafledArray.map(item => item.en),
-          translate: shafledArray.map(item => item.en).join(""),
+          buildingWord: shafledArray.map(item => getRomanji(item)).join(""),
+          shaffledLetters: shafledArray.map(item => getRomanji(item)),
+          translate: shafledArray.map(item => getRomanji(item)).join(""),
           selectKana: WordBuildingType.Kana,
           selectKanaType: kana,
         }}
         onFinish={next} />
-
-      {/* <Text style={{ color: "white" }} >
-        {JSON.stringify(shafledArray)}
-      </Text> */}
     </View>
   );
 };

@@ -7,7 +7,9 @@ import EducationPracticeFindPair from "@/entities/education/practice/word-game-f
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonMatchSymbols } from "@/shared/constants/lessons";
+import getKana from "@/shared/helpers/getKanaKey";
 import { shufflePairs } from "@/shared/helpers/letters";
+import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 
 
 type LessonDrawScreenProps = LessonMatchSymbols & {
@@ -16,10 +18,10 @@ type LessonDrawScreenProps = LessonMatchSymbols & {
 }
 
 const MatchLettersScreen: React.FC<LessonDrawScreenProps> = ({ name, symbols, kana, next }) => {
-
   const { colors } = useThemeContext();
 
   const { t } = useTranslation();
+  const { getRomanji } = useGetRomanji();
 
   return (
     <View style={styles.container} >
@@ -35,9 +37,13 @@ const MatchLettersScreen: React.FC<LessonDrawScreenProps> = ({ name, symbols, ka
           onCompleted={next}
           question={{
             type: "find-pair-word",
-            pairs: shufflePairs(symbols.map(item => [{ title: item.ka, id: item.ka }, { title: item.ru, id: item.ru }])),
+            pairs: shufflePairs(symbols.map(item => 
+              [
+                { title: getKana(item, kana), id: getKana(item, kana) },
+                { title: getRomanji(item), id: getRomanji(item) }
+              ])),
             kana: kana,
-            answers: symbols.map(item => [item.ka, item.ru])
+            answers: symbols.map(item => [getKana(item, kana), getRomanji(item)])
           }} />
       </View>
     </View>

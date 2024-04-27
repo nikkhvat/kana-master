@@ -9,6 +9,7 @@ import SettingsLanguage from "@/features/settings/settings-language/settings-lan
 import SettingsStatistics from "@/features/settings/settings-statistics/settings-statistics";
 import SettingsTheme from "@/features/settings/settings-theme/settings-theme";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import SettingsTransliterations from "@/features/settings/settings-transliterations/settings-language";
 import PageTitle from "@/shared/ui/page-title/page-title";
 
 const ProfilePage: React.FC = () => {
@@ -25,6 +26,7 @@ const ProfilePage: React.FC = () => {
           <SettingsStatistics />
           <SettingsTheme />
           <SettingsLanguage />
+          <SettingsTransliterations />
         </ScrollView>
       </AdaptiveLayout>
     </View>

@@ -148,6 +148,18 @@ const English = {
 		inTheCorrectSequence: "in the correct sequence",
 		inTheFollowingOrder: "in the following order",
 		learningComplete: "Learning complete!"
+	},
+
+	transliterationSystems: {
+		transliterationSystems: "Transliteration Systems",
+		transliterationInCyrillic: "Transliteration in Cyrillic",
+		romajiLatin: "Romaji (Latin)",
+
+		russianPhoneticTransliteration: "Russian Phonetic Transliteration",
+
+		hepburn: "Hepburn",
+		kunreiShiki: "Kunrei-shiki",
+		nihonShiki: "Nihon-shiki",
 	}
 };
 

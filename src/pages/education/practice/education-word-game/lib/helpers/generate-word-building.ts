@@ -1,6 +1,7 @@
 import { KanaAlphabet, QuestionTypeBuildingWord, WordBuildingType } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import { Word } from "@/shared/data/words";
+import getKana from "@/shared/helpers/getKanaKey";
 import { getRandomLetter, shuffleArray } from "@/shared/helpers/letters";
 import { QuestionWordBuilding } from "@/shared/types/questions";
 
@@ -37,12 +38,12 @@ const generateWordBuilding = ({
           ? hiraLetters 
           : kanaLetters]);
 
-      if (randomLetter !== null) shaffledLetters.push(randomLetter?.en[0]);
+      if (randomLetter !== null) shaffledLetters.push(randomLetter.transliterations[0]);
       continue;
     } else {
       const key = selectKanaType === KanaAlphabet.Hiragana ? "hi" : "ka";
       const randomLetter = getRandomLetter(key === "hi" ? [hiraLetters] : [kanaLetters]);
-      if (randomLetter !== null) shaffledLetters.push(randomLetter?.[key]);
+      if (randomLetter !== null) shaffledLetters.push(getKana(randomLetter, selectKanaType));
       continue;
     }
   }

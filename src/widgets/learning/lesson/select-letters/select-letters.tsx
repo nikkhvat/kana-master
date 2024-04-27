@@ -7,6 +7,8 @@ import EducationPracticeChooseValue from "@/entities/education/practice/word-gam
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonSelectSymbol } from "@/shared/constants/lessons";
+import getKana from "@/shared/helpers/getKanaKey";
+import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 
 
 type SelectLettersScreenProps = LessonSelectSymbol & {
@@ -17,11 +19,9 @@ type SelectLettersScreenProps = LessonSelectSymbol & {
 const SelectLettersScreen: React.FC<SelectLettersScreenProps> = ({ name, symbols, kana, next }) => {
 
   const { colors } = useThemeContext();
-
   const { t } = useTranslation();
-
-  const key = kana === KanaAlphabet.Hiragana ? "hi" : "ka";
-
+  const { getRomanji } = useGetRomanji();
+  
   return (
     <View style={styles.container} >
       <Text style={[styles.title, {
@@ -31,13 +31,13 @@ const SelectLettersScreen: React.FC<SelectLettersScreenProps> = ({ name, symbols
         {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")} { }
         {t("common.for")} {}
         {t("kana.romanji")} {}
-        «{symbols[1]?.en}»
+        «{getRomanji(symbols[1])}»
       </Text>
       <EducationPracticeChooseValue 
         hideTitle
         title={""} 
         answers={symbols.map(item => ({
-          text: item[key],
+          text: getKana(item, kana),
           key: item.id
         }))}
         onCompleted={next}

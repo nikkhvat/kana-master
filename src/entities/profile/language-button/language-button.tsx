@@ -8,12 +8,14 @@ interface LanguageButtonProps {
   children: string
   langKey: string
   active: boolean
+  isLongKey?: boolean
   onPress?: () => void
 }
 
 const LanguageButton: React.FC<LanguageButtonProps> = ({
   children,
   langKey,
+  isLongKey,
   onPress,
   active,
 }) => {
@@ -21,11 +23,17 @@ const LanguageButton: React.FC<LanguageButtonProps> = ({
   const { colors } = useThemeContext();
   
   return (
-    <Pressable style={[styles.button, active 
-      ? { borderColor: colors.color4, backgroundColor: colors.color4 } 
-      : { borderColor: colors.color2 }]} onPress={() => onPress?.()} >
+    <Pressable style={[styles.button, 
+      active 
+        ? { borderColor: colors.color4, backgroundColor: colors.color4 } 
+        : { borderColor: colors.color2 }]}
+      onPress={() => onPress?.()} >
       <Text 
-        style={[styles.key, { color: active ? colors.color1 : colors.color4 }]} >
+        style={[
+          styles.key, 
+          { color: active ? colors.color1 : colors.color4 },
+          isLongKey ? { width: 32 } : { width: 22 }
+        ]} >
         {langKey}
       </Text>
       <View style={[styles.line, {backgroundColor: colors.color3}]} ></View>

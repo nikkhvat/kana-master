@@ -6,7 +6,9 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonSelectSequenceLetters } from "@/shared/constants/lessons";
+import getKana from "@/shared/helpers/getKanaKey";
 import { shuffleArray } from "@/shared/helpers/letters";
+import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import Button from "@/shared/ui/button/button";
 
 type SelectSequenceLettersProps = LessonSelectSequenceLetters & {
@@ -25,9 +27,11 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
   const shafledArray = shuffleArray(sequence);
   const shafledArray2 = shuffleArray(sequence);
 
+  const { getRomanji } = useGetRomanji();
+
   const btns = shuffleArray([
-    shafledArray.map(item => item.en).join(", "),
-    shafledArray2.map(item => item.en).join(", ")
+    shafledArray.map(item => getRomanji(item)).join(", "),
+    shafledArray2.map(item => getRomanji(item)).join(", ")
   ]);
 
   return (
@@ -39,7 +43,7 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
         {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")}{" "}
         {t("lesson.inTheFollowingOrder")}{": "}
         {"\n"}
-        {shafledArray.map(item => item.ka).join(", ")}
+        {shafledArray.map(item => getKana(item, kana)).join(", ")}
       </Text>
 
       <View style={styles.rowButtons} >
