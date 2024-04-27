@@ -42,7 +42,7 @@ const SymbolHeader: React.FC<SymbolHeaderProps> = ({
 
   const title = {
     "hiragana": t("kana.hiragana"),
-    "katakana": t("kana.hiragana"),
+    "katakana": t("kana.katakana"),
   };
   
   

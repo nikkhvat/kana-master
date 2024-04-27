@@ -12,7 +12,7 @@ import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import Button from "@/shared/ui/button/button";
 
 type SelectSequenceLettersProps = LessonSelectSequenceLetters & {
-  next: () => void
+  next: (hasError: boolean) => void
   kana: KanaAlphabet
 }
 
@@ -26,13 +26,21 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
 
   const shafledArray = shuffleArray(sequence);
   const shafledArray2 = shuffleArray(sequence);
-
+  
   const { getRomanji } = useGetRomanji();
 
+  const shafledArrayString =  shafledArray.map(item => getRomanji(item)).join(", ");
+  const shafledArray2String =  shafledArray2.map(item => getRomanji(item)).join(", ");
+
+
   const btns = shuffleArray([
-    shafledArray.map(item => getRomanji(item)).join(", "),
-    shafledArray2.map(item => getRomanji(item)).join(", ")
+    shafledArrayString,
+    shafledArray2String
   ]);
+
+  const submit = (answer: string) => {
+    next(shafledArrayString !== answer); 
+  };
 
   return (
     <View style={styles.container} >
@@ -55,7 +63,7 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
           }}
           type={"inactive"}
           title={item}
-          onClick={() => next()}
+          onClick={() => submit(item)}
         />)}
       </View>
     </View>

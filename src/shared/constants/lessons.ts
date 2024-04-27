@@ -77,16 +77,11 @@ export const lessons = {
     { id: "95790d95-7f7c-448d-8d13-e87fee13a715", title: handakuon[0][0], letters: handakuon[0], msg: lastMsg },    
   ],
   yoon: [
-    { id: "bda8fae8-ad69-414b-bc0d-e7b6947bd196", title: yoon[0][0], letters: yoon[0], msg: firstMsg },    
-    { id: "af9b601a-abd8-4581-ba94-7bd2a2597a55", title: yoon[1][0], letters: yoon[1], msg: msg },    
-    { id: "b78114ca-b87d-47d3-af03-f1a05aad2779", title: yoon[2][0], letters: yoon[2], msg: msg },    
-    { id: "21aba678-901b-42ae-99cb-9ec7aa553ac0", title: yoon[3][0], letters: yoon[3], msg: msg },    
-    { id: "8b3ff09f-5e72-457d-a3c3-3efb4ecb56ad", title: yoon[4][0], letters: yoon[4], msg: msg },    
-    { id: "8a6dd410-c187-4f53-a804-ee858efcf4d2", title: yoon[5][0], letters: yoon[5], msg: msg },    
-    { id: "039da505-a31a-4de8-a0a3-3dec5c4fe951", title: yoon[6][0], letters: yoon[6], msg: msg },    
-    { id: "b2c0e343-e972-49ec-8bdb-b52d44ecca2e", title: yoon[7][0], letters: yoon[7], msg: msg },    
-    { id: "99643e24-7ba5-4862-9aca-a5ec80062b2a", title: yoon[8][0], letters: yoon[8], msg: msg },    
-    { id: "5fdffcc2-39d4-45d1-b6b3-bb2d2a142881", title: yoon[9][0], letters: yoon[9], msg: msg },    
-    { id: "710ecccf-5ef5-4538-8060-52b6e6338ec3", title: yoon[10][0], letters: yoon[10], msg: firstMsg },    
+    { id: "bda8fae8-ad69-414b-bc0d-e7b6947bd196", title: yoon[0][0], letters: [yoon[0], yoon[1]].flat(), msg: firstMsg },    
+    { id: "b78114ca-b87d-47d3-af03-f1a05aad2779", title: yoon[2][0], letters: [yoon[2], yoon[3]].flat(), msg: msg },    
+    { id: "8b3ff09f-5e72-457d-a3c3-3efb4ecb56ad", title: yoon[4][0], letters: [yoon[4], yoon[5]].flat(), msg: msg },    
+    { id: "039da505-a31a-4de8-a0a3-3dec5c4fe951", title: yoon[6][0], letters: [yoon[6], yoon[7]].flat(), msg: msg },    
+    { id: "99643e24-7ba5-4862-9aca-a5ec80062b2a", title: yoon[8][0], letters: [yoon[8], yoon[9]].flat(), msg: msg },    
+    { id: "710ecccf-5ef5-4538-8060-52b6e6338ec3", title: yoon[10][0], letters: [yoon[10], yoon[11]].flat(), msg: firstMsg },
   ]
 };

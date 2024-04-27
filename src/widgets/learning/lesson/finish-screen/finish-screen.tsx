@@ -26,6 +26,11 @@ const FinishScreen: React.FC<FinishScreenProps> = ({ next, retry }) => {
         }]} >
           {t("lesson.learningComplete")}
         </Text>
+        <Text style={[styles.subtitle, {
+          color: colors.color3
+        }]} >
+          {t("lesson.practiceEveryDay")}
+        </Text>
       </View>
 
       <View style={styles.btnsContainer} >
@@ -58,7 +63,15 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: "600",
     textAlign: "center",
-    marginBottom: 30,
+    marginBottom: 15,
+    width: "100%",
+  },
+  subtitle: {
+    fontSize: 17,
+    fontWeight: "400",
+    textAlign: "center",
+    paddingLeft: 30,
+    paddingRight: 30,
     width: "100%",
   },
   titleContainer: {

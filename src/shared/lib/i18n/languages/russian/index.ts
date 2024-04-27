@@ -147,7 +147,9 @@ const Russian = {
 		drawLetter: "Нарисуйте букву",
 		inTheCorrectSequence: "в правильном порядке",
 		inTheFollowingOrder: "в слудующим порядке",
-		learningComplete: "Урок пройден!"
+		learningComplete: "Урок пройден!",
+
+		practiceEveryDay: "Практикуйтесь каждый день, чтобы закрепить свои знания",
 	},
 
 	transliterationSystems: {

@@ -147,7 +147,9 @@ const English = {
 		drawLetter: "Draw letter",
 		inTheCorrectSequence: "in the correct sequence",
 		inTheFollowingOrder: "in the following order",
-		learningComplete: "Learning complete!"
+		learningComplete: "Learning complete!",
+
+		practiceEveryDay: "Practice every day to consolidate your knowledge.",
 	},
 
 	transliterationSystems: {

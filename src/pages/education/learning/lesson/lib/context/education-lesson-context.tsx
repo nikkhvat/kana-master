@@ -6,7 +6,7 @@ import { ILetter } from "@/shared/data/lettersTable";
 
 interface EducationLessonContextValue {
   init: (letters: ILetter[]) => void;
-  next: () => void,
+  next: (hasError?: boolean) => void,
   retry: () => void,
   screens: AnyLesson[]
   currentScreen: AnyLesson | null
@@ -16,7 +16,7 @@ interface EducationLessonContextValue {
 export const EducationLessonContext =
   createContext<EducationLessonContextValue>({
     init: () => { },
-    next: () => { },
+    next: (hasError?: boolean) => { },
     retry: () => { },
     screens: [],
     currentScreen: null,
@@ -66,12 +66,12 @@ function generateScreens(letters: ILetter[]): AnyLesson[] {
     if (letters.length -1 === i) {
       screens.push({ name: LessonScreen.SelectSymbol, symbols: shuffleArray(letters).slice(0, 3) });
       screens.push({ name: LessonScreen.SelectSymbol, symbols: shuffleArray(letters).slice(0, 3) });
-      screens.push({ name: LessonScreen.SelectSymbol, symbols: shuffleArray(letters).slice(0, 3) });
       screens.push({ name: LessonScreen.MatchSymbols, symbols: shuffleArray(letters).slice(0, 3) });
       screens.push({ name: LessonScreen.MatchSymbols, symbols: shuffleArray(letters).slice(0, 3) });
     }
   }
 
+  screens.push({ name: LessonScreen.SelectSequenceLetters, sequence: shuffleArray(letters) });
   screens.push({ name: LessonScreen.SelectSequenceLetters, sequence: shuffleArray(letters) });
   screens.push({ name: LessonScreen.BuildWord, sequence: shuffleArray(letters) });
   screens.push({ name: LessonScreen.BuildWord, sequence: shuffleArray(letters) });
@@ -94,7 +94,23 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
     setScreens(screens);
   };
 
-  const next = () => {
+  const next = (hasError?: boolean) => {
+    if (hasError) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if ((screens[screen] as any).retry !== 2) {
+        setScreens(prev => [
+          ...prev.slice(0, -1),
+          { 
+            ...screens[screen], 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            retry: (screens[screen] as any)?.retry ? (screens[screen] as any)?.retry + 1 : 1
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          },
+          { name: LessonScreen.Finish }
+        ]);
+      }
+    }
+
     if (screen + 1 !== screens.length) {
       setScreen(prev => prev + 1);
     }

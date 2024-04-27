@@ -136,7 +136,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
               onStartLesson={() => startLesson({ ...item, kana: activeTab })}
               key={getKana(item.title, activeTab)}
               icon={getKana(item.title, activeTab)}
-              passed={false}
+              passed={completedLessons.includes(`${key}/${item.id}`)}
               title={(index + 9) + 1}
               letters={item.letters}
               msg={item.msg}
@@ -156,7 +156,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
               onStartLesson={() => startLesson({ ...item, kana: activeTab })}
               key={getKana(item.title, activeTab)}
               icon={getKana(item.title, activeTab)}
-              passed={false}
+              passed={completedLessons.includes(`${key}/${item.id}`)}
               title={(index + 14) + 1}
               letters={item.letters}
               msg={item.msg}

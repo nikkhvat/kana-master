@@ -17,8 +17,7 @@ type SelectSequenceLettersProps = LessonBuildWord & {
   kana: KanaAlphabet
 }
 
-const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ name, sequence, kana, next }) => {
-
+const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ sequence, kana, next }) => {
   const { colors } = useThemeContext();
 
   const shafledArray = shuffleArray(sequence);
@@ -27,6 +26,9 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
   const { t } = useTranslation();
   const { getRomanji } = useGetRomanji();
 
+  const random = Math
+    .random()
+    .toString();
 
   return (
     <View style={styles.container} >
@@ -44,8 +46,8 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
         hideTitle
         question={{
           type: QuestionTypeBuildingWord,
-          title: "",
-          buildingWord: shafledArray.map(item => getRomanji(item)).join(""),
+          title: random,
+          buildingWord: shafledArray1.map(item => getRomanji(item)).join(""),
           shaffledLetters: shafledArray.map(item => getRomanji(item)),
           translate: shafledArray.map(item => getRomanji(item)).join(""),
           selectKana: WordBuildingType.Kana,

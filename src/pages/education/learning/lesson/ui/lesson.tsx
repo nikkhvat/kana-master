@@ -47,6 +47,13 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
     navigation.goBack();
   };
 
+  const onRetry = () => {
+    const key = kana === KanaAlphabet.Hiragana ? "hi" : "ka";
+    dispatch(completeLesson(`${key}/${id}`));
+    init(letters);
+    retry();
+  };
+
   useEffect(() => {
     init(letters);
   }, []);
@@ -115,7 +122,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
         <FinishScreen 
           name={LessonScreen.Finish} 
           next={onComplete}
-          retry={retry} />}
+          retry={onRetry} />}
       </View>
     </SafeLayout>
   );
