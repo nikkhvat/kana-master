@@ -8,9 +8,11 @@ import { RegistErrorProps } from "@/pages/education/practice/education-word-game
 import { KanaAlphabet, TEST_DELAY, WordBuildingType } from "@/shared/constants/kana";
 import { QuestionWordBuilding } from "@/shared/types/questions";
 
-
 interface ChooseLettersProps {
   question: QuestionWordBuilding;
+
+  buildingWord: string[]
+
   hideTitle?: boolean
 
   onError?: (data: RegistErrorProps) => void;
@@ -22,21 +24,21 @@ const SequenceBuild: React.FC<ChooseLettersProps> = ({
   question,
   onFinish,
   onError,
-  hideTitle
+  hideTitle,
+  buildingWord
 }) => {
   const { t } = useTranslation();
   const { colors } = useThemeContext();
 
   const {
     title,
-    buildingWord,
     shaffledLetters,
     translate,
     selectKana,
     selectKanaType,
   } = question;
 
-  const letters = buildingWord.split("");
+  const letters = buildingWord;
 
   const emptyLetters = useMemo(() => shaffledLetters.map(() => null), [shaffledLetters]);
 
@@ -87,7 +89,7 @@ const SequenceBuild: React.FC<ChooseLettersProps> = ({
         if (hasError) {
           onError?.({
             type: "building-word",
-            pair: [title, buildingWord]
+            pair: [title, buildingWord.join("")]
           });
         }
         onFinish?.(hasError);

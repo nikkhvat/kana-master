@@ -53,6 +53,7 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ seq
           selectKana: WordBuildingType.Kana,
           selectKanaType: kana,
         }}
+        buildingWord={shafledArray1.map(item => getRomanji(item))}
         onFinish={next} />
     </View>
   );
