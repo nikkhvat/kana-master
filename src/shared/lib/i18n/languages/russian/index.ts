@@ -141,8 +141,15 @@ const Russian = {
 		modeSelectAtLeastOne: "* Должен быть выбран хотя бы один режим",
 	},
 
-	lesson: {
+	lessonsList: {
 		chapter: "Раздел",
+
+		firstLessonInSectionTitle: "Научитесь писать первые {{count}} слогов.",
+		continuingLessonsTitle: "Научитесь писать следующие {{count}} слогов.",
+		finalLessonInSectionTitle: "Научитесь писать последние {{count}} слогов."
+	},
+
+	lesson: {
 		rememberWritingAndSoundLetter: "Запомните порядок написания и произношение этого слога.",
 		drawSyllable: "Нарисуйте слог «{{syllable}}» в правильном порядке",
 		matchHiraganaWithTransliteration: "Сопоставьте Хиригану с транслитерацией",

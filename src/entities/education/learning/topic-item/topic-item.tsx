@@ -108,7 +108,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
               {letters.map(item => getRomanji(item)).join(", ").toLocaleLowerCase()}
             </Text>
             <Text style={[styles.infoSubTitle, { color: colors.color4 }]} >
-              {msg?.replace("{count}", letters.length.toString())}
+              {t(msg, { count: letters.length })}
             </Text>
             <Button 
               onClick={onStartLesson}

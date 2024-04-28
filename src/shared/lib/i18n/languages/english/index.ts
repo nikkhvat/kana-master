@@ -141,8 +141,15 @@ const English = {
 		modeSelectAtLeastOne: "* At least one mode must be selected",
 	},
 
-	lesson: {
+	lessonsList: {
 		chapter: "Chapter",
+
+		firstLessonInSectionTitle: "Learn to write the first {{count}} syllables.",
+		continuingLessonsTitle: "Learn to write the next {{count}} syllables.",
+		finalLessonInSectionTitle: "Learn to write the last {{count}} syllables.",
+	},
+
+	lesson: {
 		rememberWritingAndSoundLetter: "Memorize the stroke order and pronunciation of this syllable.",
 		drawSyllable: "Draw the syllable «{{syllable}}» in the correct sequence",
 		matchHiraganaWithTransliteration: "Match Hiragana with Transliteration",
