@@ -1,15 +1,15 @@
 import React, { createContext, FC, PropsWithChildren, useContext, useState } from "react";
 
-import { AnyLesson, LessonScreen } from "@/shared/constants/lessons";
+import { AnyLesson, InfoLessonScreen, LessonScreen } from "@/shared/constants/lessons";
 import { ILetter } from "@/shared/data/lettersTable";
 
 
 interface EducationLessonContextValue {
-  init: (letters: ILetter[]) => void;
+  init: (letters: ILetter[], type: "auto" | "manually", infoScreens: InfoLessonScreen[]) => void;
   next: (hasError?: boolean) => void,
   retry: () => void,
-  screens: AnyLesson[]
-  currentScreen: AnyLesson | null
+  lessonScreens: (AnyLesson | InfoLessonScreen)[]
+  currentScreen: (AnyLesson | InfoLessonScreen) | null
   screen: number
 }
 
@@ -18,7 +18,7 @@ export const EducationLessonContext =
     init: () => { },
     next: (hasError?: boolean) => { },
     retry: () => { },
-    screens: [],
+    lessonScreens: [],
     currentScreen: null,
     screen: 0,
   });
@@ -86,12 +86,16 @@ export const useEducationLessonContext = () =>
 export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
-  const [screens, setScreens] = useState([] as AnyLesson[]);
+  const [screens, setScreens] = useState([] as (AnyLesson | InfoLessonScreen)[]);
   const [screen, setScreen] = useState(0);
 
-  const init = (letters: ILetter[]) => {
-    const screens = generateScreens(letters);
-    setScreens(screens);
+  const init = (letters: ILetter[], type: "auto" | "manually", infoScreens: InfoLessonScreen[]) => {
+    if (type === "auto") {
+      const screens = generateScreens(letters);
+      setScreens(screens);
+    } else {
+      setScreens(infoScreens);
+    }
   };
 
   const next = (hasError?: boolean) => {
@@ -126,7 +130,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
         init,
         next,
         retry,
-        screens,
+        lessonScreens: screens,
         screen,
         currentScreen: screens[screen]
       }}

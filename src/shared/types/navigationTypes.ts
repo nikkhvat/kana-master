@@ -1,8 +1,10 @@
+import { AutoLesson, ManuallyLesson } from "../constants/lessons";
 import { ILetter } from "../data/lettersTable";
 
 import { ResultInfoWordGame } from "@/pages/education/practice/education-word-game/lib/context/education-statistic-context";
 import { ResultInfo } from "@/pages/education/practice/testing/lib/context/education-statistic-context";
 import { CardMode, DifficultyLevelType, KanaAlphabet, TestMode } from "@/shared/constants/kana";
+
 
 export type RootStackParamList = {
   Root: undefined;
@@ -17,13 +19,7 @@ export type RootStackParamList = {
     keysModeState: TestMode[],
   };
   LearningPage: undefined;
-  LessonPage: {
-    title: ILetter
-    id: string
-    letters: ILetter[]
-    msg: string
-    kana: KanaAlphabet
-  };
+  LessonPage: AutoLesson | ManuallyLesson
   DrawKana: { letter: ILetter, kana: KanaAlphabet };
   Lesson: { symbols: ILetter[], kana: KanaAlphabet };
   KanaInfo: { 

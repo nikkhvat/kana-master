@@ -23,7 +23,7 @@ interface TopicItemProps {
   title: string | number;
   last: boolean;
 
-  letters: ILetter[]
+  letters?: ILetter[]
   msg: string
   kana: KanaAlphabet
 
@@ -97,7 +97,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
             {t("lessonsList.lesson")} {title}
           </Text>
           <Text style={[styles.subtitle, { color: colors.color4 }]}>
-            {letters.map(item => getKana(item, kana)).join(", ")}
+            {letters && letters.map(item => getKana(item, kana)).join(", ")}
           </Text>
 
           {state === TopicItemState.Opened && <View style={styles.openedInfo} >
@@ -105,10 +105,10 @@ const TopicItem: React.FC<TopicItemProps> = ({
             <Text style={[styles.infoTitle, { color: colors.color4 }]} >
               {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")}:
               {" "}
-              {letters.map(item => getRomanji(item)).join(", ").toLocaleLowerCase()}
+              {letters && letters.map(item => getRomanji(item)).join(", ").toLocaleLowerCase()}
             </Text>
             <Text style={[styles.infoSubTitle, { color: colors.color4 }]} >
-              {t(msg, { count: letters.length })}
+              {t(msg, { count: letters && letters.length })}
             </Text>
             <Button 
               onClick={onStartLesson}

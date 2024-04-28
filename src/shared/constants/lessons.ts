@@ -1,4 +1,6 @@
-import { ILetter, base, dakuon, handakuon, yoon } from "../data/lettersTable";
+import { ILetter, base } from "../data/lettersTable";
+
+import { KanaAlphabet } from "./kana";
 
 export enum LessonScreen {
   Symbol,
@@ -7,7 +9,9 @@ export enum LessonScreen {
   SelectSymbol,
   SelectSequenceLetters,
   BuildWord,
-  Finish
+  Finish,
+
+  Info
 }
 
 export type AnyLesson = LessonSymbol | LessonDraw | LessonMatchSymbols | LessonSelectSymbol | LessonSelectSequenceLetters | LessonBuildWord | LessonFinish
@@ -53,31 +57,142 @@ export type LessonFinish = {
   name: LessonScreen.Finish
 }
 
-export const lessons = {
+export type TextBlock = { type: "text", text: string };
+export type RulesBlock = { type: "rules", rules: string[] };
+export type TableBlock = { type: "table", table: string[][] };
+export type LetterBlock = { type: "letter", id: string, kana: KanaAlphabet };
+export type SelectAnswerBlock = { type: "select-answer", answers: { title: string, isTrue: boolean }[] };
+
+export type AnyBlock = TextBlock | TableBlock | RulesBlock | LetterBlock | SelectAnswerBlock;
+
+export type InfoLessonScreen = {
+  name: LessonScreen.Info
+  title: string
+  isActiveNext?: boolean
+  isActiveFinish?: boolean
+  blocks: AnyBlock[]
+}
+
+export type AutoLesson = {
+  type: "auto"
+  id: string
+  title: ILetter
+  letters: ILetter[]
+  msg: string
+
+  kana?: KanaAlphabet
+};
+
+export type ManuallyLesson = {
+  type: "manually"
+  id: string
+  title: string
+  msg: string
+  screens: InfoLessonScreen[]
+};
+
+export const lessonIntro: ManuallyLesson = {
+  type: "manually",
+  id: "52aa8316-4669-41e6-98d3-2b3e42a943ff",
+  title: "Introdution",
+  msg: "Надпись интродукшен",
+  screens: [
+    {
+      name: LessonScreen.Info,
+      isActiveNext: true,
+      title: "Знаешь ли ты ?",
+      blocks: [
+        { type: "text", text: "В японском языке есть два алфавита: хирагана и катакана, каждый из которых состоит из 46 букв." },
+        { type: "text", text: "Хирагана употребляется для написания слов японского происхождения, а катакана - для написания заимствованных слов и иностранных имен." },
+        { type: "text", text: "Есть также около 2000 часто используемых иероглифов (кандзи)." },
+      ],
+    },
+    {
+      name: LessonScreen.Info,
+      isActiveNext: true,
+      title: "Хирагана? Катакана? Кандзи?",
+      blocks: [
+        { type: "text", text: "И хирагана, и катакана обозначают звуки, а кандзи - значения." },
+        {
+          type: "table", table: [
+            ["Романджи", "1", "2", "3", "4", "5"],
+            ["Хиригана", "1", "2", "3", "4", "5"],
+            ["Катакана", "1", "2", "3", "4", "5"],
+          ]
+        },
+      ],
+    },
+    {
+      name: LessonScreen.Info,
+      isActiveNext: true,
+      title: "Подсказка!",
+      blocks: [
+        { type: "text", text: "Давай изучим правила написания японских иероглифов!" },
+        {
+          type: "rules", rules: [
+            "Пиши штрихи слева направо",
+            "Пиши штрихи сверху вниз",
+            "Пиши по часовой стрелке большинство кривых и окружностей"
+          ]
+        }
+      ]
+    },
+    {
+      name: LessonScreen.Info,
+      isActiveNext: true,
+      title: "Посмотри порядок штрихов.",
+      blocks: [
+        { type: "text", text: "Соблюдение правильного порядка штрихов помогает писать аккуратные символы." },
+        { type: "letter", id: "a151eeeb-2537-463c-ae23-d484d1bcb835", kana: KanaAlphabet.Hiragana }
+      ]
+    },
+    {
+      name: LessonScreen.Info,
+      title: "Посмотри порядок штрихов.",
+      blocks: [
+        { type: "text", text: "Выбери правильное правило письма на японском языке." },
+        { type: "select-answer", answers: [
+          { title: "справа налево", isTrue: false },
+          { title: "снизу вверх", isTrue: false },
+          { title: "слева направо", isTrue: true },
+        ]}
+      ]
+    },
+    {
+      name: LessonScreen.Info,
+      title: "Как писать строки?",
+      isActiveNext: true,
+      blocks: [
+        { type: "text", text: "Теперь давай обратим внимание на то, как надо заканчивать штрихи." },
+        { type: "text", text: "Для завершения штриха мы резко останавливаемся, делаем крючок или постепенно отводим кисть." },
+      ]
+    },
+    {
+      name: LessonScreen.Info,
+      isActiveNext: false,
+      isActiveFinish: true,
+      title: "Завершение штриха.",
+      blocks: [
+        { type: "text", text: "Первый штрих заканчивается крючком, а второй - резко останавливается." },
+        { type: "letter", id: "11017078-148a-4a44-b3f7-21d1df02d981", kana: KanaAlphabet.Hiragana }
+      ]
+    },
+  ],
+};
+
+export const lessons: {
+  base: (AutoLesson | ManuallyLesson)[],
+} = {
   base: [
-    { id: "3a060caa-ac2f-42cb-a901-c19848e9d5c5", title: base[0][0], letters: base[0], msg: "lessonsList.firstLessonInSectionTitle" },
-    { id: "2fa83f16-0848-49ea-a910-3e09dbd95de8", title: base[1][0], letters: base[1], msg: "lessonsList.continuingLessonsTitle" },
-    { id: "17da3959-de2c-40e6-a1aa-8cbe5237f818", title: base[2][0], letters: base[2], msg: "lessonsList.continuingLessonsTitle" },
-    { id: "f2b99593-28bb-43dd-9983-ea2668af30ab", title: base[3][0], letters: base[3], msg: "lessonsList.continuingLessonsTitle" },
-    { id: "404f7e6c-864e-4ec0-8039-f3b59c6e611d", title: base[4][0], letters: base[4], msg: "lessonsList.continuingLessonsTitle" },
-    { id: "dea61dc7-dfe3-41c0-890f-028cbf27bf3d", title: base[5][0], letters: base[5], msg: "lessonsList.continuingLessonsTitle" },
-    { id: "75a8dbb6-7cfd-4e69-9ad7-20940884aabc", title: base[6][0], letters: [base[6], base[7]].flat(), msg: "lessonsList.continuingLessonsTitle" },
-    { id: "83f0bc1e-f901-4b40-a6c6-501fb4726fb4", title: base[8][0], letters: base[8], msg: "lessonsList.continuingLessonsTitle" },
-    { id: "608ce336-8437-47b7-942d-5f4e335ef9ba", title: base[9][0], letters: [base[9], base[10]].flat(), msg: "lessonsList.finalLessonInSectionTitle" },
+    lessonIntro,
+    { type: "auto", id: "3a060caa-ac2f-42cb-a901-c19848e9d5c5", title: base[0][0], letters: base[0], msg: "lessonsList.firstLessonInSectionTitle" },
+    { type: "auto", id: "2fa83f16-0848-49ea-a910-3e09dbd95de8", title: base[1][0], letters: base[1], msg: "lessonsList.continuingLessonsTitle" },
+    { type: "auto", id: "17da3959-de2c-40e6-a1aa-8cbe5237f818", title: base[2][0], letters: base[2], msg: "lessonsList.continuingLessonsTitle" },
+    { type: "auto", id: "f2b99593-28bb-43dd-9983-ea2668af30ab", title: base[3][0], letters: base[3], msg: "lessonsList.continuingLessonsTitle" },
+    { type: "auto", id: "404f7e6c-864e-4ec0-8039-f3b59c6e611d", title: base[4][0], letters: base[4], msg: "lessonsList.continuingLessonsTitle" },
+    { type: "auto", id: "dea61dc7-dfe3-41c0-890f-028cbf27bf3d", title: base[5][0], letters: base[5], msg: "lessonsList.continuingLessonsTitle" },
+    { type: "auto", id: "75a8dbb6-7cfd-4e69-9ad7-20940884aabc", title: base[6][0], letters: [base[6], base[7]].flat(), msg: "lessonsList.continuingLessonsTitle" },
+    { type: "auto", id: "83f0bc1e-f901-4b40-a6c6-501fb4726fb4", title: base[8][0], letters: base[8], msg: "lessonsList.continuingLessonsTitle" },
+    { type: "auto", id: "608ce336-8437-47b7-942d-5f4e335ef9ba", title: base[9][0], letters: [base[9], base[10]].flat(), msg: "lessonsList.finalLessonInSectionTitle" },
   ],
-  dakuon: [
-    { id: "019edc82-150d-4657-921b-9966b02ab243", title: dakuon[0][0], letters: dakuon[0], msg: "lessonsList.firstLessonInSectionTitle" },    
-    { id: "eed9d727-4ed9-4847-9814-a41704b10d9b", title: dakuon[1][0], letters: dakuon[1], msg: "lessonsList.continuingLessonsTitle" },    
-    { id: "b664f984-b17a-4543-9fc6-a3b8e34349cb", title: dakuon[2][0], letters: dakuon[2], msg: "lessonsList.continuingLessonsTitle" },    
-    { id: "cae560b8-36b1-4c3e-b775-ceab5cbd71df", title: dakuon[3][0], letters: dakuon[3], msg: "lessonsList.continuingLessonsTitle" },    
-    { id: "95790d95-7f7c-448d-8d13-e87fee13a715", title: handakuon[0][0], letters: handakuon[0], msg: "lessonsList.finalLessonInSectionTitle" },    
-  ],
-  yoon: [
-    { id: "bda8fae8-ad69-414b-bc0d-e7b6947bd196", title: yoon[0][0], letters: [yoon[0], yoon[1]].flat(), msg: "lessonsList.firstLessonInSectionTitle" },    
-    { id: "b78114ca-b87d-47d3-af03-f1a05aad2779", title: yoon[2][0], letters: [yoon[2], yoon[3]].flat(), msg: "lessonsList.continuingLessonsTitle" },    
-    { id: "8b3ff09f-5e72-457d-a3c3-3efb4ecb56ad", title: yoon[4][0], letters: [yoon[4], yoon[5]].flat(), msg: "lessonsList.continuingLessonsTitle" },    
-    { id: "039da505-a31a-4de8-a0a3-3dec5c4fe951", title: yoon[6][0], letters: [yoon[6], yoon[7]].flat(), msg: "lessonsList.continuingLessonsTitle" },    
-    { id: "99643e24-7ba5-4862-9aca-a5ec80062b2a", title: yoon[8][0], letters: [yoon[8], yoon[9]].flat(), msg: "lessonsList.continuingLessonsTitle" },    
-    { id: "710ecccf-5ef5-4538-8060-52b6e6338ec3", title: yoon[10][0], letters: [yoon[10], yoon[11]].flat(), msg: "lessonsList.finalLessonInSectionTitle" },
-  ]
 };

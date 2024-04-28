@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { completeLesson } from "../../model/slice";
 import { useEducationLessonContext } from "../lib/context/education-lesson-context";
@@ -17,6 +17,7 @@ import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-ba
 import BuildWordScreen from "@/widgets/learning/lesson/build-word-screen/build-word-screen";
 import LessonDrawScreen from "@/widgets/learning/lesson/draw/draw";
 import FinishScreen from "@/widgets/learning/lesson/finish-screen/finish-screen";
+import InfoScreen from "@/widgets/learning/lesson/info-screen/info-screen";
 import MatchLettersScreen from "@/widgets/learning/lesson/match-letters/match-letters";
 import SelectLettersScreen from "@/widgets/learning/lesson/select-letters/select-letters";
 import SelectSequenceLettersScreen from "@/widgets/learning/lesson/select-sequence-letters/select-sequence-letters";
@@ -32,13 +33,18 @@ interface LearnScreenProps {
 }
 
 const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
-  const { letters, kana, id } = route.params;
+  const { letters, kana, screens, id, type } = {
+    letters: [],
+    kana: KanaAlphabet.Hiragana,
+    screens: [],
+    ...route.params
+  };
 
   const dispatch = useAppDispatch();
 
   const { colors } = useThemeContext();
 
-  const { init, currentScreen, screen, screens, next, retry } = useEducationLessonContext();
+  const { init, currentScreen, screen, lessonScreens, next, retry } = useEducationLessonContext();
 
   const onComplete = () => {
     const key = kana === KanaAlphabet.Hiragana ? "hi" : "ka";
@@ -50,12 +56,12 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
   const onRetry = () => {
     const key = kana === KanaAlphabet.Hiragana ? "hi" : "ka";
     dispatch(completeLesson(`${key}/${id}`));
-    init(letters);
+    init(letters, type, screens);
     retry();
   };
 
   useEffect(() => {
-    init(letters);
+    init(letters, type, screens);
   }, []);
 
   return (
@@ -69,10 +75,10 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
         }
       ]} >
       <View style={styles.header}>
-        {screen + 1 !== screens.length && <LinearProgressBar
+        {(type === "manually" ? true : (screen + 1 !== lessonScreens.length)) && <LinearProgressBar
           close={navigation.goBack}
           current={screen + 1}
-          all={screens.length}
+          all={lessonScreens.length}
         />}
       </View>
       <View style={styles.container} >
@@ -117,6 +123,16 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
           sequence={currentScreen.sequence}
           kana={kana}
           next={next} />}
+
+      {currentScreen?.name === LessonScreen.Info &&
+          <InfoScreen
+            name={LessonScreen.Info}
+            next={next}
+            finish={onComplete}
+            title={currentScreen.title}
+            blocks={currentScreen.blocks}
+            isActiveNext={currentScreen.isActiveNext}
+            isActiveFinish={currentScreen.isActiveFinish} />}
       
       {currentScreen?.name === LessonScreen.Finish && 
         <FinishScreen 
