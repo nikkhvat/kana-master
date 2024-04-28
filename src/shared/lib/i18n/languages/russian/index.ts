@@ -38,8 +38,8 @@ const Russian = {
 			slow: "7 сек",
 		},
 
-		selectCorrectTransliteration: "Выберите правильную транслитерацию",
-		selectCorrectTransliterationForWord: "Выберите правильную транслитерацию для слова"
+		selectCorrectTransliteration: "Выберите правильную транслитерацию.",
+		selectCorrectTransliterationForWord: "Выберите правильную транслитерацию для слова."
 	},
 
 	testing: {
@@ -129,7 +129,7 @@ const Russian = {
 
 	lessonsList: {
 		chapter: "Раздел",
-		completed: "пройденно",
+		completed: "пройдено",
 		lesson: "Урок",
 
 		firstLessonInSectionTitle: "Научитесь писать первые {{count}} слогов.",
@@ -139,13 +139,13 @@ const Russian = {
 
 	lesson: {
 		rememberWritingAndSoundLetter: "Запомните порядок написания и произношение этого слога.",
-		drawSyllable: "Нарисуйте слог «{{syllable}}» в правильном порядке",
-		matchHiraganaWithTransliteration: "Сопоставьте Хиригану с транслитерацией",
-		matchKatakanaWithTransliteration: "Сопоставьте Катакану с транслитерацией",
-		selectCorrectTransliteration: "Выберите правильную транслитерацию слога «{{syllable}}»",
-		chooseCorrectTransliterationSequence: "Выберите правильную последовательность транслитерации",
-		arrangeSyllablesInCorrectOrder: "Установите слоги в правильном порядке",
-		practiceEveryDay: "Практикуйтесь каждый день, чтобы закрепить свои знания",
+		drawSyllable: "Нарисуйте слог «{{syllable}}» в правильном порядке.",
+		matchHiraganaWithTransliteration: "Сопоставьте Хиригану с транслитерацией.",
+		matchKatakanaWithTransliteration: "Сопоставьте Катакану с транслитерацией.",
+		selectCorrectTransliteration: "Выберите правильную транслитерацию слога «{{syllable}}».",
+		chooseCorrectTransliterationSequence: "Выберите правильную последовательность транслитерации.",
+		arrangeSyllablesInCorrectOrder: "Установите слоги в правильном порядке.",
+		practiceEveryDay: "Практикуйтесь каждый день, чтобы закрепить свои знания.",
 		learningComplete: "Урок пройден!",
 	},
 

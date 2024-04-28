@@ -56,21 +56,16 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
   
   const thirdChapterIds = [
     "bda8fae8-ad69-414b-bc0d-e7b6947bd196",
-    "af9b601a-abd8-4581-ba94-7bd2a2597a55",
     "b78114ca-b87d-47d3-af03-f1a05aad2779",
-    "21aba678-901b-42ae-99cb-9ec7aa553ac0",
     "8b3ff09f-5e72-457d-a3c3-3efb4ecb56ad",
-    "8a6dd410-c187-4f53-a804-ee858efcf4d2",
     "039da505-a31a-4de8-a0a3-3dec5c4fe951",
-    "b2c0e343-e972-49ec-8bdb-b52d44ecca2e",
     "99643e24-7ba5-4862-9aca-a5ec80062b2a",
-    "5fdffcc2-39d4-45d1-b6b3-bb2d2a142881",
     "710ecccf-5ef5-4538-8060-52b6e6338ec3",
   ];
 
   const firstChapterProgress = firstChapterIds.filter(item => completedLessons.includes(`${key}/${item}`));
-  const secondChapterProgress = firstChapterIds.filter(item => secondChapterIds.includes(`${key}/${item}`));
-  const thirdChapterProgress = firstChapterIds.filter(item => thirdChapterIds.includes(`${key}/${item}`));
+  const secondChapterProgress = secondChapterIds.filter(item => completedLessons.includes(`${key}/${item}`));
+  const thirdChapterProgress = thirdChapterIds.filter(item => completedLessons.includes(`${key}/${item}`));
   
   const startLesson = (item: {
     title: ILetter;
@@ -107,7 +102,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
         </View>
         <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} >
           <Text style={[styles.title, { color: colors.color4 }]} >{(t("lessonsList.chapter"))} 1. {t("kana.basic")}</Text>
-          <Text style={[styles.subtitle, { color: colors.color4 }]} >{firstChapterProgress.length}/{firstChapterIds.length} {t("lessonsList.completed")}</Text>
+            <Text style={[styles.subtitle, { color: firstChapterProgress.length === firstChapterIds.length ? colors.second_color2 : colors.color4 }]} >{firstChapterProgress.length}/{firstChapterIds.length} {t("lessonsList.completed")}</Text>
           {lessons.base.map((item, index) =>
             <TopicItem 
               onClick={() => activeLesson === getKana(item.title, activeTab)
@@ -127,7 +122,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
               last={index + 1 === lessons.base.length} />)}
           
           <Text style={[styles.title, { color: colors.color4 }]} >{(t("lessonsList.chapter"))} 2. {t("kana.dakuon")}</Text>
-          <Text style={[styles.subtitle, { color: colors.color4 }]} >{secondChapterProgress.length}/{secondChapterIds.length} {t("lessonsList.completed")}</Text>
+            <Text style={[styles.subtitle, { color: secondChapterProgress.length === secondChapterIds.length ? colors.second_color2 : colors.color4 }]} >{secondChapterProgress.length}/{secondChapterIds.length} {t("lessonsList.completed")}</Text>
           {lessons.dakuon.map((item, index) =>
             <TopicItem 
               onClick={() => activeLesson === getKana(item.title, activeTab)
@@ -147,7 +142,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
               last={index + 1 === lessons.dakuon.length} />)}
           
           <Text style={[styles.title, { color: colors.color4 }]} >{(t("lessonsList.chapter"))} 3. {t("kana.yoon")}</Text>
-          <Text style={[styles.subtitle, { color: colors.color4 }]} >{thirdChapterProgress.length}/{thirdChapterIds.length} {t("lessonsList.completed")}</Text>
+            <Text style={[styles.subtitle, { color: thirdChapterProgress.length === thirdChapterIds.length ? colors.second_color2 : colors.color4 }]} >{thirdChapterProgress.length}/{thirdChapterIds.length} {t("lessonsList.completed")}</Text>
           {lessons.yoon.map((item, index) =>
             <TopicItem 
               onClick={() => activeLesson === getKana(item.title, activeTab)

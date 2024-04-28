@@ -38,8 +38,8 @@ const English = {
 			slow: "7 sec",
 		},
 
-		selectCorrectTransliteration: "Select the Correct Transliteration",
-		selectCorrectTransliterationForWord: "Select the Correct Transliteration for the Word"
+		selectCorrectTransliteration: "Select the Correct Transliteration.",
+		selectCorrectTransliterationForWord: "Select the Correct Transliteration for the Word."
 	},
 
 	testing: {
@@ -139,12 +139,12 @@ const English = {
 
 	lesson: {
 		rememberWritingAndSoundLetter: "Memorize the stroke order and pronunciation of this syllable.",
-		drawSyllable: "Draw the syllable «{{syllable}}» in the correct sequence",
-		matchHiraganaWithTransliteration: "Match Hiragana with Transliteration",
-		matchKatakanaWithTransliteration: "Match Katakana with Transliteration",
-		selectCorrectTransliteration: "Select the Correct Transliteration of the Syllable «{{syllable}}»",
-		chooseCorrectTransliterationSequence: "Choose the Correct Transliteration Sequence",
-		arrangeSyllablesInCorrectOrder: "Arrange the Syllables in the Correct Order",
+		drawSyllable: "Draw the syllable «{{syllable}}» in the correct sequence.",
+		matchHiraganaWithTransliteration: "Match Hiragana with Transliteration.",
+		matchKatakanaWithTransliteration: "Match Katakana with Transliteration.",
+		selectCorrectTransliteration: "Select the Correct Transliteration of the Syllable «{{syllable}}».",
+		chooseCorrectTransliterationSequence: "Choose the Correct Transliteration Sequence.",
+		arrangeSyllablesInCorrectOrder: "Arrange the Syllables in the Correct Order.",
 		practiceEveryDay: "Practice every day to consolidate your knowledge.",
 		learningComplete: "Learning complete!",
 	},
