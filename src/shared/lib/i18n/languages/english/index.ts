@@ -10,10 +10,10 @@ const English = {
 	},
 
 	tabs: {
-		profile: "Settings",
 		learning: "Learning",
 		practice: "Practice",
 		kana: "Kana",
+		profile: "Settings",
 	},
 
 	profile: {
@@ -106,7 +106,7 @@ const English = {
 
 		details: "Details",
 
-		alpabet: "Alphabet",
+		alphabet: "Alphabet",
 
 		fastestAnswer: "Fastest answer",
 		slowestAnswer: "Slowest answer",

@@ -10,15 +10,15 @@ const Russian = {
 	},
 
 	tabs: {
-		profile: "Настройки",
 		learning: "Обучение",
 		practice: "Практика",
 		kana: "Кана",
+		profile: "Настройки",
 	},
 
 	profile: {
-		theme: "Theme",
-		language: "Language",
+		theme: "Темы",
+		language: "Языки",
 	},
 
 	learning: {
@@ -106,7 +106,7 @@ const Russian = {
 
 		details: "Подробнее",
 
-		alpabet: "Алфавит",
+		alphabet: "Алфавит",
 
 		fastestAnswer: "Самый быстрый ответ",
 		slowestAnswer: "Самый медленный ответ",
