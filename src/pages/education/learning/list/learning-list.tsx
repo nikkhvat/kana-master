@@ -6,12 +6,12 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
 import SafeLayout from "@/app/layouts/safeLayout";
-import TopicItem, { TopicItemState } from "@/entities/education/learning/topic-item/topic-item";
+import TopicItem from "@/entities/education/learning/topic-item/topic-item";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { AutoLesson, ManuallyLesson, lessons } from "@/shared/constants/lessons";
-import { ILetter } from "@/shared/data/lettersTable";
 import getKana from "@/shared/helpers/getKanaKey";
+import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import PageTitle from "@/shared/ui/page-title/page-title";
@@ -26,27 +26,26 @@ interface HomeScreenProps {
 const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
   const { colors } = useThemeContext();
+
+  const { getRomanji } = useGetRomanji();
   
   const completedLessons = useAppSelector(state => state.lessons.completedLesson);
 
   const [activeTab, setActiveTab] = useState<KanaAlphabet>(KanaAlphabet.Hiragana);
   const [activeLesson, setActiveLesson] = useState<string | null>(null);
 
-  const key = activeTab === KanaAlphabet.Hiragana ? "hi" : "ka";
+  const toggleActiveLesson = (key: string) => {
+    if (activeLesson === key) {
+      setActiveLesson("");
+    } else {
+      setActiveLesson(key);
+    }
+  };
 
-  const firstChapterIds = [
-    "52aa8316-4669-41e6-98d3-2b3e42a943ff",
-    "3a060caa-ac2f-42cb-a901-c19848e9d5c5",
-    "2fa83f16-0848-49ea-a910-3e09dbd95de8",
-    "17da3959-de2c-40e6-a1aa-8cbe5237f818",
-    "f2b99593-28bb-43dd-9983-ea2668af30ab",
-    "404f7e6c-864e-4ec0-8039-f3b59c6e611d",
-    "dea61dc7-dfe3-41c0-890f-028cbf27bf3d",
-    "75a8dbb6-7cfd-4e69-9ad7-20940884aabc",
-    "83f0bc1e-f901-4b40-a6c6-501fb4726fb4",
-    "608ce336-8437-47b7-942d-5f4e335ef9ba",
-  ];
-  
+  const key = activeTab === KanaAlphabet.Hiragana ? "hi" : "ka";
+  const kanaTitle = activeTab === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana");
+
+  const firstChapterIds = lessons.map(item => item.id);
   const firstChapterProgress = firstChapterIds.filter(item => completedLessons.includes(`${key}/${item}`));
   
   const startLesson = (item: AutoLesson | ManuallyLesson) => {
@@ -58,7 +57,6 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
       setActiveLesson(null);
       navigation.navigate("LessonPage", item);
     }
-
   };
 
   return (
@@ -83,41 +81,36 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
         <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} >
           <Text style={[styles.title, { color: colors.color4 }]} >{(t("lessonsList.chapter"))} 1. {t("kana.basic")}</Text>
           <Text style={[styles.subtitle, { color: firstChapterProgress.length === firstChapterIds.length ? colors.second_color2 : colors.color4 }]} >{firstChapterProgress.length}/{firstChapterIds.length} {t("lessonsList.completed")}</Text>
-          {lessons.base.map((item, index) => {
+          {lessons.map((item, index) => {
             if (item?.type === "auto") {
               return <TopicItem
-                onClick={() => activeLesson === getKana(item.title, activeTab)
-                  ? setActiveLesson("")
-                  : setActiveLesson(getKana(item.title, activeTab))}
-                onStartLesson={() => startLesson({ ...item, kana: activeTab })}
                 key={getKana(item.title, activeTab)}
+                isPassed={completedLessons.includes(`${key}/${item.id}`)}
+                isOpened={activeLesson === getKana(item.title, activeTab)}
+                isLast={index + 1 === lessons.length} 
                 icon={getKana(item.title, activeTab)}
-                passed={completedLessons.includes(`${key}/${item.id}`)}
-                title={index + 1}
-                letters={item.letters}
-                msg={item.msg}
-                kana={activeTab}
-                state={activeLesson === getKana(item.title, activeTab)
-                  ? TopicItemState.Opened
-                  : TopicItemState.CLosed}
-                last={index + 1 === lessons.base.length} />;
+                title={`${t("lessonsList.lesson")} ${index}`}
+                subtitle={item.letters.map(item => getKana(item, activeTab)).join(", ")}
+                infoTitle={`${kanaTitle} ${item.letters.map(item => getRomanji(item)).join(", ").toLocaleLowerCase()}`} 
+                infoSubTitle={t(item.msg, { count: item.letters.length})} 
+                onClick={() => toggleActiveLesson(getKana(item.title, activeTab))}
+                onStartLesson={() => startLesson({ ...item, kana: activeTab })}
+              />;
             }
 
             return <TopicItem
-              onClick={() => activeLesson === item.title
-                ? setActiveLesson("")
-                : setActiveLesson(item.title)}
-              onStartLesson={() => startLesson({ ...item })}
               key={item.title}
-              icon={item.title}
-              passed={completedLessons.includes(`${key}/${item.id}`)}
-              title={index + 1}
-              msg={item.msg}
-              kana={activeTab}
-              state={activeLesson === item.title
-                ? TopicItemState.Opened
-                : TopicItemState.CLosed}
-              last={index + 1 === lessons.base.length} />;
+              isPassed={item.category.length === 2 ? completedLessons.includes(item.id) : completedLessons.includes(`${key}/${item.id}`)}
+              isOpened={activeLesson === `${item.title}/${activeTab}`}
+              isLast={index + 1 === lessons.length} 
+              icon={item.icon}
+              title={item.title}
+              subtitle={item.subTitle}
+              infoTitle={item.infoTitle}
+              infoSubTitle={item.infoSubTitle}
+              onClick={() => toggleActiveLesson(`${item.title}/${activeTab}`)}
+              onStartLesson={() => startLesson({ ...item })}
+            />;
           })}
         </ScrollView>
         </>

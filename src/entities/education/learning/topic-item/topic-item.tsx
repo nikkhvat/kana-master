@@ -5,29 +5,20 @@ import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { ILetter } from "@/shared/data/lettersTable";
-import getKana from "@/shared/helpers/getKanaKey";
-import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import Button from "@/shared/ui/button/button";
 
-
-export enum TopicItemState {
-  Opened,
-  CLosed,
-}
-
-interface TopicItemProps {
+interface TopicItemProps {  
+  isPassed?: boolean;
+  isOpened?: boolean;
+  isLast: boolean;
+  
   icon?: string;
-  passed?: boolean;
-  title: string | number;
-  last: boolean;
+  title: string;
+  subtitle: string;
+  infoTitle: string;
+  infoSubTitle: string;
 
-  letters?: ILetter[]
-  msg: string
-  kana: KanaAlphabet
 
-  state?: TopicItemState;
   onClick?: () => void;
   onStartLesson?: () => void;
 }
@@ -36,22 +27,18 @@ const screenWidth = Dimensions.get("window").width;
 
 const TopicItem: React.FC<TopicItemProps> = ({
   icon = "?",
-  passed,
+  isPassed,
   title,
-  letters,
-  last,
-  state = TopicItemState.CLosed,
-  msg,
-  kana,
+  subtitle,
+  infoTitle,
+  infoSubTitle,
+  isLast,
+  isOpened,
   onClick,
   onStartLesson,
 }) => {
   const { colors } = useThemeContext();
   const { t } = useTranslation();
-
-  const isOpened = state === TopicItemState.Opened;
-
-  const { getRomanji } = useGetRomanji();
 
   return (
     <Pressable style={[styles.container, {
@@ -63,7 +50,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
             style={[
               styles.indicatorRound,
               {
-                borderColor: passed ? colors.second_color2 : colors.color2,
+                borderColor: isPassed ? colors.second_color2 : colors.color2,
                 backgroundColor: "transparent",
               },
             ]}
@@ -78,7 +65,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
               {icon}
             </Text>
           </View>
-          {passed && (
+          {isPassed && (
             <View
               style={[
                 styles.indicatorCheck,
@@ -93,40 +80,30 @@ const TopicItem: React.FC<TopicItemProps> = ({
           )}
         </View>
         <View style={[styles.info, { width: screenWidth - 130 }]}>
-          <Text style={[styles.title, { color: colors.color4 }]}>
-            {t("lessonsList.lesson")} {title}
-          </Text>
-          <Text style={[styles.subtitle, { color: colors.color4 }]}>
-            {letters && letters.map(item => getKana(item, kana)).join(", ")}
-          </Text>
+          <Text style={[styles.title, { color: colors.color4 }]}>{title}</Text>
+          <Text style={[styles.subtitle, { color: colors.color4 }]}>{subtitle}</Text>
 
-          {state === TopicItemState.Opened && <View style={styles.openedInfo} >
+          {isOpened && <View style={styles.openedInfo} >
             <View style={[styles.infoLine, { backgroundColor: colors.color2 }]} ></View>
-            <Text style={[styles.infoTitle, { color: colors.color4 }]} >
-              {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")}:
-              {" "}
-              {letters && letters.map(item => getRomanji(item)).join(", ").toLocaleLowerCase()}
-            </Text>
-            <Text style={[styles.infoSubTitle, { color: colors.color4 }]} >
-              {t(msg, { count: letters && letters.length })}
-            </Text>
+            <Text style={[styles.infoTitle, { color: colors.color4 }]} > {infoTitle} </Text>
+            <Text style={[styles.infoSubTitle, { color: colors.color4 }]} > {infoSubTitle} </Text>
             <Button 
               onClick={onStartLesson}
-                customStyles={{
+              customStyles={{
                 width: 108,
               }}
               type={"general"}
-              title={passed ? t("common.retry") : t("common.start")}
+              title={isPassed ? t("common.retry") : t("common.start")}
             />
           </View>}
         </View>
       </View>
-      {(!last || isOpened) && (
+      {(!isLast || isOpened) && (
         <View
           style={[
             styles.line,
             {
-              backgroundColor: passed ? colors.second_color2 : colors.color2,
+              backgroundColor: isPassed ? colors.second_color2 : colors.color2,
               height: isOpened ? 140 : 24
             },
           ]}

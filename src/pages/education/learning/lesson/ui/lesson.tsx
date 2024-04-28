@@ -10,7 +10,7 @@ import { useEducationLessonContext } from "../lib/context/education-lesson-conte
 import SafeLayout from "@/app/layouts/safeLayout";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen } from "@/shared/constants/lessons";
+import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
 import { useAppDispatch } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
@@ -46,16 +46,24 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
 
   const { init, currentScreen, screen, lessonScreens, next, retry } = useEducationLessonContext();
 
-  const onComplete = () => {
-    const key = kana === KanaAlphabet.Hiragana ? "hi" : "ka";
-    dispatch(completeLesson(`${key}/${id}`));
+  const addMarkCompleteLessonInStore = () => {
+    const category = (route.params as ManuallyLesson).category;
 
+    if (category.length === 2) {
+      dispatch(completeLesson(id));
+    } else {
+      const key = kana === KanaAlphabet.Hiragana ? "hi" : "ka";
+      dispatch(completeLesson(`${key}/${id}`));
+    }
+  };
+
+  const onComplete = () => {
+    addMarkCompleteLessonInStore();
     navigation.goBack();
   };
 
   const onRetry = () => {
-    const key = kana === KanaAlphabet.Hiragana ? "hi" : "ka";
-    dispatch(completeLesson(`${key}/${id}`));
+    addMarkCompleteLessonInStore();
     init(letters, type, screens);
     retry();
   };
