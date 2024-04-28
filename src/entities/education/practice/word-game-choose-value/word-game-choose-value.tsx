@@ -7,6 +7,7 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { RegistErrorProps } from "@/pages/education/practice/education-word-game/ui/education-practice";
 import { TEST_DELAY } from "@/shared/constants/kana";
 import { Word } from "@/shared/data/words";
+import LetterText from "@/shared/ui/letter/letter";
 
 
 
@@ -112,9 +113,7 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
               pick?.(answer.key);
             }}
           >
-            <Text style={[styles.text, { color: cardColor(answer.key)}]}>
-              {answer.text}
-            </Text>
+            <LetterText color={cardColor(answer.key)} >{answer.text}</LetterText>
           </TouchableOpacity>
         ))}
       </View>

@@ -3,6 +3,7 @@ import React from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import LetterText from "@/shared/ui/letter/letter";
 
 interface FindPairItemProps {
   isError: boolean
@@ -38,10 +39,6 @@ const FindPairItem: React.FC<FindPairItemProps> = ({
           : isError ? colors.second_color1
           : isSelect ? "transparent" : "transparent",
       height: 50,
-    },
-    text: {
-      color: (isCorrect || isError) ? colors.color5 : colors.color4,
-      fontSize: 22,
     }
   });
 
@@ -50,7 +47,7 @@ const FindPairItem: React.FC<FindPairItemProps> = ({
       style={styles.itemStyle}
       onPress={onPress}
     >
-      <Text style={styles.text} >{children}</Text>
+      <LetterText color={(isCorrect || isError) ? colors.color5 : colors.color4} >{children}</LetterText>
     </Pressable>
   );
 };

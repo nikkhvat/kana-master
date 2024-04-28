@@ -146,7 +146,7 @@ const Russian = {
 		rememberWritingAndSoundLetter: "Запомните порядок написания и звучание слога",
 		drawLetter: "Нарисуйте букву",
 		inTheCorrectSequence: "в правильном порядке",
-		inTheFollowingOrder: "в слудующим порядке",
+		inTheFollowingOrder: "в следующим порядке",
 		learningComplete: "Урок пройден!",
 
 		practiceEveryDay: "Практикуйтесь каждый день, чтобы закрепить свои знания",

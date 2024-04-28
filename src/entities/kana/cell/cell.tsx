@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
   },
   symbol: {
     fontWeight: "400",
+    textTransform: "uppercase"
   },
   subText: {
     fontSize: 13,

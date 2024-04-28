@@ -7,6 +7,7 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { RegistErrorProps } from "@/pages/education/practice/education-word-game/lib/context/education-statistic-context";
 import { KanaAlphabet, TEST_DELAY, WordBuildingType } from "@/shared/constants/kana";
 import { QuestionWordBuilding } from "@/shared/types/questions";
+import LetterText from "@/shared/ui/letter/letter";
 
 interface ChooseLettersProps {
   question: QuestionWordBuilding;
@@ -159,16 +160,11 @@ const SequenceBuild: React.FC<ChooseLettersProps> = ({
                   },
                 ]}
               >
-                <Text
-                  style={[
-                    styles.chooseLettersText,
-                    {
-                      color: !selected ? colors.color4 : "transparent"
-                    },
-                  ]}
-                >
+                <LetterText
+                  fontSize={22}
+                  color={!selected ? colors.color4 : "transparent"} >
                   {letter}
-                </Text>
+                </LetterText>
               </TouchableOpacity>
             );
           })}
@@ -218,7 +214,7 @@ const styles = StyleSheet.create({
   },
   letter: {
     fontSize: 22,
-    textTransform: "uppercase",
+    textTransform: "lowercase"
   },
   chooseLettersContainer: {
     flexDirection: "row",
@@ -235,7 +231,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    width: 50,
+    minWidth: 50,
     height: 50,
   },
   chooseLettersText: {

@@ -64,9 +64,10 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
           customStyles={{ 
             width: rowLength > 18 ? "100%" : (screenWidth - 55) / 2,
             height: 50,
+            fontSize: 17,
           }}
           type={"inactive"}
-          title={item}
+          title={item.toLowerCase()}
           onClick={() => submit(item)}
         />)}
       </View>
@@ -87,13 +88,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     gap: 15,
-    rowGap: 0
+    rowGap: 0,
   },
   title: {
     width: "100%",
     fontSize: 17,
     fontWeight: "600",
     textAlign: "center",
-    marginBottom: 30
+    marginBottom: 30,
   },
 });
