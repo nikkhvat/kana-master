@@ -46,13 +46,10 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
 
   return (
     <View style={styles.container} >
-      <Text style={[styles.title, {
-        color: colors.color4
-      }]} >
-        {t("common.select")}{" "}
-        {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")}{" "}
-        {t("lesson.inTheFollowingOrder")}{": "}
-        {"\n"}
+      <Text style={[styles.title, { color: colors.color4 }]} >
+        {t("lesson.chooseCorrectTransliterationSequence")}
+      </Text>
+      <Text style={[styles.title, { color: colors.color4 }]} >
         {shafledArray.map(item => getKana(item, kana)).join(", ")}
       </Text>
 
@@ -67,7 +64,7 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
             fontSize: 17,
           }}
           type={"inactive"}
-          title={item.toLowerCase()}
+          title={item}
           onClick={() => submit(item)}
         />)}
       </View>

@@ -25,7 +25,7 @@ const LessonDrawScreen: React.FC<LessonDrawScreenProps> = ({ symbol, kana, next 
         <Text style={[styles.title, {
           color: colors.color4
         }]} >
-          {t("lesson.drawLetter")} «{getKana(symbol, kana)}» {t("lesson.inTheCorrectSequence")}.
+          {t("lesson.drawSyllable", { syllable: getKana(symbol, kana)  })} 
         </Text>
 
         <Draw kana={kana} letter={symbol} />

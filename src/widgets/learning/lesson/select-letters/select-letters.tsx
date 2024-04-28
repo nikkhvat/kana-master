@@ -16,7 +16,7 @@ type SelectLettersScreenProps = LessonSelectSymbol & {
   kana: KanaAlphabet
 }
 
-const SelectLettersScreen: React.FC<SelectLettersScreenProps> = ({ name, symbols, kana, next }) => {
+const SelectLettersScreen: React.FC<SelectLettersScreenProps> = ({ symbols, kana, next }) => {
 
   const { colors } = useThemeContext();
   const { t } = useTranslation();
@@ -27,11 +27,7 @@ const SelectLettersScreen: React.FC<SelectLettersScreenProps> = ({ name, symbols
       <Text style={[styles.title, {
         color: colors.color4
       }]} >
-        {t("common.select")} {}
-        {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")} { }
-        {t("common.for")} {}
-        {t("kana.romanji")} {}
-        «{getRomanji(symbols[1])}»
+        {t("lesson.selectCorrectTransliteration", { syllable: getRomanji(symbols[1]) })}
       </Text>
       <EducationPracticeChooseValue 
         hideTitle

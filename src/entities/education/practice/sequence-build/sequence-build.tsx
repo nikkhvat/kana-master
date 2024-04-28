@@ -105,22 +105,6 @@ const SequenceBuild: React.FC<ChooseLettersProps> = ({
 
   return (
     <View style={styles.container}>
-      {!hideTitle && <Text style={[styles.question, { color: colors.color4 }]}>
-        {t("common.select")} 
-        {" "}
-        {selectKana === WordBuildingType.Romanji
-          ? t("kana.romanji")?.toLowerCase()
-          : selectKanaType === KanaAlphabet.Hiragana
-            ? t("kana.hiragana")?.toLowerCase()
-            : t("kana.katakana")?.toLowerCase()}
-        {" "}
-        {t("common.for")}
-        {" "}
-        {title}
-        {" "}
-        ({translate})
-      </Text>}
-
       <View style={styles.content}>
         <Pressable onPress={reset} style={styles.wordContainer}>
           {selectedLetters.map((letter, i) => (
@@ -214,7 +198,7 @@ const styles = StyleSheet.create({
   },
   letter: {
     fontSize: 22,
-    textTransform: "lowercase"
+    textTransform: "uppercase"
   },
   chooseLettersContainer: {
     flexDirection: "row",

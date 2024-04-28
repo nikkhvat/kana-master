@@ -143,13 +143,15 @@ const English = {
 
 	lesson: {
 		chapter: "Chapter",
-		rememberWritingAndSoundLetter: "Remember the spelling order and sound of the letter",
-		drawLetter: "Draw letter",
-		inTheCorrectSequence: "in the correct sequence",
-		inTheFollowingOrder: "in the following order",
-		learningComplete: "Learning complete!",
-
+		rememberWritingAndSoundLetter: "Memorize the stroke order and pronunciation of this syllable.",
+		drawSyllable: "Draw the syllable «{{syllable}}» in the correct sequence",
+		matchHiraganaWithTransliteration: "Match Hiragana with Transliteration",
+		matchKatakanaWithTransliteration: "Match Katakana with Transliteration",
+		selectCorrectTransliteration: "Select the Correct Transliteration of the Syllable «{{syllable}}»",
+		chooseCorrectTransliterationSequence: "Choose the Correct Transliteration Sequence",
+		arrangeSyllablesInCorrectOrder: "Arrange the Syllables in the Correct Order",
 		practiceEveryDay: "Practice every day to consolidate your knowledge.",
+		learningComplete: "Learning complete!",
 	},
 
 	transliterationSystems: {

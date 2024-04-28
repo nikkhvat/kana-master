@@ -35,10 +35,12 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ seq
       <Text style={[styles.title, {
         color: colors.color4
       }]} >
-        {t("common.select")}{" "}
-        {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")}{" "}
-        {t("lesson.inTheFollowingOrder")}{": "}
-        {"\n"}
+        {t("lesson.arrangeSyllablesInCorrectOrder")}
+      </Text>
+      <Text style={[styles.title, {
+        color: colors.color4,
+        marginBottom: 60
+      }]} >
         {shafledArray1.map(item => getKana(item, kana)).join(", ")}
       </Text>
 
@@ -72,12 +74,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     gap: 15,
+    marginTop: 40
   },
   title: {
     width: "100%",
     fontSize: 17,
     fontWeight: "600",
     textAlign: "center",
-    marginBottom: 60
+    marginBottom: 20
   },
 });

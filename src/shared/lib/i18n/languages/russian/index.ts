@@ -143,13 +143,15 @@ const Russian = {
 
 	lesson: {
 		chapter: "Раздел",
-		rememberWritingAndSoundLetter: "Запомните порядок написания и звучание слога",
-		drawLetter: "Нарисуйте букву",
-		inTheCorrectSequence: "в правильном порядке",
-		inTheFollowingOrder: "в следующим порядке",
-		learningComplete: "Урок пройден!",
-
+		rememberWritingAndSoundLetter: "Запомните порядок написания и произношение этого слога.",
+		drawSyllable: "Нарисуйте слог «{{syllable}}» в правильном порядке",
+		matchHiraganaWithTransliteration: "Сопоставьте Хиригану с транслитерацией",
+		matchKatakanaWithTransliteration: "Сопоставьте Катакану с транслитерацией",
+		selectCorrectTransliteration: "Выберите правильную транслитерацию слога «{{syllable}}»",
+		chooseCorrectTransliterationSequence: "Выберите правильную последовательность транслитерации",
+		arrangeSyllablesInCorrectOrder: "Установите слоги в правильном порядке",
 		practiceEveryDay: "Практикуйтесь каждый день, чтобы закрепить свои знания",
+		learningComplete: "Урок пройден!",
 	},
 
 	transliterationSystems: {

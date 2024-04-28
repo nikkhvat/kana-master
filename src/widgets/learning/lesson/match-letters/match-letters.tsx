@@ -27,9 +27,9 @@ const MatchLettersScreen: React.FC<LessonDrawScreenProps> = ({ name, symbols, ka
     <View style={styles.container} >
       <View>
         <Text style={[styles.title, {color: colors.color4 }]} >
-          {t("common.match")} {}
-          {kana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")} {}
-          {t("common.with")} {t("kana.romanji")}
+          {kana === KanaAlphabet.Hiragana
+            ? t("lesson.matchHiraganaWithTransliteration")
+            : t("lesson.matchKatakanaWithTransliteration") }
         </Text>
 
         <EducationPracticeFindPair
