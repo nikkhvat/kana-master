@@ -5,12 +5,8 @@ const Russian = {
 		next: "Дальше",
 		retry: "Повторить",
 		complete: "Закончить",
-		completed: "пройденно",
-		finish: "Закончить",
-		select: "Выбери",
-		match: "Сопоставь",
-		for: "для",
-		with: "с",
+		start: "Начать",
+		auto: "Авто",
 	},
 
 	tabs: {
@@ -21,20 +17,8 @@ const Russian = {
 	},
 
 	profile: {
-		statistics: "Статистика",
-		viewStatistics: "Посмотреть статистику →",
-
-		theme: "Тема",
-		light: "Светлая",
-		dark: "Тёмная",
-		auto: "Авто",
-
-		language: "Язык приложения"
-	},
-
-	lessons: {
-		start: "Начать",
-		title: "Урок"
+		theme: "Theme",
+		language: "Language",
 	},
 
 	learning: {
@@ -52,7 +36,10 @@ const Russian = {
 			fast: "3 сек",
 			medium: "5 сек",
 			slow: "7 сек",
-		}
+		},
+
+		selectCorrectTransliteration: "Выберите правильную транслитерацию",
+		selectCorrectTransliterationForWord: "Выберите правильную транслитерацию для слова"
 	},
 
 	testing: {
@@ -69,7 +56,6 @@ const Russian = {
 
 	wordGame: {
 		mode: "Режим",
-		start: "Начать",
 
 		choice: "Выбор",
 		wordBuilding: "Составь слово",
@@ -143,6 +129,8 @@ const Russian = {
 
 	lessonsList: {
 		chapter: "Раздел",
+		completed: "пройденно",
+		lesson: "Урок",
 
 		firstLessonInSectionTitle: "Научитесь писать первые {{count}} слогов.",
 		continuingLessonsTitle: "Научитесь писать следующие {{count}} слогов.",

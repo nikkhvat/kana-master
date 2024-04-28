@@ -33,7 +33,7 @@ const StartPracticeButton: React.FC<StartPracticeButtonProps> = ({
       </Text>}
       <Button
         customStyles={{ marginTop: 0, marginBottom: 15 }}
-        title={t("testing.start")}
+        title={t("common.start")}
         type={someError ? "disabled" : "general"}
         fontSize={17}
         onClick={onPress}

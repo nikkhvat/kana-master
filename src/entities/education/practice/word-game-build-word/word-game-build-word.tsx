@@ -102,20 +102,11 @@ const EducationPracticeChooseLetters: React.FC<ChooseLettersProps> = ({
 
   return (
     <View style={styles.container}>
-      {!hideTitle && <Text style={[styles.question, { color: colors.color4 }]}>
-        {t("common.select")} 
-        {" "}
-        {selectKana === WordBuildingType.Romanji
-          ? t("kana.romanji")?.toLowerCase()
-          : selectKanaType === KanaAlphabet.Hiragana
-            ? t("kana.hiragana")?.toLowerCase()
-            : t("kana.katakana")?.toLowerCase()}
-        {" "}
-        {t("common.for")}
-        {" "}
-        {title}
-        {" "}
-        ({translate})
+      {!hideTitle && <Text style={[styles.question, { color: colors.color4, marginTop: 35 }]}>
+        {t("practice.selectCorrectTransliterationForWord")}
+      </Text>}
+      {!hideTitle && <Text style={[styles.question, { color: colors.color4, marginBottom: 40 }]}>
+        {title} ({translate})
       </Text>}
 
       <View style={styles.content}>
@@ -190,8 +181,7 @@ const styles = StyleSheet.create({
   question: {
     fontSize: 17,
     fontWeight: "600",
-    marginTop: 35,
-    marginBottom: 30,
+    marginTop: 10,
     width: "100%",
     textAlign: "center",
   },

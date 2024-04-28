@@ -107,7 +107,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
         </View>
         <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false} >
           <Text style={[styles.title, { color: colors.color4 }]} >{(t("lessonsList.chapter"))} 1. {t("kana.basic")}</Text>
-          <Text style={[styles.subtitle, { color: colors.color4 }]} >{firstChapterProgress.length}/{firstChapterIds.length} {t("common.completed")}</Text>
+          <Text style={[styles.subtitle, { color: colors.color4 }]} >{firstChapterProgress.length}/{firstChapterIds.length} {t("lessonsList.completed")}</Text>
           {lessons.base.map((item, index) =>
             <TopicItem 
               onClick={() => activeLesson === getKana(item.title, activeTab)
@@ -127,7 +127,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
               last={index + 1 === lessons.base.length} />)}
           
           <Text style={[styles.title, { color: colors.color4 }]} >{(t("lessonsList.chapter"))} 2. {t("kana.dakuon")}</Text>
-          <Text style={[styles.subtitle, { color: colors.color4 }]} >{secondChapterProgress.length}/{secondChapterIds.length} {t("common.completed")}</Text>
+          <Text style={[styles.subtitle, { color: colors.color4 }]} >{secondChapterProgress.length}/{secondChapterIds.length} {t("lessonsList.completed")}</Text>
           {lessons.dakuon.map((item, index) =>
             <TopicItem 
               onClick={() => activeLesson === getKana(item.title, activeTab)
@@ -147,7 +147,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
               last={index + 1 === lessons.dakuon.length} />)}
           
           <Text style={[styles.title, { color: colors.color4 }]} >{(t("lessonsList.chapter"))} 3. {t("kana.yoon")}</Text>
-          <Text style={[styles.subtitle, { color: colors.color4 }]} >{thirdChapterProgress.length}/{thirdChapterIds.length} {t("common.completed")}</Text>
+          <Text style={[styles.subtitle, { color: colors.color4 }]} >{thirdChapterProgress.length}/{thirdChapterIds.length} {t("lessonsList.completed")}</Text>
           {lessons.yoon.map((item, index) =>
             <TopicItem 
               onClick={() => activeLesson === getKana(item.title, activeTab)

@@ -125,16 +125,9 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
   return (
     <View style={styles.container}>
       {!hideTitle && <Text style={[styles.question, {color: colors.color4}]}>
-        {t("common.match")}
-        {" "}
-        {kana === KanaAlphabet.Hiragana 
-          ? t("kana.hiragana")?.toLowerCase()
-          : t("kana.katakana")?.toLowerCase()
-          }
-        {" "}
-        {t("common.with")}
-        {" "}
-        {t("kana.romanji")?.toLowerCase()}
+        {kana === KanaAlphabet.Hiragana
+          ? t("lesson.matchHiraganaWithTransliteration")
+          : t("lesson.matchKatakanaWithTransliteration")}
       </Text>}
       <View style={styles.pairs}>
         {pairs.map((pair) => (

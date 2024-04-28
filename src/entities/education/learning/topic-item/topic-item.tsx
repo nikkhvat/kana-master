@@ -94,7 +94,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
         </View>
         <View style={[styles.info, { width: screenWidth - 130 }]}>
           <Text style={[styles.title, { color: colors.color4 }]}>
-            {t("lessons.title")} {title}
+            {t("lessonsList.lesson")} {title}
           </Text>
           <Text style={[styles.subtitle, { color: colors.color4 }]}>
             {letters.map(item => getKana(item, kana)).join(", ")}
@@ -116,7 +116,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
                 width: 108,
               }}
               type={"general"}
-              title={passed ? t("common.retry") : t("lessons.start")}
+              title={passed ? t("common.retry") : t("common.start")}
             />
           </View>}
         </View>

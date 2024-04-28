@@ -88,13 +88,10 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
 
   return (
     <View style={styles.container}>
-      {!hideTitle && <Text style={[styles.question, { color: colors.color4 }]}>
-        {t("common.select")}
-        {" "}
-        {t("kana.romanji")?.toLowerCase()}
-        {" "}
-        {t("common.for")}
-        {" "}
+      {!hideTitle && <Text style={[styles.question, { color: colors.color4, marginTop: 35 }]}>
+        {t("practice.selectCorrectTransliteration")}
+      </Text>}
+      {!hideTitle && <Text style={[styles.question, { color: colors.color4, marginBottom: 40 }]}>
         {title}
       </Text>}
 
@@ -131,8 +128,7 @@ const styles = StyleSheet.create({
   question: {
     fontSize: 17,
     fontWeight: "600",
-    marginTop: 35,
-    marginBottom: 30,
+    marginTop: 10,
     width: "100%",
     textAlign: "center",
   },

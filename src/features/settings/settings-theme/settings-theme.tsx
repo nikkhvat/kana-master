@@ -48,7 +48,7 @@ const SettingsTheme: React.FC = () => {
             size={24}
             color={colors._theme === "light" ? colors.color4 : colors.color4}
           />,
-          t("profile.auto"),
+          t("common.auto"),
         ]} />
     </>
   );

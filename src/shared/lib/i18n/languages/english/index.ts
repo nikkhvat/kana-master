@@ -5,12 +5,8 @@ const English = {
 		next: "Next",
 		retry: "Retry",
 		complete: "Complete",
-		completed: "completed",
-		finish: "Finish",
-		select: "Select",
-		match: "Match",
-		for: "for",
-		with: "with",
+		start: "Start",
+		auto: "Auto",
 	},
 
 	tabs: {
@@ -21,20 +17,8 @@ const English = {
 	},
 
 	profile: {
-		statistics: "Statistics",
-		viewStatistics: "View statistics →",
-
 		theme: "Theme",
-		light: "Light",
-		dark: "Dark",
-		auto: "Auto",
-
 		language: "Language"
-	},
-
-	lessons: {
-		start: "Start",
-		title: "Lesson"
 	},
 
 	learning: {
@@ -52,7 +36,10 @@ const English = {
 			fast: "3 sec",
 			medium: "5 sec",
 			slow: "7 sec",
-		}
+		},
+
+		selectCorrectTransliteration: "Select the Correct Transliteration",
+		selectCorrectTransliterationForWord: "Select the Correct Transliteration for the Word"
 	},
 
 	testing: {
@@ -69,7 +56,6 @@ const English = {
 
 	wordGame: {
 		mode: "Mode",
-		start: "Start",
 
 		choice: "Choice",
 		wordBuilding: "Word Building",
@@ -143,6 +129,8 @@ const English = {
 
 	lessonsList: {
 		chapter: "Chapter",
+		completed: "completed",
+		lesson: "Lesson",
 
 		firstLessonInSectionTitle: "Learn to write the first {{count}} syllables.",
 		continuingLessonsTitle: "Learn to write the next {{count}} syllables.",

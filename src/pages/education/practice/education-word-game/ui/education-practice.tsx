@@ -105,7 +105,6 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
         />
       </View>
 
-      {/* Выбор пары (игра слов) */}
       {isFindPair &&
         <EducationPracticeFindPair
           question={question}
@@ -113,14 +112,12 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
           onError={registrError}
         />}
 
-      {/* Составить слово из предложенных букв (игра слов) */}
       {isBuildingWord && 
         <EducationPracticeChooseLetters 
           question={question}
           onError={registrError}
           onFinish={(isError) => onSubmit(!isError)} />}
 
-      {/* Составить слово из предложенных букв (игра слов) */}
       {isChooseWord &&
         <EducationPracticeChooseValue
           title={question.title}
