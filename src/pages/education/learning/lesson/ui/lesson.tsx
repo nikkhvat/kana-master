@@ -49,7 +49,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
   const addMarkCompleteLessonInStore = () => {
     const category = (route.params as ManuallyLesson).category;
 
-    if (category.length === 2) {
+    if (category?.length === 2) {
       dispatch(completeLesson(id));
     } else {
       const key = kana === KanaAlphabet.Hiragana ? "hi" : "ka";
