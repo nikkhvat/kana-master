@@ -112,7 +112,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
             />
           </View>
           {(type !== "base" ? row : row[0].id === "9e4e7b1b-2b3c-467d-8c24-be83a4ae5a89" ? [row[0], null, row[1], null, row[2]] :
-            row[0].id === "a53d8501-373d-4944-a76b-657f672162f9" ? [row[0], row[1], null, row[2], row[3]] :
+            row[0].id === "a53d8501-373d-4944-a76b-657f672162f9" ? [row[0], null, null, null, row[1]] :
               row[0].id === "2a481d17-0d7c-492a-85fc-cab60e9fb6df" ? [null, null, row[0], null, null] : row).map((cell, cellIndex) => (
               <Cell 
                 key={`${rowIndex}/${cellIndex}`}

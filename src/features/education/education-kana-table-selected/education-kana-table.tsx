@@ -169,7 +169,7 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
             </View>
             {(
               row.items[0].data.id === "9e4e7b1b-2b3c-467d-8c24-be83a4ae5a89" ? [row.items[0], null, row.items[1], null, row.items[2]] :
-                row.items[0].data.id === "a53d8501-373d-4944-a76b-657f672162f9" ? [row.items[0], row.items[1], null, row.items[2], row.items[3]] :
+                row.items[0].data.id === "a53d8501-373d-4944-a76b-657f672162f9" ? [row.items[0], null, null, null, row.items[1]] :
                   row.items[0].data.id === "2a481d17-0d7c-492a-85fc-cab60e9fb6df" ? [null, null, row.items[0], null, null]
                     : row.items).map((cell, cellIndex) => {
                       return (

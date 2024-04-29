@@ -63,8 +63,8 @@ const lettersTableBase = {
     "e53fdab4-2d04-452d-a635-d2ac728c6a32": { id: "e53fdab4-2d04-452d-a635-d2ac728c6a32", ka: "レ", hi: "れ", transliterations: ["RE", "RE", "RE", "РЭ"] },
     "6ba2a0b0-d443-4323-a382-c8144cd996d3": { id: "6ba2a0b0-d443-4323-a382-c8144cd996d3", ka: "ロ", hi: "ろ", transliterations: ["RO", "RO", "RO", "РО"] },
     "a53d8501-373d-4944-a76b-657f672162f9": { id: "a53d8501-373d-4944-a76b-657f672162f9", ka: "ワ", hi: "わ", transliterations: ["WA", "WA", "WA", "ВА"] },
-    "8b8c04b7-b8f9-44f8-b188-b9c1e406fd12": { id: "8b8c04b7-b8f9-44f8-b188-b9c1e406fd12", ka: "ヰ", hi: "ゐ", transliterations: ["WI", "WI", "WI", "ВИ"] },
-    "92f412f6-6c79-47ca-8be5-bf3f75500f25": { id: "92f412f6-6c79-47ca-8be5-bf3f75500f25", ka: "ヱ", hi: "ゑ", transliterations: ["WE", "WE", "WE", "ВЕ"] },
+    // "8b8c04b7-b8f9-44f8-b188-b9c1e406fd12": { id: "8b8c04b7-b8f9-44f8-b188-b9c1e406fd12", ka: "ヰ", hi: "ゐ", transliterations: ["WI", "WI", "WI", "ВИ"] },
+    // "92f412f6-6c79-47ca-8be5-bf3f75500f25": { id: "92f412f6-6c79-47ca-8be5-bf3f75500f25", ka: "ヱ", hi: "ゑ", transliterations: ["WE", "WE", "WE", "ВЕ"] },
     "858b53e1-af17-45d5-8fc2-330121eab5c4": { id: "858b53e1-af17-45d5-8fc2-330121eab5c4", ka: "ヲ", hi: "を", transliterations: ["WO", "WO", "WO", "ВО"] },
     "2a481d17-0d7c-492a-85fc-cab60e9fb6df": { id: "2a481d17-0d7c-492a-85fc-cab60e9fb6df", ka: "ン", hi: "ん", transliterations: ["N", "N", "N", "Н"] }
 };
@@ -212,8 +212,8 @@ export const base: ILetter[][] = [
   ],
   [
     { id: "a53d8501-373d-4944-a76b-657f672162f9", ka: "ワ", hi: "わ", transliterations: ["WA", "WA", "WA", "ВА"] },
-    { id: "8b8c04b7-b8f9-44f8-b188-b9c1e406fd12", ka: "ヰ", hi: "ゐ", transliterations: ["WI", "WI", "WI", "ВИ"] },
-    { id: "92f412f6-6c79-47ca-8be5-bf3f75500f25", ka: "ヱ", hi: "ゑ", transliterations: ["WE", "WE", "WE", "ВЕ"] },
+    // { id: "8b8c04b7-b8f9-44f8-b188-b9c1e406fd12", ka: "ヰ", hi: "ゐ", transliterations: ["WI", "WI", "WI", "ВИ"] },
+    // { id: "92f412f6-6c79-47ca-8be5-bf3f75500f25", ka: "ヱ", hi: "ゑ", transliterations: ["WE", "WE", "WE", "ВЕ"] },
     { id: "858b53e1-af17-45d5-8fc2-330121eab5c4", ka: "ヲ", hi: "を", transliterations: ["WO", "WO", "WO", "ВО"] },
   ],
   [
@@ -370,8 +370,8 @@ export const baseFlatLettersId: LettersKeysBase[] = [
   "e53fdab4-2d04-452d-a635-d2ac728c6a32",
   "6ba2a0b0-d443-4323-a382-c8144cd996d3",
   "a53d8501-373d-4944-a76b-657f672162f9",
-  "8b8c04b7-b8f9-44f8-b188-b9c1e406fd12",
-  "92f412f6-6c79-47ca-8be5-bf3f75500f25",
+  // "8b8c04b7-b8f9-44f8-b188-b9c1e406fd12",
+  // "92f412f6-6c79-47ca-8be5-bf3f75500f25",
   "858b53e1-af17-45d5-8fc2-330121eab5c4",
   "2a481d17-0d7c-492a-85fc-cab60e9fb6df",
 ];
