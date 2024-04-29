@@ -93,11 +93,11 @@ const lettersTableDakuon = {
 };
 
 const lettersTableHandakuon = {
-  "29586e2f-2cdf-4f5a-ab03-43cdc7de5bee": { id: "29586e2f-2cdf-4f5a-ab03-43cdc7de5bee", ka: "ぱ", hi: "ぱ", en: "PA", ru: "ПА" },
-  "aa3a1a5c-3654-46e3-826f-aaf4f8d0538b": { id: "aa3a1a5c-3654-46e3-826f-aaf4f8d0538b", ka: "ぴ", hi: "ぴ", en: "PI", ru: "ПИ" },
-  "70bd9d94-d6d5-4572-9b4e-290c2effbec4": { id: "70bd9d94-d6d5-4572-9b4e-290c2effbec4", ka: "ぷ", hi: "ぷ", en: "PU", ru: "ПУ" },
-  "cb95fb95-60c8-4324-a716-a9a1013f9214": { id: "cb95fb95-60c8-4324-a716-a9a1013f9214", ka: "ぺ", hi: "ぺ", en: "PE", ru: "ПЭ" },
-  "dded7c42-3b0c-4e89-9b03-1ad95d40fa9d": { id: "dded7c42-3b0c-4e89-9b03-1ad95d40fa9d", ka: "ぽ", hi: "ぽ", en: "PO", ru: "ПО" },
+  "29586e2f-2cdf-4f5a-ab03-43cdc7de5bee": { id: "29586e2f-2cdf-4f5a-ab03-43cdc7de5bee", ka: "パ", hi: "ぱ", transliterations: ["PA", "PA", "PA", "ПА"] },
+  "aa3a1a5c-3654-46e3-826f-aaf4f8d0538b": { id: "aa3a1a5c-3654-46e3-826f-aaf4f8d0538b", ka: "ピ", hi: "ぴ", transliterations: ["PI", "PI", "PI", "ПИ"] },
+  "70bd9d94-d6d5-4572-9b4e-290c2effbec4": { id: "70bd9d94-d6d5-4572-9b4e-290c2effbec4", ka: "プ", hi: "ぷ", transliterations: ["PU", "PU", "PU", "ПУ"] },
+  "cb95fb95-60c8-4324-a716-a9a1013f9214": { id: "cb95fb95-60c8-4324-a716-a9a1013f9214", ka: "ペ", hi: "ぺ", transliterations: ["PE", "PE", "PE", "ПЭ"] },
+  "dded7c42-3b0c-4e89-9b03-1ad95d40fa9d": { id: "dded7c42-3b0c-4e89-9b03-1ad95d40fa9d", ka: "ポ", hi: "ぽ", transliterations: ["PO", "PO", "PO", "ПО"] },
 };
 
 const lettersTableYoon = {

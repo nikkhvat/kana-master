@@ -117,7 +117,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
 
           {letter !== null && <View style={styles.buttonContainer}>
             <View style={styles.buttons}>
-              <SoundLetter customStyles={{ flex: 1, marginTop: 0 }} id={letter.en} />
+              <SoundLetter customStyles={{ flex: 1, marginTop: 0 }} id={letter.id} />
               <Button
                 customStyles={{ flex: 1, marginTop: 0 }}
                 title={"Draw"}

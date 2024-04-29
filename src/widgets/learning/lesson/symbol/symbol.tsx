@@ -42,7 +42,7 @@ const LessonSymbolScreen: React.FC<LessonSymbolScreenProps> = ({ symbol, kana, n
           <Symbol id={symbol?.id} kana={kana} />
         </View>
         <View style={styles.bottomRow}  >
-          <SoundLetter customStyles={{ width: 50, height: 50 }} id={symbol.transliterations[0]} />
+          <SoundLetter customStyles={{ width: 50, height: 50 }} id={symbol.id} />
           <View>
             <SymbolHeader bottomTitle kana={kana} letter={symbol} />
           </View>
