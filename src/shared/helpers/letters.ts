@@ -22,7 +22,34 @@ export const shufflePairs = <T>(array: Array<T>[]): Array<T>[] => {
   return arrayCopy;
 };
 
-export const areLettersEqual = (letter1: ILetter, letter2: ILetter) => letter1.id === letter2.id;
+export const isInclude = (
+  errorsPairs: Array<string | number>,
+  id: string | number,
+) => {
+  for (let i = 0; i < errorsPairs.length; i++) {
+    const element = errorsPairs[i];
+
+    if (element === id) return true;
+  }
+
+  return false;
+};
+
+export const isCorrectPair = (
+  leftPair: string,
+  rigthPair: string,
+  pairs: string[][],
+) => {
+  const cond = pairs.some((pair) => {
+    const condLeft = pair[0] === leftPair || pair[1] === leftPair;
+    const condRight = pair[0] === rigthPair || pair[1] === rigthPair;
+    return condLeft && condRight;
+  });
+  return cond;
+};
+
+export const areLettersEqual = (letter1: ILetter, letter2: ILetter) =>
+  letter1.id === letter2.id;
 
 export const getRandomLetter = (letters: ILetter[][]): ILetter | null => {
   const flatArray = letters.flat();
@@ -35,18 +62,26 @@ export const getRandomLetter = (letters: ILetter[][]): ILetter | null => {
 };
 
 export const generateRandomLetters = (
-  kana: ILetter[][], 
-  { excludeLetter, limit }: {excludeLetter?: ILetter, limit: number}): ILetter[] => {
-
+  kana: ILetter[][],
+  { excludeLetter, limit }: { excludeLetter?: ILetter; limit: number },
+): ILetter[] => {
   const letters: ILetter[] = [];
-  
+
   while (letters.length < limit) {
     const randomLetter = getRandomLetter(kana);
-    
+
     if (randomLetter === null) return letters;
-    
-    if (!letters.some(letter => letter.transliterations[0].toUpperCase().trim() === randomLetter.transliterations[0].toUpperCase().trim()) &&
-      (!excludeLetter || randomLetter.transliterations[0].toUpperCase().trim() !== excludeLetter.transliterations[0].toUpperCase().trim())) {
+
+    if (
+      !letters.some(
+        (letter) =>
+          letter.transliterations[0].toUpperCase().trim() ===
+          randomLetter.transliterations[0].toUpperCase().trim(),
+      ) &&
+      (!excludeLetter ||
+        randomLetter.transliterations[0].toUpperCase().trim() !==
+          excludeLetter.transliterations[0].toUpperCase().trim())
+    ) {
       letters.push(randomLetter);
     }
   }
@@ -54,7 +89,7 @@ export const generateRandomLetters = (
   return letters;
 };
 
-export const getColumn = (rows: (ILetter)[][], columnId: number): ILetter[] => {
+export const getColumn = (rows: ILetter[][], columnId: number): ILetter[] => {
   const array: ILetter[] = [];
 
   for (let i = 0; i < rows.length; i++) {
@@ -67,7 +102,7 @@ export const getColumn = (rows: (ILetter)[][], columnId: number): ILetter[] => {
   return array;
 };
 
-export const getRow = (rows: (ILetter)[][], rowId: number): ILetter[] => {
+export const getRow = (rows: ILetter[][], rowId: number): ILetter[] => {
   const array: ILetter[] = [];
 
   for (let i = 0; i < rows[rowId].length; i++) {
@@ -79,7 +114,10 @@ export const getRow = (rows: (ILetter)[][], rowId: number): ILetter[] => {
   return array;
 };
 
-export const selectedLetters = (rows: (ILetter)[][], selected: { rows: number[], cols: number[] }): ILetter[] => {
+export const selectedLetters = (
+  rows: ILetter[][],
+  selected: { rows: number[]; cols: number[] },
+): ILetter[] => {
   const array: ILetter[] = [];
 
   for (let i = 0; i < selected.cols.length; i++) {

@@ -45,11 +45,11 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Сопоставь хирагану с романдзи.",
       blocks: [
         {
-          type: "select-answer",
-          answers: [
-            { title: "へた = fuku (одежда)", isTrue: true },
-            { title: "ふく = sushi", isTrue: true },
-            { title: "すし = heta (неумелый)", isTrue: true },
+          type: "match-answer",
+          pairs: [
+            ["へた", "fuku (одежда)"],
+            ["ふく", "sushi"],
+            ["すし", "heta (неумелый)"],
           ],
         },
       ],
@@ -249,16 +249,14 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      isActiveNext: false,
-      isActiveFinish: true,
       title: "Сопоставь хирагану с романдзи.",
       blocks: [
         {
-          type: "select-answer",
-          answers: [
-            { title: "ここ = goko (5 кусочков)", isTrue: true },
-            { title: "ごこ = gogo (днем)", isTrue: true },
-            { title: "ごご = koko (здесь)", isTrue: true },
+          type: "match-answer",
+          pairs: [
+            ["ここ", "goko (5 кусочков)"],
+            ["ごこ", "gogo (днем)"],
+            ["ごご", "koko (здесь)"],
           ],
         },
       ],

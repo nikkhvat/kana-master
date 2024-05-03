@@ -11,86 +11,103 @@ export enum LessonScreen {
   BuildWord,
   Finish,
 
-  Info
+  Info,
 }
 
-export type AnyLesson = LessonSymbol | LessonDraw | LessonMatchSymbols | LessonSelectSymbol | LessonSelectSequenceLetters | LessonBuildWord | LessonFinish
+export type AnyLesson =
+  | LessonSymbol
+  | LessonDraw
+  | LessonMatchSymbols
+  | LessonSelectSymbol
+  | LessonSelectSequenceLetters
+  | LessonBuildWord
+  | LessonFinish;
 
 // First screen
 export type LessonSymbol = {
-  name: LessonScreen.Symbol
-  symbol: ILetter
-}
+  name: LessonScreen.Symbol;
+  symbol: ILetter;
+};
 
 // Second screen
 export type LessonDraw = {
-  name: LessonScreen.Draw
-  symbol: ILetter
-}
+  name: LessonScreen.Draw;
+  symbol: ILetter;
+};
 
 // Third screen
 export type LessonMatchSymbols = {
-  name: LessonScreen.MatchSymbols
-  symbols: ILetter[]
-}
+  name: LessonScreen.MatchSymbols;
+  symbols: ILetter[];
+};
 
 // Fourth screen
 export type LessonSelectSymbol = {
-  name: LessonScreen.SelectSymbol
-  symbols: ILetter[]
-}
+  name: LessonScreen.SelectSymbol;
+  symbols: ILetter[];
+};
 
 // Fifth screen
 export type LessonSelectSequenceLetters = {
-  name: LessonScreen.SelectSequenceLetters
-  sequence: ILetter[]
-}
+  name: LessonScreen.SelectSequenceLetters;
+  sequence: ILetter[];
+};
 
 // Sixth screen
 export type LessonBuildWord = {
-  name: LessonScreen.BuildWord
-  sequence: ILetter[]
-}
+  name: LessonScreen.BuildWord;
+  sequence: ILetter[];
+};
 
 // Seventh screen
 export type LessonFinish = {
-  name: LessonScreen.Finish
-}
+  name: LessonScreen.Finish;
+};
 
-export type TextBlock = { type: "text", text: string };
-export type RulesBlock = { type: "rules", rules: string[] };
-export type TableBlock = { type: "table", table: string[][] };
-export type LetterBlock = { type: "letter", id: string, kana: KanaAlphabet };
-export type SelectAnswerBlock = { type: "select-answer", answers: { title: string, isTrue: boolean }[] };
+export type TextBlock = { type: "text"; text: string };
+export type RulesBlock = { type: "rules"; rules: string[] };
+export type TableBlock = { type: "table"; table: string[][] };
+export type LetterBlock = { type: "letter"; id: string; kana: KanaAlphabet };
+export type MathAnswerBlock = { type: "match-answer"; pairs: string[][] };
+export type SelectAnswerBlock = {
+  type: "select-answer";
+  answers: { title: string; isTrue: boolean }[];
+};
 
-export type AnyBlock = TextBlock | TableBlock | RulesBlock | LetterBlock | SelectAnswerBlock;
+export type AnyBlock =
+  | TextBlock
+  | TableBlock
+  | RulesBlock
+  | LetterBlock
+  | MathAnswerBlock
+  | SelectAnswerBlock;
 
 export type InfoLessonScreen = {
-  name: LessonScreen.Info
-  title: string
-  isActiveNext?: boolean
-  isActiveFinish?: boolean
-  blocks: AnyBlock[]
-}
+  name: LessonScreen.Info;
+  title: string;
+  isActiveNext?: boolean;
+  isActiveFinish?: boolean;
+  blocks: AnyBlock[];
+};
 
 export type AutoLesson = {
-  type: "auto"
-  id: string
-  title: ILetter
-  letters: ILetter[]
-  msg: string
+  type: "auto";
+  id: string;
+  title: ILetter;
+  letters: ILetter[];
+  msg: string;
 
-  kana?: KanaAlphabet
+  kana?: KanaAlphabet;
 };
 
 export type ManuallyLesson = {
-  type: "manually"
-  id: string
-  title: string
-  subTitle: string
-  infoTitle: string
-  infoSubTitle: string
-  icon: string
-  category: KanaAlphabet[]
-  screens: InfoLessonScreen[]
+  type: "manually";
+  id: string;
+  title: string;
+  subTitle: string;
+  infoTitle: string;
+  infoSubTitle: string;
+  icon: string;
+  category: KanaAlphabet[];
+  screens: InfoLessonScreen[];
 };

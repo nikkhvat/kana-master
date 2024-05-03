@@ -7,14 +7,15 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { InfoLessonScreen } from "@/shared/constants/lessons";
 import Button from "@/shared/ui/button/button";
 import BorderLetter from "@/shared/ui/letter/borderLetter/borderLetter";
+import MatchPairs from "@/shared/ui/matchPairs/match-pairs";
 import Rules from "@/shared/ui/rules/rules";
 import SelectAnswer from "@/shared/ui/selectAnswer/select-answer";
 import Table from "@/shared/ui/table/table";
 
 type InfoScreenProps = InfoLessonScreen & {
-  next: () => void
-  finish: () => void
-}
+  next: () => void;
+  finish: () => void;
+};
 
 const InfoScreen: React.FC<InfoScreenProps> = ({
   next,
@@ -22,55 +23,71 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
   title,
   blocks,
   isActiveFinish,
-  isActiveNext
- }) => {
-
+  isActiveNext,
+}) => {
   const { t } = useTranslation();
   const { colors } = useThemeContext();
-  
+
   return (
-    <View style={styles.container} >
-      <View style={styles.content} >
-        <Text style={[styles.title, {
-          color: colors.color4
-        }]} >
+    <View style={styles.container}>
+      <View style={styles.content}>
+        <Text
+          style={[
+            styles.title,
+            {
+              color: colors.color4,
+            },
+          ]}
+        >
           {title}
         </Text>
 
-        <View style={styles.blocks} >
-          {blocks.map(block => {
+        <View style={styles.blocks}>
+          {blocks.map((block, idx) => {
             if (block.type === "text") {
-              return <View key={block.text} >
-                <Text style={[styles.blockText, { color: colors.color4 }]} >
-                  {block.text}
-                </Text>
-              </View>;
+              return (
+                <View key={block.text}>
+                  <Text style={[styles.blockText, { color: colors.color4 }]}>
+                    {block.text}
+                  </Text>
+                </View>
+              );
             } else if (block.type === "table") {
-              return <Table key={block.type} data={block.table} /> ;
+              return <Table key={idx} data={block.table} />;
             } else if (block.type === "rules") {
-              return <Rules key={block.type} rules={block.rules} />;
+              return <Rules key={idx} rules={block.rules} />;
             } else if (block.type === "letter") {
-              return <BorderLetter kana={block.kana} key={block.id} id={block.id} />;
+              return <BorderLetter kana={block.kana} key={idx} id={block.id} />;
             } else if (block.type === "select-answer") {
-              return <SelectAnswer key={block.type} next={next} answers={block.answers} />;
+              return (
+                <SelectAnswer key={idx} next={next} answers={block.answers} />
+              );
+            } else if (block.type === "match-answer") {
+              return (
+                <MatchPairs onComplete={next} pairs={block.pairs} key={idx} />
+              );
             }
           })}
         </View>
       </View>
 
-      <View style={styles.btnsContainer} >
-        {isActiveNext && <Button
-          customStyles={{ width: "100%" }}
-          type={"general"}
-          title={t("common.next")}
-          onClick={next}
-        />}
-        {isActiveFinish && <Button
-          customStyles={{ width: "100%" }}
-          type={"general"}
-          title={t("common.complete")}
-          onClick={finish}
-        />}
+      <View style={styles.btnsContainer}>
+        {isActiveNext && (
+          <Button
+            customStyles={{ width: "100%" }}
+            type={"general"}
+            title={t("common.next")}
+            onClick={next}
+          />
+        )}
+        {isActiveFinish && (
+          <Button
+            customStyles={{ width: "100%" }}
+            type={"general"}
+            title={t("common.complete")}
+            onClick={finish}
+          />
+        )}
       </View>
     </View>
   );
@@ -85,7 +102,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   content: {
-    width: "100%"
+    width: "100%",
   },
   title: {
     fontSize: 17,
@@ -109,9 +126,9 @@ const styles = StyleSheet.create({
 
   // Blocks
   blocks: {
-    gap: 15
+    gap: 15,
   },
   blockText: {
-    fontSize: 15
-  }
+    fontSize: 15,
+  },
 });
