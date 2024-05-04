@@ -2,8 +2,10 @@ import { base } from "../lettersTable";
 
 import { lessonIntroduction } from "./lessons/0-introduction";
 import { dakuonAndHandakuonLesson } from "./lessons/1-dakuon-and-handakuon";
+import { longVowels } from "./lessons/2-long-vowels";
 
 import { AutoLesson, ManuallyLesson } from "@/shared/constants/lessons";
+import { longConsonants } from "./lessons/3-long-consonants";
 
 export const lessons: (AutoLesson | ManuallyLesson)[] = [
   lessonIntroduction,
@@ -71,4 +73,6 @@ export const lessons: (AutoLesson | ManuallyLesson)[] = [
     msg: "lessonsList.finalLessonInSectionTitle",
   },
   dakuonAndHandakuonLesson,
+  longVowels,
+  longConsonants,
 ];

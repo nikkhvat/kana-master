@@ -1,4 +1,4 @@
-import { ILetter, base } from "../data/lettersTable";
+import { ILetter } from "../data/lettersTable";
 
 import { KanaAlphabet } from "./kana";
 
@@ -69,6 +69,7 @@ export type RulesBlock = { type: "rules"; rules: string[] };
 export type TableBlock = { type: "table"; table: string[][] };
 export type LetterBlock = { type: "letter"; id: string; kana: KanaAlphabet };
 export type MathAnswerBlock = { type: "match-answer"; pairs: string[][] };
+export type SequenceBlock = { type: "sequence"; sequence: string[] };
 export type SelectAnswerBlock = {
   type: "select-answer";
   answers: { title: string; isTrue: boolean }[];
@@ -80,6 +81,7 @@ export type AnyBlock =
   | RulesBlock
   | LetterBlock
   | MathAnswerBlock
+  | SequenceBlock
   | SelectAnswerBlock;
 
 export type InfoLessonScreen = {

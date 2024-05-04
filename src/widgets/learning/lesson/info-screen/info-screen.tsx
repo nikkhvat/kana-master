@@ -10,11 +10,43 @@ import BorderLetter from "@/shared/ui/letter/borderLetter/borderLetter";
 import MatchPairs from "@/shared/ui/matchPairs/match-pairs";
 import Rules from "@/shared/ui/rules/rules";
 import SelectAnswer from "@/shared/ui/selectAnswer/select-answer";
+import Sequence from "@/shared/ui/sequence";
 import Table from "@/shared/ui/table/table";
 
 type InfoScreenProps = InfoLessonScreen & {
   next: () => void;
   finish: () => void;
+};
+
+const BoldText: React.FC<{ children: string }> = ({ children }) => {
+  return <Text style={{ fontWeight: "600" }}>{children}</Text>;
+};
+
+const parseString = (input: string) => {
+  const regex = /\*\*(.*?)\*\*/g;
+  const matches = input.matchAll(regex);
+  let lastIndex = 0;
+  const parsedContent = [];
+
+  for (const match of matches) {
+    const [fullMatch, word] = match;
+    const startIndex = input.indexOf(fullMatch, lastIndex);
+    const beforeText = input.substring(lastIndex, startIndex);
+
+    if (beforeText) {
+      parsedContent.push(beforeText);
+    }
+
+    parsedContent.push(<BoldText key={startIndex}>{word}</BoldText>);
+    lastIndex = startIndex + fullMatch.length;
+  }
+
+  const remainingText = input.substring(lastIndex);
+  if (remainingText) {
+    parsedContent.push(remainingText);
+  }
+
+  return parsedContent;
 };
 
 const InfoScreen: React.FC<InfoScreenProps> = ({
@@ -27,6 +59,14 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
 }) => {
   const { t } = useTranslation();
   const { colors } = useThemeContext();
+
+  function checkUnknown(arg: never): never {
+    throw new Error(`not all blocks are processed: ${arg}`);
+  }
+
+  const nextScreen = () => {
+    next();
+  };
 
   return (
     <View style={styles.container}>
@@ -48,7 +88,7 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
               return (
                 <View key={block.text}>
                   <Text style={[styles.blockText, { color: colors.color4 }]}>
-                    {block.text}
+                    {parseString(block.text)}
                   </Text>
                 </View>
               );
@@ -60,12 +100,30 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
               return <BorderLetter kana={block.kana} key={idx} id={block.id} />;
             } else if (block.type === "select-answer") {
               return (
-                <SelectAnswer key={idx} next={next} answers={block.answers} />
+                <SelectAnswer
+                  key={idx}
+                  next={nextScreen}
+                  answers={block.answers}
+                />
               );
             } else if (block.type === "match-answer") {
               return (
-                <MatchPairs onComplete={next} pairs={block.pairs} key={idx} />
+                <MatchPairs
+                  onComplete={nextScreen}
+                  pairs={block.pairs}
+                  key={idx}
+                />
               );
+            } else if (block.type === "sequence") {
+              return (
+                <Sequence
+                  onFinish={nextScreen}
+                  sequence={block.sequence}
+                  key={idx}
+                />
+              );
+            } else {
+              checkUnknown(block);
             }
           })}
         </View>
@@ -77,7 +135,7 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
             customStyles={{ width: "100%" }}
             type={"general"}
             title={t("common.next")}
-            onClick={next}
+            onClick={nextScreen}
           />
         )}
         {isActiveFinish && (
