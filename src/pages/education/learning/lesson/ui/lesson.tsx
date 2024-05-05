@@ -23,13 +23,15 @@ import SelectLettersScreen from "@/widgets/learning/lesson/select-letters/select
 import SelectSequenceLettersScreen from "@/widgets/learning/lesson/select-sequence-letters/select-sequence-letters";
 import LessonSymbolScreen from "@/widgets/learning/lesson/symbol/symbol";
 
-
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "LessonPage">;
+type HomeScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "LessonPage"
+>;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, "LessonPage">;
 
 interface LearnScreenProps {
-  route: LearnScreenRouteProp
-  navigation: HomeScreenNavigationProp
+  route: LearnScreenRouteProp;
+  navigation: HomeScreenNavigationProp;
 }
 
 const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
@@ -37,14 +39,15 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
     letters: [],
     kana: KanaAlphabet.Hiragana,
     screens: [],
-    ...route.params
+    ...route.params,
   };
 
   const dispatch = useAppDispatch();
 
   const { colors } = useThemeContext();
 
-  const { init, currentScreen, screen, lessonScreens, next, retry } = useEducationLessonContext();
+  const { init, currentScreen, screen, lessonScreens, next, retry } =
+    useEducationLessonContext();
 
   const addMarkCompleteLessonInStore = () => {
     const category = (route.params as ManuallyLesson).category;
@@ -73,80 +76,98 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
   }, []);
 
   return (
-    <SafeLayout  
+    <SafeLayout
       additionalPaddingTop={20}
       style={[
         styles.container,
         {
           flex: 1,
-          backgroundColor: colors.color1
-        }
-      ]} >
+          backgroundColor: colors.color1,
+        },
+      ]}
+    >
       <View style={styles.header}>
-        {(type === "manually" ? true : (screen + 1 !== lessonScreens.length)) && <LinearProgressBar
-          close={navigation.goBack}
-          current={screen + 1}
-          all={lessonScreens.length}
-        />}
+        {(type === "manually" ? true : screen + 1 !== lessonScreens.length) && (
+          <LinearProgressBar
+            close={navigation.goBack}
+            current={screen + 1}
+            all={lessonScreens.length}
+          />
+        )}
       </View>
-      <View style={styles.container} >
-      {currentScreen?.name === LessonScreen.Symbol && 
-        <LessonSymbolScreen 
-          name={LessonScreen.Symbol}
-          symbol={currentScreen.symbol}
-          kana={kana}
-          next={next} />}
-      
-      {currentScreen?.name === LessonScreen.Draw && 
-        <LessonDrawScreen 
-          name={LessonScreen.Draw}
-          symbol={currentScreen.symbol}
-          kana={kana}
-          next={next} />}
-      
-      {currentScreen?.name === LessonScreen.MatchSymbols && 
-        <MatchLettersScreen 
-          name={LessonScreen.MatchSymbols}
-          symbols={currentScreen.symbols}
-          kana={kana}
-          next={next} />}
-      
-      {currentScreen?.name === LessonScreen.SelectSymbol && 
-        <SelectLettersScreen 
-          name={LessonScreen.SelectSymbol}
-          symbols={currentScreen.symbols}
-          kana={kana}
-          next={next} />}
-      
-      {currentScreen?.name === LessonScreen.SelectSequenceLetters && 
-        <SelectSequenceLettersScreen
-          name={LessonScreen.SelectSequenceLetters}
-          sequence={currentScreen.sequence}
-          kana={kana}
-          next={next} />}
-      
-      {currentScreen?.name === LessonScreen.BuildWord && 
-        <BuildWordScreen
-          name={LessonScreen.BuildWord}
-          sequence={currentScreen.sequence}
-          kana={kana}
-          next={next} />}
+      <View style={styles.container}>
+        {currentScreen?.name === LessonScreen.Symbol && (
+          <LessonSymbolScreen
+            name={LessonScreen.Symbol}
+            symbol={currentScreen.symbol}
+            kana={kana}
+            next={next}
+          />
+        )}
 
-      {currentScreen?.name === LessonScreen.Info &&
+        {currentScreen?.name === LessonScreen.Draw && (
+          <LessonDrawScreen
+            name={LessonScreen.Draw}
+            symbol={currentScreen.symbol}
+            kana={kana}
+            next={next}
+          />
+        )}
+
+        {currentScreen?.name === LessonScreen.MatchSymbols && (
+          <MatchLettersScreen
+            name={LessonScreen.MatchSymbols}
+            symbols={currentScreen.symbols}
+            kana={kana}
+            next={next}
+          />
+        )}
+
+        {currentScreen?.name === LessonScreen.SelectSymbol && (
+          <SelectLettersScreen
+            name={LessonScreen.SelectSymbol}
+            symbols={currentScreen.symbols}
+            kana={kana}
+            next={next}
+          />
+        )}
+
+        {currentScreen?.name === LessonScreen.SelectSequenceLetters && (
+          <SelectSequenceLettersScreen
+            name={LessonScreen.SelectSequenceLetters}
+            sequence={currentScreen.sequence}
+            kana={kana}
+            next={next}
+          />
+        )}
+
+        {currentScreen?.name === LessonScreen.BuildWord && (
+          <BuildWordScreen
+            name={LessonScreen.BuildWord}
+            sequence={currentScreen.sequence}
+            kana={kana}
+            next={next}
+          />
+        )}
+
+        {currentScreen?.name === LessonScreen.Info && (
           <InfoScreen
             name={LessonScreen.Info}
             next={next}
             finish={onComplete}
             title={currentScreen.title}
             blocks={currentScreen.blocks}
-            isActiveNext={currentScreen.isActiveNext}
-            isActiveFinish={currentScreen.isActiveFinish} />}
-      
-      {currentScreen?.name === LessonScreen.Finish && 
-        <FinishScreen 
-          name={LessonScreen.Finish} 
-          next={onComplete}
-          retry={onRetry} />}
+            isLast={screen + 1 === lessonScreens.length}
+          />
+        )}
+
+        {currentScreen?.name === LessonScreen.Finish && (
+          <FinishScreen
+            name={LessonScreen.Finish}
+            next={onComplete}
+            retry={onRetry}
+          />
+        )}
       </View>
     </SafeLayout>
   );
@@ -154,12 +175,11 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
 
 export default Lesson;
 
-
 const styles = StyleSheet.create({
   header: {
     marginBottom: 22,
   },
   container: {
     flex: 1,
-  }
+  },
 });

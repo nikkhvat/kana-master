@@ -13,7 +13,6 @@ export const lessonIntroduction: ManuallyLesson = {
   screens: [
     {
       name: LessonScreen.Info,
-      isActiveNext: true,
       title: "Знаешь ли ты ?",
       blocks: [
         {
@@ -32,7 +31,6 @@ export const lessonIntroduction: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      isActiveNext: true,
       title: "Хирагана? Катакана? Кандзи?",
       blocks: [
         {
@@ -51,7 +49,6 @@ export const lessonIntroduction: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      isActiveNext: true,
       title: "Подсказка!",
       blocks: [
         {
@@ -70,7 +67,6 @@ export const lessonIntroduction: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      isActiveNext: true,
       title: "Посмотри порядок штрихов.",
       blocks: [
         {
@@ -105,7 +101,6 @@ export const lessonIntroduction: ManuallyLesson = {
     {
       name: LessonScreen.Info,
       title: "Как писать строки?",
-      isActiveNext: true,
       blocks: [
         {
           type: "text",
@@ -119,8 +114,6 @@ export const lessonIntroduction: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      isActiveNext: false,
-      isActiveFinish: true,
       title: "Завершение штриха.",
       blocks: [
         {

@@ -13,7 +13,6 @@ export const longConsonants: ManuallyLesson = {
   screens: [
     {
       name: LessonScreen.Info,
-      isActiveNext: true,
       title: "Долгие согласные.",
       blocks: [
         {
@@ -54,12 +53,11 @@ export const longConsonants: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      isActiveNext: true,
       title: "Исключение!",
       blocks: [
         {
           type: "text",
-          text: "Маленькую «tsu» (っ) нельзя использовать перед буквами хираганы **な** (na), **に** (ni), **ぬ** (nu), **ね** (ne) и **の** (no). Для обозначения долготы этих согласных добавляется ん (n).",
+          text: "Маленькую «tsu» (っ) нельзя использовать перед буквами хираганы **な** (na), **に** (ni), **ぬ** (nu), **ね** (ne) и **の** (no). Для обозначения долготы этих согласных добавляется **ん** (n).",
         },
         {
           type: "rules",
@@ -82,7 +80,6 @@ export const longConsonants: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      isActiveNext: true,
       title: "Исключение!",
       blocks: [
         {
@@ -97,7 +94,6 @@ export const longConsonants: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      isActiveFinish: true,
       title: "Запомни!",
       blocks: [
         {

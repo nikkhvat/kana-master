@@ -13,7 +13,6 @@ export const longVowels: ManuallyLesson = {
   screens: [
     {
       name: LessonScreen.Info,
-      isActiveNext: true,
       title: "Долгие гласные.",
       blocks: [
         {
@@ -31,7 +30,6 @@ export const longVowels: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      isActiveNext: true,
       title: "Подсказка!",
       blocks: [
         {
@@ -49,7 +47,6 @@ export const longVowels: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      isActiveNext: true,
       title: "Запомни правило!",
       blocks: [
         {
@@ -90,7 +87,6 @@ export const longVowels: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      isActiveNext: true,
       title: "Запомни правило!",
       blocks: [
         {
@@ -112,7 +108,6 @@ export const longVowels: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      isActiveNext: true,
       title: "Сопоставь хирагану с романдзи.",
       blocks: [
         {
@@ -127,7 +122,6 @@ export const longVowels: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      isActiveFinish: true,
       title: "Запомни!",
       blocks: [
         {

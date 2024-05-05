@@ -87,8 +87,6 @@ export type AnyBlock =
 export type InfoLessonScreen = {
   name: LessonScreen.Info;
   title: string;
-  isActiveNext?: boolean;
-  isActiveFinish?: boolean;
   blocks: AnyBlock[];
 };
 
