@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TEST_DELAY } from "@/shared/constants/kana";
+import { shuffleArray } from "@/shared/helpers/letters";
 
 type SelectAnswerProps = {
   answers: { title: string; isTrue: boolean }[];
@@ -12,6 +13,8 @@ type SelectAnswerProps = {
 
 const SelectAnswer: React.FC<SelectAnswerProps> = ({ answers, next }) => {
   const { colors } = useThemeContext();
+
+  const shuffleAnswers = useMemo(() => shuffleArray(answers), [answers]);
 
   const [errors, setErrors] = useState<string[]>([]);
   const [correct, setCorrect] = useState<string[]>([]);
@@ -37,18 +40,18 @@ const SelectAnswer: React.FC<SelectAnswerProps> = ({ answers, next }) => {
 
   return (
     <View style={styles.answers}>
-      {answers.map((answer) => (
+      {shuffleAnswers.map((answer) => (
         <Pressable
           onPress={() => onAnswer(answer)}
           style={[
             styles.question,
             { borderColor: colors.color2 },
-            errors.includes(answer.title)
-              ? { backgroundColor: colors.second_color1 }
-              : {},
-            correct.includes(answer.title)
-              ? { backgroundColor: colors.second_color2 }
-              : {},
+            errors.includes(answer.title) && {
+              backgroundColor: colors.second_color1,
+            },
+            correct.includes(answer.title) && {
+              backgroundColor: colors.second_color2,
+            },
           ]}
           key={answer.title}
         >
