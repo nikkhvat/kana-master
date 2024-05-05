@@ -1,40 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { TEST_DELAY } from "@/shared/constants/kana";
 
 type SelectAnswerProps = {
-  answers: { title: string, isTrue: boolean }[]
-  next?: () => void
-}
+  answers: { title: string; isTrue: boolean }[];
+  next?: () => void;
+};
 
 const SelectAnswer: React.FC<SelectAnswerProps> = ({ answers, next }) => {
   const { colors } = useThemeContext();
 
   const [errors, setErrors] = useState<string[]>([]);
-  
-  const onAnswer = (answer: { title: string, isTrue: boolean }) => {
+  const [correct, setCorrect] = useState<string[]>([]);
+
+  const onAnswer = (answer: { title: string; isTrue: boolean }) => {
     if (answer.isTrue) {
-      next?.();
+      setCorrect((prev) => [...prev, answer.title]);
+
+      setTimeout(() => {
+        next?.();
+      }, TEST_DELAY);
     } else {
-      setErrors(prev => [...prev, answer.title]);
+      setErrors((prev) => [...prev, answer.title]);
     }
   };
 
+  useEffect(() => {
+    return () => {
+      setErrors([]);
+      setCorrect([]);
+    };
+  }, [answers]);
+
   return (
-    <View style={styles.answers} >
-      {answers.map(answer => (
-        <Pressable 
+    <View style={styles.answers}>
+      {answers.map((answer) => (
+        <Pressable
           onPress={() => onAnswer(answer)}
           style={[
             styles.question,
             { borderColor: colors.color2 },
-            errors.includes(answer.title) ? { backgroundColor: colors.second_color1 } : {}
+            errors.includes(answer.title)
+              ? { backgroundColor: colors.second_color1 }
+              : {},
+            correct.includes(answer.title)
+              ? { backgroundColor: colors.second_color2 }
+              : {},
           ]}
           key={answer.title}
         >
-          <Text style={[styles.text, { color: colors.color4 }]} >{answer.title}</Text>
+          <Text style={[styles.text, { color: colors.color4 }]}>
+            {answer.title}
+          </Text>
         </Pressable>
       ))}
     </View>
@@ -58,10 +78,10 @@ const styles = StyleSheet.create({
     paddingTop: 14,
     paddingBottom: 14,
     borderWidth: 1,
-    borderRadius: 12
+    borderRadius: 12,
   },
   text: {
     fontWeight: "400",
     fontSize: 15,
-  }
+  },
 });

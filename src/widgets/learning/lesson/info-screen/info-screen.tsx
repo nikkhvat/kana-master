@@ -7,9 +7,9 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { InfoLessonScreen } from "@/shared/constants/lessons";
 import Button from "@/shared/ui/button/button";
 import BorderLetter from "@/shared/ui/letter/borderLetter/borderLetter";
-import MatchPairs from "@/shared/ui/matchPairs/match-pairs";
+import MatchPairs from "@/shared/ui/match-pairs/match-pairs";
 import Rules from "@/shared/ui/rules/rules";
-import SelectAnswer from "@/shared/ui/selectAnswer/select-answer";
+import SelectAnswer from "@/shared/ui/select-answer/select-answer";
 import Sequence from "@/shared/ui/sequence";
 import Table from "@/shared/ui/table/table";
 import BlockText from "@/shared/ui/text/text";
