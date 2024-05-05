@@ -7,17 +7,16 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import Button from "@/shared/ui/button/button";
 
-interface TopicItemProps {  
+interface TopicItemProps {
   isPassed?: boolean;
   isOpened?: boolean;
   isLast: boolean;
-  
+
   icon?: string;
   title: string;
   subtitle: string;
   infoTitle: string;
   infoSubTitle: string;
-
 
   onClick?: () => void;
   onStartLesson?: () => void;
@@ -40,75 +39,79 @@ const TopicItem: React.FC<TopicItemProps> = ({
   const { colors } = useThemeContext();
   const { t } = useTranslation();
 
+  const indicatorRoundColors = {
+    borderColor: isPassed ? colors.second_color2 : colors.color2,
+    backgroundColor: "transparent",
+  };
+
+  const indicatorCheckColors = {
+    borderColor: colors.color1,
+    backgroundColor: colors.second_color2,
+  };
+
+  const indicatorIconColors = {
+    backgroundColor: colors.second_color4,
+  };
+
+  const lineStyle = {
+    backgroundColor: isPassed ? colors.second_color2 : colors.color2,
+    height: isOpened ? "65%" : 24,
+  };
+
   return (
-    <Pressable style={[styles.container, {
-      paddingBottom: isOpened ? 5 : 35,
-    }]} onPress={() => onClick?.()} >
+    <Pressable
+      style={[
+        styles.container,
+        {
+          paddingBottom: isOpened ? 5 : 35,
+        },
+      ]}
+      onPress={() => onClick?.()}
+    >
       <View style={[styles.content]}>
         <View style={styles.indicator}>
-          <View
-            style={[
-              styles.indicatorRound,
-              {
-                borderColor: isPassed ? colors.second_color2 : colors.color2,
-                backgroundColor: "transparent",
-              },
-            ]}
-          ></View>
-          <View
-            style={[
-              styles.indicatorIcon,
-              { backgroundColor: colors.second_color4 },
-            ]}
-          >
+          <View style={[styles.indicatorRound, indicatorRoundColors]}></View>
+          <View style={[styles.indicatorIcon, indicatorIconColors]}>
             <Text style={[styles.indicatorIconText, { color: colors.color4 }]}>
               {icon}
             </Text>
           </View>
           {isPassed && (
-            <View
-              style={[
-                styles.indicatorCheck,
-                {
-                  borderColor: colors.color1,
-                  backgroundColor: colors.second_color2,
-                },
-              ]}
-            >
+            <View style={[styles.indicatorCheck, indicatorCheckColors]}>
               <Icon name={"check-bold"} size={12} color={colors.color5} />
             </View>
           )}
         </View>
         <View style={[styles.info, { width: screenWidth - 130 }]}>
           <Text style={[styles.title, { color: colors.color4 }]}>{title}</Text>
-          <Text style={[styles.subtitle, { color: colors.color4 }]}>{subtitle}</Text>
+          <Text style={[styles.subtitle, { color: colors.color4 }]}>
+            {subtitle}
+          </Text>
 
-          {isOpened && <View style={styles.openedInfo} >
-            <View style={[styles.infoLine, { backgroundColor: colors.color2 }]} ></View>
-            <Text style={[styles.infoTitle, { color: colors.color4 }]} > {infoTitle} </Text>
-            <Text style={[styles.infoSubTitle, { color: colors.color4 }]} > {infoSubTitle} </Text>
-            <Button 
-              onClick={onStartLesson}
-              customStyles={{
-                width: 108,
-              }}
-              type={"general"}
-              title={isPassed ? t("common.retry") : t("common.start")}
-            />
-          </View>}
+          {isOpened && (
+            <View style={styles.openedInfo}>
+              <View
+                style={[styles.infoLine, { backgroundColor: colors.color2 }]}
+              />
+              <Text style={[styles.infoTitle, { color: colors.color4 }]}>
+                {infoTitle}
+              </Text>
+              <Text style={[styles.infoSubTitle, { color: colors.color4 }]}>
+                {infoSubTitle}
+              </Text>
+              <Button
+                onClick={onStartLesson}
+                customStyles={{
+                  width: 108,
+                }}
+                type={"general"}
+                title={isPassed ? t("common.retry") : t("common.start")}
+              />
+            </View>
+          )}
         </View>
       </View>
-      {(!isLast || isOpened) && (
-        <View
-          style={[
-            styles.line,
-            {
-              backgroundColor: isPassed ? colors.second_color2 : colors.color2,
-              height: isOpened ? 140 : 24
-            },
-          ]}
-        />
-      )}
+      {(!isLast || isOpened) && <View style={[styles.line, lineStyle]} />}
     </Pressable>
   );
 };
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
     position: "relative",
     paddingLeft: 20,
     paddingRight: 20,
-    flex: 1
+    flex: 1,
   },
   content: {
     width: "100%",
@@ -150,7 +153,7 @@ const styles = StyleSheet.create({
   infoTitle: {
     marginTop: 15,
     fontWeight: "bold",
-    fontSize: 17
+    fontSize: 17,
   },
   infoSubTitle: {
     marginTop: 5,
@@ -160,7 +163,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 17,
     fontWeight: "600",
-    marginTop: 12
+    marginTop: 12,
   },
   subtitle: {
     fontSize: 15,
@@ -206,5 +209,5 @@ const styles = StyleSheet.create({
   },
   openedInfo: {
     width: "100%",
-  }
+  },
 });

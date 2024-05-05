@@ -80,20 +80,6 @@ export const longConsonants: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Исключение!",
-      blocks: [
-        {
-          type: "text",
-          text: "Также маленькую «tsu» (**っ**) нельзя использовать перед буквами хираганы **ま** (ma), **み** (mi), **む** (mu), **め** (me) и **も** (mo). Для обозначения долготы этих согласных добавляется **う** (u).",
-        },
-        {
-          type: "rules",
-          rules: ["うま (mma) - лошадь", "うみ (mmi) - море"],
-        },
-      ],
-    },
-    {
-      name: LessonScreen.Info,
       title: "Запомни!",
       blocks: [
         {

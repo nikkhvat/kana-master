@@ -93,6 +93,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
           </View>
           <ScrollView
             style={styles.scroll}
+            contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
           >
             <Text style={[styles.title, { color: colors.color4 }]}>
@@ -187,6 +188,9 @@ const styles = StyleSheet.create({
   },
   scroll: {
     flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 20,
   },
   line: {
     height: 1,
