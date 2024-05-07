@@ -54,17 +54,17 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Дакуон ka, ki, ku, ke, ko.",
+      title: "Dakuon ka, ki, ku, ke, ko.",
       blocks: [
         {
           type: "text",
-          text: "Мы можем создать **новые** звуки, добавив специальный знак (dakuten) в виде **двух коротких прямых линий** в правый верхний угол только что рассмотренных нами слогов хираганы. Посмотри ниже, чтобы увидеть, как этот знак изменяет произношение! Полученные слоги хираганы называются **звонкими**.",
+          text: "We can create **new** sounds by adding a special mark (dakuten) in the form of **two short straight lines** to the upper right corner of the hiragana syllables we've just reviewed. Check below to see how this mark changes the pronunciation! The resulting hiragana syllables are called **voiced**.",
         },
         {
           type: "table",
           table: [
-            ["Глухие", "か (ka)", "き (ki)", "く (ku)", "け (ke)", "こ (ko)"],
-            ["Звонкие", "が (ga)", "ぎ (gi)", "ぐ (gu)", "げ (ge)", "ご (go)"],
+            ["Voiceless", "か (ka)", "き (ki)", "く (ku)", "け (ke)", "こ (ko)"],
+            ["Voiced", "が (ga)", "ぎ (gi)", "ぐ (gu)", "げ (ge)", "ご (go)"],
           ],
         },
       ],

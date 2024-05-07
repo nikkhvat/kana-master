@@ -27,8 +27,8 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
   const shaffledLetters = useMemo(() => shuffleArray(sequence), [sequence]);
 
   const emptyLetters = useMemo(
-    () => shaffledLetters.map(() => null),
-    [shaffledLetters],
+    () => sequence.map(() => null),
+    [sequence],
   );
 
   const [selectedLetters, setSelectedLetters] = useState(
@@ -60,6 +60,8 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
     );
 
   function reset() {
+    const emptyLetters = sequence.map(() => null);
+
     setSelectedLetters(emptyLetters);
     setTrueAnswers(emptyLetters);
   }
@@ -80,13 +82,15 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
           onError?.();
         }
         onFinish?.(hasError);
+        reset();
+        setTrueAnswers(prev => prev.map(item => null));
       }, TEST_DELAY);
     }
   }, [selectedLetters]);
 
   useEffect(() => {
-    return reset();
-  }, []);
+    reset();
+  }, [sequence]);
 
   const getBorderLetterContainer = (
     letter: null | { letter: string; index: number },

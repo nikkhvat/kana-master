@@ -133,7 +133,7 @@ const EducationKanaQuickSelectionPage: React.FC<EducationKanaQuickSelectionProps
   ) => {
     dispatch(setKanaSelected(value));
   };
-
+  
   return (
     <AdaptiveLayout style={{flex: 1}} >
       <View style={{ flex: 1, backgroundColor: colors.color1, paddingTop: insets.top }}>

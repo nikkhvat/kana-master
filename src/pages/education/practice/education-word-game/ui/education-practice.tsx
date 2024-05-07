@@ -16,6 +16,7 @@ import EducationPracticeFindPair from "@/entities/education/practice/word-game-f
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { countAvailableWords } from "@/pages/kana/kana-quick-selection/model/slice";
 import { QuestionTypeBuildingWord, QuestionTypeChooseWord, QuestionTypeFindPairWord, TEST_DELAY } from "@/shared/constants/kana";
+import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
@@ -48,6 +49,8 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
 
   const { keysModeState } = route.params;
 
+  const { wordKey } = useGetRomanji();
+
   const { init, submit, questions, currentIndex, generateQuestions } = useEducationPracticeContext();
 
   const { init: initStat, pickAnswer, registrError, getResult } = useEducationStatisticContext();
@@ -57,13 +60,14 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
       selectedLetters,
       selectedWords,
       keysModeState,
+      lang: wordKey
     });
 
     init(generateQuestion);
     initStat();
 
     return () => {};
-  }, []);
+  }, [wordKey, keysModeState, selectedLetters, selectedWords]);
 
   // Вызываеться после ответа на вопрос
   const finishCallback = (onFinishPractice: boolean) => {

@@ -7,6 +7,8 @@ interface GenerateFindThePairProps {
   word: Word,
   kanaWords: Word[],
   hiraWords: Word[],
+
+  lang: string
   
   kana: KanaAlphabet
 }
@@ -16,6 +18,7 @@ const generateFindThePair = ({
   kanaWords, 
   hiraWords,
   kana,
+  lang,
 }: GenerateFindThePairProps): Maybe<QuestionFindPair> => {
   const words = kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords;
 
@@ -32,26 +35,21 @@ const generateFindThePair = ({
     word3?.kana,
   ];
   const romanjiElements = [
-    word?.romanji,
-    word1?.romanji,
-    word2?.romanji,
-    word3?.romanji,
+    `${word?.romanji} (${word[lang as "en"]})`,
+    `${word1?.romanji} (${word1[lang as "en"]})`,
+    `${word2?.romanji} (${word2[lang as "en"]})`,
+    `${word3?.romanji} (${word3[lang as "en"]})`,
   ];
-
-  kanaElements.sort(() => Math.random() - 0.5);
-  romanjiElements.sort(() => Math.random() - 0.5);
-
-  const shuffledPairs = kanaElements.map((kana, index) => {
-    return [
-      { title: kana, id: kana },
-      { title: romanjiElements[index], id: romanjiElements[index] },
-    ];
-  });
 
   return {
     type: QuestionTypeFindPairWord,
     kana: kana,
-    pairs: shuffledPairs,
+    pairs: kanaElements.map((kana, index) => {
+      return [
+        { title: kana, id: kana },
+        { title: romanjiElements[index], id: romanjiElements[index] },
+      ];
+    }),
     answers: [
       [word?.kana, word?.romanji],
       [word1?.kana, word1?.romanji],

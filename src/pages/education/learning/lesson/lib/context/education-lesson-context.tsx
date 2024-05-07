@@ -55,7 +55,7 @@ function generateScreens(letters: ILetter[]): AnyLesson[] {
           letters[i],
           letters[i - 1],
           letters[i - 2],
-        ])
+        ]),
       });
       screens.push({
         name: LessonScreen.MatchSymbols,

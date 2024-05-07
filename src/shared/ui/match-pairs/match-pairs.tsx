@@ -36,7 +36,7 @@ function shuffleArray<T>(array: T[]): T[] {
 
 type MatchPairsProps = {
   pairs: string[][];
-  onError?: () => void;
+  onError?: (pair: string[]) => void;
   onComplete?: (hasError: boolean) => void;
 };
 
@@ -131,7 +131,7 @@ const MatchPairs: React.FC<MatchPairsProps> = ({
             },
           }));
 
-          onError?.();
+          onError?.([selectedPair.item, item]);
           setHasError(() => true);
         }, TEST_DELAY);
       }
@@ -163,6 +163,9 @@ const MatchPairs: React.FC<MatchPairsProps> = ({
     ) {
       setTimeout(() => {
         onComplete?.(hasError);
+
+        setSelectedPair(null);
+        setHasError(false);
       }, TEST_DELAY);
     }
   }, [allPairsCompleted]);

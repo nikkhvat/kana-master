@@ -8,6 +8,8 @@ interface GenerateChoiceAnswerProps {
   word: Word,
   kanaWords: Word[],
   hiraWords: Word[],
+
+  lang: string
   
   kana: KanaAlphabet
 }
@@ -17,6 +19,7 @@ const generateChoiceAnswer = ({
   kanaWords, 
   hiraWords,
   kana,
+  lang,
 }: GenerateChoiceAnswerProps): Maybe<QuestionChoice> => {
   const words = kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords;
 
@@ -29,7 +32,7 @@ const generateChoiceAnswer = ({
   return {
     type: QuestionTypeChooseWord,
     word: word,
-    title: `${word.kana} (${word.translate})`,
+    title: `${word.kana} (${word[lang as "en"]})`,
     questions: shuffleArray([
       { text: word.romanji, key: word.romanji },
       { text: word1.romanji, key: word1.romanji },

@@ -98,7 +98,7 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
               return (
                 <SelectAnswer
                   key={idx}
-                  next={nextScreen}
+                  onFinish={nextScreen}
                   answers={block.answers}
                 />
               );

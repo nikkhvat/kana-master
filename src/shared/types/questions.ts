@@ -26,11 +26,9 @@ export type QuestionChoice = {
 export type QuestionWordBuilding = {
 	type: typeof QuestionTypeBuildingWord;
 
-	title: string;
-	buildingWord: string;
-	shaffledLetters: string[];
-	translate: string;
-	selectKana: WordBuildingType,
+	originalWord: string,
+	buildingWord: string,
+	translate: string,
 	selectKanaType: KanaAlphabet,
 };
 

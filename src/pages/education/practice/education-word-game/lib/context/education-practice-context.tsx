@@ -18,6 +18,7 @@ interface generateQuestionsProps {
   selectedLetters: RootState["kana"]["selected"]
   selectedWords: RootState["kana"]["selectedWords"]
   keysModeState: TestMode[]
+  lang: string
 }
 interface EducationPracticeContextValue {
   init: (questions: AnyWordGameQuestion[]) => void;
@@ -71,6 +72,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
     mode: "romanji" | "kana",
     kanaWords: Word[],
     hiraWords: Word[],
+    lang: string,
     kanaLetters: ILetter[],
     hiraLetters: ILetter[],
   ): Maybe<AnyWordGameQuestion> => {
@@ -79,19 +81,19 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
 
     switch (type) {
       case TestMode.Choice: {
-        return generateChoiceAnswer({ word, kanaWords, hiraWords, kana });
+        return generateChoiceAnswer({ word, kanaWords, hiraWords, kana, lang});
       }
       case TestMode.WordBuilding: {
         return generateWordBuilding({
           word,
           kanaLetters,
           hiraLetters,
-          selectKana: mode === "romanji" ? WordBuildingType.Romanji : WordBuildingType.Kana,
           selectKanaType: kana,
+          lang
         });
       }
       case TestMode.FindPair: {
-        return generateFindThePair({ word, kanaWords, hiraWords, kana });
+        return generateFindThePair({ word, kanaWords, hiraWords, kana, lang});
       }
     }
   };
@@ -100,6 +102,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
     selectedLetters,
     selectedWords,
     keysModeState,
+    lang,
   }: generateQuestionsProps): AnyWordGameQuestion[] => {
 
     const kanaLetters = [
@@ -168,8 +171,10 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
           mode,
           kanaWords,
           hiraWords,
+          lang,
           kanaLetters as ILetter[],
-          hiraLetters as ILetter[]);
+          hiraLetters as ILetter[],
+        );
         
         if (question !== null) {
           questions.push(question);

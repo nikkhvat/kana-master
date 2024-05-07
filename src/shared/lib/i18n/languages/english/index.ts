@@ -39,7 +39,9 @@ const English = {
 		},
 
 		selectCorrectTransliteration: "Select the Correct Transliteration.",
-		selectCorrectTransliterationForWord: "Select the Correct Transliteration for the Word."
+		
+		selectHiraganaForWord: "Choose the hiragana in the correct order.",
+		selectKatakanaForWord: "Choose the katakana in the correct order.",
 	},
 
 	testing: {

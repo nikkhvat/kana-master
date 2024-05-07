@@ -39,7 +39,9 @@ const Russian = {
 		},
 
 		selectCorrectTransliteration: "Выберите правильную транслитерацию.",
-		selectCorrectTransliterationForWord: "Выберите правильную транслитерацию для слова."
+
+		selectHiraganaForWord: "Выберите хиригану в правильном порядке.",
+		selectKatakanaForWord: "Выберите катакана в правильном порядке.",
 	},
 
 	testing: {

@@ -3,13 +3,12 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 
-import EducationPracticeChooseValue from "@/entities/education/practice/word-game-choose-value/word-game-choose-value";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonSelectSymbol } from "@/shared/constants/lessons";
 import getKana from "@/shared/helpers/getKanaKey";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
-
+import SelectAnswer from "@/shared/ui/select-answer/select-answer";
 
 type SelectLettersScreenProps = LessonSelectSymbol & {
   next: () => void
@@ -22,28 +21,20 @@ const SelectLettersScreen: React.FC<SelectLettersScreenProps> = ({ symbols, kana
   const { t } = useTranslation();
   const { getRomanji } = useGetRomanji();
   
+  const answers = symbols.map(item => ({
+    title: getKana(item, kana),
+    isTrue: item.id === symbols[0].id
+  }));
+  
   return (
     <View style={styles.container} >
       <Text style={[styles.title, {
         color: colors.color4
       }]} >
-        {t("lesson.selectCorrectTransliteration", { syllable: getRomanji(symbols[1]) })}
+        {t("lesson.selectCorrectTransliteration", { syllable: getRomanji(symbols[0]) })}
       </Text>
-      <EducationPracticeChooseValue 
-        hideTitle
-        title={""} 
-        answers={symbols.map(item => ({
-          text: getKana(item, kana),
-          key: item.id
-        }))}
-        onCompleted={next}
-        trueAnswer={symbols[1].id}
-        word={{
-          kana: "",
-          kanji: null,
-          romanji: "",
-          translate: ""
-        }} />
+      
+      <SelectAnswer answers={answers} />
     </View>
   );
 };

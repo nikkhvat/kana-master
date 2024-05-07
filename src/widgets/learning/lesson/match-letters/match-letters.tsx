@@ -10,6 +10,7 @@ import { LessonMatchSymbols } from "@/shared/constants/lessons";
 import getKana from "@/shared/helpers/getKanaKey";
 import { shufflePairs } from "@/shared/helpers/letters";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
+import MatchPairs from "@/shared/ui/match-pairs/match-pairs";
 
 
 type LessonDrawScreenProps = LessonMatchSymbols & {
@@ -22,6 +23,7 @@ const MatchLettersScreen: React.FC<LessonDrawScreenProps> = ({ name, symbols, ka
 
   const { t } = useTranslation();
   const { getRomanji } = useGetRomanji();
+
 
   return (
     <View style={styles.container} >

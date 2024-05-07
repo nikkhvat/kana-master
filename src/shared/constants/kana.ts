@@ -59,8 +59,8 @@ export enum KanaMode {
 }
 
 export const LETTERS_COUNT = {
-  [KanaSection.BasicHiragana]: 48,
-  [KanaSection.BasicKatakana]: 48,
+  [KanaSection.BasicHiragana]: 46,
+  [KanaSection.BasicKatakana]: 46,
 
   [KanaSection.DakuonHiragana]: 20,
   [KanaSection.DakuonKatakana]: 20,

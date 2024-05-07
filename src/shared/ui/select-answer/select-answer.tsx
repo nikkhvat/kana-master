@@ -8,10 +8,11 @@ import { shuffleArray } from "@/shared/helpers/letters";
 
 type SelectAnswerProps = {
   answers: { title: string; isTrue: boolean }[];
-  next?: () => void;
+  onError?: () => void;
+  onFinish?: (hasError: boolean) => void;
 };
 
-const SelectAnswer: React.FC<SelectAnswerProps> = ({ answers, next }) => {
+const SelectAnswer: React.FC<SelectAnswerProps> = ({ answers, onError, onFinish }) => {
   const { colors } = useThemeContext();
 
   const shuffleAnswers = useMemo(() => shuffleArray(answers), [answers]);
@@ -24,10 +25,13 @@ const SelectAnswer: React.FC<SelectAnswerProps> = ({ answers, next }) => {
       setCorrect((prev) => [...prev, answer.title]);
 
       setTimeout(() => {
-        next?.();
+        onFinish?.(Boolean(errors.length));
       }, TEST_DELAY);
     } else {
       setErrors((prev) => [...prev, answer.title]);
+      setTimeout(() => {
+        onError?.();
+      }, TEST_DELAY);
     }
   };
 
