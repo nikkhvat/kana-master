@@ -10,7 +10,11 @@ import { useEducationLessonContext } from "../lib/context/education-lesson-conte
 import SafeLayout from "@/app/layouts/safeLayout";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
-import { AutoLesson, LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
+import {
+  AutoLesson,
+  LessonScreen,
+  ManuallyLesson,
+} from "@/shared/constants/lessons";
 import { useAppDispatch } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
@@ -35,8 +39,12 @@ interface LearnScreenProps {
 }
 
 const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
-  const isAutoLesson = (item: AutoLesson | ManuallyLesson): item is AutoLesson => "letters" in item;
-  const isManualyLesson = (item: AutoLesson | ManuallyLesson): item is ManuallyLesson => "screens" in item;
+  const isAutoLesson = (
+    item: AutoLesson | ManuallyLesson,
+  ): item is AutoLesson => "letters" in item;
+  const isManualyLesson = (
+    item: AutoLesson | ManuallyLesson,
+  ): item is ManuallyLesson => "screens" in item;
 
   const { lesson } = route.params;
 
@@ -53,7 +61,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
     if (isAutoLesson(lesson)) {
       const key = lesson.kana === KanaAlphabet.Hiragana ? "hi" : "ka";
       dispatch(completeLesson(`${key}/${id}`));
-    } 
+    }
 
     if (isManualyLesson(lesson)) {
       const category = lesson.category;
@@ -79,7 +87,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
 
   const onRetry = () => {
     addMarkCompleteLessonInStore();
-    
+
     if (isAutoLesson(lesson)) {
       init(lesson.letters, "auto", []);
     }
@@ -87,14 +95,14 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
     if (isManualyLesson(lesson)) {
       init([], "manually", lesson.screens);
     }
-    
+
     retry();
   };
 
   useEffect(() => {
     if (isAutoLesson(lesson)) {
       init(lesson.letters, "auto", []);
-    } 
+    }
 
     if (isManualyLesson(lesson)) {
       init([], "manually", lesson.screens);
@@ -113,7 +121,9 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
       ]}
     >
       <View style={styles.header}>
-        {(isManualyLesson(lesson) ? true : screen + 1 !== lessonScreens.length) && (
+        {(isManualyLesson(lesson)
+          ? true
+          : screen + 1 !== lessonScreens.length) && (
           <LinearProgressBar
             close={navigation.goBack}
             current={screen + 1}
@@ -121,81 +131,85 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
           />
         )}
       </View>
-      {isAutoLesson(lesson) && <View style={styles.container}>
-        {currentScreen?.name === LessonScreen.Symbol && (
-          <LessonSymbolScreen
-            name={LessonScreen.Symbol}
-            symbol={currentScreen.symbol}
-            kana={lesson.kana || KanaAlphabet.Hiragana}
-            next={next}
-          />
-        )}
+      {isAutoLesson(lesson) && (
+        <View style={styles.container}>
+          {currentScreen?.name === LessonScreen.Symbol && (
+            <LessonSymbolScreen
+              name={LessonScreen.Symbol}
+              symbol={currentScreen.symbol}
+              kana={lesson.kana || KanaAlphabet.Hiragana}
+              next={next}
+            />
+          )}
 
-        {currentScreen?.name === LessonScreen.Draw && (
-          <LessonDrawScreen
-            name={LessonScreen.Draw}
-            symbol={currentScreen.symbol}
-            kana={lesson.kana || KanaAlphabet.Hiragana}
-            next={next}
-          />
-        )}
+          {currentScreen?.name === LessonScreen.Draw && (
+            <LessonDrawScreen
+              name={LessonScreen.Draw}
+              symbol={currentScreen.symbol}
+              kana={lesson.kana || KanaAlphabet.Hiragana}
+              next={next}
+            />
+          )}
 
-        {currentScreen?.name === LessonScreen.MatchSymbols && (
-          <MatchLettersScreen
-            name={LessonScreen.MatchSymbols}
-            symbols={currentScreen.symbols}
-            kana={lesson.kana || KanaAlphabet.Hiragana}
-            next={next}
-          />
-        )}
+          {currentScreen?.name === LessonScreen.MatchSymbols && (
+            <MatchLettersScreen
+              name={LessonScreen.MatchSymbols}
+              symbols={currentScreen.symbols}
+              kana={lesson.kana || KanaAlphabet.Hiragana}
+              next={next}
+            />
+          )}
 
-        {currentScreen?.name === LessonScreen.SelectSymbol && (
-          <SelectLettersScreen
-            name={LessonScreen.SelectSymbol}
-            symbols={currentScreen.symbols}
-            kana={lesson.kana || KanaAlphabet.Hiragana}
-            next={next}
-          />
-        )}
+          {currentScreen?.name === LessonScreen.SelectSymbol && (
+            <SelectLettersScreen
+              name={LessonScreen.SelectSymbol}
+              symbols={currentScreen.symbols}
+              kana={lesson.kana || KanaAlphabet.Hiragana}
+              next={next}
+            />
+          )}
 
-        {currentScreen?.name === LessonScreen.SelectSequenceLetters && (
-          <SelectSequenceLettersScreen
-            name={LessonScreen.SelectSequenceLetters}
-            sequence={currentScreen.sequence}
-            kana={lesson.kana || KanaAlphabet.Hiragana}
-            next={next}
-          />
-        )}
+          {currentScreen?.name === LessonScreen.SelectSequenceLetters && (
+            <SelectSequenceLettersScreen
+              name={LessonScreen.SelectSequenceLetters}
+              sequence={currentScreen.sequence}
+              kana={lesson.kana || KanaAlphabet.Hiragana}
+              next={next}
+            />
+          )}
 
-        {currentScreen?.name === LessonScreen.BuildWord && (
-          <BuildWordScreen
-            name={LessonScreen.BuildWord}
-            sequence={currentScreen.sequence}
-            kana={lesson.kana || KanaAlphabet.Hiragana}
-            next={next}
-          />
-        )}
+          {currentScreen?.name === LessonScreen.BuildWord && (
+            <BuildWordScreen
+              name={LessonScreen.BuildWord}
+              sequence={currentScreen.sequence}
+              kana={lesson.kana || KanaAlphabet.Hiragana}
+              next={next}
+            />
+          )}
 
-        {currentScreen?.name === LessonScreen.Finish && (
-          <FinishScreen
-            name={LessonScreen.Finish}
-            next={onComplete}
-            retry={onRetry}
-          />
-        )}
-      </View>}
-      <View style={styles.container}>
-        {currentScreen?.name === LessonScreen.Info && (
-          <InfoScreen
-            name={LessonScreen.Info}
-            next={next}
-            finish={onComplete}
-            title={currentScreen.title}
-            blocks={currentScreen.blocks}
-            isLast={screen + 1 === lessonScreens.length}
-          />
-        )}
-      </View>
+          {currentScreen?.name === LessonScreen.Finish && (
+            <FinishScreen
+              name={LessonScreen.Finish}
+              next={onComplete}
+              retry={onRetry}
+            />
+          )}
+        </View>
+      )}
+      {isManualyLesson(lesson) && (
+        <View style={styles.container}>
+          {currentScreen?.name === LessonScreen.Info && (
+            <InfoScreen
+              name={LessonScreen.Info}
+              next={next}
+              finish={onComplete}
+              title={currentScreen.title}
+              blocks={currentScreen.blocks}
+              isLast={screen + 1 === lessonScreens.length}
+            />
+          )}
+        </View>
+      )}
     </SafeLayout>
   );
 };
