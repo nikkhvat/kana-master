@@ -1,14 +1,18 @@
 import { base } from "../lettersTable";
 
-import { lessonIntroduction } from "./lessons/0-introduction";
-import { dakuonAndHandakuonLesson } from "./lessons/1-dakuon-and-handakuon";
-import { longVowels } from "./lessons/2-long-vowels";
-import { longConsonants } from "./lessons/3-long-consonants";
+import { lessonIntroduction as lessonIntroductionEn } from "./lessons/en/0-introduction";
+import { dakuonAndHandakuonLesson as dakuonAndHandakuonLessonEn } from "./lessons/en/1-dakuon-and-handakuon";
+import { longVowels as longVowelsEn } from "./lessons/en/2-long-vowels";
+import { longConsonants as longConsonantsEn } from "./lessons/en/3-long-consonants";
+import { lessonIntroduction as lessonIntroductionRu } from "./lessons/ru/0-introduction";
+import { dakuonAndHandakuonLesson as dakuonAndHandakuonLessonRu } from "./lessons/ru/1-dakuon-and-handakuon";
+import { longVowels as longVowelsRu } from "./lessons/ru/2-long-vowels";
+import { longConsonants as longConsonantsRu } from "./lessons/ru/3-long-consonants";
 
 import { AutoLesson, ManuallyLesson } from "@/shared/constants/lessons";
 
-export const chapter1: (AutoLesson | ManuallyLesson)[] = [
-  lessonIntroduction,
+export const chapter1 = (lang: "ru" | "en"): (AutoLesson | ManuallyLesson)[] => [
+  lang === "en" ? lessonIntroductionEn : lessonIntroductionRu,
   {
     id: "3a060caa-ac2f-42cb-a901-c19848e9d5c5",
     title: base[0][0],
@@ -65,8 +69,8 @@ export const chapter1: (AutoLesson | ManuallyLesson)[] = [
   },
 ];
 
-export const chapter2: (AutoLesson | ManuallyLesson)[] = [
-  dakuonAndHandakuonLesson,
-  longVowels,
-  longConsonants,
+export const chapter2 = (lang: "ru" | "en"): (AutoLesson | ManuallyLesson)[] => [
+  lang === "en" ? dakuonAndHandakuonLessonEn : dakuonAndHandakuonLessonRu,
+  lang === "en" ? longVowelsEn : longVowelsRu,
+  lang === "en" ? longConsonantsEn : longConsonantsRu,
 ];

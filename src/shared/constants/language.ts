@@ -20,6 +20,7 @@ export const LanguageName = {
 
 export const languageRomanji: ("en" | "ru")[] = ["en", "ru"];
 export const wordsLang: ("en" | "ru")[] = ["en", "ru"];
+export const lessonsLang: ("en" | "ru")[] = ["en", "ru"];
 
 export const enumerationLanguageList = [
   ShortLanguage.EN,

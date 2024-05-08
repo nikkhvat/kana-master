@@ -12,6 +12,7 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { AutoLesson, ManuallyLesson } from "@/shared/constants/lessons";
 import { chapter1, chapter2 } from "@/shared/data/chapters";
+import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import PageTitle from "@/shared/ui/page-title/page-title";
 import Switcher from "@/shared/ui/switcher/switcher";
@@ -28,6 +29,8 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
   const { colors } = useThemeContext();
 
+  const { lessonsKey } = useGetRomanji();
+
   const isAutoLesson = (item: AutoLesson | ManuallyLesson): item is AutoLesson => "letters" in item;
   const [activeTab, setActiveTab] = useState<KanaAlphabet>(
     KanaAlphabet.Hiragana,
@@ -41,6 +44,9 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
       navigation.navigate("LessonPage", {lesson: item});
     }
   };
+
+  const lessonsChapter1 = chapter1(lessonsKey);
+  const lessonsChapter2 = chapter2(lessonsKey);
 
   return (
     <SafeLayout style={{ flex: 1, paddingBottom: 0 }} disableLeft disableRight>
@@ -64,14 +70,14 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
           >
             <Chapter
               title={`${t("lessonsList.chapter")} 1. ${t("kana.basic")}`}
-              lessons={chapter1}
+              lessons={lessonsChapter1}
               activeTab={activeTab}
               startLesson={startLesson}
             />
             <View style={[styles.line, { backgroundColor: colors.color2 }]} />
             <Chapter
               title={`${t("lessonsList.chapter")} 2. ${t("lessonsList.grammar")}`}
-              lessons={chapter2}
+              lessons={lessonsChapter2}
               activeTab={activeTab}
               startLesson={startLesson}
             />

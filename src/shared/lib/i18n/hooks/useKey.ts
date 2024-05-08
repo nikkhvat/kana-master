@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 import { useTransliterationsContext } from "@/features/settings/settings-transliterations/context/transliteration";
-import { languageRomanji, wordsLang } from "@/shared/constants/language";
+import { languageRomanji, lessonsLang, wordsLang } from "@/shared/constants/language";
 import { ILetter } from "@/shared/data/lettersTable";
 
 const useGetRomanji = () => {
@@ -11,6 +11,7 @@ const useGetRomanji = () => {
 
   const key = languageRomanji.includes(language as "en") ? language : "en";
   const wordKey = wordsLang.includes(language as "en") ? language : "en";
+  const lessonsKey = lessonsLang.includes(language as "en") ? language : "en";
 
   return {
     getRomanji: (letter: ILetter) => {      
@@ -18,6 +19,7 @@ const useGetRomanji = () => {
     },
     key: key as "en",
     wordKey: wordKey as "en",
+    lessonsKey: lessonsKey as "en",
     transliterations
   };
 };
