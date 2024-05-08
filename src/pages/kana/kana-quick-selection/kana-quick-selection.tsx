@@ -13,7 +13,7 @@ import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
 import { RootState } from "@/app/store";
 import SelectButton, { SelectButtonState } from "@/entities/kana/kana-quick-selection/SelectButton/select-button";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { Kana, KanaMode, KanaSection, LETTERS_COUNT } from "@/shared/constants/kana";
+import { Kana, KanaAlphabet, KanaMode, KanaSection, LETTERS_COUNT } from "@/shared/constants/kana";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
@@ -33,86 +33,32 @@ const EducationKanaQuickSelectionPage: React.FC<EducationKanaQuickSelectionProps
 
   const SHOW_ALLOWED_WORDS = screen === "WordBuilding";
 
+  const selected = useAppSelector((state: RootState) => state.kana.selected);
+
   const hiraganaSelectedWords = useAppSelector((state: RootState) => state.kana.selectedWords.hiragana);
   const katakanaSelectedWords = useAppSelector((state: RootState) => state.kana.selectedWords.katakana);
 
-  const selected = useAppSelector((state: RootState) => state.kana.selected);
+  const selectedLettersHiragana = useAppSelector((state: RootState) => state.kana.selectedLettersHiragana);
+  const selectedLettersKatakana = useAppSelector((state: RootState) => state.kana.selectedLettersKatakana);
+  const selectedLetters = useAppSelector((state: RootState) => state.kana.selectedLetters);
 
-  const selectedLettersHiragana = useAppSelector(
-    (state: RootState) => state.kana.selectedLettersHiragana
-  );
-  const selectedLettersKatakana = useAppSelector(
-    (state: RootState) => state.kana.selectedLettersKatakana
-  );
-  const selectedLetters = useAppSelector(
-    (state: RootState) => state.kana.selectedLetters
-  );
+  const IS_BASIC_HIRA = selected.base.hiragana.length === LETTERS_COUNT.basic;
+  const IS_DAKUON_HIRA = selected.dakuon.hiragana.length === LETTERS_COUNT.dakuon;
+  const IS_HANDAKUON_HIRA = selected.handakuon.hiragana.length === LETTERS_COUNT.handakuon;
+  const IS_YOON_HIRA = selected.yoon.hiragana.length === LETTERS_COUNT.yoon;
 
-  useEffect(() => {
-    dispatch(countAvailableWords());
-  }, [dispatch, selected]);
+  const IS_BASIC_KATA = selected.base.katakana.length === LETTERS_COUNT.basic;
+  const IS_DAKUON_KATA = selected.dakuon.katakana.length === LETTERS_COUNT.dakuon;
+  const IS_HANDAKUON_KATA = selected.handakuon.katakana.length === LETTERS_COUNT.handakuon;
+  const IS_YOON_KATA = selected.yoon.katakana.length === LETTERS_COUNT.yoon;
 
+  const IS_BASIC = IS_BASIC_HIRA && IS_BASIC_KATA;
+  const IS_DAKUON = IS_DAKUON_HIRA && IS_DAKUON_KATA;
+  const IS_HANDAKUON = IS_HANDAKUON_HIRA && IS_HANDAKUON_KATA;
+  const IS_YOON = IS_YOON_HIRA && IS_YOON_KATA;
 
-  const IS_KANA_SELECTED =
-    selected.base.katakana.length ===
-    LETTERS_COUNT[KanaSection.BasicKatakana] &&
-    selected.dakuon.katakana.length ===
-    LETTERS_COUNT[KanaSection.DakuonKatakana] &&
-    selected.handakuon.katakana.length ===
-    LETTERS_COUNT[KanaSection.HandakuonKatakana] &&
-    selected.yoon.katakana.length === LETTERS_COUNT[KanaSection.YoonKatakana];
-
-  const IS_HIRA_SELECTED =
-    selected.base.hiragana.length ===
-    LETTERS_COUNT[KanaSection.BasicHiragana] &&
-    selected.dakuon.hiragana.length ===
-    LETTERS_COUNT[KanaSection.DakuonHiragana] &&
-    selected.handakuon.hiragana.length ===
-    LETTERS_COUNT[KanaSection.HandakuonHiragana] &&
-    selected.yoon.hiragana.length === LETTERS_COUNT[KanaSection.YoonHiragana];
-
-  const IS_BASIC =
-    selected.base.hiragana.length ===
-    LETTERS_COUNT[KanaSection.BasicHiragana] &&
-    selected.base.katakana.length === LETTERS_COUNT[KanaSection.BasicKatakana];
-
-  const IS_DAKUON =
-    selected.dakuon.hiragana.length ===
-    LETTERS_COUNT[KanaSection.DakuonHiragana] &&
-    selected.dakuon.katakana.length ===
-    LETTERS_COUNT[KanaSection.DakuonKatakana];
-
-  const IS_HANDAKUON =
-    selected.handakuon.hiragana.length ===
-    LETTERS_COUNT[KanaSection.HandakuonHiragana] &&
-    selected.handakuon.katakana.length ===
-    LETTERS_COUNT[KanaSection.HandakuonKatakana];
-
-  const IS_YOON =
-    selected.yoon.hiragana.length === LETTERS_COUNT[KanaSection.YoonHiragana] &&
-    selected.yoon.katakana.length === LETTERS_COUNT[KanaSection.YoonKatakana];
-
-  const IS_BASIC_HIRA =
-    selected.base.hiragana.length === LETTERS_COUNT[KanaSection.BasicHiragana];
-  const IS_DAKUON_HIRA =
-    selected.dakuon.hiragana.length ===
-    LETTERS_COUNT[KanaSection.DakuonHiragana];
-  const IS_HANDAKUON_HIRA =
-    selected.handakuon.hiragana.length ===
-    LETTERS_COUNT[KanaSection.HandakuonHiragana];
-  const IS_YOON_HIRA =
-    selected.yoon.hiragana.length === LETTERS_COUNT[KanaSection.YoonHiragana];
-
-  const IS_BASIC_KATA =
-    selected.base.katakana.length === LETTERS_COUNT[KanaSection.BasicKatakana];
-  const IS_DAKUON_KATA =
-    selected.dakuon.katakana.length ===
-    LETTERS_COUNT[KanaSection.DakuonKatakana];
-  const IS_HANDAKUON_KATA =
-    selected.handakuon.katakana.length ===
-    LETTERS_COUNT[KanaSection.HandakuonKatakana];
-  const IS_YOON_KATA =
-    selected.yoon.katakana.length === LETTERS_COUNT[KanaSection.YoonKatakana];
+  const IS_KANA_SELECTED = selectedLettersKatakana === LETTERS_COUNT[KanaAlphabet.Katakana];
+  const IS_HIRA_SELECTED = selectedLettersHiragana === LETTERS_COUNT[KanaAlphabet.Hiragana];
 
   const set = (
     value:
@@ -133,23 +79,57 @@ const EducationKanaQuickSelectionPage: React.FC<EducationKanaQuickSelectionProps
   ) => {
     dispatch(setKanaSelected(value));
   };
-  
+
+  type EmptyItem = { empty: boolean }
+  type TextItem = { selected: boolean, action: () => void, label: string }
+  type BoolItem = { selected: boolean, action: () => void }
+  type AnyItem = EmptyItem | TextItem | BoolItem
+
+  const isEmptyItem = (item: AnyItem): item is EmptyItem => "empty" in item;
+  const isTextItem = (item: AnyItem): item is TextItem => "label" in item;
+  const isBoolItem = (item: AnyItem): item is BoolItem => !("empty" in item) && !("label" in item) && "selected" in item && "action" in item;
+
+  const selection: AnyItem[][] = [
+    [
+      { empty: true },
+      { selected: IS_HIRA_SELECTED, action: () => set(Kana.Hiragana), label: t("kana.hiragana") },
+      { selected: IS_KANA_SELECTED, action: () => set(Kana.Katakana), label: t("kana.katakana") },
+    ],
+    [
+      { selected: IS_BASIC, action: () => set(KanaMode.Basic), label: t("kana.basic") },
+      { selected: IS_BASIC_HIRA, action: () => set(KanaSection.BasicHiragana) },
+      { selected: IS_BASIC_KATA, action: () => set(KanaSection.BasicKatakana) },
+    ],
+    [
+      { selected: IS_DAKUON, action: () => set(KanaMode.Dakuon), label: t("kana.dakuon") },
+      { selected: IS_DAKUON_HIRA, action: () => set(KanaSection.DakuonHiragana) },
+      { selected: IS_DAKUON_KATA, action: () => set(KanaSection.DakuonKatakana) },
+    ],
+    [
+      { selected: IS_HANDAKUON, action: () => set(KanaMode.Handakuon), label: t("kana.handakuon") },
+      { selected: IS_HANDAKUON_HIRA, action: () => set(KanaSection.HandakuonHiragana) },
+      { selected: IS_HANDAKUON_KATA, action: () => set(KanaSection.HandakuonKatakana) },
+    ],
+    [
+      { selected: IS_YOON, action: () => set(KanaMode.Yoon), label: t("kana.yoon") },
+      { selected: IS_YOON_HIRA, action: () => set(KanaSection.YoonHiragana) },
+      { selected: IS_YOON_KATA, action: () => set(KanaSection.YoonKatakana) },
+    ]
+  ];
+
+  useEffect(() => {
+    dispatch(countAvailableWords());
+  }, [dispatch, selected]);
+
   return (
-    <AdaptiveLayout style={{flex: 1}} >
+    <AdaptiveLayout style={{ flex: 1 }} >
       <View style={{ flex: 1, backgroundColor: colors.color1, paddingTop: insets.top }}>
-        <View style={{ 
-          flexDirection: "row", 
-          justifyContent: "space-between", 
-          alignItems: "center", 
-          paddingLeft: 20, 
-          paddingRight: 20, 
-          paddingTop: 20,
-        }}>
+        <View style={styles.header}>
           <Pressable onPress={() => navigation.goBack()} style={{ justifyContent: "center", alignItems: "center", padding: 18, margin: -18 }}>
             <Icon name="keyboard-backspace" size={24} color={colors.color4} />
           </Pressable>
-          <Pressable 
-            onPress={() => navigation.navigate("KanaSelect", { title: "" })} 
+          <Pressable
+            onPress={() => navigation.navigate("KanaSelect", { title: "" })}
             style={{ justifyContent: "center", alignItems: "center", padding: 18, margin: -18 }}
           >
             <Icon name="square-edit-outline" size={24} color={colors.color4} />
@@ -188,47 +168,39 @@ const EducationKanaQuickSelectionPage: React.FC<EducationKanaQuickSelectionProps
             <Text style={[styles.selectionTitle, { color: colors.color4 }]}>{t("quickSelectKana.title")}</Text>
 
             <View style={styles.selectionContainer}>
-              <View style={styles.selectionRow}>
-                <SelectButton type={SelectButtonState.Empty} />
-                <SelectButton selected={IS_HIRA_SELECTED} onPress={() => set(Kana.Hiragana)} type={SelectButtonState.Text}>
-                  {t("kana.hiragana")}
-                </SelectButton>
-                <SelectButton selected={IS_KANA_SELECTED} onPress={() => set(Kana.Katakana)} type={SelectButtonState.Text}>
-                  {t("kana.katakana")}
-                </SelectButton>
-              </View>
 
-              <View style={styles.selectionRow}>
-                <SelectButton selected={IS_BASIC} onPress={() => set(KanaMode.Basic)} type={SelectButtonState.Text}>
-                  {t("kana.basic")}
-                </SelectButton>
-                <SelectButton selected={IS_BASIC_HIRA} onPress={() => set(KanaSection.BasicHiragana)} type={SelectButtonState.Icon} />
-                <SelectButton selected={IS_BASIC_KATA} onPress={() => set(KanaSection.BasicKatakana)} type={SelectButtonState.Icon} />
-              </View>
+              {selection.map((section, idx) => (
+                <View key={idx} style={styles.selectionRow}>
+                  {section.map((item, index) => {
+                    if (isEmptyItem(item)) {
+                      return <SelectButton key={index} type={SelectButtonState.Empty} />;
+                    }
 
-              <View style={styles.selectionRow}>
-                <SelectButton selected={IS_DAKUON} onPress={() => set(KanaMode.Dakuon)} type={SelectButtonState.Text}>
-                  {t("kana.dakuon")}
-                </SelectButton>
-                <SelectButton selected={IS_DAKUON_HIRA} onPress={() => set(KanaSection.DakuonHiragana)} type={SelectButtonState.Icon} />
-                <SelectButton selected={IS_DAKUON_KATA} onPress={() => set(KanaSection.DakuonKatakana)} type={SelectButtonState.Icon} />
-              </View>
+                    if (isTextItem(item)) {
+                      return (
+                        <SelectButton
+                          key={index}
+                          selected={item.selected}
+                          onPress={item.action}
+                          type={SelectButtonState.Text}>
+                          {item.label}
+                        </SelectButton>
+                      );
+                    }
 
-              <View style={styles.selectionRow}>
-                <SelectButton selected={IS_HANDAKUON} onPress={() => set(KanaMode.Handakuon)} type={SelectButtonState.Text}>
-                  {t("kana.handakuon")}
-                </SelectButton>
-                <SelectButton selected={IS_HANDAKUON_HIRA} onPress={() => set(KanaSection.HandakuonHiragana)} type={SelectButtonState.Icon} />
-                <SelectButton selected={IS_HANDAKUON_KATA} onPress={() => set(KanaSection.HandakuonKatakana)} type={SelectButtonState.Icon} />
-              </View>
-
-              <View style={styles.selectionRow}>
-                <SelectButton selected={IS_YOON} onPress={() => set(KanaMode.Yoon)} type={SelectButtonState.Text}>
-                  {t("kana.yoon")}
-                </SelectButton>
-                <SelectButton selected={IS_YOON_HIRA} onPress={() => set(KanaSection.YoonHiragana)} type={SelectButtonState.Icon} />
-                <SelectButton selected={IS_YOON_KATA} onPress={() => set(KanaSection.YoonKatakana)} type={SelectButtonState.Icon} />
-              </View>
+                    if (isBoolItem(item)) {
+                      return (
+                        <SelectButton
+                          key={index}
+                          selected={item.selected}
+                          onPress={item.action}
+                          type={SelectButtonState.Icon}
+                        />
+                      );
+                    }
+                  })}
+                </View>
+              ))}
             </View>
 
             <Button
@@ -250,6 +222,14 @@ const EducationKanaQuickSelectionPage: React.FC<EducationKanaQuickSelectionProps
 export default EducationKanaQuickSelectionPage;
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 20,
+  },
   infoContainer: {
     height: 120,
     borderBottomWidth: 1,

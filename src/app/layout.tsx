@@ -111,7 +111,6 @@ const Layout = () => {
           <Stack.Screen name="ChooseAlphabet" component={EducationKanaQuickSelectionPage} options={{ headerShown: false }} />
           <Stack.Screen name="EducationPractice" component={TestingPage} options={{ title: "Practice", ...headerSettings }} />
           <Stack.Screen name="EducationWordGame" component={EducationWordGamePage} options={{ title: "Word Game", ...headerSettings }} />
-          {/* <Stack.Screen name="Lesson" component={Lesson} options={{ headerShown: false }} /> */}
           <Stack.Screen name="LessonPage" component={LessonPage} options={{ ...headerSettings }} />
           <Stack.Screen name="Results" component={EducationResultPage} options={{ title: "Results", ...headerSettings }} />
           <Stack.Group screenOptions={{

@@ -59,17 +59,28 @@ export enum KanaMode {
 }
 
 export const LETTERS_COUNT = {
+  [KanaAlphabet.Hiragana]: 107,
+  [KanaAlphabet.Katakana]: 107,
+
   [KanaSection.BasicHiragana]: 46,
   [KanaSection.BasicKatakana]: 46,
+  
+  basic: 46,
 
   [KanaSection.DakuonHiragana]: 20,
   [KanaSection.DakuonKatakana]: 20,
+  
+  dakuon: 20,
 
   [KanaSection.HandakuonHiragana]: 5,
   [KanaSection.HandakuonKatakana]: 5,
+  
+  handakuon: 5,
 
   [KanaSection.YoonHiragana]: 36,
   [KanaSection.YoonKatakana]: 36,
+  
+  yoon: 36,
 };
 
 export const TEST_DELAY = 300;
