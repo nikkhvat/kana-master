@@ -134,6 +134,8 @@ const Russian = {
 		completed: "пройдено",
 		lesson: "Урок",
 
+		grammar: "Грамматика",
+
 		firstLessonInSectionTitle: "Научитесь писать первые {{count}} слогов.",
 		continuingLessonsTitle: "Научитесь писать следующие {{count}} слогов.",
 		finalLessonInSectionTitle: "Научитесь писать последние {{count}} слогов."

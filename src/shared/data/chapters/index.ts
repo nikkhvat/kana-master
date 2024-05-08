@@ -7,7 +7,7 @@ import { longConsonants } from "./lessons/3-long-consonants";
 
 import { AutoLesson, ManuallyLesson } from "@/shared/constants/lessons";
 
-export const lessons: (AutoLesson | ManuallyLesson)[] = [
+export const chapter1: (AutoLesson | ManuallyLesson)[] = [
   lessonIntroduction,
   {
     id: "3a060caa-ac2f-42cb-a901-c19848e9d5c5",
@@ -63,6 +63,9 @@ export const lessons: (AutoLesson | ManuallyLesson)[] = [
     letters: [base[9], base[10]].flat(),
     msg: "lessonsList.finalLessonInSectionTitle",
   },
+];
+
+export const chapter2: (AutoLesson | ManuallyLesson)[] = [
   dakuonAndHandakuonLesson,
   longVowels,
   longConsonants,

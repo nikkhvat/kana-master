@@ -134,6 +134,8 @@ const English = {
 		completed: "completed",
 		lesson: "Lesson",
 
+		grammar: "Grammar",
+
 		firstLessonInSectionTitle: "Learn to write the first {{count}} syllables.",
 		continuingLessonsTitle: "Learn to write the next {{count}} syllables.",
 		finalLessonInSectionTitle: "Learn to write the last {{count}} syllables.",
