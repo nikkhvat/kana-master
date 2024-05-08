@@ -64,14 +64,13 @@ export type LessonFinish = {
   name: LessonScreen.Finish;
 };
 
-export type TextBlock = { type: "text"; text: string };
-export type RulesBlock = { type: "rules"; rules: string[] };
-export type TableBlock = { type: "table"; table: string[][] };
-export type LetterBlock = { type: "letter"; id: string; kana: KanaAlphabet };
-export type MathAnswerBlock = { type: "match-answer"; pairs: string[][] };
-export type SequenceBlock = { type: "sequence"; sequence: string[] };
+export type TextBlock = { text: string };
+export type RulesBlock = { rules: string[] };
+export type TableBlock = { table: string[][] };
+export type LetterBlock = { id: string; kana: KanaAlphabet };
+export type MathAnswerBlock = { pairs: string[][] };
+export type SequenceBlock = { sequence: string[] };
 export type SelectAnswerBlock = {
-  type: "select-answer";
   answers: { title: string; isTrue: boolean }[];
 };
 

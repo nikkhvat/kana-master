@@ -16,15 +16,12 @@ export const lessonIntroduction: ManuallyLesson = {
       title: "Знаешь ли ты ?",
       blocks: [
         {
-          type: "text",
           text: "В японском языке есть два алфавита: **хирагана** и **катакана**, каждый из которых состоит из 46 букв.",
         },
         {
-          type: "text",
           text: "**Хирагана** употребляется для написания слов японского происхождения, а **катакана** - для написания заимствованных слов и иностранных имен.",
         },
         {
-          type: "text",
           text: "Есть также около 2000 часто используемых иероглифов (**кандзи**).",
         },
       ],
@@ -34,11 +31,9 @@ export const lessonIntroduction: ManuallyLesson = {
       title: "Хирагана? Катакана? Кандзи?",
       blocks: [
         {
-          type: "text",
           text: "И **хирагана**, и **катакана** обозначают звуки, а **кандзи** - значения.",
         },
         {
-          type: "table",
           table: [
             ["Романджи", "A", "I", "U", "E", "O"],
             ["Хиригана", "あ", "い", "う", "え", "お"],
@@ -52,11 +47,9 @@ export const lessonIntroduction: ManuallyLesson = {
       title: "Подсказка!",
       blocks: [
         {
-          type: "text",
           text: "Давай изучим правила написания японских иероглифов!",
         },
         {
-          type: "rules",
           rules: [
             "Пиши штрихи слева направо",
             "Пиши штрихи сверху вниз",
@@ -70,11 +63,9 @@ export const lessonIntroduction: ManuallyLesson = {
       title: "Посмотри порядок штрихов.",
       blocks: [
         {
-          type: "text",
           text: "Соблюдение правильного порядка штрихов помогает писать аккуратные символы.",
         },
         {
-          type: "letter",
           id: "a151eeeb-2537-463c-ae23-d484d1bcb835",
           kana: KanaAlphabet.Hiragana,
         },
@@ -85,11 +76,9 @@ export const lessonIntroduction: ManuallyLesson = {
       title: "Посмотри порядок штрихов.",
       blocks: [
         {
-          type: "text",
           text: "Выбери правильное правило письма на японском языке.",
         },
         {
-          type: "select-answer",
           answers: [
             { title: "справа налево", isTrue: false },
             { title: "снизу вверх", isTrue: false },
@@ -103,11 +92,9 @@ export const lessonIntroduction: ManuallyLesson = {
       title: "Как писать строки?",
       blocks: [
         {
-          type: "text",
           text: "Теперь давай обратим внимание на то, как надо заканчивать штрихи.",
         },
         {
-          type: "text",
           text: "Для завершения штриха мы резко останавливаемся, делаем крючок или постепенно отводим кисть.",
         },
       ],
@@ -117,11 +104,9 @@ export const lessonIntroduction: ManuallyLesson = {
       title: "Завершение штриха.",
       blocks: [
         {
-          type: "text",
           text: "Первый штрих заканчивается крючком, а второй - резко останавливается.",
         },
         {
-          type: "letter",
           id: "11017078-148a-4a44-b3f7-21d1df02d981",
           kana: KanaAlphabet.Hiragana,
         },

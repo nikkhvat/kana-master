@@ -16,11 +16,9 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Дакуон и хандакуон.",
       blocks: [
         {
-          type: "text",
           text: "Мы рассмотрели все слоги хираганы. Теперь мы готовы к изучению **специальных знаков хираганы**! Для начала давай узнаем, с какими слогами хираганы можно употреблять эти знаки:",
         },
         {
-          type: "table",
           table: [
             [
               "ka, ki, ku, ke, ko",
@@ -43,7 +41,6 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Сопоставь хирагану с романдзи.",
       blocks: [
         {
-          type: "match-answer",
           pairs: [
             ["へた", "fuku (одежда)"],
             ["ふく", "sushi"],
@@ -57,13 +54,18 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Dakuon ka, ki, ku, ke, ko.",
       blocks: [
         {
-          type: "text",
           text: "We can create **new** sounds by adding a special mark (dakuten) in the form of **two short straight lines** to the upper right corner of the hiragana syllables we've just reviewed. Check below to see how this mark changes the pronunciation! The resulting hiragana syllables are called **voiced**.",
         },
         {
-          type: "table",
           table: [
-            ["Voiceless", "か (ka)", "き (ki)", "く (ku)", "け (ke)", "こ (ko)"],
+            [
+              "Voiceless",
+              "か (ka)",
+              "き (ki)",
+              "く (ku)",
+              "け (ke)",
+              "こ (ko)",
+            ],
             ["Voiced", "が (ga)", "ぎ (gi)", "ぐ (gu)", "げ (ge)", "ご (go)"],
           ],
         },
@@ -74,7 +76,6 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Выбери хирагану для kagi (ключ).",
       blocks: [
         {
-          type: "select-answer",
           answers: [
             { title: "がき", isTrue: true },
             { title: "がぎ", isTrue: true },
@@ -88,11 +89,9 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Дакуон za, ji, zu, ze, zo.",
       blocks: [
         {
-          type: "text",
           text: "Точно так же мы можем добавить специальные знаки (dakuten) к буквам хираганы, начинающихся с «**s**».",
         },
         {
-          type: "table",
           table: [
             ["Глухие", "さ (sa)", "し (shi)", "す (su)", "せ (se)", "そ (so)"],
             ["Звонкие", "ざ (za)", "じ (ji)", "ず (zu)", "ぜ (ze)", "ぞ (zo)"],
@@ -105,11 +104,9 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Дакуон da, ji, zu, de, do.",
       blocks: [
         {
-          type: "text",
           text: "Кроме того, специальный знак (dakuten) может быть добавлен к буквам хираганы, начинающихся с «**t**», для образования новых звонких звуков!",
         },
         {
-          type: "table",
           table: [
             ["Глухие", "た (ta)", "ち (chi)", "つ (tsu)", "て (te)", "と (to)"],
             ["Звонкие", "だ (da)", "ぢ (ji)", "づ (zu)", "で (de)", "ど (do)"],
@@ -122,15 +119,12 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Обрати внимание!",
       blocks: [
         {
-          type: "text",
           text: "**じ** (ji) и **ぢ** (ji) произносятся одинаково, как и **ず** (zu) и **づ** (zu). В прошлом они произносились по-разному, но постепенно приобрели одинаковое произношение.",
         },
         {
-          type: "text",
           text: "Важно отметить, что для слов с «ji» чаще всего используется **じ**, а для слов с «zu» - **ず**. Лишь с очень немногими словами употребляется **ぢ** и **づ**.",
         },
         {
-          type: "rules",
           rules: [
             "じ (ji), ず (zu) - используются в большинстве случаем",
             "ぢ (ji), づ (zu) - используются лишь в нескольких словах",
@@ -143,7 +137,6 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Выбери хирагану для dashi (японский бульон).",
       blocks: [
         {
-          type: "select-answer",
           answers: [
             { title: "たじ", isTrue: true },
             { title: "だし", isTrue: true },
@@ -157,11 +150,9 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Дакуон ba, bi, bu, be, bo.",
       blocks: [
         {
-          type: "text",
           text: "Теперь давай изучим специальные знаки (dakuten) для строки, начинающейся с «**h**».",
         },
         {
-          type: "table",
           table: [
             ["Звук «h»", "は (ha)", "ひ (hi)", "ふ (fu)", "へ (he)", "ほ (ho)"],
             ["Звук «b»", "ば (ba)", "び (bi)", "ぶ (bu)", "べ (be)", "ぼ (bo)"],
@@ -174,7 +165,6 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Выбери хирагану для kabuki (японский театр).",
       blocks: [
         {
-          type: "select-answer",
           answers: [
             { title: "かふぎ", isTrue: true },
             { title: "かふぎ", isTrue: true },
@@ -188,11 +178,9 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Хандакуон pa, pi, pu, pe, po.",
       blocks: [
         {
-          type: "text",
           text: "Строка хираганы, начинающаяся с **は** (ha) - особенная! В дополнение к изученному нами специальному знаку, ее также можно комбинировать с другим знаком (handakuten), маленьким кружком. Он меняет звук «**p**».",
         },
         {
-          type: "table",
           table: [
             ["Звук «h»", "は (ha)", "ひ (hi)", "ふ (fu)", "へ (he)", "ほ (ho)"],
             ["Звук «b»", "ば (ba)", "び (bi)", "ぶ (bu)", "べ (be)", "ぼ (bo)"],
@@ -206,7 +194,6 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Выбери романдзи для ぱくぱく (есть с аппетитом).",
       blocks: [
         {
-          type: "select-answer",
           answers: [
             { title: "hakuhaku", isTrue: true },
             { title: "pakupaku", isTrue: true },
@@ -220,11 +207,9 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Подсказка!",
       blocks: [
         {
-          type: "text",
           text: "Специальные знаки, с которыми мы познакомились, очень важны, потому что при их добавлении значение слова может **полностью измениться**!",
         },
         {
-          type: "rules",
           rules: [
             "はか (haka) - могила",
             "ばか (baka) - дурак",
@@ -239,7 +224,6 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Сопоставь хирагану с романдзи.",
       blocks: [
         {
-          type: "match-answer",
           pairs: [
             ["ここ", "goko (5 кусочков)"],
             ["ごこ", "gogo (днем)"],

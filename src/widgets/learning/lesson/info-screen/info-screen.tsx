@@ -4,7 +4,17 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { InfoLessonScreen } from "@/shared/constants/lessons";
+import {
+  AnyBlock,
+  InfoLessonScreen,
+  LetterBlock,
+  MathAnswerBlock,
+  RulesBlock,
+  SelectAnswerBlock,
+  SequenceBlock,
+  TableBlock,
+  TextBlock,
+} from "@/shared/constants/lessons";
 import Button from "@/shared/ui/button/button";
 import BorderLetter from "@/shared/ui/letter/borderLetter/borderLetter";
 import MatchPairs from "@/shared/ui/match-pairs/match-pairs";
@@ -21,6 +31,18 @@ type InfoScreenProps = InfoLessonScreen & {
   isLast?: boolean;
 };
 
+const blockType = {
+  isText: (item: AnyBlock): item is TextBlock => "text" in item,
+  isTable: (item: AnyBlock): item is TableBlock => "table" in item,
+  isRules: (item: AnyBlock): item is RulesBlock => "rules" in item,
+  isLetter: (item: AnyBlock): item is LetterBlock => "kana" in item,
+  isSelectAnswer: (item: AnyBlock): item is SelectAnswerBlock =>
+    "answers" in item,
+  isMatchAnswerBlock: (item: AnyBlock): item is MathAnswerBlock =>
+    "pairs" in item,
+  isSequence: (item: AnyBlock): item is SequenceBlock => "sequence" in item,
+};
+
 const InfoScreen: React.FC<InfoScreenProps> = ({
   next,
   finish,
@@ -33,9 +55,9 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
 
   const interactiveBlocks = blocks.filter(
     (item) =>
-      item.type === "select-answer" ||
-      item.type === "match-answer" ||
-      item.type === "sequence",
+      blockType.isSelectAnswer(item) ||
+      blockType.isMatchAnswerBlock(item) ||
+      blockType.isSequence(item),
   );
 
   function checkUnknown(arg: never): never {
@@ -86,15 +108,15 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
 
         <View style={styles.blocks}>
           {blocks.map((block, idx) => {
-            if (block.type === "text") {
+            if (blockType.isText(block)) {
               return <BlockText text={block.text} key={idx} />;
-            } else if (block.type === "table") {
+            } else if (blockType.isTable(block)) {
               return <Table key={idx} data={block.table} />;
-            } else if (block.type === "rules") {
+            } else if (blockType.isRules(block)) {
               return <Rules key={idx} rules={block.rules} />;
-            } else if (block.type === "letter") {
+            } else if (blockType.isLetter(block)) {
               return <BorderLetter kana={block.kana} key={idx} id={block.id} />;
-            } else if (block.type === "select-answer") {
+            } else if (blockType.isSelectAnswer(block)) {
               return (
                 <SelectAnswer
                   key={idx}
@@ -102,7 +124,7 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
                   answers={block.answers}
                 />
               );
-            } else if (block.type === "match-answer") {
+            } else if (blockType.isMatchAnswerBlock(block)) {
               return (
                 <MatchPairs
                   onComplete={nextScreen}
@@ -110,7 +132,7 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
                   key={idx}
                 />
               );
-            } else if (block.type === "sequence") {
+            } else if (blockType.isSequence(block)) {
               return (
                 <Sequence
                   onFinish={nextScreen}
