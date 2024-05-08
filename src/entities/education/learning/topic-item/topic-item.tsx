@@ -55,7 +55,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
 
   const lineStyle = {
     backgroundColor: isPassed ? colors.second_color2 : colors.color2,
-    height: isOpened ? "65%" : 24,
+    height: (isOpened ? "65%" : 24) as number,
   };
 
   return (
@@ -121,10 +121,10 @@ export default TopicItem;
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    marginTop: 8,
     position: "relative",
     paddingLeft: 20,
     paddingRight: 20,
+    marginBottom: 8,
     flex: 1,
   },
   content: {

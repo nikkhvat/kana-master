@@ -85,19 +85,6 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
 export default LearningList;
 
 const styles = StyleSheet.create({
-  title: {
-    fontWeight: "600",
-    fontSize: 22,
-    marginTop: 10,
-    paddingHorizontal: 20,
-  },
-  subtitle: {
-    fontSize: 13,
-    fontWeight: "600",
-    marginTop: 10,
-    marginBottom: 22,
-    paddingHorizontal: 20,
-  },
   scroll: {
     flex: 1,
   },

@@ -154,15 +154,4 @@ const styles = StyleSheet.create({
     marginBottom: 22,
     paddingHorizontal: 20,
   },
-  scroll: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingBottom: 20,
-  },
-  line: {
-    height: 1,
-    width: "100%",
-    marginBottom: 20,
-  },
 });
