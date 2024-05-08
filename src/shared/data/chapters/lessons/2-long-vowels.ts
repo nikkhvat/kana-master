@@ -2,7 +2,6 @@ import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
 
 export const longVowels: ManuallyLesson = {
-  type: "manually",
   id: "17cac414-90ce-462c-8cda-7afdcc8a5b5e",
   title: "Долгие гласные.",
   subTitle: "Долгие гласные.",

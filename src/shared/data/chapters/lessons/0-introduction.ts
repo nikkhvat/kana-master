@@ -2,7 +2,6 @@ import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
 
 export const lessonIntroduction: ManuallyLesson = {
-  type: "manually",
   id: "52aa8316-4669-41e6-98d3-2b3e42a943ff",
   title: "Введение",
   subTitle: "Хирагана и Катакана",

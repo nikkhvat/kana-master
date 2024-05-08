@@ -36,6 +36,8 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
     (state) => state.lessons.completedLesson,
   );
 
+  const isAutoLesson = (item: AutoLesson | ManuallyLesson): item is AutoLesson => "letters" in item;
+
   const [activeTab, setActiveTab] = useState<KanaAlphabet>(
     KanaAlphabet.Hiragana,
   );
@@ -43,7 +45,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [activeLesson, setActiveLesson] = useState<string | null>(null);
 
   const lessonsList = lessons.filter((item) =>
-    item.type === "manually" ? item.category.includes(activeTab) : true,
+    isAutoLesson(item) ? true : item.category.includes(activeTab)
   );
 
   const toggleActiveLesson = (key: string) => {
@@ -66,13 +68,13 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
   );
 
   const startLesson = (item: AutoLesson | ManuallyLesson) => {
-    if (item.type === "auto") {
+    if (isAutoLesson(item)) {
       const clonedArray = JSON.parse(JSON.stringify(item.letters));
       setActiveLesson(null);
-      navigation.navigate("LessonPage", { ...item, letters: clonedArray });
+      navigation.navigate("LessonPage", {lesson: { ...item, letters: clonedArray }});
     } else {
       setActiveLesson(null);
-      navigation.navigate("LessonPage", item);
+      navigation.navigate("LessonPage", {lesson: item});
     }
   };
 
@@ -114,7 +116,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
               {t("lessonsList.completed")}
             </Text>
             {lessonsList.map((item, index) => {
-              if (item?.type === "auto") {
+              if (isAutoLesson(item)) {
                 return (
                   <TopicItem
                     key={getKana(item.title, activeTab)}

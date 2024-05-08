@@ -90,7 +90,6 @@ export type InfoLessonScreen = {
 };
 
 export type AutoLesson = {
-  type: "auto";
   id: string;
   title: ILetter;
   letters: ILetter[];
@@ -100,7 +99,6 @@ export type AutoLesson = {
 };
 
 export type ManuallyLesson = {
-  type: "manually";
   id: string;
   title: string;
   subTitle: string;
