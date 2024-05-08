@@ -59,7 +59,11 @@ const SelectAnswer: React.FC<SelectAnswerProps> = ({ answers, onError, onFinish 
           ]}
           key={answer.title}
         >
-          <Text style={[styles.text, { color: colors.color4 }]}>
+          <Text style={[styles.text,
+            {color: colors.color4}, 
+            (errors.includes(answer.title) || correct.includes(answer.title)) && {
+              color: colors.color5,
+            }]}>
             {answer.title}
           </Text>
         </Pressable>
