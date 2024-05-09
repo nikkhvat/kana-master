@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 
-import { View, StyleSheet, Dimensions, GestureResponderEvent } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  GestureResponderEvent,
+} from "react-native";
 import { Svg, Path } from "react-native-svg";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -22,19 +27,24 @@ interface DrawProps {
 const screenWidth = Dimensions.get("window").width;
 
 const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
-  const [currentPath, setCurrentPath] = useState<{x: number, y: number}[]>([]);
-  const [paths, setPaths] = useState<{ x: number, y: number }[][]>([]);
-  
+  const [currentPath, setCurrentPath] = useState<{ x: number; y: number }[]>(
+    [],
+  );
+  const [paths, setPaths] = useState<{ x: number; y: number }[][]>([]);
+
   const [isShowBorder, setIsShowBorder] = useState<boolean>(true);
   const [isShowKana, setIsShowKana] = useState<boolean>(true);
 
   const { colors } = useThemeContext();
 
-  const canvasSize = width - 40 - (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0);
+  const canvasSize =
+    width -
+    40 -
+    (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0);
   const strokeWidth = 14;
 
   const onTouchEnd = () => {
-    setPaths(prevPaths => [...prevPaths, currentPath]);
+    setPaths((prevPaths) => [...prevPaths, currentPath]);
     setCurrentPath([]);
   };
 
@@ -60,14 +70,17 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
     setCurrentPath([]);
   };
 
-  const generatePathDAttribute = (points: { x: number, y: number }[]) => {
+  const generatePathDAttribute = (points: { x: number; y: number }[]) => {
     if (points.length < 2) return "";
     let d = `M ${points[0].x},${points[0].y}`;
     for (let i = 1; i < points.length; i++) {
-      const midPoint = i > 1 ? {
-        x: (points[i - 1].x + points[i].x) / 2,
-        y: (points[i - 1].y + points[i].y) / 2,
-      } : points[i - 1];
+      const midPoint =
+        i > 1
+          ? {
+              x: (points[i - 1].x + points[i].x) / 2,
+              y: (points[i - 1].y + points[i].y) / 2,
+            }
+          : points[i - 1];
       d += ` Q ${points[i - 1].x},${points[i - 1].y} ${midPoint.x},${midPoint.y}`;
     }
     d += ` T ${points[points.length - 1].x},${points[points.length - 1].y}`;
@@ -77,25 +90,43 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
   return (
     <View>
       <View>
-        <View 
-          style={[styles.drawContainer, { 
-            height: canvasSize, 
-            width: canvasSize,
-            borderColor: colors.color2
-          }]} 
-          onTouchMove={onTouchMove} 
+        <View
+          style={[
+            styles.drawContainer,
+            {
+              height: canvasSize,
+              width: canvasSize,
+              borderColor: colors.color2,
+            },
+          ]}
+          onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
           onStartShouldSetResponder={() => true}
           onMoveShouldSetResponder={() => true}
-          >
+        >
           {isShowBorder && (
             <>
-              <View style={[styles.drawContainerLeftBlock, { borderRightColor: colors.color2 }]} />
-              <View style={[styles.drawContainerTopBlock, { borderBottomColor: colors.color2 }]} />
+              <View
+                style={[
+                  styles.drawContainerLeftBlock,
+                  { borderRightColor: colors.color2 },
+                ]}
+              />
+              <View
+                style={[
+                  styles.drawContainerTopBlock,
+                  { borderBottomColor: colors.color2 },
+                ]}
+              />
             </>
           )}
           {isShowKana && (
-            <View style={[styles.drawContainerImage, { width: canvasSize, height: canvasSize, }]} >
+            <View
+              style={[
+                styles.drawContainerImage,
+                { width: canvasSize - 2, height: canvasSize - 1 },
+              ]}
+            >
               <Symbol id={letter?.id} kana={kana} />
             </View>
           )}
@@ -105,19 +136,19 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
                 key={`path-${index}`}
                 d={generatePathDAttribute(path)}
                 stroke={colors.color4}
-                fill='transparent'
+                fill="transparent"
                 strokeWidth={strokeWidth}
-                strokeLinejoin='round'
-                strokeLinecap='round'
+                strokeLinejoin="round"
+                strokeLinecap="round"
               />
             ))}
             <Path
               d={generatePathDAttribute(currentPath)}
               stroke={colors.color4}
-              fill='transparent'
+              fill="transparent"
               strokeWidth={strokeWidth}
-              strokeLinejoin='round'
-              strokeLinecap='round'
+              strokeLinejoin="round"
+              strokeLinecap="round"
             />
           </Svg>
         </View>
@@ -127,13 +158,25 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
           <Button
             customStyles={{ width: 50, height: 50 }}
             type={isShowBorder ? "active" : "inactive"}
-            icon={<Icon name={"border-outside"} size={24} color={isShowBorder ? colors.color5 : colors.color4} />}
+            icon={
+              <Icon
+                name={"border-outside"}
+                size={24}
+                color={isShowBorder ? colors.color5 : colors.color4}
+              />
+            }
             onClick={() => setIsShowBorder((prev) => !prev)}
           />
           <Button
             customStyles={{ width: 50, height: 50 }}
             type={isShowKana ? "active" : "inactive"}
-            icon={<Icon name={"eye-outline"} size={24} color={isShowKana ? colors.color5 : colors.color4} />}
+            icon={
+              <Icon
+                name={"eye-outline"}
+                size={24}
+                color={isShowKana ? colors.color5 : colors.color4}
+              />
+            }
             onClick={() => setIsShowKana((prev) => !prev)}
           />
         </View>

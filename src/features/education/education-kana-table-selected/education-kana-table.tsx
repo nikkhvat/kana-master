@@ -1,39 +1,45 @@
 import React, { useCallback, useMemo } from "react";
 
-import { useTranslation } from "react-i18next";
 import { Dimensions, View, ScrollView, StyleSheet } from "react-native";
 
 import { RootState } from "@/app/store";
 import Cell from "@/entities/kana/cell/cell";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { toggleLetter, toggleSome } from "@/pages/kana/kana-quick-selection/model/slice";
+import {
+  toggleLetter,
+  toggleSome,
+} from "@/pages/kana/kana-quick-selection/model/slice";
 import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
-import { ILetter, dakuon, handakuon, base, yoon } from "@/shared/data/lettersTable";
+import {
+  ILetter,
+  dakuon,
+  handakuon,
+  base,
+  yoon,
+} from "@/shared/data/lettersTable";
 import { getLettersWithStatuses } from "@/shared/helpers/kana";
-import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 
 interface EducationKanaTableProps {
   kana: KanaAlphabet.Hiragana | KanaAlphabet.Katakana;
   type: Alphabet;
   isEditMode?: boolean;
-  last?: boolean
+  last?: boolean;
 }
 
 const screenWidth = Dimensions.get("window").width;
-const screenAdaptiveWidth = screenWidth > 500 ? screenWidth * 0.68 : screenWidth;
-const itemWidth = (screenAdaptiveWidth / 6) - 15;
-const itemWidthLong = (screenAdaptiveWidth / 3) - (itemWidth / 3) - 23;
+const screenAdaptiveWidth =
+  screenWidth > 500 ? screenWidth * 0.68 : screenWidth;
+const itemWidth = screenAdaptiveWidth / 6 - 15;
+const itemWidthLong = screenAdaptiveWidth / 3 - itemWidth / 3 - 23;
 
 const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
   kana,
   type,
   isEditMode,
-  last
+  last,
 }) => {
   const dispatch = useAppDispatch();
-
-  const { getRomanji, key } = useGetRomanji();
 
   const { colors } = useThemeContext();
 
@@ -45,7 +51,7 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
   }, []);
 
   const selectedLetters = useAppSelector(
-    (state: RootState) => state.kana.selected[type][kana]
+    (state: RootState) => state.kana.selected[type][kana],
   );
 
   const data = useMemo(() => getData(type), [getData, type]);
@@ -57,45 +63,44 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
           letter: letter,
           alphabet,
           kana: kana,
-        })
+        }),
       );
     },
-    [dispatch, kana]
+    [dispatch, kana],
   );
 
   const onPress = useCallback(
     (
-      val: [cell: ILetter, rowIndex: number, cellIndex: number, type: string]
+      val: [cell: ILetter, rowIndex: number, cellIndex: number, type: string],
     ) => {
       onToggleLetter(
         val[0],
         val[3] === "basic"
           ? "base"
-          : (val[3] as "base" | "dakuon" | "handakuon" | "yoon")
+          : (val[3] as "base" | "dakuon" | "handakuon" | "yoon"),
       );
     },
-    [onToggleLetter]
+    [onToggleLetter],
   );
 
   const onToggleSome = useCallback(
     (
       letters: ILetter[],
-      alphabet: "base" | "dakuon" | "handakuon" | "yoon"
+      alphabet: "base" | "dakuon" | "handakuon" | "yoon",
     ) => {
       dispatch(
         toggleSome({
           letter: letters,
           alphabet,
           kana: kana,
-        })
+        }),
       );
     },
-    [dispatch, kana]
+    [dispatch, kana],
   );
 
   const onPlus = useCallback(
     (type: "row" | "cell", index: number, alphabet: Alphabet) => {
-
       const dataMap = {
         base: base,
         dakuon: dakuon,
@@ -113,21 +118,26 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
         type === "row"
           ? (data[index].filter(isILetter) as ILetter[])
           : (data.flatMap((row) =>
-            isILetter(row[index]) ? [row[index]] : []
-          ) as ILetter[]);
+              isILetter(row[index]) ? [row[index]] : [],
+            ) as ILetter[]);
 
       onToggleSome(letters, alphabet);
     },
-    [onToggleSome]
+    [onToggleSome],
   );
 
   const letters = useMemo(
     () => getLettersWithStatuses(data, selectedLetters),
-    [data, selectedLetters]
+    [data, selectedLetters],
   );
 
   return (
-    <View style={[styles.container, { borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.color2 }]}>
+    <View
+      style={[
+        styles.container,
+        { borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.color2 },
+      ]}
+    >
       {letters.length > 1 && (
         <View style={styles.rowButtons}>
           {letters[0].items.map((cell, cellIndex) => {
@@ -137,7 +147,6 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
                 isLong={letters[0].items.length === 3}
                 widthStandart={itemWidth}
                 widthLong={itemWidthLong}
-                lang={key}
                 kana={kana}
                 cell={null}
                 isPlus
@@ -149,7 +158,6 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
         </View>
       )}
 
-
       <ScrollView>
         {letters.map((row, rowIndex) => (
           <View key={`row-${rowIndex}`} style={[styles.row, { marginTop: 10 }]}>
@@ -159,7 +167,6 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
                 isLong={false}
                 widthStandart={itemWidth}
                 widthLong={itemWidthLong}
-                lang={key}
                 kana={kana}
                 cell={null}
                 isPlus
@@ -167,25 +174,35 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
                 isStartOfLine={isEditMode ? "+" : "-"}
               />
             </View>
-            {(
-              row.items[0].data.id === "9e4e7b1b-2b3c-467d-8c24-be83a4ae5a89" ? [row.items[0], null, row.items[1], null, row.items[2]] :
-                row.items[0].data.id === "a53d8501-373d-4944-a76b-657f672162f9" ? [row.items[0], null, null, null, row.items[1]] :
-                  row.items[0].data.id === "2a481d17-0d7c-492a-85fc-cab60e9fb6df" ? [null, null, row.items[0], null, null]
-                    : row.items).map((cell, cellIndex) => {
-                      return (
-                        <Cell
-                          key={`${rowIndex}/${cellIndex}`}
-                          onPress={() => cell?.data && onPress?.([cell.data, rowIndex, cellIndex, type])}
-                          isLong={row.items.length === 3 && row.items[0].data.id !== "9e4e7b1b-2b3c-467d-8c24-be83a4ae5a89"}
-                          widthStandart={itemWidth}
-                          widthLong={itemWidthLong}
-                          lang={key}
-                          kana={kana}
-                          cell={cell?.data}
-                          active={cell?.active}
-                        />
-                      );
-                    })}
+            {(row.items[0].data.id === "9e4e7b1b-2b3c-467d-8c24-be83a4ae5a89"
+              ? [row.items[0], null, row.items[1], null, row.items[2]]
+              : row.items[0].data.id === "a53d8501-373d-4944-a76b-657f672162f9"
+                ? [row.items[0], null, null, null, row.items[1]]
+                : row.items[0].data.id ===
+                    "2a481d17-0d7c-492a-85fc-cab60e9fb6df"
+                  ? [null, null, row.items[0], null, null]
+                  : row.items
+            ).map((cell, cellIndex) => {
+              return (
+                <Cell
+                  key={`${rowIndex}/${cellIndex}`}
+                  onPress={() =>
+                    cell?.data &&
+                    onPress?.([cell.data, rowIndex, cellIndex, type])
+                  }
+                  isLong={
+                    row.items.length === 3 &&
+                    row.items[0].data.id !==
+                      "9e4e7b1b-2b3c-467d-8c24-be83a4ae5a89"
+                  }
+                  widthStandart={itemWidth}
+                  widthLong={itemWidthLong}
+                  kana={kana}
+                  cell={cell?.data}
+                  active={cell?.active}
+                />
+              );
+            })}
           </View>
         ))}
       </ScrollView>
@@ -214,7 +231,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
-    gap: 9
+    gap: 9,
   },
   cell: {
     justifyContent: "center",

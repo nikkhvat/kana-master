@@ -1,33 +1,40 @@
 import React, { useMemo } from "react";
 
-import { useTranslation } from "react-i18next";
 import { Dimensions, View, StyleSheet } from "react-native";
 
 import Cell from "@/entities/kana/cell/cell";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TABLET_WIDTH } from "@/shared/constants/app";
 import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
-import { dakuon, handakuon, base, yoon, LettersKeys, ILetter } from "@/shared/data/lettersTable";
+import {
+  dakuon,
+  handakuon,
+  base,
+  yoon,
+  LettersKeys,
+  ILetter,
+} from "@/shared/data/lettersTable";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { useAppSelector } from "@/shared/model/hooks";
 interface EducationKanaTableProps {
-  kana: KanaAlphabet.Hiragana | KanaAlphabet.Katakana
+  kana: KanaAlphabet.Hiragana | KanaAlphabet.Katakana;
   type: Alphabet;
   onClick?: (id: LettersKeys) => void;
   last?: boolean;
 }
 
 const screenWidth = Dimensions.get("window").width;
-const screenAdaptiveWidth = screenWidth > TABLET_WIDTH ? screenWidth * 0.75 : screenWidth;
-const itemWidth = (screenAdaptiveWidth / 6) - 14;
-const itemWidthLong = (screenAdaptiveWidth / 3) - (itemWidth / 3) - 23;
+const screenAdaptiveWidth =
+  screenWidth > TABLET_WIDTH ? screenWidth * 0.75 : screenWidth;
+const itemWidth = screenAdaptiveWidth / 6 - 14;
+const itemWidthLong = screenAdaptiveWidth / 3 - itemWidth / 3 - 23;
 
-const EducationKanaTable: React.FC<EducationKanaTableProps> = ({ 
-  kana, 
-  type, 
-  onClick = () => { }, 
-  last }) => {
-
+const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
+  kana,
+  type,
+  onClick = () => {},
+  last,
+}) => {
   const letters = useMemo(() => {
     switch (type) {
       case "base":
@@ -43,7 +50,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
 
   const levels = useAppSelector((state) => state.statistics.statistics[kana]);
   const isEnabledStats = useAppSelector((state) => state.statistics.isEnabled);
-  
+
   const { colors } = useThemeContext();
 
   const { getRomanji, key } = useGetRomanji();
@@ -51,26 +58,30 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
   const getStartOfRow = (letter: ILetter) => {
     const romanji = getRomanji(letter);
 
-    return (romanji.length < 3
-      ? romanji[0]
-      : romanji[0] + romanji[1]) + "-";
+    return (romanji.length < 3 ? romanji[0] : romanji[0] + romanji[1]) + "-";
   };
-  
+
   const getEndOfColumn = (letter: ILetter) => {
     const romanji = getRomanji(letter);
 
-    return "-" + (romanji.length === 2 ? 
-        romanji[1] : 
-        romanji.length === 1 ? 
-        romanji[0] : romanji[2]);
+    return (
+      "-" +
+      (romanji.length === 2
+        ? romanji[1]
+        : romanji.length === 1
+          ? romanji[0]
+          : romanji[2])
+    );
   };
 
   return (
-    <View style={[
-      styles.container, 
-      { borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.color2 },
-      type === "yoon" ? { marginBottom: 0 } : {}
-      ]}>
+    <View
+      style={[
+        styles.container,
+        { borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.color2 },
+        type === "yoon" ? { marginBottom: 0 } : {},
+      ]}
+    >
       {letters && letters.length > 1 && (
         <View style={styles.rowButtons}>
           <Cell
@@ -78,7 +89,6 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
             isLong={false}
             widthStandart={itemWidth}
             widthLong={itemWidthLong}
-            lang={key}
             kana={kana}
             cell={null}
             isStartOfLine={""}
@@ -89,7 +99,6 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
               isLong={letters[0].length === 3}
               widthStandart={itemWidth}
               widthLong={itemWidthLong}
-              lang={key}
               kana={kana}
               cell={null}
               isStartOfLine={getEndOfColumn(cell)}
@@ -97,37 +106,48 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
           ))}
         </View>
       )}
-      {letters && letters.map((row, rowIndex) => (
-        <View key={`row-${rowIndex}`} style={styles.row}>
-          <View style={styles.rowButtons}>
-            <Cell
-              key={`${rowIndex}/start_of_line`}
-              isLong={false}
-              widthStandart={itemWidth}
-              widthLong={itemWidthLong}
-              lang={key}
-              kana={kana}
-              cell={null}
-              isStartOfLine={getStartOfRow(row[0])}
-            />
-          </View>
-          {(type !== "base" ? row : row[0].id === "9e4e7b1b-2b3c-467d-8c24-be83a4ae5a89" ? [row[0], null, row[1], null, row[2]] :
-            row[0].id === "a53d8501-373d-4944-a76b-657f672162f9" ? [row[0], null, null, null, row[1]] :
-              row[0].id === "2a481d17-0d7c-492a-85fc-cab60e9fb6df" ? [null, null, row[0], null, null] : row).map((cell, cellIndex) => (
-              <Cell 
-                key={`${rowIndex}/${cellIndex}`}
-                onPress={() => cell && onClick(cell.id)}
-                isLong={row.length === 3 && row[0].id !== "9e4e7b1b-2b3c-467d-8c24-be83a4ae5a89"}
+      {letters &&
+        letters.map((row, rowIndex) => (
+          <View key={`row-${rowIndex}`} style={styles.row}>
+            <View style={styles.rowButtons}>
+              <Cell
+                key={`${rowIndex}/start_of_line`}
+                isLong={false}
                 widthStandart={itemWidth}
                 widthLong={itemWidthLong}
-                lang={key}
+                kana={kana}
+                cell={null}
+                isStartOfLine={getStartOfRow(row[0])}
+              />
+            </View>
+            {(type !== "base"
+              ? row
+              : row[0].id === "9e4e7b1b-2b3c-467d-8c24-be83a4ae5a89"
+                ? [row[0], null, row[1], null, row[2]]
+                : row[0].id === "a53d8501-373d-4944-a76b-657f672162f9"
+                  ? [row[0], null, null, null, row[1]]
+                  : row[0].id === "2a481d17-0d7c-492a-85fc-cab60e9fb6df"
+                    ? [null, null, row[0], null, null]
+                    : row
+            ).map((cell, cellIndex) => (
+              <Cell
+                key={`${rowIndex}/${cellIndex}`}
+                onPress={() => cell && onClick(cell.id)}
+                isLong={
+                  row.length === 3 &&
+                  row[0].id !== "9e4e7b1b-2b3c-467d-8c24-be83a4ae5a89"
+                }
+                widthStandart={itemWidth}
+                widthLong={itemWidthLong}
                 kana={kana}
                 cell={cell}
-                indicator={(cell && isEnabledStats) ? levels[cell.id]?.level : undefined}
+                indicator={
+                  cell && isEnabledStats ? levels[cell.id]?.level : undefined
+                }
               />
             ))}
-        </View>
-      ))}
+          </View>
+        ))}
     </View>
   );
 };
@@ -143,7 +163,7 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
     gap: 9,
     width: "100%",
-    alignItems: "center"
+    alignItems: "center",
   },
   row: {
     flexDirection: "row",
@@ -155,6 +175,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-end",
-    gap: 9
+    gap: 9,
   },
 });

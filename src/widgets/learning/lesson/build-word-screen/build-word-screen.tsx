@@ -3,13 +3,12 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 
-import SequenceBuild from "@/entities/education/practice/sequence-build/sequence-build";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { KanaAlphabet, QuestionTypeBuildingWord, WordBuildingType } from "@/shared/constants/kana";
+import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonBuildWord } from "@/shared/constants/lessons";
 import getKana from "@/shared/helpers/getKanaKey";
-import { shuffleArray } from "@/shared/helpers/letters";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
+import Sequence from "@/shared/ui/sequence";
 
 
 type SelectSequenceLettersProps = LessonBuildWord & {
@@ -20,15 +19,10 @@ type SelectSequenceLettersProps = LessonBuildWord & {
 const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ sequence, kana, next }) => {
   const { colors } = useThemeContext();
 
-  const shafledArray = shuffleArray(sequence);
-  const shafledArray1 = shuffleArray(sequence);
-
+  const sequenceArray = sequence.map(item => getKana(item, kana));
   const { t } = useTranslation();
-  const { getRomanji } = useGetRomanji();
 
-  const random = Math
-    .random()
-    .toString();
+  const { getRomanji } = useGetRomanji();
 
   return (
     <View style={styles.container} >
@@ -41,22 +35,14 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ seq
         color: colors.color4,
         marginBottom: 60
       }]} >
-        {shafledArray1.map(item => getKana(item, kana)).join(", ")}
+        {sequence.map(item => getRomanji(item)).join(", ")}
       </Text>
 
-      <SequenceBuild
-        hideTitle
-        question={{
-          type: QuestionTypeBuildingWord,
-          title: random,
-          buildingWord: shafledArray1.map(item => getRomanji(item)).join(""),
-          shaffledLetters: shafledArray.map(item => getRomanji(item)),
-          translate: shafledArray.map(item => getRomanji(item)).join(""),
-          selectKana: WordBuildingType.Kana,
-          selectKanaType: kana,
-        }}
-        buildingWord={shafledArray1.map(item => getRomanji(item))}
-        onFinish={next} />
+      <Sequence
+        key={sequenceArray.join("")}
+        onFinish={next}
+        sequence={sequenceArray}
+      />
     </View>
   );
 };

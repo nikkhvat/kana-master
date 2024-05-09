@@ -11,21 +11,30 @@ import getKana from "@/shared/helpers/getKanaKey";
 import Button from "@/shared/ui/button/button";
 
 type LessonDrawScreenProps = LessonDraw & {
-  next: () => void
-  kana: KanaAlphabet
-}
+  next: () => void;
+  kana: KanaAlphabet;
+};
 
-const LessonDrawScreen: React.FC<LessonDrawScreenProps> = ({ symbol, kana, next }) => {
+const LessonDrawScreen: React.FC<LessonDrawScreenProps> = ({
+  symbol,
+  kana,
+  next,
+}) => {
   const { colors } = useThemeContext();
   const { t } = useTranslation();
 
   return (
-    <View style={styles.container} >
+    <View style={styles.container}>
       <View>
-        <Text style={[styles.title, {
-          color: colors.color4
-        }]} >
-          {t("lesson.drawSyllable", { syllable: getKana(symbol, kana)  })} 
+        <Text
+          style={[
+            styles.title,
+            {
+              color: colors.color4,
+            },
+          ]}
+        >
+          {t("lesson.drawSyllable", { syllable: getKana(symbol, kana) })}
         </Text>
 
         <Draw kana={kana} letter={symbol} />
@@ -52,6 +61,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 17,
     fontWeight: "600",
-    textAlign: "center"
+    textAlign: "center",
   },
 });

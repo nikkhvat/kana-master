@@ -11,30 +11,40 @@ import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import SelectAnswer from "@/shared/ui/select-answer/select-answer";
 
 type SelectLettersScreenProps = LessonSelectSymbol & {
-  next: () => void
-  kana: KanaAlphabet
-}
+  next: () => void;
+  kana: KanaAlphabet;
+};
 
-const SelectLettersScreen: React.FC<SelectLettersScreenProps> = ({ symbols, kana, next }) => {
-
+const SelectLettersScreen: React.FC<SelectLettersScreenProps> = ({
+  symbols,
+  kana,
+  next,
+}) => {
   const { colors } = useThemeContext();
   const { t } = useTranslation();
   const { getRomanji } = useGetRomanji();
-  
-  const answers = symbols.map(item => ({
+
+  const answers = symbols.map((item) => ({
     title: getKana(item, kana),
-    isTrue: item.id === symbols[0].id
+    isTrue: item.id === symbols[0].id,
   }));
-  
+
   return (
-    <View style={styles.container} >
-      <Text style={[styles.title, {
-        color: colors.color4
-      }]} >
-        {t("lesson.selectCorrectTransliteration", { syllable: getRomanji(symbols[0]) })}
+    <View style={styles.container}>
+      <Text
+        style={[
+          styles.title,
+          {
+            color: colors.color4,
+          },
+        ]}
+      >
+        {t("lesson.selectCorrectTransliteration", {
+          syllable: getRomanji(symbols[0]),
+        })}
       </Text>
-      
-      <SelectAnswer answers={answers} />
+
+      <SelectAnswer onFinish={() => next()} answers={answers} />
     </View>
   );
 };
@@ -52,6 +62,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "600",
     textAlign: "center",
-    marginBottom: 30
+    marginBottom: 30,
   },
 });

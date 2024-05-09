@@ -15,7 +15,15 @@ import Symbol from "@/entities/kana/symbol/symbol";
 import SymbolHeader from "@/entities/kana/symbol-header/symbol-header";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
-import { ILetter, LettersKeys, baseFlatLettersId, dakuonFlatLettersId, handakuonFlatLettersId, lettersTableById, yoonFlatLettersId } from "@/shared/data/lettersTable";
+import {
+  ILetter,
+  LettersKeys,
+  baseFlatLettersId,
+  dakuonFlatLettersId,
+  handakuonFlatLettersId,
+  lettersTableById,
+  yoonFlatLettersId,
+} from "@/shared/data/lettersTable";
 import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
@@ -36,27 +44,39 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
 
   const { id: LetterIdFromParams, kana: kanaFromParams } = route.params;
 
-  const flatLetters = useMemo(() => [
-    ...baseFlatLettersId,
-    ...dakuonFlatLettersId,
-    ...handakuonFlatLettersId,
-    ...yoonFlatLettersId,
-  ], []);
+  const flatLetters = useMemo(
+    () => [
+      ...baseFlatLettersId,
+      ...dakuonFlatLettersId,
+      ...handakuonFlatLettersId,
+      ...yoonFlatLettersId,
+    ],
+    [],
+  );
 
   const [letterId, setLetterId] = useState(LetterIdFromParams);
   const [letterKana, setLetterKana] = useState(kanaFromParams);
 
-  const level = useAppSelector((state) => state.statistics.statistics[kanaFromParams][letterId]);
+  const level = useAppSelector(
+    (state) => state.statistics.statistics[kanaFromParams][letterId],
+  );
 
-  const indicatorColor = level === undefined ? null : level?.level === StatisticLevel.Green
-    ? colors.second_color2 : level?.level === StatisticLevel.Yellow
-      ? colors.second_color5 : colors.second_color1;
+  const indicatorColor =
+    level === undefined
+      ? null
+      : level?.level === StatisticLevel.Green
+        ? colors.second_color2
+        : level?.level === StatisticLevel.Yellow
+          ? colors.second_color5
+          : colors.second_color1;
 
   const [isDrawSymbol, setIsDrawSymbol] = useState(false);
 
   const prevLetter = () => {
     const active = lettersTableById[letterId as LettersKeys];
-    const activeIndex = flatLetters.findIndex((element) => element === active.id);
+    const activeIndex = flatLetters.findIndex(
+      (element) => element === active.id,
+    );
     if (activeIndex === 0) return;
 
     setLetterId(flatLetters[activeIndex - 1]);
@@ -64,7 +84,9 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
 
   const nextLetter = () => {
     const active = lettersTableById[letterId as LettersKeys];
-    const activeIndex = flatLetters.findIndex((element) => element === active.id);
+    const activeIndex = flatLetters.findIndex(
+      (element) => element === active.id,
+    );
     if (flatLetters.length === activeIndex + 1) return;
 
     setLetterId(flatLetters[activeIndex + 1]);
@@ -80,105 +102,122 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
     navigation.setOptions({
       headerTitleAlign: "center",
       headerLeft: () => (
-        <Pressable onPress={() => {
-          if (isDrawSymbol) {
-            setIsDrawSymbol(false);
-          } else {
-            navigation.goBack();
-          }
-        }} >
-          <Icon 
+        <Pressable
+          onPress={() => {
+            if (isDrawSymbol) {
+              setIsDrawSymbol(false);
+            } else {
+              navigation.goBack();
+            }
+          }}
+        >
+          <Icon
             name={isDrawSymbol ? "keyboard-backspace" : "close"}
             size={24}
             color={colors.color4}
           />
         </Pressable>
       ),
-      title: letterKana === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana"),
+      title:
+        letterKana === KanaAlphabet.Hiragana
+          ? t("kana.hiragana")
+          : t("kana.katakana"),
       headerShadowVisible: false,
     });
   }, [navigation, isDrawSymbol, letterKana]);
 
   return (
-    <AdaptiveLayout style={{ flex: 1 }} >
-      {isDrawSymbol === false ?
-        <View style={[styles.container, { backgroundColor: colors.color1, }]}>
-          
-          {letter !== null && <View style={styles.symbolContainer}>
-            <SymbolHeader 
-              indicatorColor={indicatorColor}
-              hideTitle
-              kana={letterKana}
-              letter={letter as ILetter} />
-            <View style={{ marginTop: 35 }} >
-              <Symbol id={letter.id} kana={letterKana} />
+    <AdaptiveLayout style={{ flex: 1 }}>
+      {isDrawSymbol === false ? (
+        <View style={[styles.container, { backgroundColor: colors.color1 }]}>
+          {letter !== null && (
+            <View style={styles.symbolContainer}>
+              <SymbolHeader
+                indicatorColor={indicatorColor}
+                hideTitle
+                kana={letterKana}
+                letter={letter as ILetter}
+              />
+              <View style={{ marginTop: 35 }}>
+                <Symbol id={letter.id} kana={letterKana} />
+              </View>
             </View>
-          </View>}
+          )}
 
-          {letter !== null && <View style={styles.buttonContainer}>
-            <View style={styles.buttons}>
-              <SoundLetter customStyles={{ flex: 1, marginTop: 0 }} id={letter.id} />
-              <Button
-                customStyles={{ flex: 1, marginTop: 0 }}
-                title={"Draw"}
-                onClick={drawSymbol}
-                type={"inactive"}
-                image={"gesture-tap-hold"}
-              />
-            </View>
-            <View style={styles.buttons}>
-              {screenHeight < 700 && 
+          {letter !== null && (
+            <View style={styles.buttonContainer}>
+              <View style={styles.buttons}>
+                <SoundLetter
+                  customStyles={{ flex: 1, marginTop: 0 }}
+                  id={letter.id}
+                />
                 <Button
-                  customStyles={{ flex: 1, width: 50, marginTop: 0 }}
-                  type={"inactive"}
-                  image={"chevron-left"}
-                  onClick={() => prevLetter()}
-                />}
-              <Button
-                customStyles={{ flex: 1, marginTop: 0 }}
-                title={`${letterKana === KanaAlphabet.Hiragana ? t("kana.katakana") : t("kana.hiragana") } →`}
-                onClick={() => {
-                  setLetterKana(letterKana === KanaAlphabet.Hiragana ? KanaAlphabet.Katakana : KanaAlphabet.Hiragana);
-                }}
-                type={"inactive"}
-              />
-              {screenHeight < 700 &&
-                <Button
-                  customStyles={{ width: 50, marginTop: 0 }}
+                  customStyles={{ flex: 1, marginTop: 0 }}
                   title={"Draw"}
+                  onClick={drawSymbol}
                   type={"inactive"}
-                  image={"chevron-right"}
-                  onClick={() => nextLetter()}
-                />}
+                  image={"gesture-tap-hold"}
+                />
+              </View>
+              <View style={styles.buttons}>
+                {screenHeight < 700 && (
+                  <Button
+                    customStyles={{ flex: 1, width: 50, marginTop: 0 }}
+                    type={"inactive"}
+                    image={"chevron-left"}
+                    onClick={() => prevLetter()}
+                  />
+                )}
+                <Button
+                  customStyles={{ flex: 1, marginTop: 0 }}
+                  title={`${letterKana === KanaAlphabet.Hiragana ? t("kana.katakana") : t("kana.hiragana")} →`}
+                  onClick={() => {
+                    setLetterKana(
+                      letterKana === KanaAlphabet.Hiragana
+                        ? KanaAlphabet.Katakana
+                        : KanaAlphabet.Hiragana,
+                    );
+                  }}
+                  type={"inactive"}
+                />
+                {screenHeight < 700 && (
+                  <Button
+                    customStyles={{ width: 50, marginTop: 0 }}
+                    title={"Draw"}
+                    type={"inactive"}
+                    image={"chevron-right"}
+                    onClick={() => nextLetter()}
+                  />
+                )}
+              </View>
             </View>
-          </View>}
+          )}
 
-          {screenHeight > 700 && <View style={[styles.buttons, { paddingBottom: insets.bottom }]}>
-            <Button
-              customStyles={{ width: 50, }}
-              type={"inactive"}
-              image={"chevron-left"}
-              onClick={() => prevLetter()}
-            />
-            <Button
-              customStyles={{ width: 50 }}
-              type={"inactive"}
-              image={"chevron-right"}
-              onClick={() => nextLetter()}
-            />
-          </View>}
+          {screenHeight > 700 && (
+            <View style={[styles.buttons, { paddingBottom: insets.bottom }]}>
+              <Button
+                customStyles={{ width: 50 }}
+                type={"inactive"}
+                image={"chevron-left"}
+                onClick={() => prevLetter()}
+              />
+              <Button
+                customStyles={{ width: 50 }}
+                type={"inactive"}
+                image={"chevron-right"}
+                onClick={() => nextLetter()}
+              />
+            </View>
+          )}
         </View>
-        : 
-        <DrawKana 
-          letter={letter as ILetter} 
-          kana={letterKana} />
-        }
+      ) : (
+        <DrawKana letter={letter as ILetter} kana={letterKana} />
+      )}
     </AdaptiveLayout>
   );
 };
 
 export default KanaInfo;
-
 
 const styles = StyleSheet.create({
   container: {
@@ -209,7 +248,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     marginTop: 15,
-    gap: 15
+    gap: 15,
   },
   close: {
     marginTop: 10,
@@ -217,5 +256,5 @@ const styles = StyleSheet.create({
     position: "absolute",
     padding: 10,
     zIndex: 9,
-  }
+  },
 });

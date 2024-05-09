@@ -10,23 +10,22 @@ import getKana from "@/shared/helpers/getKanaKey";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 
 interface CellProps {
-  isLong: boolean
-  widthStandart: number
-  widthLong: number
+  isLong: boolean;
+  widthStandart: number;
+  widthLong: number;
 
-  active?: boolean
-  isPlus?: boolean
+  active?: boolean;
+  isPlus?: boolean;
 
-  onPress?: (id: string) => void
+  onPress?: (id: string) => void;
 
-  lang: "ru" | "en",
-  kana: KanaAlphabet.Hiragana | KanaAlphabet.Katakana
+  kana: KanaAlphabet.Hiragana | KanaAlphabet.Katakana;
 
-  cell: ILetter | null | undefined
+  cell: ILetter | null | undefined;
 
-  isStartOfLine?: string | null | undefined | false
+  isStartOfLine?: string | null | undefined | false;
 
-  indicator?: StatisticLevel
+  indicator?: StatisticLevel;
 }
 
 const Cell: React.FC<CellProps> = ({
@@ -34,57 +33,72 @@ const Cell: React.FC<CellProps> = ({
   isLong,
   widthStandart,
   widthLong,
-  lang,
   kana,
   cell,
   isPlus,
   active,
   isStartOfLine,
-  indicator
+  indicator,
 }) => {
-
   const { colors } = useThemeContext();
 
-  const indicatorColor = indicator === StatisticLevel.Green
-    ? colors.second_color2 : indicator === StatisticLevel.Yellow
-    ? colors.second_color5 : colors.second_color1;
+  const indicatorColor =
+    indicator === StatisticLevel.Green
+      ? colors.second_color2
+      : indicator === StatisticLevel.Yellow
+        ? colors.second_color5
+        : colors.second_color1;
 
-  const { getRomanji, key } = useGetRomanji();
+  const { getRomanji } = useGetRomanji();
 
   return (
     <TouchableOpacity
-      onPress={() => (cell) ? onPress?.(cell.id) : onPress?.("")}
+      onPress={() => (cell ? onPress?.(cell.id) : onPress?.(""))}
       style={[
         styles.cell,
         {
           width: isLong ? widthLong : widthStandart,
           height: widthStandart,
-          backgroundColor: (active && !isPlus) ? colors.second_color4 : active ? colors.second_color3 : "transparent",
-          borderColor: (((!cell || active) && !isPlus)) ? "transparent" : colors.color2,
-        }
+          backgroundColor:
+            active && !isPlus
+              ? colors.second_color4
+              : active
+                ? colors.second_color3
+                : "transparent",
+          borderColor:
+            (!cell || active) && !isPlus ? "transparent" : colors.color2,
+        },
       ]}
     >
-      {indicator && <View style={[styles.cellIndicator, { backgroundColor: indicatorColor }]} ></View>}
-      {(cell !== null && !isStartOfLine) && <>
-        <Text style={[styles.symbol, { fontSize: 17, color: colors.color4 }]}>
-          {cell && getKana(cell, kana)}
+      {indicator && (
+        <View
+          style={[styles.cellIndicator, { backgroundColor: indicatorColor }]}
+        ></View>
+      )}
+      {cell !== null && !isStartOfLine && (
+        <>
+          <Text style={[styles.symbol, { fontSize: 17, color: colors.color4 }]}>
+            {cell && getKana(cell, kana)}
+          </Text>
+          {cell && (
+            <Text style={[styles.subText, { color: colors.color4 }]}>
+              {getRomanji(cell).toUpperCase()}
+            </Text>
+          )}
+        </>
+      )}
+
+      {!cell && isStartOfLine && !isPlus && (
+        <Text style={[styles.symbol, { fontSize: 13, color: colors.color3 }]}>
+          {isStartOfLine}
         </Text>
-        {cell && 
-          <Text 
-            style={[
-              styles.subText, 
-              { color: colors.color4 }]} >
-            {getRomanji(cell).toUpperCase()}
-          </Text>}
-      </>}
+      )}
 
-      {(!cell && isStartOfLine && !isPlus) && <Text style={[styles.symbol, { fontSize: 13, color: colors.color3 }]}>
-        {isStartOfLine}
-      </Text>}
-
-      {isPlus && <Text style={[styles.symbol, { fontSize: 17, color: colors.color4 }]}>
-        {isStartOfLine}
-      </Text>}
+      {isPlus && (
+        <Text style={[styles.symbol, { fontSize: 17, color: colors.color4 }]}>
+          {isStartOfLine}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };
@@ -97,7 +111,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 12,
     borderWidth: 1,
-    position: "relative"
+    position: "relative",
   },
   cellIndicator: {
     position: "absolute",
@@ -105,11 +119,11 @@ const styles = StyleSheet.create({
     height: 6,
     top: 5,
     right: 5,
-    borderRadius: 10
+    borderRadius: 10,
   },
   symbol: {
     fontWeight: "400",
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
   subText: {
     fontSize: 13,
