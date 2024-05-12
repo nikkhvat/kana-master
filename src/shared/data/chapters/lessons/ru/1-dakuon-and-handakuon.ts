@@ -15,7 +15,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Дакуон и хандакуон.",
       blocks: [
         {
-          text: "Мы рассмотрели все слоги хираганы. Теперь мы готовы к изучению **специальных знаков хираганы**! Для начала давай узнаем, с какими слогами хираганы можно употреблять эти знаки:",
+          text: "После того как мы освоили основные слоги хираганы, пришло время познакомиться с дакуон и хандакуон — особыми знаками, которые изменяют звучание слогов.",
         },
         {
           table: [
@@ -53,19 +53,19 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Dakuon ka, ki, ku, ke, ko.",
       blocks: [
         {
-          text: "We can create **new** sounds by adding a special mark (dakuten) in the form of **two short straight lines** to the upper right corner of the hiragana syllables we've just reviewed. Check below to see how this mark changes the pronunciation! The resulting hiragana syllables are called **voiced**.",
+          text: "Добавляя специальные знаки дакутен, представляющие собой две короткие палочки, к слогам, мы формируем новые звуки. Ознакомьтесь, как это изменяет произношение.",
         },
         {
           table: [
             [
-              "Voiceless",
+              "Без знака",
               "か (ka)",
               "き (ki)",
               "く (ku)",
               "け (ke)",
               "こ (ko)",
             ],
-            ["Voiced", "が (ga)", "ぎ (gi)", "ぐ (gu)", "げ (ge)", "ご (go)"],
+            ["С знаком", "が (ga)", "ぎ (gi)", "ぐ (gu)", "げ (ge)", "ご (go)"],
           ],
         },
       ],
@@ -88,7 +88,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Дакуон za, ji, zu, ze, zo.",
       blocks: [
         {
-          text: "Точно так же мы можем добавить специальные знаки (dakuten) к буквам хираганы, начинающихся с «**s**».",
+          text: "Аналогичным образом мы добавляем дакутен к слогам, начинающимся на 's', преобразуя их в звонкие звуки.",
         },
         {
           table: [
@@ -100,10 +100,19 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
+      title: "Выбери хирагану для suzuran (ландыш).",
+      blocks: [
+        {
+          sequence: [ "ん", "す", "ら", "ず", "ぞ", "さ" ]
+        },
+      ],
+    },
+    {
+      name: LessonScreen.Info,
       title: "Дакуон da, ji, zu, de, do.",
       blocks: [
         {
-          text: "Кроме того, специальный знак (dakuten) может быть добавлен к буквам хираганы, начинающихся с «**t**», для образования новых звонких звуков!",
+          text: "Добавляя дакутен к слогам, начинающимся на 't', мы создаём другой набор звонких звуков.",
         },
         {
           table: [
@@ -118,15 +127,15 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Обрати внимание!",
       blocks: [
         {
-          text: "**じ** (ji) и **ぢ** (ji) произносятся одинаково, как и **ず** (zu) и **づ** (zu). В прошлом они произносились по-разному, но постепенно приобрели одинаковое произношение.",
+          text: "Слоги じ (ji) и ぢ (ji), а также ず (zu) и づ (zu) произносятся одинаково в современном японском. Ранее эти звуки различались, но со временем слились.",
         },
         {
-          text: "Важно отметить, что для слов с «ji» чаще всего используется **じ**, а для слов с «zu» - **ず**. Лишь с очень немногими словами употребляется **ぢ** и **づ**.",
+          text: "Заметьте, что じ чаще всего используется для 'ji', а ず для 'zu'. Слоги ぢ и づ встречаются редко.",
         },
         {
           rules: [
-            "じ (ji), ず (zu) - используются в большинстве случаем",
-            "ぢ (ji), づ (zu) - используются лишь в нескольких словах",
+            "じ (ji), ず (zu) - чаще всего используемые",
+            "ぢ (ji), づ (zu) - редко используемые",
           ],
         },
       ],
@@ -149,7 +158,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Дакуон ba, bi, bu, be, bo.",
       blocks: [
         {
-          text: "Теперь давай изучим специальные знаки (dakuten) для строки, начинающейся с «**h**».",
+          text: "Изучим, как применять дакутен к слогам, начинающимся на 'h', изменяя их в звонкие звуки 'b'.",
         },
         {
           table: [
@@ -165,9 +174,9 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       blocks: [
         {
           answers: [
-            { title: "かふぎ", isTrue: true },
-            { title: "かふぎ", isTrue: true },
-            { title: "かふぎ", isTrue: true },
+            { title: "かぶき", isTrue: true },
+            { title: "かびき", isTrue: false },
+            { title: "かふき", isTrue: false },
           ],
         },
       ],
@@ -177,7 +186,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Хандакуон pa, pi, pu, pe, po.",
       blocks: [
         {
-          text: "Строка хираганы, начинающаяся с **は** (ha) - особенная! В дополнение к изученному нами специальному знаку, ее также можно комбинировать с другим знаком (handakuten), маленьким кружком. Он меняет звук «**p**».",
+          text: "Особая строка хираганы начинается с 'は' (ha). К ней мы можем добавить не только дакутен, но и хандакутен, маленький круг, который преобразует звуки в 'p'.",
         },
         {
           table: [
@@ -194,9 +203,9 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       blocks: [
         {
           answers: [
-            { title: "hakuhaku", isTrue: true },
+            { title: "hakuhaku", isTrue: false },
             { title: "pakupaku", isTrue: true },
-            { title: "bakubaku", isTrue: true },
+            { title: "bakubaku", isTrue: false },
           ],
         },
       ],
@@ -206,7 +215,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Подсказка!",
       blocks: [
         {
-          text: "Специальные знаки, с которыми мы познакомились, очень важны, потому что при их добавлении значение слова может **полностью измениться**!",
+          text: "Использование специальных знаков существенно изменяет значения слов, что подчеркивает их важность в японском языке.",
         },
         {
           rules: [

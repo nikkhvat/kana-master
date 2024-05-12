@@ -1,15 +1,37 @@
+/* eslint-disable import/order */
 import { base } from "../lettersTable";
 
+import { AutoLesson, ManuallyLesson } from "@/shared/constants/lessons";
+
 import { lessonIntroduction as lessonIntroductionEn } from "./lessons/en/0-introduction";
-import { dakuonAndHandakuonLesson as dakuonAndHandakuonLessonEn } from "./lessons/en/1-dakuon-and-handakuon";
-import { longVowels as longVowelsEn } from "./lessons/en/2-long-vowels";
-import { longConsonants as longConsonantsEn } from "./lessons/en/3-long-consonants";
 import { lessonIntroduction as lessonIntroductionRu } from "./lessons/ru/0-introduction";
+
+import { dakuonAndHandakuonLesson as dakuonAndHandakuonLessonEn } from "./lessons/en/1-dakuon-and-handakuon";
 import { dakuonAndHandakuonLesson as dakuonAndHandakuonLessonRu } from "./lessons/ru/1-dakuon-and-handakuon";
+
+import { longVowels as longVowelsEn } from "./lessons/en/2-long-vowels";
 import { longVowels as longVowelsRu } from "./lessons/ru/2-long-vowels";
+
+import { longConsonants as longConsonantsEn } from "./lessons/en/3-long-consonants";
 import { longConsonants as longConsonantsRu } from "./lessons/ru/3-long-consonants";
 
-import { AutoLesson, ManuallyLesson } from "@/shared/constants/lessons";
+import { dakuonAndHandakuonKatakanaLesson as dakuonAndHandakuonKatakanaLessonEn } from "./lessons/en/5-dakuon-and-handakuon";
+import { dakuonAndHandakuonKatakanaLesson as dakuonAndHandakuonKatakanaLessonRu } from "./lessons/ru/5-dakuon-and-handakuon";
+
+import { longVowelsKatakana as longVowelsKatakanaEn } from "./lessons/en/7-long-vowels-katakana";
+import { longVowelsKatakana as longVowelsKatakanaRu } from "./lessons/ru/7-long-vowels-katakana";
+
+import { longConsonantsKatakana as longConsonantsKatakanaEn } from "./lessons/en/8-long-сonsonants-katakana";
+import { longConsonantsKatakana as longConsonantsKatakanaRu } from "./lessons/ru/8-long-сonsonants-katakana";
+
+import { additionalKatakanaSounds as additionalKatakanaSoundsEn } from "./lessons/en/6-additional-latakana-sounds";
+import { additionalKatakanaSounds as additionalKatakanaSoundsRu } from "./lessons/ru/6-additional-latakana-sounds";
+
+import { yoonHiragana as yoonHiraganaEn } from "./lessons/en/4-hi-yoon";
+import { yoonHiragana as yoonHiraganaRu } from "./lessons/ru/4-hi-yoon";
+
+import { yoonKatakana as yoonKatakanaEn } from "./lessons/en/9-ka-yoon";
+import { yoonKatakana as yoonKatakanaRu } from "./lessons/ru/9-ka-yoon";
 
 export const chapter1 = (lang: "ru" | "en"): (AutoLesson | ManuallyLesson)[] => [
   lang === "en" ? lessonIntroductionEn : lessonIntroductionRu,
@@ -73,4 +95,10 @@ export const chapter2 = (lang: "ru" | "en"): (AutoLesson | ManuallyLesson)[] => 
   lang === "en" ? dakuonAndHandakuonLessonEn : dakuonAndHandakuonLessonRu,
   lang === "en" ? longVowelsEn : longVowelsRu,
   lang === "en" ? longConsonantsEn : longConsonantsRu,
+  lang === "en" ? dakuonAndHandakuonKatakanaLessonEn : dakuonAndHandakuonKatakanaLessonRu,
+  lang === "en" ? longVowelsKatakanaEn : longVowelsKatakanaRu, 
+  lang === "en" ? longConsonantsKatakanaEn : longConsonantsKatakanaRu,
+  lang === "en" ? additionalKatakanaSoundsEn : additionalKatakanaSoundsRu,
+  lang === "en" ? yoonHiraganaEn : yoonHiraganaRu,
+  lang === "en" ? yoonKatakanaEn : yoonKatakanaRu,
 ];

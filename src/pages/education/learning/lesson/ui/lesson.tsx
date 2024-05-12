@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { completeLesson } from "../../model/slice";
 import { useEducationLessonContext } from "../lib/context/education-lesson-context";
@@ -27,6 +28,7 @@ import SelectLettersScreen from "@/widgets/learning/lesson/select-letters/select
 import SelectSequenceLettersScreen from "@/widgets/learning/lesson/select-sequence-letters/select-sequence-letters";
 import LessonSymbolScreen from "@/widgets/learning/lesson/symbol/symbol";
 
+
 type HomeScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   "LessonPage"
@@ -39,6 +41,8 @@ interface LearnScreenProps {
 }
 
 const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
+  const insets = useSafeAreaInsets();
+  
   const isAutoLesson = (
     item: AutoLesson | ManuallyLesson,
   ): item is AutoLesson => "letters" in item;
@@ -73,7 +77,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
           dispatch(completeLesson(`hi/${id}`));
         }
 
-        if (category.includes(KanaAlphabet.Hiragana)) {
+        if (category.includes(KanaAlphabet.Katakana)) {
           dispatch(completeLesson(`ka/${id}`));
         }
       }
@@ -112,6 +116,8 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
   return (
     <SafeLayout
       additionalPaddingTop={20}
+      disableLeft
+      disableRight
       style={[
         styles.container,
         {
@@ -120,7 +126,10 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
         },
       ]}
     >
-      <View style={styles.header}>
+      <View style={{
+        paddingLeft: insets.left + 20,
+        paddingRight: insets.right + 20,
+      }}>
         {(isManualyLesson(lesson)
           ? true
           : screen + 1 !== lessonScreens.length) && (
@@ -132,7 +141,10 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
         )}
       </View>
       {isAutoLesson(lesson) && (
-        <View style={styles.container}>
+        <View style={[styles.container, {
+          paddingLeft: insets.left + 20,
+          paddingRight: insets.right + 20,
+        }]}>
           {currentScreen?.name === LessonScreen.Symbol && (
             <LessonSymbolScreen
               name={LessonScreen.Symbol}
@@ -217,9 +229,6 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
 export default Lesson;
 
 const styles = StyleSheet.create({
-  header: {
-    marginBottom: 22,
-  },
   container: {
     flex: 1,
   },

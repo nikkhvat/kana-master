@@ -40,14 +40,15 @@ const Chapter: React.FC<ChapterProps> = ({
     (state) => state.lessons.completedLesson,
   );
 
-  const firstChapterIds = lessons.map((item) => item.id);
+  const lessonsList = lessons.filter((item) =>
+    isAutoLesson(item) ? true : item.category.includes(activeTab)
+  );
+
+  const firstChapterIds = lessonsList.map((item) => item.id);
   const firstChapterProgress = firstChapterIds.filter((item) =>
     completedLessons.includes(`${key}/${item}`),
   );
 
-  const lessonsList = lessons.filter((item) =>
-    isAutoLesson(item) ? true : item.category.includes(activeTab)
-  );
 
   const kanaTitle =
     activeTab === KanaAlphabet.Hiragana

@@ -1,7 +1,8 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import {
@@ -23,6 +24,7 @@ import SelectAnswer from "@/shared/ui/select-answer/select-answer";
 import Sequence from "@/shared/ui/sequence";
 import Table from "@/shared/ui/table/table";
 import BlockText from "@/shared/ui/text/text";
+
 
 type InfoScreenProps = InfoLessonScreen & {
   next: () => void;
@@ -50,6 +52,7 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
   blocks,
   isLast,
 }) => {
+  const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const { colors } = useThemeContext();
 
@@ -80,7 +83,12 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
     if (interactiveBlocks.length) return <View></View>;
 
     return (
-      <View style={styles.btnsContainer}>
+      <View style={[styles.btnsContainer,
+        {
+          paddingLeft: insets.left + 20,
+          paddingRight: insets.right + 20,
+        }
+      ]}>
         {!isLast && (
           <Button
             customStyles={{ width: "100%" }}
@@ -103,7 +111,12 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
+      <ScrollView contentContainerStyle={{
+        paddingTop: 22,
+      }} style={[styles.content, {
+        paddingLeft: insets.left + 20,
+        paddingRight: insets.right + 20,
+      }]}>
         <Text style={[styles.title, textColor]}>{title}</Text>
 
         <View style={styles.blocks}>
@@ -145,8 +158,8 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
             }
           })}
         </View>
-      </View>
-
+      
+      </ScrollView>
       {getButtons()}
     </View>
   );
@@ -183,7 +196,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  // Blocks
   blocks: {
     gap: 15,
   },

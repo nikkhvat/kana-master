@@ -6,7 +6,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
   title: "Dakuon and Handakuon",
   subTitle: "Dakuon and Handakuon",
   infoTitle: "Information",
-  infoSubTitle: "Here, we'll tell you about special hiragana marks",
+  infoSubTitle: "Here we will tell you about special marks in Hiragana",
   icon: "濁音",
   category: [KanaAlphabet.Hiragana],
   screens: [
@@ -15,7 +15,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Dakuon and Handakuon",
       blocks: [
         {
-          text: "We've covered all the hiragana syllables. Now we're ready to learn about **special hiragana marks**! Let's first see which hiragana syllables can use these marks:",
+          text: "Having mastered the basic syllables of Hiragana, it’s time to learn about dakuon and handakuon—special marks that alter the sounds of the syllables.",
         },
         {
           table: [
@@ -37,23 +37,23 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Match Hiragana with Romaji.",
+      title: "Match Hiragana with Romaji",
       blocks: [
         {
           pairs: [
             ["へた", "fuku (clothes)"],
             ["ふく", "sushi"],
-            ["すし", "heta (unskilled)"],
+            ["すし", "heta (clumsy)"],
           ],
         },
       ],
     },
     {
       name: LessonScreen.Info,
-      title: "Dakuon ka, ki, ku, ke, ko.",
+      title: "Dakuon ka, ki, ku, ke, ko",
       blocks: [
         {
-          text: "We can create **new** sounds by adding a special mark (dakuten) in the form of **two short straight lines** to the upper-right corner of the hiragana syllables we've reviewed. Check below to see how this mark changes the pronunciation! The resulting hiragana syllables are called **voiced**.",
+          text: "By adding special marks called dakuten, which are two short lines, to the syllables, we create new sounds. See how this changes the pronunciation.",
         },
         {
           table: [
@@ -72,12 +72,12 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Select the Hiragana for kagi (key).",
+      title: "Choose the hiragana for kagi (key)",
       blocks: [
         {
           answers: [
-            { title: "がき", isTrue: true },
-            { title: "がぎ", isTrue: true },
+            { title: "がき", isTrue: false },
+            { title: "がぎ", isTrue: false },
             { title: "かぎ", isTrue: true },
           ],
         },
@@ -85,10 +85,10 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Dakuon za, ji, zu, ze, zo.",
+      title: "Dakuon za, ji, zu, ze, zo",
       blocks: [
         {
-          text: "Similarly, we can add special marks (dakuten) to hiragana characters starting with 's.'",
+          text: "Similarly, we add dakuten to syllables starting with 's', turning them into voiced sounds.",
         },
         {
           table: [
@@ -100,10 +100,19 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Dakuon da, ji, zu, de, do.",
+      title: "Choose the hiragana for suzuran (lily of the valley)",
       blocks: [
         {
-          text: "We can also add special marks (dakuten) to hiragana characters starting with 't' to create new voiced sounds!",
+          sequence: ["す", "ず", "ら", "ん"]
+        },
+      ],
+    },
+    {
+      name: LessonScreen.Info,
+      title: "Dakuon da, ji, zu, de, do",
+      blocks: [
+        {
+          text: "By adding dakuten to syllables starting with 't', we create another set of voiced sounds.",
         },
         {
           table: [
@@ -115,41 +124,41 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Take note!",
+      title: "Note!",
       blocks: [
         {
-          text: "**じ** (ji) and **ぢ** (ji) are pronounced the same way, as are **ず** (zu) and **づ** (zu). In the past, they had different pronunciations but eventually converged.",
+          text: "The syllables じ (ji) and ぢ (ji), as well as ず (zu) and づ (zu), are pronounced the same in modern Japanese. They used to sound different but have merged over time.",
         },
         {
-          text: "It's important to note that **じ** is mostly used for 'ji,' and **ず** is used for 'zu.' Only a few words use **ぢ** and **づ**.",
+          text: "Note that じ is most commonly used for 'ji', and ず for 'zu'. The syllables ぢ and づ are rarely used.",
         },
         {
           rules: [
-            "じ (ji), ず (zu) - mostly used",
-            "ぢ (ji), づ (zu) - used only for a few words",
+            "じ (ji), ず (zu) - most commonly used",
+            "ぢ (ji), づ (zu) - rarely used",
           ],
         },
       ],
     },
     {
       name: LessonScreen.Info,
-      title: "Select the Hiragana for dashi (Japanese broth).",
+      title: "Choose the hiragana for dashi (Japanese broth)",
       blocks: [
         {
           answers: [
-            { title: "たじ", isTrue: true },
+            { title: "たじ", isTrue: false },
             { title: "だし", isTrue: true },
-            { title: "だじ", isTrue: true },
+            { title: "だじ", isTrue: false },
           ],
         },
       ],
     },
     {
       name: LessonScreen.Info,
-      title: "Dakuon ba, bi, bu, be, bo.",
+      title: "Dakuon ba, bi, bu, be, bo",
       blocks: [
         {
-          text: "Now let's learn the special marks (dakuten) for the row starting with 'h.'",
+          text: "Let's see how to apply dakuten to syllables starting with 'h', turning them into the voiced 'b' sounds.",
         },
         {
           table: [
@@ -161,23 +170,23 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Select the Hiragana for kabuki (Japanese theater).",
+      title: "Choose the hiragana for kabuki (Japanese theatre)",
       blocks: [
         {
           answers: [
-            { title: "かふぎ", isTrue: true },
-            { title: "かふぎ", isTrue: true },
-            { title: "かふぎ", isTrue: true },
+            { title: "かぶき", isTrue: true },
+            { title: "かびき", isTrue: false },
+            { title: "かふき", isTrue: false },
           ],
         },
       ],
     },
     {
       name: LessonScreen.Info,
-      title: "Handakuon pa, pi, pu, pe, po.",
+      title: "Handakuon pa, pi, pu, pe, po",
       blocks: [
         {
-          text: "The hiragana row starting with **は** (ha) is special! In addition to the dakuten mark, it can also be combined with another mark (handakuten), a small circle, which changes the sound to 'p.'",
+          text: "A special line of Hiragana starting with 'は' (ha) can also be combined with another mark, the handakuten, a small circle, which transforms the sounds into 'p'.",
         },
         {
           table: [
@@ -190,23 +199,23 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Select the Romaji for ぱくぱく (to eat heartily).",
+      title: "Choose the romaji for ぱくぱく (eating heartily)",
       blocks: [
         {
           answers: [
-            { title: "hakuhaku", isTrue: true },
+            { title: "hakuhaku", isTrue: false },
             { title: "pakupaku", isTrue: true },
-            { title: "bakubaku", isTrue: true },
+            { title: "bakubaku", isTrue: false },
           ],
         },
       ],
     },
     {
       name: LessonScreen.Info,
-      title: "Hint!",
+      title: "Tip!",
       blocks: [
         {
-          text: "The special marks we learned are crucial because they can **completely change** the meaning of a word!",
+          text: "Using special marks significantly changes the meanings of words, underscoring their importance in the Japanese language.",
         },
         {
           rules: [
@@ -220,12 +229,12 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Match Hiragana with Romaji.",
+      title: "Match hiragana with romaji",
       blocks: [
         {
           pairs: [
             ["ここ", "goko (5 pieces)"],
-            ["ごこ", "gogo (afternoon)"],
+            ["ごこ", "gogo (in the afternoon)"],
             ["ごご", "koko (here)"],
           ],
         },

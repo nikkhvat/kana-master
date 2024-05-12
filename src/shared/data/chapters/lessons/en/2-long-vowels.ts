@@ -6,7 +6,7 @@ export const longVowels: ManuallyLesson = {
   title: "Long Vowels",
   subTitle: "Long Vowels",
   infoTitle: "Information",
-  infoSubTitle: "Here, we'll tell you about long vowels",
+  infoSubTitle: "Here we will tell you about long vowels",
   icon: "子音",
   category: [KanaAlphabet.Hiragana],
   screens: [
@@ -15,7 +15,7 @@ export const longVowels: ManuallyLesson = {
       title: "Long Vowels",
       blocks: [
         {
-          text: "Earlier, we studied special hiragana marks. Today, they'll come in handy as we'll learn to form long vowels. First, let's review the five main vowels.",
+          text: "We have previously touched on special signs in Hiragana. Today, we will delve deeper into the study of long vowels. Let's start with the basics — revising the five fundamental vowels.",
         },
         {
           table: [
@@ -27,14 +27,14 @@ export const longVowels: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Hint!",
+      title: "Tip!",
       blocks: [
         {
-          text: "To understand the importance of long and short vowels, let's compare the words listed below. It's important not to confuse them!",
+          text: "Let's examine how long vowels can change the meaning of words. This is crucial for proper understanding and avoiding confusion.",
         },
         {
           rules: [
-            "おばさん (obasan) - middle-aged woman; aunt",
+            "おばさん (obasan) - aunt; middle-aged woman",
             "おばあさん (obaasan) - grandmother",
           ],
         },
@@ -45,13 +45,13 @@ export const longVowels: ManuallyLesson = {
       title: "Remember the Rule!",
       blocks: [
         {
-          text: "**あ** (a) makes any hiragana ending with 'a' long (e.g., かあ - kaa).",
+          text: "**あ** (a) extends the vowel 'a' in hiragana, creating a long sound, for example, in the word かあ (kaa).",
         },
         {
-          text: "**い** (i) makes any hiragana ending with 'i' long (e.g., にい - nii).",
+          text: "**い** (i) extends the vowel 'i', as in にい (nii).",
         },
         {
-          text: "**う** (u) makes any hiragana ending with 'u' long (e.g., くう - kuu).",
+          text: "**う** (u) extends the vowel 'u', as in くう (kuu).",
         },
         {
           rules: [
@@ -64,13 +64,13 @@ export const longVowels: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Match Hiragana with Romaji.",
+      title: "Match Hiragana with Romaji",
       blocks: [
         {
           pairs: [
             ["おじいさん", "obaasan (grandmother)"],
             ["おばあさん", "ojiisan (grandfather)"],
-            ["すうじ", "suuji (number)"],
+            ["すうじ", "suuji (numbers)"],
           ],
         },
       ],
@@ -80,10 +80,7 @@ export const longVowels: ManuallyLesson = {
       title: "Remember the Rule!",
       blocks: [
         {
-          text: "**い** (i) makes any hiragana ending with 'e' long (e.g., せい - sei).",
-        },
-        {
-          text: "**う** (u) makes any hiragana ending with 'o' long (e.g., こう - kou).",
+          text: "**い** (i) extends the vowel 'e' to 'ei', as in the word せい (sei), and **う** (u) extends the vowel 'o' to 'ou', as in こう (kou).",
         },
         {
           rules: [
@@ -95,7 +92,7 @@ export const longVowels: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Match Hiragana with Romaji.",
+      title: "Match Hiragana with Romaji",
       blocks: [
         {
           pairs: [
@@ -111,11 +108,11 @@ export const longVowels: ManuallyLesson = {
       title: "Remember!",
       blocks: [
         {
-          text: "The particle 'wa,' which functions as the subject marker, is written in hiragana as は (ha). It's the only instance where は (ha) is written but pronounced as 'wa.'",
+          text: "The topic marker 'wa', used to indicate the subject, is written as は (ha) but pronounced as 'wa'. This is a unique rule in the Japanese language.",
         },
         {
           rules: [
-            "わたし は がくせい です。 (Watashi wa gakusei desu.) - I am a student.",
+            "わたし は がくせい です (Watashi wa gakusei desu) - I am a student.",
           ],
         },
       ],

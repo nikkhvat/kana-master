@@ -6,7 +6,7 @@ export const longConsonants: ManuallyLesson = {
   title: "Long Consonants",
   subTitle: "Long Consonants",
   infoTitle: "Information",
-  infoSubTitle: "Here, we'll tell you about long consonants",
+  infoSubTitle: "Here we will tell you about long consonants",
   icon: "母音",
   category: [KanaAlphabet.Hiragana],
   screens: [
@@ -15,18 +15,18 @@ export const longConsonants: ManuallyLesson = {
       title: "Long Consonants",
       blocks: [
         {
-          text: "In the previous lesson, we discussed long vowels. In Japanese, consonants can also be long!",
+          text: "In the previous lesson, we discussed long vowels. Now, let's turn our attention to long consonants in Japanese, which play an equally important role.",
         },
         {
-          text: "A small 'tsu' (っ) before a hiragana character denotes long (or doubled) consonants. The 'tsu' (っ) itself isn't pronounced.",
+          text: "Doubling of consonants is indicated by the small 'tsu' (っ) character placed before a consonant, creating a pause in the word and lengthening the consonant sound.",
         },
         {
-          text: "Compare the words below with the regular 'tsu' (つ) and the small 'tsu' (っ).",
+          text: "Examine the examples of using the standard 'tsu' (つ) and the small 'tsu' (っ):",
         },
         {
           rules: [
             "かた (kata) - shoulder",
-            "かつた (katsuta) - a name",
+            "かつた (katsuta) - name",
             "かった (katta) - won",
           ],
         },
@@ -34,7 +34,7 @@ export const longConsonants: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Match Hiragana with Romaji.",
+      title: "Match Hiragana with Romaji",
       blocks: [
         {
           pairs: [
@@ -50,7 +50,7 @@ export const longConsonants: ManuallyLesson = {
       title: "Exception!",
       blocks: [
         {
-          text: "The small 'tsu' (っ) can't be used before the hiragana characters **な** (na), **に** (ni), **ぬ** (nu), **ね** (ne), or **の** (no). To indicate the length of these consonants, **ん** (n) is used.",
+          text: "Note that the small 'tsu' (っ) is not used before vowels and certain consonants such as **な**, **に**, **ぬ**, **ね**, **の**. In these cases, the symbol **ん** (n) is used to lengthen the sounds.",
         },
         {
           rules: [
@@ -62,7 +62,7 @@ export const longConsonants: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Choose the Hiragana for kanna (pliers).",
+      title: "Choose the hiragana for kanna (pliers)",
       blocks: [
         {
           sequence: ["ん", "に", "か", "な", "ち", "っ"],
@@ -74,14 +74,14 @@ export const longConsonants: ManuallyLesson = {
       title: "Remember!",
       blocks: [
         {
-          text: "'Hello' is written as こんにちは (konnichiwa). The last character is **は** (ha), not **わ** (wa), because this expression was once longer and contained the subject marker **は** (ha). Although the longer greeting was shortened, the use of 'wa' as the subject marker **は** (ha) remains.",
+          text: "The word 'hello' is written as こんにちは (konnichiwa), where the last character is **は** (ha), not **わ** (wa). This is because the phrase was originally longer and used the particle **は** as part of the greeting.",
         },
         {
-          text: "As you might remember, the subject marker is always written as **は** (ha), but pronounced 'wa'.",
+          text: "Remember, the Japanese topic marker, despite being written as **は** (ha), is always pronounced 'wa'.",
         },
         {
           rules: [
-            "こんにちは (konnichiwa) - hello",
+            "こんにちは (konnichiwa) - good afternoon",
             "こんばんは (konbanwa) - good evening",
           ],
         },

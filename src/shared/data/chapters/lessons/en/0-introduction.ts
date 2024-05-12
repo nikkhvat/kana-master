@@ -15,22 +15,22 @@ export const lessonIntroduction: ManuallyLesson = {
       title: "Did you know?",
       blocks: [
         {
-          text: "The Japanese language has two alphabets: **hiragana** and **katakana**, each containing 46 letters.",
+          text: "Japanese uses two main alphabets — Hiragana and Katakana, each consisting of 46 characters.",
         },
         {
-          text: "**Hiragana** is used to write words of Japanese origin, while **katakana** is used for loanwords and foreign names.",
+          text: "Hiragana is primarily used for writing native Japanese words, while Katakana is often used for transcribing foreign words and names.",
         },
         {
-          text: "There are also about 2000 frequently used characters (**kanji**).",
+          text: "Additionally, Japanese frequently uses Kanji characters, totaling about two thousand commonly used symbols.",
         },
       ],
     },
     {
       name: LessonScreen.Info,
-      title: "Hiragana? Katakana? Kanji?",
+      title: "Hiragana, Katakana, Kanji — What's the difference?",
       blocks: [
         {
-          text: "Both **hiragana** and **katakana** represent sounds, while **kanji** convey meanings.",
+          text: "Hiragana and Katakana are syllabic alphabets representing sounds, whereas Kanji carry meaning.",
         },
         {
           table: [
@@ -43,26 +43,26 @@ export const lessonIntroduction: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Hint!",
+      title: "Tip: How to Write Kanji",
       blocks: [
         {
-          text: "Let's learn the rules for writing Japanese characters!",
+          text: "Learning the correct stroke order is important for writing neat Kanji. Here are the basic rules:",
         },
         {
           rules: [
             "Write strokes from left to right",
             "Write strokes from top to bottom",
-            "Write most curves and circles clockwise",
+            "Most curves and circles are drawn clockwise",
           ],
         },
       ],
     },
     {
       name: LessonScreen.Info,
-      title: "Check the stroke order.",
+      title: "Practice: Stroke Order",
       blocks: [
         {
-          text: "Following the correct stroke order helps write neat characters.",
+          text: "Understanding and adhering to the correct stroke order is critically important for writing Japanese characters.",
         },
         {
           id: "a151eeeb-2537-463c-ae23-d484d1bcb835",
@@ -72,38 +72,38 @@ export const lessonIntroduction: ManuallyLesson = {
     },
     {
       name: LessonScreen.Info,
-      title: "Check the stroke order.",
+      title: "Exercise: Choosing the Correct Writing Direction",
       blocks: [
         {
-          text: "Select the correct writing rule in Japanese.",
+          text: "Determine the correct direction for writing characters:",
         },
         {
           answers: [
-            { title: "Right to left", isTrue: false },
-            { title: "Bottom to top", isTrue: false },
-            { title: "Left to right", isTrue: true },
+            { title: "from right to left", isTrue: false },
+            { title: "from bottom to top", isTrue: false },
+            { title: "from left to right", isTrue: true },
           ],
         },
       ],
     },
     {
       name: LessonScreen.Info,
-      title: "How to write lines?",
+      title: "How to Properly Finish Strokes?",
       blocks: [
         {
-          text: "Now let's pay attention to how to finish strokes.",
+          text: "Mastering the technique of properly finishing strokes helps achieve aesthetics and readability in writing.",
         },
         {
-          text: "To finish a stroke, we stop abruptly, make a hook, or gradually move the brush away.",
+          text: "A stroke can end with a hook, a sharp stop, or a gradual brush away.",
         },
       ],
     },
     {
       name: LessonScreen.Info,
-      title: "Finishing the stroke.",
+      title: "Practice: Finishing a Stroke",
       blocks: [
         {
-          text: "The first stroke ends with a hook, and the second stops abruptly.",
+          text: "Let's consider different ways of finishing strokes with examples.",
         },
         {
           id: "11017078-148a-4a44-b3f7-21d1df02d981",
