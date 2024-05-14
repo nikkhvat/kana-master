@@ -7,7 +7,7 @@ import {
   GestureResponderEvent,
 } from "react-native";
 import { Svg, Path } from "react-native-svg";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import Symbol from "@/entities/kana/symbol/symbol";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
