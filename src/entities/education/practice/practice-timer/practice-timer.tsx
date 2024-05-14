@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { View, Text, StyleSheet, Animated, Dimensions } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 

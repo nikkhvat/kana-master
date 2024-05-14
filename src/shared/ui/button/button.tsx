@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 
 import { Text, StyleSheet, ViewStyle, TextStyle, TouchableOpacityProps, Pressable } from "react-native";
-import Ionicons from "react-native-vector-icons/MaterialCommunityIcons";
+import Ionicons from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 

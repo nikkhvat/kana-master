@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -9,7 +10,6 @@ import * as SystemUI from "expo-system-ui";
 import { useTranslation } from "react-i18next";
 import { Platform, Pressable, StatusBar } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import LessonPage from "@/pages/education/learning/lesson";
@@ -39,7 +39,14 @@ const headerSettings = {
   headerBackVisible: false,
 };
 
-const icons = {
+type Icons = {
+  Learning: "school-outline",
+  Practice: "cards-outline",
+  Settings: "cog-outline",
+  Kana: "syllabary-hiragana",
+}
+
+const icons: Icons = {
   Learning: "school-outline",
   Practice: "cards-outline",
   Settings: "cog-outline",

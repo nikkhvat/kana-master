@@ -1,4 +1,5 @@
 {
   "cSpell.words": [
-  ]
+  ],
+  "eslint.experimental.useFlatConfig": true
 }

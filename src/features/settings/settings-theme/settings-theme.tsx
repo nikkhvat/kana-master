@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text } from "react-native";
-import Icon from "react-native-vector-icons/Feather";
+import Icon from "@expo/vector-icons/Feather";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { Theme } from "@/shared/constants/theme";
