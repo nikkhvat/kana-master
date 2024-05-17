@@ -61,6 +61,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
     (state) => state.statistics.statistics[kanaFromParams][letterId],
   );
 
+  const isEnabledStats = useAppSelector((state) => state.statistics.isEnabled);
   const indicatorColor =
     level === undefined
       ? null
@@ -133,7 +134,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
           {letter !== null && (
             <View style={styles.symbolContainer}>
               <SymbolHeader
-                indicatorColor={indicatorColor}
+                indicatorColor={isEnabledStats ? indicatorColor : null}
                 hideTitle
                 kana={letterKana}
                 letter={letter as ILetter}

@@ -22,6 +22,7 @@ const DrawKana: React.FC<DrawKanaProps> = ({ letter, kana }) => {
     (state) => state.statistics.statistics[kana][letter.id],
   );
 
+  const isEnabledStats = useAppSelector((state) => state.statistics.isEnabled);
   const indicatorColor =
     level === undefined
       ? null
@@ -41,7 +42,7 @@ const DrawKana: React.FC<DrawKanaProps> = ({ letter, kana }) => {
       ]}
     >
       <SymbolHeader
-        indicatorColor={indicatorColor}
+        indicatorColor={isEnabledStats ? indicatorColor : null}
         hideTitle
         kana={kana}
         letter={letter}
