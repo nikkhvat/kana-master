@@ -67,6 +67,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
     <SafeLayout disableLeft disableRight >
       <AdaptiveLayout>
         <View style={[styles.container, { backgroundColor: colors.color1 }]}>
+          {isIos && <View style={[styles.lineContainer, { top: 155, backgroundColor: colors.color2 }]} />}
           <PageTitle style={styles.title} >{t("tabs.kana")}</PageTitle>
           <View style={styles.switcherContainer}>
             <Switcher<KanaAlphabet>
@@ -82,7 +83,6 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
               ]}
             />
           </View>
-          {isIos && <View style={[styles.lineContainer, { top: insets.top + 95, backgroundColor: colors.color2 }]} />}
           <SectionList
             style={{ height: scrollHeight }}
             sections={sections}
