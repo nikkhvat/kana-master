@@ -46,7 +46,7 @@ const Chapter: React.FC<ChapterProps> = ({
 
   const firstChapterIds = lessonsList.map((item) => item.id);
   const firstChapterProgress = firstChapterIds.filter((item) =>
-    completedLessons.includes(`${key}/${item}`),
+    completedLessons.includes(`${key}/${item}`) || completedLessons.includes(item),
   );
 
 
