@@ -46,10 +46,8 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
         ? true : false : (prev?.[index] === false || prev?.[index] === true) ? prev?.[index] : null))
     
     setTimeout(() => {
-      if (shafledArrayString === answer) {
-        setStates([])
-        next(shafledArrayString !== answer); 
-      }
+      setStates([])
+      next(shafledArrayString !== answer); 
     }, TEST_DELAY)
   };
 
