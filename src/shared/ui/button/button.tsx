@@ -65,7 +65,7 @@ const Button: React.FC<ButtonProps> = ({
               : title}
         </>
       ) : (
-        <Ionicons name={image} size={24} color={colors.color4} />
+        <Ionicons name={image as "symbol"} size={24} color={colors.color4} />
       )}
     </Pressable>
   );

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { KanaAlphabet } from "@/shared/constants/kana";
+import { KanaAlphabet, TEST_DELAY } from "@/shared/constants/kana";
 import { LessonSelectSequenceLetters } from "@/shared/constants/lessons";
 import getKana from "@/shared/helpers/getKanaKey";
 import { shuffleArray } from "@/shared/helpers/letters";
@@ -24,8 +24,8 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
   
   const { t } = useTranslation();
 
-  const shafledArray = shuffleArray(sequence);
-  const shafledArray2 = shuffleArray(sequence);
+  const shafledArray = useMemo(() => shuffleArray(sequence), []);
+  const shafledArray2 = useMemo(() => shuffleArray(sequence), []);
 
   const { getRomanji } = useGetRomanji();
 
@@ -33,13 +33,24 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
   const shafledArray2String =  shafledArray2.map(item => getRomanji(item)).join(", ");
 
 
-  const btns = shuffleArray([
+  const btns = useMemo(() => shuffleArray([
     shafledArrayString,
     shafledArray2String
-  ]);
+  ]), [sequence]);
+
+  const [states, setStates] = useState<(null | false | true)[]>();
 
   const submit = (answer: string) => {
-    next(shafledArrayString !== answer); 
+    setStates(prev => btns.map((item, index) => item === answer
+      ? shafledArrayString === answer
+        ? true : false : (prev?.[index] === false || prev?.[index] === true) ? prev?.[index] : null))
+    
+    setTimeout(() => {
+      if (shafledArrayString === answer) {
+        setStates([])
+        next(shafledArrayString !== answer); 
+      }
+    }, TEST_DELAY)
   };
 
   const rowLength = shafledArrayString.length;
@@ -56,12 +67,16 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ nam
       <View style={[styles.rowButtons, { 
         flexDirection: rowLength > 18 ? "column" : "row"
         }]} >
-        {btns.map(item => <Button
+        {btns.map((item, index) => <Button
           key={item}
-          customStyles={{ 
-            width: rowLength > 18 ? "100%" : (screenWidth - 55) / 2,
-            height: 50,
-            fontSize: 17,
+          customStyles={{
+              width: rowLength > 18 ? "100%" : (screenWidth - 55) / 2,
+              height: 50,
+              fontSize: 17,
+              backgroundColor: states?.[index] === true
+                ? colors.second_color2 : states?.[index] === false
+                ? colors.second_color1
+                : colors.color1
           }}
           type={"inactive"}
           title={item}
