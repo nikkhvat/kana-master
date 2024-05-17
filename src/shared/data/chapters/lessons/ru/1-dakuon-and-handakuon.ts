@@ -3,10 +3,10 @@ import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
 
 export const dakuonAndHandakuonLesson: ManuallyLesson = {
   id: "52aa8316-4669-41e6-98d3-2b3e42a941ff",
-  title: "Дакуон и хандакуон.",
-  subTitle: "Дакуон и хандакуон.",
+  title: "Дакуон и хандакуон",
+  subTitle: "Специальные знаки хираганы",
   infoTitle: "Информация",
-  infoSubTitle: "Здесь мы раскажем вам о специальных знаках хираганы",
+  infoSubTitle: "Здесь мы расскажем вам о специальных знаках хираганы.",
   icon: "濁音",
   category: [KanaAlphabet.Hiragana],
   screens: [
@@ -15,17 +15,22 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Дакуон и хандакуон.",
       blocks: [
         {
-          text: "После того как мы освоили основные слоги хираганы, пришло время познакомиться с дакуон и хандакуон — особыми знаками, которые изменяют звучание слогов.",
+          text: "После того, как мы освоили основные слоги хираганы, пришло время познакомиться с дакуон и хандакуон — особыми знаками, которые изменяют звучание слогов.",
+        },
+        {
+          text: "Для начала давай узнаем, с какими слогами хираганы можно употреблять эти знаки:",
         },
         {
           table: [
             [
+              "Романджи",
               "ka, ki, ku, ke, ko",
               "sa, shi, su, se, so",
               "ta, chi, tsu, te, to",
               "ha, hi, fu, he, ho",
             ],
             [
+              "Хирагана",
               "か, き, く, け, こ",
               "さ, し, す, せ, そ",
               "た, ち, つ, て, と",
@@ -41,31 +46,31 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       blocks: [
         {
           pairs: [
-            ["へた", "fuku (одежда)"],
-            ["ふく", "sushi"],
-            ["すし", "heta (неумелый)"],
+            ["きく", "kiku (слушать)"],
+            ["つち", "tsuchi (земля)"],
+            ["ほし", "hoshi (звезда)"],
           ],
         },
       ],
     },
     {
       name: LessonScreen.Info,
-      title: "Dakuon ka, ki, ku, ke, ko.",
+      title: "Дакуон ka, ki, ku, ke, ko.",
       blocks: [
         {
-          text: "Добавляя специальные знаки дакутен, представляющие собой две короткие палочки, к слогам, мы формируем новые звуки. Ознакомьтесь, как это изменяет произношение.",
+          text: "Добавляя специальные знаки дакутен, представляющие собой две короткие палочки в правом верхнем углу, к слогам, мы формируем новые звуки. Ознакомьтесь, как это изменяет произношение.",
         },
         {
           table: [
             [
-              "Без знака",
+              "Глухие",
               "か (ka)",
               "き (ki)",
               "く (ku)",
               "け (ke)",
               "こ (ko)",
             ],
-            ["С знаком", "が (ga)", "ぎ (gi)", "ぐ (gu)", "げ (ge)", "ご (go)"],
+            ["Звонкие", "が (ga)", "ぎ (gi)", "ぐ (gu)", "げ (ge)", "ご (go)"],
           ],
         },
       ],
@@ -76,8 +81,8 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       blocks: [
         {
           answers: [
-            { title: "がき", isTrue: true },
-            { title: "がぎ", isTrue: true },
+            { title: "がき", isTrue: false },
+            { title: "がぎ", isTrue: false },
             { title: "かぎ", isTrue: true },
           ],
         },
@@ -88,7 +93,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Дакуон za, ji, zu, ze, zo.",
       blocks: [
         {
-          text: "Аналогичным образом мы добавляем дакутен к слогам, начинающимся на 's', преобразуя их в звонкие звуки.",
+          text: "Аналогичным образом мы добавляем дакутен к слогам, начинающихся с 's', преобразуя их в звонкие звуки.",
         },
         {
           table: [
@@ -103,7 +108,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Выбери хирагану для suzuran (ландыш).",
       blocks: [
         {
-          sequence: [ "ん", "す", "ら", "ず", "ぞ", "さ" ]
+          sequence: ["す", "ず", "ら", "ん"]
         },
       ],
     },
@@ -112,7 +117,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Дакуон da, ji, zu, de, do.",
       blocks: [
         {
-          text: "Добавляя дакутен к слогам, начинающимся на 't', мы создаём другой набор звонких звуков.",
+          text: "Добавляя дакутен к слогам, начинающихся с 't', мы создаём другой набор звонких звуков.",
         },
         {
           table: [
@@ -130,12 +135,12 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
           text: "Слоги じ (ji) и ぢ (ji), а также ず (zu) и づ (zu) произносятся одинаково в современном японском. Ранее эти звуки различались, но со временем слились.",
         },
         {
-          text: "Заметьте, что じ чаще всего используется для 'ji', а ず для 'zu'. Слоги ぢ и づ встречаются редко.",
+          text: "Заметьте, что для слов с «ji» чаще всего используется じ, а для слов с «zu» - ず. Лишь с очень немногими словами употребляется ぢ и づ.",
         },
         {
           rules: [
-            "じ (ji), ず (zu) - чаще всего используемые",
-            "ぢ (ji), づ (zu) - редко используемые",
+            "じ(ji), ず(zu) - используются в большинстве случаем",
+            "ぢ(ji), づ(zu) - используются лишь в нескольких словах",
           ],
         },
       ],
@@ -146,9 +151,9 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       blocks: [
         {
           answers: [
-            { title: "たじ", isTrue: true },
+            { title: "たじ", isTrue: false },
             { title: "だし", isTrue: true },
-            { title: "だじ", isTrue: true },
+            { title: "だじ", isTrue: false },
           ],
         },
       ],
@@ -158,7 +163,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Дакуон ba, bi, bu, be, bo.",
       blocks: [
         {
-          text: "Изучим, как применять дакутен к слогам, начинающимся на 'h', изменяя их в звонкие звуки 'b'.",
+          text: "Теперь давай изучим специальные знаки дакутен для строки, начинающейся с «h».",
         },
         {
           table: [
@@ -174,9 +179,9 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       blocks: [
         {
           answers: [
+            { title: "かふぎ", isTrue: false },
+            { title: "がぶき", isTrue: false },
             { title: "かぶき", isTrue: true },
-            { title: "かびき", isTrue: false },
-            { title: "かふき", isTrue: false },
           ],
         },
       ],
@@ -186,7 +191,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       title: "Хандакуон pa, pi, pu, pe, po.",
       blocks: [
         {
-          text: "Особая строка хираганы начинается с 'は' (ha). К ней мы можем добавить не только дакутен, но и хандакутен, маленький круг, который преобразует звуки в 'p'.",
+          text: "Строка хираганы, начинающаяся с は(ha) - особенная! К ней мы можем добавить не только дакутен, но и хандакутен, маленький кружок, который преобразует звуки в 'p'.",
         },
         {
           table: [
@@ -233,9 +238,9 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       blocks: [
         {
           pairs: [
-            ["ここ", "goko (5 кусочков)"],
-            ["ごこ", "gogo (днем)"],
-            ["ごご", "koko (здесь)"],
+            ["ここ", "koko (здесь)"],
+            ["ごこ", "goko (5 кусочков)"],
+            ["ごご", "gogo (днем)"],
           ],
         },
       ],
