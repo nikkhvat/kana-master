@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const longConsonants: ManuallyLesson = {
+export const longConsonants = {
   id: "edcb6a6b-4d01-4b37-a53c-9b670f88478b",
   title: "Долгие согласные",
   subTitle: "っ + k, っ + s, っ + t, っ + p",
   infoTitle: "Информация",
   infoSubTitle: "Здесь мы раскажем вам о долгих согласных.",
   icon: "母音",
-  category: [KanaAlphabet.Hiragana],
+  category: ["hiragana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Долгие согласные.",
       blocks: [
         {
@@ -33,7 +30,7 @@ export const longConsonants: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь хирагану с романдзи.",
       blocks: [
         {
@@ -46,7 +43,7 @@ export const longConsonants: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Исключение!",
       blocks: [
         {
@@ -61,7 +58,7 @@ export const longConsonants: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери хирагану для gomennasai (извини).",
       blocks: [
         {
@@ -70,7 +67,7 @@ export const longConsonants: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Запомни!",
       blocks: [
         {

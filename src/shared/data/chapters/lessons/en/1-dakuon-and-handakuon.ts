@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const dakuonAndHandakuonLesson: ManuallyLesson = {
+export const dakuonAndHandakuonLesson = {
   id: "52aa8316-4669-41e6-98d3-2b3e42a941ff",
   title: "Dakuon and Handakuon",
   subTitle: "Dakuon and Handakuon",
   infoTitle: "Information",
   infoSubTitle: "Here we will tell you about special marks in Hiragana",
   icon: "濁音",
-  category: [KanaAlphabet.Hiragana],
+  category: ["hiragana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Dakuon and Handakuon",
       blocks: [
         {
@@ -36,7 +33,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match Hiragana with Romaji",
       blocks: [
         {
@@ -49,7 +46,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Dakuon ka, ki, ku, ke, ko",
       blocks: [
         {
@@ -71,7 +68,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the hiragana for kagi (key)",
       blocks: [
         {
@@ -84,7 +81,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Dakuon za, ji, zu, ze, zo",
       blocks: [
         {
@@ -99,7 +96,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the hiragana for suzuran (lily of the valley)",
       blocks: [
         {
@@ -108,7 +105,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Dakuon da, ji, zu, de, do",
       blocks: [
         {
@@ -123,7 +120,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Note!",
       blocks: [
         {
@@ -141,7 +138,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the hiragana for dashi (Japanese broth)",
       blocks: [
         {
@@ -154,7 +151,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Dakuon ba, bi, bu, be, bo",
       blocks: [
         {
@@ -169,7 +166,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the hiragana for kabuki (Japanese theatre)",
       blocks: [
         {
@@ -182,7 +179,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Handakuon pa, pi, pu, pe, po",
       blocks: [
         {
@@ -198,7 +195,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the romaji for ぱくぱく (eating heartily)",
       blocks: [
         {
@@ -211,7 +208,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Tip!",
       blocks: [
         {
@@ -228,7 +225,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match hiragana with romaji",
       blocks: [
         {

@@ -102,3 +102,8 @@ export const chapter2 = (lang: "ru" | "en"): (AutoLesson | ManuallyLesson)[] => 
   lang === "en" ? yoonHiraganaEn : yoonHiraganaRu,
   lang === "en" ? yoonKatakanaEn : yoonKatakanaRu,
 ];
+
+export const chaptres = (lang: "ru" | "en") => [
+  chapter1(lang),
+  chapter2(lang)
+]

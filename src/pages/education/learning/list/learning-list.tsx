@@ -11,7 +11,7 @@ import SafeLayout from "@/app/layouts/safeLayout";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { AutoLesson, ManuallyLesson } from "@/shared/constants/lessons";
-import { chapter1, chapter2 } from "@/shared/data/chapters";
+import { chapter1, chapter2, chaptres } from "@/shared/data/chapters";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import PageTitle from "@/shared/ui/page-title/page-title";
@@ -45,8 +45,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
     }
   };
 
-  const lessonsChapter1 = chapter1(lessonsKey);
-  const lessonsChapter2 = chapter2(lessonsKey);
+  const chapters = chaptres(lessonsKey);
 
   return (
     <SafeLayout style={{ flex: 1, paddingBottom: 0 }} disableLeft disableRight>
@@ -68,19 +67,14 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
           >
-            <Chapter
-              title={`${t("lessonsList.chapter")} 1. ${t("kana.basic")}`}
-              lessons={lessonsChapter1}
-              activeTab={activeTab}
-              startLesson={startLesson}
-            />
-            <View style={[styles.line, { backgroundColor: colors.color2 }]} />
-            <Chapter
-              title={`${t("lessonsList.chapter")} 2. ${t("lessonsList.grammar")}`}
-              lessons={lessonsChapter2}
-              activeTab={activeTab}
-              startLesson={startLesson}
-            />
+            {chapters.map((item, index) => (
+              <Chapter
+                title={`${t("lessonsList.chapter")} ${index + 1}. ${index === 0 ? t("kana.basic") : ""} ${index === 1 ? t("lessonsList.grammar") : ""}`}
+                lessons={item}
+                activeTab={activeTab}
+                startLesson={startLesson}
+              />
+            ))}
           </ScrollView>
         </>
       </AdaptiveLayout>
@@ -96,10 +90,5 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingBottom: 20,
-  },
-  line: {
-    height: 1,
-    width: "100%",
-    marginBottom: 20,
   },
 });

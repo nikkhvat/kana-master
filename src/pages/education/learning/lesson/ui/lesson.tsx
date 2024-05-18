@@ -12,7 +12,9 @@ import SafeLayout from "@/app/layouts/safeLayout";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import {
+  AnyLesson,
   AutoLesson,
+  InfoLessonScreen,
   LessonScreen,
   ManuallyLesson,
 } from "@/shared/constants/lessons";
@@ -46,9 +48,18 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
   const isAutoLesson = (
     item: AutoLesson | ManuallyLesson,
   ): item is AutoLesson => "letters" in item;
+  
   const isManualyLesson = (
     item: AutoLesson | ManuallyLesson,
   ): item is ManuallyLesson => "screens" in item;
+  
+  const isInfoLessonScreen = (
+    item: AnyLesson | InfoLessonScreen | null | undefined,
+  ): item is InfoLessonScreen => item !== null && typeof item === 'object' && !("name" in item);
+
+  const isAnyLessonScreen = (
+    item: AnyLesson | InfoLessonScreen | null | undefined,
+  ): item is AnyLesson => item !== null && typeof item === 'object' && "name" in item;
 
   const { lesson } = route.params;
 
@@ -113,6 +124,8 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
     }
   }, []);
 
+  const isAnyScreen = currentScreen !== null && isAnyLessonScreen(currentScreen);
+
   return (
     <SafeLayout
       additionalPaddingTop={20}
@@ -145,7 +158,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
           paddingLeft: insets.left + 20,
           paddingRight: insets.right + 20,
         }]}>
-          {currentScreen?.name === LessonScreen.Symbol && (
+          {isAnyScreen && currentScreen?.name === LessonScreen.Symbol && (
             <LessonSymbolScreen
               name={LessonScreen.Symbol}
               symbol={currentScreen.symbol}
@@ -154,7 +167,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
             />
           )}
 
-          {currentScreen?.name === LessonScreen.Draw && (
+          {isAnyScreen && currentScreen?.name === LessonScreen.Draw && (
             <LessonDrawScreen
               name={LessonScreen.Draw}
               symbol={currentScreen.symbol}
@@ -163,7 +176,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
             />
           )}
 
-          {currentScreen?.name === LessonScreen.MatchSymbols && (
+          {isAnyScreen && currentScreen?.name === LessonScreen.MatchSymbols && (
             <MatchLettersScreen
               name={LessonScreen.MatchSymbols}
               symbols={currentScreen.symbols}
@@ -172,7 +185,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
             />
           )}
 
-          {currentScreen?.name === LessonScreen.SelectSymbol && (
+          {isAnyScreen && currentScreen?.name === LessonScreen.SelectSymbol && (
             <SelectLettersScreen
               name={LessonScreen.SelectSymbol}
               symbols={currentScreen.symbols}
@@ -181,7 +194,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
             />
           )}
 
-          {currentScreen?.name === LessonScreen.SelectSequenceLetters && (
+          {isAnyScreen && currentScreen?.name === LessonScreen.SelectSequenceLetters && (
             <SelectSequenceLettersScreen
               name={LessonScreen.SelectSequenceLetters}
               sequence={currentScreen.sequence}
@@ -190,7 +203,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
             />
           )}
 
-          {currentScreen?.name === LessonScreen.BuildWord && (
+          {isAnyScreen && currentScreen?.name === LessonScreen.BuildWord && (
             <BuildWordScreen
               name={LessonScreen.BuildWord}
               sequence={currentScreen.sequence}
@@ -199,7 +212,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
             />
           )}
 
-          {currentScreen?.name === LessonScreen.Finish && (
+          {isAnyScreen && currentScreen?.name === LessonScreen.Finish && (
             <FinishScreen
               name={LessonScreen.Finish}
               next={onComplete}
@@ -210,9 +223,10 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
       )}
       {isManualyLesson(lesson) && (
         <View style={styles.container}>
-          {currentScreen?.name === LessonScreen.Info && (
+          {
+          currentScreen !== null &&
+          isInfoLessonScreen(currentScreen) && (
             <InfoScreen
-              name={LessonScreen.Info}
               next={next}
               finish={onComplete}
               title={currentScreen.title}

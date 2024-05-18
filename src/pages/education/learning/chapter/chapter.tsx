@@ -55,7 +55,6 @@ const Chapter: React.FC<ChapterProps> = ({
       ? t("kana.hiragana")
       : t("kana.katakana");
 
-
   const toggleActiveLesson = (key: string) => {
     if (activeLesson === key) {
       setActiveLesson("");

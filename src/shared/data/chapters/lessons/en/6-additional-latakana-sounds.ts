@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const additionalKatakanaSounds: ManuallyLesson = {
+export const additionalKatakanaSounds = {
   id: "b8e91c9c-d468-43b3-a6cc-67f05f46eb7d",
   title: "Additional Katakana Sounds",
   subTitle: "Additional Sounds",
   infoTitle: "Information",
   infoSubTitle: "Here we will tell you about additional sounds in Katakana",
   icon: "子音",
-  category: [KanaAlphabet.Katakana],
+  category: ["katakana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Adding Vowels to ‘フ’",
       blocks: [
         {
@@ -29,7 +26,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match Katakana with Romaji",
       blocks: [
         {
@@ -42,7 +39,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ]
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Supplementing Sounds for ‘ワ’ wa (wa)",
       blocks: [
         {
@@ -69,7 +66,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Take Note!",
       blocks: [
         {
@@ -85,7 +82,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Hiragana for haro wīn (Halloween).",
       blocks: [
         {
@@ -98,7 +95,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ]
     },
     {
-      name: LessonScreen.Info,
+      
       title: "‘V’ Sounds Group",
       blocks: [
         {
@@ -116,7 +113,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Hiragana for vikutoru (Victor).",
       blocks: [
         {
@@ -125,7 +122,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ]
     },
     {
-      name: LessonScreen.Info,
+      
       title: "‘チェ’ Sounds",
       blocks: [
         {
@@ -134,7 +131,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Hiragana for cherī (cherry).",
       blocks: [
         {
@@ -147,7 +144,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ]
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Sounds 'ディ', 'ドゥ'",
       blocks: [
         {
@@ -156,7 +153,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match Katakana with Romaji",
       blocks: [
         {
@@ -169,7 +166,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ]
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Sounds 'ジェ', 'シェ'",
       blocks: [
         {
@@ -178,7 +175,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Hiragana for dizunīrando (Disneyland).",
       blocks: [
         {
@@ -191,7 +188,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ]
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Sounds 'ティ', 'トゥ'",
       blocks: [
         {
@@ -200,7 +197,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Hiragana for shefu (chef).",
       blocks: [
         {

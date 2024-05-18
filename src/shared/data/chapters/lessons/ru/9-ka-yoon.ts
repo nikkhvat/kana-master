@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const yoonKatakana: ManuallyLesson = {
+export const yoonKatakana = {
   id: "515aea21-2b85-4a5a-8238-03b4a8044765",
   title: "Юон в катакане",
   subTitle: "や, ゆ, よ",
   infoTitle: "Информация",
   infoSubTitle: "Здесь мы расскажем вам о юон.",
   icon: "拗音",
-  category: [KanaAlphabet.Katakana],
+  category: ["katakana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Юон в катакане",
       blocks: [
         {
@@ -19,28 +16,28 @@ export const yoonKatakana: ManuallyLesson = {
         },
         {
           rules: [
-            "ヤ(ya)",
-            "ユ(yu)",
-            "ヨ(yo)",
+            "ヤ (ya)",
+            "ユ (yu)",
+            "ヨ (yo)",
           ]
         },
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь катакану с романдзи.",
       blocks: [
         {
           pairs: [
-            ["ヤモリ", "yamori(геккон)"],
-            ["ユーロ", "yūro(евро)"],
-            ["ヨーロッパ", "yōroppa(Европа)"],
+            ["ヤモリ", "yamori (геккон)"],
+            ["ユーロ", "yūro (евро)"],
+            ["ヨーロッパ", "yōroppa (Европа)"],
           ],
         },
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Подсказка!",
       blocks: [
         {
@@ -48,14 +45,14 @@ export const yoonKatakana: ManuallyLesson = {
         },
         {
           rules: [
-            "キヤ(kiya) - не существует в японском языке",
-            "キャ(kya) - стандартное произношение",
+            "キヤ (kiya) - не существует в японском языке",
+            "キャ (kya) - стандартное произношение",
           ],
         },
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Юон ki, gi.",
       blocks: [
         {
@@ -70,20 +67,20 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь катакану с романдзи.",
       blocks: [
         {
           pairs: [
-            ["キャラバン", "kyaraban(караван)"],
-            ["キューバ", "kyūba(Куба)"],
-            ["ギャング", "gyangu(банда)"],
+            ["キャラバン", "kyaraban (караван)"],
+            ["キューバ", "kyūba (Куба)"],
+            ["ギャング", "gyangu (банда)"],
           ],
         },
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Юон shi, ji.",
       blocks: [
         {
@@ -98,7 +95,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери катакану для shatsu (рубашка).",
       blocks: [
         {
@@ -111,7 +108,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Юон chi, ji.",
       blocks: [
         {
@@ -126,14 +123,14 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери катакану для chansu (шанс).",
       blocks: [
         { sequence: ["チ", "ャ", "ン", "ス"] },
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Юон ni, mi.",
       blocks: [
         {
@@ -148,7 +145,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери катакану для myūjikaru (мюзикл).",
       blocks: [
         {
@@ -161,7 +158,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Юон ri.",
       blocks: [
         {
@@ -177,14 +174,14 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери катакану для ryukkusakku (рюкзак).",
       blocks: [
         { sequence: ["リ", "ュ", "ッ", "ク", "サ","ッ", "ク"] },
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Юон hi, bi, pi.",
       blocks: [
         {
@@ -200,7 +197,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь катакану с романдзи.",
       blocks: [
         {

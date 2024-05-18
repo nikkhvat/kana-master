@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const lessonIntroduction: ManuallyLesson = {
+export const lessonIntroduction = {
   id: "52aa8316-4669-41e6-98d3-2b3e42a943ff",
   title: "Введение",
   subTitle: "Хирагана и Катакана",
   infoTitle: "Информация",
   infoSubTitle: "Здесь мы расскажем вам об алфавитах в японском языке.",
   icon: "序章",
-  category: [KanaAlphabet.Hiragana, KanaAlphabet.Katakana],
+  category: ["hiragana", "katakana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Знаешь ли ты?",
       blocks: [
         {
@@ -26,7 +23,7 @@ export const lessonIntroduction: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Хирагана, Катакана, Кандзи — в чем разница?",
       blocks: [
         {
@@ -42,7 +39,7 @@ export const lessonIntroduction: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Подсказка!",
       blocks: [
         {
@@ -58,7 +55,7 @@ export const lessonIntroduction: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Посмотри порядок штрихов.",
       blocks: [
         {
@@ -66,12 +63,12 @@ export const lessonIntroduction: ManuallyLesson = {
         },
         {
           id: "a151eeeb-2537-463c-ae23-d484d1bcb835",
-          kana: KanaAlphabet.Hiragana,
+          kana: "hiragana",
         },
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери правильное написание письма.",
       blocks: [
         {
@@ -84,7 +81,7 @@ export const lessonIntroduction: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Завершение штриха.",
       blocks: [
         {
@@ -98,7 +95,7 @@ export const lessonIntroduction: ManuallyLesson = {
         },
         {
           id: "11017078-148a-4a44-b3f7-21d1df02d981",
-          kana: KanaAlphabet.Hiragana,
+          kana: "hiragana",
         },
       ],
     },

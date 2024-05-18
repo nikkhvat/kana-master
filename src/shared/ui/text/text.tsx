@@ -55,7 +55,7 @@ export default BlockText;
 
 const styles = StyleSheet.create({
   blockText: {
-    fontSize: 25,
-    lineHeight: 28
+    fontSize: 15,
+    lineHeight: 22
   },
 });

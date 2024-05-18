@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const yoonHiragana: ManuallyLesson = {
+export const yoonHiragana = {
   id: "a16a1684-bdc7-4f2c-9c0a-ebbd89d61b0b",
   title: "Юон",
   subTitle: "や, ゆ, よ",
   infoTitle: "Информация",
   infoSubTitle: "Здесь мы раскажем вам о юон.",
   icon: "拗音",
-  category: [KanaAlphabet.Hiragana],
+  category: ["hiragana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Юон.",
       blocks: [
         {
@@ -27,7 +24,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь хирагану с романдзи.",
       blocks: [
         {
@@ -40,7 +37,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Подсказка!",
       blocks: [
         {
@@ -55,7 +52,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Юон ki, gi.",
       blocks: [
         {
@@ -70,7 +67,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь хирагану с романдзи.",
       blocks: [
         {
@@ -83,7 +80,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Юон shi, ji.",
       blocks: [
         {
@@ -98,7 +95,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери хирагану для jū gyo ui n (сотрудник).",
       blocks: [
         {
@@ -111,7 +108,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Юон chi, ji.",
       blocks: [
         {
@@ -126,14 +123,14 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери хирагану для te chou (блокнот).",
       blocks: [
         { sequence: ["て", "ち", "ょ", "う"] },
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Юон ni, mi.",
       blocks: [
         {
@@ -147,7 +144,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери хирагану для gyuunyuu (молоко).",
       blocks: [
         {
@@ -160,7 +157,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Юон ri.",
       blocks: [
         {
@@ -175,14 +172,14 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери хирагану для ryōri ni n (шеф повар).",
       blocks: [
         { sequence: [ "り", "ょ", "う", "り", "に", "ん"] },
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Юон hi, bi, pi.",
       blocks: [
         { text: "Для создания звуков юон используйте слоги hi (**ひ**), bi (**び**) и pi (**ぴ**) в сочетании с уменьшенными гласными." },
@@ -196,7 +193,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь хирагану с романдзи.",
       blocks: [
         {

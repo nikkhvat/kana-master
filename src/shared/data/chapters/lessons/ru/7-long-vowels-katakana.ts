@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const longVowelsKatakana: ManuallyLesson = {
+export const longVowelsKatakana = {
   id: "3e8bfb8e-6470-40d7-8b89-7635f23f4f92",
   title: "Долгие гласные в катакане",
   subTitle: "Долгие гласные",
   infoTitle: "Информация",
   infoSubTitle: "Здесь мы расскажем вам о долгих гласных в катакане",
   icon: "母音",
-  category: [KanaAlphabet.Katakana],
+  category: ["katakana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Долгие гласные в катакане",
       blocks: [
         {
@@ -32,7 +29,7 @@ export const longVowelsKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Подсказка: важность долгих гласных",
       blocks: [
         {
@@ -47,7 +44,7 @@ export const longVowelsKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь катакану с романдзи.",
       blocks: [
         {
@@ -60,7 +57,7 @@ export const longVowelsKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери катакану для apāto (квартира).",
       blocks: [
         { sequence: ["ア", "パ", "ー", "ト"] }

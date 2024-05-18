@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const longVowels: ManuallyLesson = {
+export const longVowels = {
   id: "17cac414-90ce-462c-8cda-7afdcc8a5b5e",
   title: "Long Vowels",
   subTitle: "Long Vowels",
   infoTitle: "Information",
   infoSubTitle: "Here we will tell you about long vowels",
   icon: "子音",
-  category: [KanaAlphabet.Hiragana],
+  category: ["hiragana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Long Vowels",
       blocks: [
         {
@@ -26,7 +23,7 @@ export const longVowels: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Tip!",
       blocks: [
         {
@@ -41,7 +38,7 @@ export const longVowels: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Remember the Rule!",
       blocks: [
         {
@@ -63,7 +60,7 @@ export const longVowels: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match Hiragana with Romaji",
       blocks: [
         {
@@ -76,7 +73,7 @@ export const longVowels: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Remember the Rule!",
       blocks: [
         {
@@ -91,7 +88,7 @@ export const longVowels: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match Hiragana with Romaji",
       blocks: [
         {
@@ -104,7 +101,7 @@ export const longVowels: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Remember!",
       blocks: [
         {

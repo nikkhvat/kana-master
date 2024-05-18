@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
+export const dakuonAndHandakuonKatakanaLesson = {
   id: "5cb6d389-dfe6-4feb-94f0-51e6aa32329f",
   title: "Dakuten and Handakuten in Katakana",
   subTitle: "Dakuten and Handakuten",
   infoTitle: "Information",
   infoSubTitle: "Here we will tell you about the special signs in Katakana",
   icon: "濁音",
-  category: [KanaAlphabet.Katakana],
+  category: ["katakana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Dakuten and Handakuten",
       blocks: [
         {
@@ -36,7 +33,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match Katakana with Romaji",
       blocks: [
         {
@@ -49,7 +46,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Dakuten ka, ki, ku, ke, ko",
       blocks: [
         {
@@ -64,7 +61,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Katakana for kagi (key)",
       blocks: [
         {
@@ -77,7 +74,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Dakuten za, ji, zu, ze, zo",
       blocks: [
         {
@@ -92,7 +89,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Katakana for kujira (whale)",
       blocks: [
         {
@@ -101,7 +98,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Dakuten da, ji, zu, de, do",
       blocks: [
         {
@@ -116,7 +113,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Take Note!",
       blocks: [
         {
@@ -134,7 +131,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Katakana for mukade (centipede)",
       blocks: [
         {
@@ -147,7 +144,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Dakuten ba, bi, bu, be, bo",
       blocks: [
         {
@@ -162,7 +159,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Katakana for buraun (brown)",
       blocks: [
         {
@@ -175,7 +172,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Handakuten pa, pi, pu, pe, po",
       blocks: [
         {
@@ -191,7 +188,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the romaji for アパレル (clothing)",
       blocks: [
         {

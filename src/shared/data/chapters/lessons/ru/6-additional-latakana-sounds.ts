@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const additionalKatakanaSounds: ManuallyLesson = {
+export const additionalKatakanaSounds = {
   id: "b8e91c9c-d468-43b3-a6cc-67f05f46eb7d",
   title: "Дополнительные звуки катаканы",
   subTitle: "Дополнительные звуки",
   infoTitle: "Информация",
   infoSubTitle: "Здесь мы расскажем вам о дополнительных звуках катаканы",
   icon: "子音",
-  category: [KanaAlphabet.Katakana],
+  category: ["katakana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Добавление гласных к «フ»",
       blocks: [
         {
@@ -29,7 +26,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь катакану с романдзи.",
       blocks: [
         {
@@ -42,7 +39,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ]
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Дополнение звуков для «ワ» ва (wa)",
       blocks: [
         {
@@ -69,7 +66,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Обратите внимание!",
       blocks: [
         {
@@ -85,7 +82,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери хирагану для haro wīn (Хэллоуин).",
       blocks: [
         {
@@ -98,7 +95,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ]
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Звуки группы «V»",
       blocks: [
         {
@@ -116,7 +113,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери хирагану для vikutoru (Виктор).",
       blocks: [
         {
@@ -125,7 +122,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ]
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Звуки «チェ»",
       blocks: [
         {
@@ -134,7 +131,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери хирагану для cherī (черешня).",
       blocks: [
         {
@@ -147,7 +144,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ]
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Звуки «ディ», «ドゥ»",
       blocks: [
         {
@@ -156,7 +153,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь катакану с романдзи.",
       blocks: [
         {
@@ -169,7 +166,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ]
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Звуки «ジェ», «シェ»",
       blocks: [
         {
@@ -178,7 +175,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери хирагану для dizunīrando (Диснейленд).",
       blocks: [
         {
@@ -191,7 +188,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ]
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Звуки «ティ», «トゥ»",
       blocks: [
         {
@@ -200,7 +197,7 @@ export const additionalKatakanaSounds: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери хирагану для shefu (повар).",
       blocks: [
         {

@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const longConsonantsKatakana: ManuallyLesson = {
+export const longConsonantsKatakana = {
   id: "7c56b8b0-832e-4e2e-badc-cf93f4e97a9e",
   title: "Long Consonants in Katakana",
   subTitle: "Long Consonants",
   infoTitle: "Information",
   infoSubTitle: "Here we will tell you about long consonants in Katakana",
   icon: "子音",
-  category: [KanaAlphabet.Katakana],
+  category: ["katakana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Long Consonants in Katakana",
       blocks: [
         {
@@ -32,7 +29,7 @@ export const longConsonantsKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match Katakana with Romaji.",
       blocks: [
         {
@@ -45,7 +42,7 @@ export const longConsonantsKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Katakana for painappuru (pineapple).",
       blocks: [
         { sequence: ["パ", "イ", "ナ", "ッ", "プ", "ル"] }

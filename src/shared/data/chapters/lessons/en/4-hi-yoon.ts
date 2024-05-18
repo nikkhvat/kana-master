@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const yoonHiragana: ManuallyLesson = {
+export const yoonHiragana = {
   id: "a16a1684-bdc7-4f2c-9c0a-ebbd89d61b0b",
   title: "Yoon",
   subTitle: "や, ゆ, よ",
   infoTitle: "Information",
   infoSubTitle: "Here we will tell you about Yoon.",
   icon: "拗音",
-  category: [KanaAlphabet.Hiragana],
+  category: ["hiragana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Long Consonants",
       blocks: [
         {
@@ -27,7 +24,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match Hiragana with Romaji",
       blocks: [
         {
@@ -40,7 +37,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Hint!",
       blocks: [
         {
@@ -55,7 +52,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Yoon ki, gi",
       blocks: [
         {
@@ -70,7 +67,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match Hiragana with Romaji",
       blocks: [
         {
@@ -83,7 +80,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Yoon shi, ji",
       blocks: [
         {
@@ -98,7 +95,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the hiragana for jū gyo ui n (employee).",
       blocks: [
         {
@@ -111,7 +108,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Yoon chi, ji",
       blocks: [
         {
@@ -126,14 +123,14 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the hiragana for te chou (notebook).",
       blocks: [
         { sequence: ["ょ", "ゅ", "て", "う", "ち", "ん"] },
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Yoon ni, mi",
       blocks: [
         { text: "Combinations of ni (に) and mi (み) with miniature symbols allow the creation of complex sounds nya, nyu, nyo and mya, myu, myo." },
@@ -146,7 +143,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the hiragana for gyuunyuu (milk).",
       blocks: [
         {
@@ -159,7 +156,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Yoon ri",
       blocks: [
         { text: "Letter ri (り) combines with miniature vowels to form sounds rya, ryu, ryo." },
@@ -173,14 +170,14 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the hiragana for ryōri ni n (chef).",
       blocks: [
         { sequence: ["り", "う", "り", "に", "ょ", "ん"] },
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Yoon hi, bi, pi",
       blocks: [
         { text: "Use the letters hi (ひ), bi (び), and pi (ぴ) in combination with miniature vowels to create Yoon sounds." },
@@ -194,7 +191,7 @@ export const yoonHiragana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Yoon hi, bi, pi",
       blocks: [
         { text: "Examine how these sounds change the meaning of a word depending on the context." },

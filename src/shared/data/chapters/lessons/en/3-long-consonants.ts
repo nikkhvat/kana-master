@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const longConsonants: ManuallyLesson = {
+export const longConsonants = {
   id: "edcb6a6b-4d01-4b37-a53c-9b670f88478b",
   title: "Long Consonants",
   subTitle: "Long Consonants",
   infoTitle: "Information",
   infoSubTitle: "Here we will tell you about long consonants",
   icon: "母音",
-  category: [KanaAlphabet.Hiragana],
+  category: ["hiragana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Long Consonants",
       blocks: [
         {
@@ -33,7 +30,7 @@ export const longConsonants: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match Hiragana with Romaji",
       blocks: [
         {
@@ -46,7 +43,7 @@ export const longConsonants: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Exception!",
       blocks: [
         {
@@ -61,7 +58,7 @@ export const longConsonants: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the hiragana for kanna (pliers)",
       blocks: [
         {
@@ -70,7 +67,7 @@ export const longConsonants: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Remember!",
       blocks: [
         {

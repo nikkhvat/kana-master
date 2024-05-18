@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const longVowelsKatakana: ManuallyLesson = {
+export const longVowelsKatakana = {
   id: "3e8bfb8e-6470-40d7-8b89-7635f23f4f92",
   title: "Long Vowels in Katakana",
   subTitle: "Long Vowels",
   infoTitle: "Information",
   infoSubTitle: "Here we will tell you about long vowels in Katakana",
   icon: "母音",
-  category: [KanaAlphabet.Katakana],
+  category: ["katakana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Long Vowels in Katakana",
       blocks: [
         {
@@ -32,7 +29,7 @@ export const longVowelsKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Tip: The Importance of Long Vowels",
       blocks: [
         {
@@ -47,7 +44,7 @@ export const longVowelsKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match Katakana with Romaji",
       blocks: [
         {
@@ -60,7 +57,7 @@ export const longVowelsKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Katakana for apāto (apartment).",
       blocks: [
         { sequence: ["ア", "パ", "ー", "ト"] }

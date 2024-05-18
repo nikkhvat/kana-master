@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const yoonKatakana: ManuallyLesson = {
+export const yoonKatakana = {
   id: "515aea21-2b85-4a5a-8238-03b4a8044765",
   title: "Yoon in Katakana",
   subTitle: "ヤ, ユ, ヨ",
   infoTitle: "Information",
   infoSubTitle: "Here we will tell you about yoon in Katakana.",
   icon: "拗音",
-  category: [KanaAlphabet.Katakana],
+  category: ["katakana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Yoon in Katakana",
       blocks: [
         {
@@ -27,7 +24,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match Katakana with Romaji.",
       blocks: [
         {
@@ -40,7 +37,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Tip!",
       blocks: [
         {
@@ -55,7 +52,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Yoon ki, gi.",
       blocks: [
         {
@@ -70,7 +67,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match Katakana with Romaji.",
       blocks: [
         {
@@ -83,7 +80,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Yoon shi, ji.",
       blocks: [
         {
@@ -98,7 +95,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Katakana for shatsu (shirt).",
       blocks: [
         {
@@ -111,7 +108,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Yoon chi, ji.",
       blocks: [
         {
@@ -126,14 +123,14 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Katakana for chansu (chance).",
       blocks: [
         { sequence: ["チ", "ャ", "ン", "ス"] },
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Yoon ni, mi.",
       blocks: [
         {
@@ -148,7 +145,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Katakana for myūjikaru (musical).",
       blocks: [
         {
@@ -161,7 +158,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Yoon ri.",
       blocks: [
         {
@@ -177,14 +174,14 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Choose the Katakana for ryukkusakku (backpack).",
       blocks: [
         { sequence: ["リ", "ュ", "ッ", "ク", "サ", "ッ", "ク"] },
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Yoon hi, bi, pi.",
       blocks: [
         {
@@ -200,7 +197,7 @@ export const yoonKatakana: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Match Katakana with Romaji.",
       blocks: [
         {

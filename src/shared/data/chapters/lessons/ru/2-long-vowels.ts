@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const longVowels: ManuallyLesson = {
+export const longVowels = {
   id: "17cac414-90ce-462c-8cda-7afdcc8a5b5e",
   title: "Долгие гласные",
   subTitle: "ああ, いい, うう, えい, おう",
   infoTitle: "Информация",
   infoSubTitle: "Здесь мы раскажем вам о долгих гласных.",
   icon: "子音",
-  category: [KanaAlphabet.Hiragana],
+  category: ["hiragana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Долгие гласные.",
       blocks: [
         {
@@ -26,7 +23,7 @@ export const longVowels: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Подсказка!",
       blocks: [
         {
@@ -41,7 +38,7 @@ export const longVowels: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Запомни правило!",
       blocks: [
         {text: "あ(a) делает любой слог хираганы, оканчивающуюся на «a», долгой (например, かあ - kaa)."},
@@ -57,7 +54,7 @@ export const longVowels: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь хирагану с романдзи.",
       blocks: [
         {
@@ -70,7 +67,7 @@ export const longVowels: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Запомни правило!",
       blocks: [
         {
@@ -88,7 +85,7 @@ export const longVowels: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь хирагану с романдзи.",
       blocks: [
         {
@@ -101,7 +98,7 @@ export const longVowels: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Запомни!",
       blocks: [
         {

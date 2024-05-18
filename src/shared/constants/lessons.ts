@@ -67,7 +67,7 @@ export type LessonFinish = {
 export type TextBlock = { text: string };
 export type RulesBlock = { rules: string[] };
 export type TableBlock = { table: string[][] };
-export type LetterBlock = { id: string; kana: KanaAlphabet };
+export type LetterBlock = { id: string; kana: "hiragana" | "katakana" };
 export type MathAnswerBlock = { pairs: string[][] };
 export type SequenceBlock = { sequence: string[] };
 export type SelectAnswerBlock = {
@@ -84,18 +84,17 @@ export type AnyBlock =
   | SelectAnswerBlock;
 
 export type InfoLessonScreen = {
-  name: LessonScreen.Info;
   title: string;
   blocks: AnyBlock[];
 };
 
-export type AutoLesson = {
+export type AutoLesson = { 
   id: string;
   title: ILetter;
   letters: ILetter[];
   msg: string;
 
-  kana?: KanaAlphabet;
+  kana: KanaAlphabet
 };
 
 export type ManuallyLesson = {
@@ -105,6 +104,6 @@ export type ManuallyLesson = {
   infoTitle: string;
   infoSubTitle: string;
   icon: string;
-  category: KanaAlphabet[];
+  category: ("hiragana" | "katakana")[];
   screens: InfoLessonScreen[];
 };

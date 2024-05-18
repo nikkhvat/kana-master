@@ -24,6 +24,7 @@ import SelectAnswer from "@/shared/ui/select-answer/select-answer";
 import Sequence from "@/shared/ui/sequence";
 import Table from "@/shared/ui/table/table";
 import BlockText from "@/shared/ui/text/text";
+import { KanaAlphabet } from "@/shared/constants/kana";
 
 
 type InfoScreenProps = InfoLessonScreen & {
@@ -128,7 +129,11 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
             } else if (blockType.isRules(block)) {
               return <Rules key={idx} rules={block.rules} />;
             } else if (blockType.isLetter(block)) {
-              return <BorderLetter kana={block.kana} key={idx} id={block.id} />;
+              return <BorderLetter 
+                kana={block.kana === "hiragana" ? KanaAlphabet.Hiragana : KanaAlphabet.Katakana}
+                key={idx}
+                id={block.id}
+              />;
             } else if (blockType.isSelectAnswer(block)) {
               return (
                 <SelectAnswer

@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const dakuonAndHandakuonLesson: ManuallyLesson = {
+export const dakuonAndHandakuonLesson = {
   id: "52aa8316-4669-41e6-98d3-2b3e42a941ff",
   title: "Дакуон и хандакуон",
   subTitle: "Специальные знаки хираганы",
   infoTitle: "Информация",
   infoSubTitle: "Здесь мы расскажем вам о специальных знаках хираганы.",
   icon: "濁音",
-  category: [KanaAlphabet.Hiragana],
+  category: ["hiragana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Дакуон и хандакуон.",
       blocks: [
         {
@@ -41,7 +38,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь хирагану с романдзи.",
       blocks: [
         {
@@ -54,7 +51,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Дакуон ka, ki, ku, ke, ko.",
       blocks: [
         {
@@ -76,7 +73,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери хирагану для kagi (ключ).",
       blocks: [
         {
@@ -89,7 +86,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Дакуон za, ji, zu, ze, zo.",
       blocks: [
         {
@@ -104,7 +101,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери хирагану для suzuran (ландыш).",
       blocks: [
         {
@@ -113,7 +110,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Дакуон da, ji, zu, de, do.",
       blocks: [
         {
@@ -128,7 +125,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Обрати внимание!",
       blocks: [
         {
@@ -146,7 +143,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери хирагану для dashi (японский бульон).",
       blocks: [
         {
@@ -159,7 +156,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Дакуон ba, bi, bu, be, bo.",
       blocks: [
         {
@@ -174,7 +171,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери хирагану для kabuki (японский театр).",
       blocks: [
         {
@@ -187,7 +184,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Хандакуон pa, pi, pu, pe, po.",
       blocks: [
         {
@@ -203,7 +200,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери романдзи для ぱくぱく (есть с аппетитом).",
       blocks: [
         {
@@ -216,7 +213,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Подсказка!",
       blocks: [
         {
@@ -233,7 +230,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь хирагану с романдзи.",
       blocks: [
         {

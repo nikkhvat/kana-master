@@ -1,17 +1,14 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
+export const dakuonAndHandakuonKatakanaLesson = {
   id: "5cb6d389-dfe6-4feb-94f0-51e6aa32329f",
   title: "Дакуон и хандакуон.",
   subTitle: "Дакуон и хандакуон.",
   infoTitle: "Информация",
   infoSubTitle: "Здесь мы раскажем вам о специальных знаках катаканы",
   icon: "濁音",
-  category: [KanaAlphabet.Katakana],
+  category: ["katakana"],
   screens: [
     {
-      name: LessonScreen.Info,
+      
       title: "Дакуон и хандакуон.",
       blocks: [
         {
@@ -36,7 +33,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Сопоставь катакану с романдзи.",
       blocks: [
         {
@@ -49,7 +46,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Дакуон ka, ki, ku, ke, ko.",
       blocks: [
         {
@@ -64,7 +61,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери катакану для kagi (ключ).",
       blocks: [
         {
@@ -77,7 +74,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Дакуон za, ji, zu, ze, zo.",
       blocks: [
         {
@@ -92,7 +89,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери катакану для kujira (кит).",
       blocks: [
         {
@@ -101,7 +98,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Дакуон da, ji, zu, de, do.",
       blocks: [
         {
@@ -116,7 +113,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Обрати внимание!",
       blocks: [
         {
@@ -134,7 +131,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери катакану для mukade (сороконожка).",
       blocks: [
         {
@@ -147,7 +144,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Дакуон ba, bi, bu, be, bo.",
       blocks: [
         {
@@ -162,7 +159,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери катакану для buraun (коричневый).",
       blocks: [
         {
@@ -175,7 +172,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Хандакуон pa, pi, pu, pe, po.",
       blocks: [
         {
@@ -191,7 +188,7 @@ export const dakuonAndHandakuonKatakanaLesson: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Выбери романдзи для アパレル (одежда).",
       blocks: [
         {

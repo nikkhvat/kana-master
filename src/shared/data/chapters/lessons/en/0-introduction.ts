@@ -1,17 +1,13 @@
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
-
-export const lessonIntroduction: ManuallyLesson = {
+export const lessonIntroduction = {
   id: "52aa8316-4669-41e6-98d3-2b3e42a943ff",
   title: "Introduction",
   subTitle: "Hiragana and Katakana",
   infoTitle: "Information",
   infoSubTitle: "Here we will tell you about the alphabets in the Japanese language",
   icon: "序章",
-  category: [KanaAlphabet.Hiragana, KanaAlphabet.Katakana],
+  category: ["hiragana", "katakana"],
   screens: [
     {
-      name: LessonScreen.Info,
       title: "Did you know?",
       blocks: [
         {
@@ -26,7 +22,6 @@ export const lessonIntroduction: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
       title: "Hiragana, Katakana, Kanji — What's the difference?",
       blocks: [
         {
@@ -42,7 +37,6 @@ export const lessonIntroduction: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
       title: "Tip: How to Write Kanji",
       blocks: [
         {
@@ -58,7 +52,6 @@ export const lessonIntroduction: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
       title: "Practice: Stroke Order",
       blocks: [
         {
@@ -66,12 +59,11 @@ export const lessonIntroduction: ManuallyLesson = {
         },
         {
           id: "a151eeeb-2537-463c-ae23-d484d1bcb835",
-          kana: KanaAlphabet.Hiragana,
+          kana: "hiragana",
         },
       ],
     },
     {
-      name: LessonScreen.Info,
       title: "Exercise: Choosing the Correct Writing Direction",
       blocks: [
         {
@@ -87,7 +79,7 @@ export const lessonIntroduction: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "How to Properly Finish Strokes?",
       blocks: [
         {
@@ -99,7 +91,7 @@ export const lessonIntroduction: ManuallyLesson = {
       ],
     },
     {
-      name: LessonScreen.Info,
+      
       title: "Practice: Finishing a Stroke",
       blocks: [
         {
@@ -107,7 +99,7 @@ export const lessonIntroduction: ManuallyLesson = {
         },
         {
           id: "11017078-148a-4a44-b3f7-21d1df02d981",
-          kana: KanaAlphabet.Hiragana,
+          kana: "hiragana",
         },
       ],
     },
