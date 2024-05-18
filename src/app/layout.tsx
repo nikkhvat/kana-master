@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -27,7 +27,8 @@ import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 
-
+import * as SplashScreen from 'expo-splash-screen';
+import { TEST_DELAY } from "@/shared/constants/kana";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -55,9 +56,24 @@ const icons: Icons = {
 
 type KeysIcon = "Learning" | "Settings" | "Kana"
 
+SplashScreen.preventAutoHideAsync();
+
 function BottomTabNavigator() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setAppIsReady(true)
+    }, TEST_DELAY)
+  }, [])
 
   return (
     <Tab.Navigator

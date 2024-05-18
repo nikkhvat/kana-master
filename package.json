@@ -36,7 +36,8 @@
     "react-native-screens": "~3.31.1",
     "react-native-svg": "15.2.0",
     "react-redux": "^9.1.2",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "expo-splash-screen": "~0.27.4"
   },
   "devDependencies": {
     "@tsconfig/react-native": "^3.0.5",
