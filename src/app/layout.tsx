@@ -63,16 +63,17 @@ function BottomTabNavigator() {
   const insets = useSafeAreaInsets();
   const [appIsReady, setAppIsReady] = useState(false);
 
-  const onLayoutRootView = useCallback(async () => {
+  useEffect(() => {
     if (appIsReady) {
-      await SplashScreen.hideAsync();
+      SplashScreen.hideAsync();
     }
-  }, [appIsReady]);
+  }, [appIsReady])
 
   useEffect(() => {
     setTimeout(() => {
       setAppIsReady(true)
-    }, TEST_DELAY)
+      console.log("HIDE SPLASH");
+    }, TEST_DELAY * 2)
   }, [])
 
   return (
