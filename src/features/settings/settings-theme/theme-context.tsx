@@ -1,7 +1,7 @@
 import React, { createContext, useContext, ReactNode, useState, useEffect, FunctionComponent } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Appearance } from "react-native";
+import { Appearance, useColorScheme } from "react-native";
 
 import { Theme } from "@/shared/constants/theme";
 import { darkTheme } from "@/shared/themes/dark";
@@ -71,7 +71,9 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({ children 
 
   const colors = getColors(theme);
 
-  const themeString = theme === Theme.Auto ? "auto" : theme === Theme.Dark ? "dark" : "light";
+  const autoTheme = useColorScheme()
+
+  const themeString = theme === Theme.Auto ? "auto" : autoTheme === "dark" ? "dark" : "light";
 
   return (
     <ThemeContext.Provider value={{ updateTheme, colors, theme, themeString: themeString }}>

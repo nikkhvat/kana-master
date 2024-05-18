@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
   drawContainer: {
     borderWidth: 1,
     borderRadius: 12,
-    marginTop: 39,
+    marginTop: 30,
     position: "relative",
   },
   drawContainerImage: {

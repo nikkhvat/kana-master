@@ -54,5 +54,6 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: "400",
     fontSize: 15,
+    lineHeight: 22,
   }
 });

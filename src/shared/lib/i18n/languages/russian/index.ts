@@ -101,6 +101,8 @@ const Russian = {
 		title: "Практика окончена",
 		score: "Счёт",
 
+		wellDoneNoErrors: "Прекрасно справились, ошибок нет!",
+
 		sec: "cек",
 		min: "мин",
 

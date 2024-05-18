@@ -34,7 +34,7 @@ import { yoonKatakana as yoonKatakanaEn } from "./lessons/en/9-ka-yoon";
 import { yoonKatakana as yoonKatakanaRu } from "./lessons/ru/9-ka-yoon";
 
 export const chapter1 = (lang: "ru" | "en"): (AutoLesson | ManuallyLesson)[] => [
-  lang === "en" ? lessonIntroductionEn : lessonIntroductionRu,
+  lang === "en" ? lessonIntroductionEn as ManuallyLesson : lessonIntroductionRu as ManuallyLesson,
   {
     id: "3a060caa-ac2f-42cb-a901-c19848e9d5c5",
     title: base[0][0],
@@ -92,15 +92,15 @@ export const chapter1 = (lang: "ru" | "en"): (AutoLesson | ManuallyLesson)[] => 
 ];
 
 export const chapter2 = (lang: "ru" | "en"): (AutoLesson | ManuallyLesson)[] => [
-  lang === "en" ? dakuonAndHandakuonLessonEn : dakuonAndHandakuonLessonRu,
-  lang === "en" ? longVowelsEn : longVowelsRu,
-  lang === "en" ? longConsonantsEn : longConsonantsRu,
-  lang === "en" ? dakuonAndHandakuonKatakanaLessonEn : dakuonAndHandakuonKatakanaLessonRu,
-  lang === "en" ? longVowelsKatakanaEn : longVowelsKatakanaRu, 
-  lang === "en" ? longConsonantsKatakanaEn : longConsonantsKatakanaRu,
-  lang === "en" ? additionalKatakanaSoundsEn : additionalKatakanaSoundsRu,
-  lang === "en" ? yoonHiraganaEn : yoonHiraganaRu,
-  lang === "en" ? yoonKatakanaEn : yoonKatakanaRu,
+  lang === "en" ? dakuonAndHandakuonLessonEn as ManuallyLesson : dakuonAndHandakuonLessonRu as ManuallyLesson,
+  lang === "en" ? longVowelsEn as ManuallyLesson : longVowelsRu as ManuallyLesson,
+  lang === "en" ? longConsonantsEn as ManuallyLesson : longConsonantsRu as ManuallyLesson,
+  lang === "en" ? dakuonAndHandakuonKatakanaLessonEn as ManuallyLesson : dakuonAndHandakuonKatakanaLessonRu as ManuallyLesson,
+  lang === "en" ? longVowelsKatakanaEn as ManuallyLesson : longVowelsKatakanaRu as ManuallyLesson, 
+  lang === "en" ? longConsonantsKatakanaEn as ManuallyLesson : longConsonantsKatakanaRu as ManuallyLesson,
+  lang === "en" ? additionalKatakanaSoundsEn as ManuallyLesson : additionalKatakanaSoundsRu as ManuallyLesson,
+  lang === "en" ? yoonHiraganaEn as ManuallyLesson : yoonHiraganaRu as ManuallyLesson,
+  lang === "en" ? yoonKatakanaEn as ManuallyLesson : yoonKatakanaRu as ManuallyLesson,
 ];
 
 export const chapters = (lang: "ru" | "en") => [

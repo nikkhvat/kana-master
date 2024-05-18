@@ -101,6 +101,8 @@ const English = {
 		title: "Practice complete",
 		score: "Score",
 
+		wellDoneNoErrors: "Well done, no errors!",
+
 		sec: "sec",
 		min: "min",
 		

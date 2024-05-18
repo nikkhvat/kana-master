@@ -101,6 +101,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
                 key={index}
                 activeTab={activeTab}
                 startLesson={startLesson}
+                isLast={index + 1 === chapters.length}
               />
             ))}
           </ScrollView>

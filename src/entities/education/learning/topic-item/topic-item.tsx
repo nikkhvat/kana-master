@@ -63,7 +63,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
       style={[
         styles.container,
         {
-          paddingBottom: isOpened ? 5 : 35,
+          paddingBottom: (isOpened && !isLast) ? 15 : 35,
         },
       ]}
       onPress={() => onClick?.()}
@@ -90,15 +90,15 @@ const TopicItem: React.FC<TopicItemProps> = ({
 
           {isOpened && (
             <View style={styles.openedInfo}>
-              <View
-                style={[styles.infoLine, { backgroundColor: colors.color2 }]}
-              />
-              <Text style={[styles.infoTitle, { color: colors.color4 }]}>
-                {infoTitle}
-              </Text>
-              <Text style={[styles.infoSubTitle, { color: colors.color4 }]}>
-                {infoSubTitle}
-              </Text>
+              <View>
+                <View style={[styles.infoLine, { backgroundColor: colors.color2 }]} />
+                <Text style={[styles.infoTitle, { color: colors.color4 }]}>
+                  {infoTitle}
+                </Text>
+                <Text style={[styles.infoSubTitle, { color: colors.color4 }]}>
+                  {infoSubTitle}
+                </Text>
+              </View>
               <Button
                 onClick={onStartLesson}
                 customStyles={{
@@ -209,5 +209,8 @@ const styles = StyleSheet.create({
   },
   openedInfo: {
     width: "100%",
+    minHeight: 160,
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
 });

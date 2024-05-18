@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { useTranslation } from "react-i18next";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Text } from "react-native";
 
 import TopicItem from "@/entities/education/learning/topic-item/topic-item";
@@ -17,12 +17,14 @@ type ChapterProps = {
   lessons: (AutoLesson | ManuallyLesson)[]
   activeTab: KanaAlphabet
   startLesson: (item: AutoLesson | ManuallyLesson) => void
+  isLast: boolean
 }
 
 const Chapter: React.FC<ChapterProps> = ({
   lessons,
   activeTab,
   title,
+  isLast,
   startLesson,
 }) => {
   const { t } = useTranslation();
@@ -66,7 +68,7 @@ const Chapter: React.FC<ChapterProps> = ({
   if (lessonsList.length === 0) return <></>;
   
   return (
-    <>
+    <View>
       <Text style={[styles.title, { color: colors.color4 }]}>
         {title}
       </Text>
@@ -134,7 +136,10 @@ const Chapter: React.FC<ChapterProps> = ({
           />
         );
       })}
-    </>
+      {!isLast && <View style={[styles.line, {
+        backgroundColor: colors.color2
+      }]} ></View>}
+    </View>
   );
 };
 
@@ -154,4 +159,9 @@ const styles = StyleSheet.create({
     marginBottom: 22,
     paddingHorizontal: 20,
   },
+  line: {
+    width: "100%",
+    height: 1,
+    marginBottom: 30
+  }
 });

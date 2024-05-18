@@ -101,9 +101,10 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
         </View>
 
         <ScrollView style={containerStyles.scroll}>
-          <Text style={[containerStyles.metricsTitle, {
+          {!(result.type === "RESULT_WORD_GAME" && (result.incorrectWordBuilding.length + result.incorrectFindThePair.length + result.incorrectChoice.length) === 0) && 
+            <Text style={[containerStyles.metricsTitle, {
             color: colors.color4
-          }]} >{t("result.details")}</Text>
+          }]} >{t("result.details")}</Text>}
           {result.type === "RESULT_PRACTICE" && <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
             <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.alphabet")}:</Text>
             <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
@@ -157,6 +158,9 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
               {result.incorrectChoice.map(item => `${item[0]} (${item[1]})`).join(", ")}
             </Text>
           </View>}
+
+          {(result.type === "RESULT_WORD_GAME" && (result.incorrectWordBuilding.length + result.incorrectFindThePair.length + result.incorrectChoice.length) === 0) && 
+            <Text style={[containerStyles.wellDoneNoErrors, { color: colors.color4 }]} >{t("result.wellDoneNoErrors")}</Text>}
         </ScrollView>
         <View style={[containerStyles.buttons, {marginBottom: insets.bottom}]} >
           <Button
@@ -249,6 +253,11 @@ const containerStyles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "700"
   },
+  wellDoneNoErrors: {
+    marginTop: 20,
+    fontSize: 17,
+    fontWeight: "700"
+  }
 });
 
 export default EducationResultPage;

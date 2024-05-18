@@ -72,7 +72,6 @@ function BottomTabNavigator() {
   useEffect(() => {
     setTimeout(() => {
       setAppIsReady(true)
-      console.log("HIDE SPLASH");
     }, TEST_DELAY * 2)
   }, [])
 
