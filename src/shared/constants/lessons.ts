@@ -94,7 +94,7 @@ export type AutoLesson = {
   letters: ILetter[];
   msg: string;
 
-  kana: KanaAlphabet
+  kana?: KanaAlphabet
 };
 
 export type ManuallyLesson = {

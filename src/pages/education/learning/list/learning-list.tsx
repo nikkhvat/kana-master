@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
@@ -8,14 +8,14 @@ import Chapter from "../chapter/chapter";
 
 import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
 import SafeLayout from "@/app/layouts/safeLayout";
-import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { AutoLesson, ManuallyLesson } from "@/shared/constants/lessons";
-import { chapter1, chapter2, chaptres } from "@/shared/data/chapters";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import PageTitle from "@/shared/ui/page-title/page-title";
 import Switcher from "@/shared/ui/switcher/switcher";
+import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
+import { init, updateLessons } from "../model/slice";
 
 type HomeScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -26,8 +26,9 @@ interface HomeScreenProps {
 }
 
 const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
+  const dispatch = useAppDispatch();
+
   const { t } = useTranslation();
-  const { colors } = useThemeContext();
 
   const { lessonsKey } = useGetRomanji();
 
@@ -45,7 +46,33 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
     }
   };
 
-  const chapters = chaptres(lessonsKey);
+  const chapters = useAppSelector((state) => state.lessons.chapters)
+  const lastUpdate = useAppSelector((state) => state.lessons.lastUpdate)
+  const chaptersLang = useAppSelector((state) => state.lessons.lang)
+
+  useEffect(() => {
+    if (!chapters || chapters.length === 0) {
+      dispatch(init(lessonsKey))
+    }
+  }, [chapters])
+
+  useEffect(() => {
+    const now = +new Date();
+
+    const timeDifference = now - lastUpdate;
+
+    if (timeDifference >= 3600000 || lastUpdate === undefined) {
+      dispatch(updateLessons({
+        lang: lessonsKey
+      }))
+    }
+
+    if (chaptersLang !== lessonsKey) {
+      dispatch(updateLessons({
+        lang: lessonsKey
+      }))
+    }
+  }, [])
 
   return (
     <SafeLayout style={{ flex: 1, paddingBottom: 0 }} disableLeft disableRight>
@@ -67,10 +94,11 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
           >
-            {chapters.map((item, index) => (
+            {chapters && chapters.map((item, index) => (
               <Chapter
                 title={`${t("lessonsList.chapter")} ${index + 1}. ${index === 0 ? t("kana.basic") : ""} ${index === 1 ? t("lessonsList.grammar") : ""}`}
                 lessons={item}
+                key={index}
                 activeTab={activeTab}
                 startLesson={startLesson}
               />

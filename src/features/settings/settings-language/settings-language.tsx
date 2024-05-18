@@ -7,15 +7,20 @@ import { StyleSheet, Text, View } from "react-native";
 import LanguageButton from "@/entities/profile/language-button/language-button";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { LanguageKeys, languageList } from "@/shared/constants/language";
+import { useAppDispatch } from "@/shared/model/hooks";
+import { init } from "@/pages/education/learning/model/slice";
 
 const SettingsLanguage: React.FC = () => {
   const { colors } = useThemeContext();  
+  const dispatch = useAppDispatch()
 
   const { t, i18n } = useTranslation();
 
   const setLanguage = async (lang: LanguageKeys) => {
     await AsyncStorage.setItem("lang", lang);
     i18n.changeLanguage(lang);
+
+    dispatch(init(lang))
   };
 
   return (
