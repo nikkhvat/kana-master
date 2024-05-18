@@ -20,7 +20,6 @@ const SettingsLanguage: React.FC = () => {
     await AsyncStorage.setItem("lang", lang);
     i18n.changeLanguage(lang);
 
-    dispatch(init(lang))
     dispatch(updateLessons({ lang }))
   };
 

@@ -34,7 +34,7 @@ import { yoonKatakana as yoonKatakanaEn } from "./lessons/en/9-ka-yoon";
 import { yoonKatakana as yoonKatakanaRu } from "./lessons/ru/9-ka-yoon";
 
 export const chapter1 = (lang: "ru" | "en"): (AutoLesson | ManuallyLesson)[] => [
-  lang === "en" ? lessonIntroductionEn as ManuallyLesson : lessonIntroductionRu as ManuallyLesson,
+  lang === "en" ? lessonIntroductionEn : lessonIntroductionRu,
   {
     id: "3a060caa-ac2f-42cb-a901-c19848e9d5c5",
     title: base[0][0],
@@ -92,14 +92,14 @@ export const chapter1 = (lang: "ru" | "en"): (AutoLesson | ManuallyLesson)[] => 
 ];
 
 export const chapter2 = (lang: "ru" | "en"): (AutoLesson | ManuallyLesson)[] => [
-  lang === "en" ? dakuonAndHandakuonLessonEn as ManuallyLesson : dakuonAndHandakuonLessonRu as ManuallyLesson,
+  lang === "en" ? dakuonAndHandakuonLessonEn : dakuonAndHandakuonLessonRu,
   lang === "en" ? longVowelsEn : longVowelsRu,
   lang === "en" ? longConsonantsEn : longConsonantsRu,
   lang === "en" ? dakuonAndHandakuonKatakanaLessonEn : dakuonAndHandakuonKatakanaLessonRu,
   lang === "en" ? longVowelsKatakanaEn : longVowelsKatakanaRu, 
   lang === "en" ? longConsonantsKatakanaEn : longConsonantsKatakanaRu,
   lang === "en" ? additionalKatakanaSoundsEn : additionalKatakanaSoundsRu,
-  lang === "en" ? yoonHiraganaEn as ManuallyLesson : yoonHiraganaRu as ManuallyLesson,
+  lang === "en" ? yoonHiraganaEn : yoonHiraganaRu,
   lang === "en" ? yoonKatakanaEn : yoonKatakanaRu,
 ];
 

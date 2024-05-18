@@ -1,4 +1,6 @@
-export const lessonIntroduction = {
+import { ManuallyLesson } from "@/shared/constants/lessons";
+
+export const lessonIntroduction: ManuallyLesson = {
   id: "52aa8316-4669-41e6-98d3-2b3e42a943ff",
   title: "Введение",
   subTitle: "Хирагана и Катакана",

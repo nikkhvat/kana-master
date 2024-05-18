@@ -1,4 +1,6 @@
-export const yoonKatakana = {
+import { ManuallyLesson } from "@/shared/constants/lessons";
+
+export const yoonKatakana: ManuallyLesson = {
   id: "515aea21-2b85-4a5a-8238-03b4a8044765",
   title: "Юон в катакане",
   subTitle: "や, ゆ, よ",

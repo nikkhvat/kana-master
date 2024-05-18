@@ -57,6 +57,9 @@ export const lessonsSlice = createSlice({
       if (action.payload?.ok) {
         state.chapters = action.payload?.chapters
         state.lastUpdate = +new Date()
+      } else if (state.lang !== action.payload.lang) {
+        state.chapters = chapters(action.payload.lang)
+        state.lang = action.payload.lang
       }
     })
   },
