@@ -86,10 +86,10 @@ export const additionalKatakanaSounds = {
       title: "Выбери хирагану для haro wīn (Хэллоуин).",
       blocks: [
         {
-          rules: [
-            "ウェールズ ",
-            "ハロウィーン",
-            "ウォッカ",
+          ansers: [
+            { title: "ウェールズ ", isTrue: true },
+            { title: "ハロウィーン", isTrue: true },
+            { title: "ウォッカ", isTrue: true },
           ]
         }
       ]
