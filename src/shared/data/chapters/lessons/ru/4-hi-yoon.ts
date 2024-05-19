@@ -1,6 +1,4 @@
-import { ManuallyLesson } from "@/shared/constants/lessons";
-
-export const yoonHiragana: ManuallyLesson = {
+export const yoonHiragana = {
   id: "a16a1684-bdc7-4f2c-9c0a-ebbd89d61b0b",
   title: "Юон",
   subTitle: "や, ゆ, よ",

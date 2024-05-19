@@ -1,6 +1,4 @@
-import { ManuallyLesson } from "@/shared/constants/lessons";
-
-export const dakuonAndHandakuonLesson: ManuallyLesson = {
+export const dakuonAndHandakuonLesson = {
   id: "52aa8316-4669-41e6-98d3-2b3e42a941ff",
   title: "Дакуон и хандакуон",
   subTitle: "Специальные знаки хираганы",

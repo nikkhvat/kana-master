@@ -1,13 +1,13 @@
 export const longConsonantsKatakana = {
   id: "7c56b8b0-832e-4e2e-badc-cf93f4e97a9e",
   title: "Долгие согласные в катакане",
-  subTitle: "Долгие согласные",
+  subTitle: "ッ + k, ッ + s, ッ + t, ッ + p",
   infoTitle: "Информация",
-  infoSubTitle: "Здесь мы расскажем вам о долгих согласных в катакане",
+  infoSubTitle: "Здесь мы раскажем вам о долгих согласных.",
   icon: "子音",
   category: ["katakana"],
   screens: [
-    {
+    { 
       
       title: "Долгие согласные в катакане",
       blocks: [
@@ -34,9 +34,9 @@ export const longConsonantsKatakana = {
       blocks: [
         {
           pairs: [
-            ["ネックレス", "nekkuresu(ожерелье)"],
-            ["ブラック", "burakku(черный)"],
-            ["ライラック", "rairakku(сирень)"],
+            ["ネックレス", "nekkuresu (ожерелье)"],
+            ["ブラック", "burakku (черный)"],
+            ["ライラック", "rairakku (сирень)"],
           ]
         }
       ],
@@ -45,7 +45,9 @@ export const longConsonantsKatakana = {
       
       title: "Выбери катакану для painappuru (ананас).",
       blocks: [
-        { sequence: ["パ", "イ", "ナ", "ッ", "プ", "ル"] }
+        {
+          sequence: [ "パ", "イ", "ナ", "ッ", "プ", "ル" ]
+        }
       ],
     },
   ],
