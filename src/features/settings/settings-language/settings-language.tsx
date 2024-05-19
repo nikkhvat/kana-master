@@ -8,7 +8,7 @@ import LanguageButton from "@/entities/profile/language-button/language-button";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { LanguageKeys, languageList } from "@/shared/constants/language";
 import { useAppDispatch } from "@/shared/model/hooks";
-import { init, updateLessons } from "@/pages/education/learning/model/slice";
+import { updateLessons } from "@/pages/education/learning/model/slice";
 
 const SettingsLanguage: React.FC = () => {
   const { colors } = useThemeContext();  

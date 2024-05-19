@@ -15,7 +15,7 @@ import { RootStackParamList } from "@/shared/types/navigationTypes";
 import PageTitle from "@/shared/ui/page-title/page-title";
 import Switcher from "@/shared/ui/switcher/switcher";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
-import { init, updateLessons } from "../model/slice";
+import { updateLessons } from "../model/slice";
 
 type HomeScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -51,28 +51,23 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
   const chaptersLang = useAppSelector((state) => state.lessons.lang)
 
   useEffect(() => {
-    if (!chapters || chapters.length === 0) {
-      dispatch(init(lessonsKey))
-    }
-  }, [chapters])
-
-  useEffect(() => {
     const now = +new Date();
-
     const timeDifference = now - lastUpdate;
 
     if (timeDifference >= 3600000 || lastUpdate === undefined) {
-      dispatch(updateLessons({
-        lang: lessonsKey
-      }))
+      dispatch(updateLessons({lang: lessonsKey}))
     }
-
+    
     if (chaptersLang !== lessonsKey) {
       dispatch(updateLessons({
         lang: lessonsKey
       }))
     }
-  }, [])
+
+    if (!chapters || chapters.length === 0) {
+      dispatch(updateLessons({ lang: lessonsKey }))
+    }
+  }, [chapters, chaptersLang, lessonsKey, lastUpdate])
 
   return (
     <SafeLayout style={{ flex: 1, paddingBottom: 0 }} disableLeft disableRight>
