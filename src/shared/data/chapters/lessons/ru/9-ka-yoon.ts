@@ -1,9 +1,9 @@
 export const yoonKatakana = {
   id: "515aea21-2b85-4a5a-8238-03b4a8044765",
-  title: "Юон в катакане",
+  title: "Юон",
   subTitle: "ヤ, ユ, ヨ",
   infoTitle: "Информация",
-  infoSubTitle: "Здесь мы расскажем вам о юон",
+  infoSubTitle: "Здесь мы расскажем вам о юон.",
   icon: "拗音", 
   category: ["katakana"],
   screens: [

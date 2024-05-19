@@ -1,28 +1,32 @@
 export const dakuonAndHandakuonKatakanaLesson = {
   id: "5cb6d389-dfe6-4feb-94f0-51e6aa32329f",
-  title: "Dakuten and Handakuten in Katakana",
-  subTitle: "Dakuten and Handakuten",
+  title: "Dakuon and Handakuon",
+  subTitle: "Special Katakana Marks",
   infoTitle: "Information",
-  infoSubTitle: "Here we will tell you about the special signs in Katakana",
+  infoSubTitle: "Here we will tell you about special katakana marks.",
   icon: "濁音",
   category: ["katakana"],
   screens: [
     {
-      
-      title: "Dakuten and Handakuten",
+      title: "Dakuon and Handakuon.",
       blocks: [
         {
-          text: "After covering all the Katakana syllables, it's time to learn about the special signs used with these symbols. Let's explore which syllables can use Dakuten and Handakuten.",
+          text: "After mastering the basic katakana syllables, it's time to get acquainted with dakuon and handakuon—special marks that change the sound of the syllables.",
+        },
+        {
+          text: "First, let's find out which katakana syllables can use these marks:",
         },
         {
           table: [
             [
+              "Romaji",
               "ka, ki, ku, ke, ko",
               "sa, shi, su, se, so",
               "ta, chi, tsu, te, to",
               "ha, hi, fu, he, ho",
             ],
             [
+              "Katakana",
               "カ, キ, ク, ケ, コ",
               "サ, シ, ス, セ, ソ",
               "タ, チ, ツ, テ, ト",
@@ -33,172 +37,160 @@ export const dakuonAndHandakuonKatakanaLesson = {
       ],
     },
     {
-      
-      title: "Match Katakana with Romaji",
+      title: "Match Katakana with Romaji.",
       blocks: [
         {
           pairs: [
-            ["カキ", "tako (octopus)"],
-            ["ハト", "kaki (persimmon)"],
-            ["タコ", "hato (pigeon)"],
+            ["タコ", "tako (octopus)"],
+            ["ハト", "hato (pigeon)"],
+            ["カキ", "kaki (persimmon)"],
           ],
         },
       ],
     },
     {
-      
-      title: "Dakuten ka, ki, ku, ke, ko",
+      title: "Dakuon ka, ki, ku, ke, ko.",
       blocks: [
         {
-          text: "By adding Dakuten, special marks in the form of two short lines, to the Katakana syllables, we form the voiced versions of these syllables. Observe how the pronunciation changes.",
+          text: "By adding dakuten marks, which are two short strokes in the upper right corner, to the syllables, we form new sounds. See how this changes the pronunciation.",
         },
         {
           table: [
-            ["Voiceless", "カ(ka)", "キ(ki)", "ク(ku)", "ケ(ke)", "コ(ko)"],
-            ["Voiced", "ガ(ga)", "ギ(gi)", "グ(gu)", "ゲ(ge)", "ゴ(go)"],
+            ["Voiceless", "カ (ka)", "キ (ki)", "ク (ku)", "ケ (ke)", "コ (ko)"],
+            ["Voiced", "ガ (ga)", "ギ (gi)", "グ (gu)", "ゲ (ge)", "ゴ (go)"],
           ],
         },
       ],
     },
     {
-      
-      title: "Choose the Katakana for kagi (key)",
+      title: "Choose the Katakana for gorufu (golf).",
       blocks: [
         {
           answers: [
-            { title: "カギ", isTrue: true },
-            { title: "ガギ", isTrue: false },
-            { title: "キギ", isTrue: false },
+            { title: "ゴキブリ", isTrue: false },
+            { title: "ゴルフ", isTrue: true },
+            { title: "ココア", isTrue: false },
           ],
         },
       ],
     },
     {
-      
-      title: "Dakuten za, ji, zu, ze, zo",
+      title: "Dakuon za, ji, zu, ze, zo.",
       blocks: [
         {
-          text: "Similarly, we can apply Dakuten to syllables starting with 's' to transform them into voiced sounds.",
+          text: "Similarly, we add dakuten to syllables starting with 's', transforming them into voiced sounds.",
         },
         {
           table: [
-            ["Voiceless", "サ(sa)", "シ(shi)", "ス(su)", "セ(se)", "ソ(so)"],
-            ["Voiced", "ザ(za)", "ジ(ji)", "ズ(zu)", "ゼ(ze)", "ゾ(zo)"],
+            ["Voiceless", "サ (sa)", "シ (shi)", "ス (su)", "セ (se)", "ソ (so)"],
+            ["Voiced", "ザ (za)", "ジ (ji)", "ズ (zu)", "ゼ (ze)", "ゾ (zo)"],
           ],
         },
       ],
     },
     {
-      
-      title: "Choose the Katakana for kujira (whale)",
+      title: "Choose the Katakana for kujira (whale).",
       blocks: [
         {
-          sequence: ["ク", "ジ", "ラ"]
+          sequence: ["ク", "ジ", "ラ"],
         },
       ],
     },
     {
-      
-      title: "Dakuten da, ji, zu, de, do",
+      title: "Dakuon da, ji, zu, de, do.",
       blocks: [
         {
-          text: "Dakuten can also be added to syllables starting with 't', creating another set of voiced sounds.",
+          text: "By adding dakuten to syllables starting with 't', we create another set of voiced sounds.",
         },
         {
           table: [
-            ["Voiceless", "タ(ta)", "チ(chi)", "ツ(tsu)", "テ(te)", "ト(to)"],
-            ["Voiced", "ダ(da)", "ヂ(ji)", "ヅ(zu)", "デ(de)", "ド(do)"],
+            ["Voiceless", "タ (ta)", "チ (chi)", "ツ (tsu)", "テ (te)", "ト (to)"],
+            ["Voiced", "ダ (da)", "ヂ (ji)", "ヅ (zu)", "デ (de)", "ド (do)"],
           ],
         },
       ],
     },
     {
-      
-      title: "Take Note!",
+      title: "Note!",
       blocks: [
         {
-          text: "The syllables ジ (ji) and ヂ (ji), as well as ズ (zu) and ヅ (zu), are pronounced the same in modern Japanese. These sounds were once pronounced differently but have merged over time.",
+          text: "The syllables ジ (ji) and ヂ (ji), as well as ズ (zu) and ヅ (zu), are pronounced the same in modern Japanese. Previously, these sounds were different but have merged over time.",
         },
         {
-          text: "ジ is most commonly used for 'ji' and ズ for 'zu', while ヂ and ヅ are significantly less common.",
+          text: "It is important to note that for words with 'ji', ジ is most commonly used, and for words with 'zu', ズ is used. Only very few words use ヂ and ヅ.",
         },
         {
           rules: [
-            "ジ (ji) and ズ (zu) are most commonly used",
-            "ヂ (ji) and ヅ (zu) are rarely used",
+            "ジ (ji) and ズ (zu) are used most frequently",
+            "ヂ (ji) and ヅ (zu) are used only in a few words",
           ],
         },
       ],
     },
     {
-      
-      title: "Choose the Katakana for mukade (centipede)",
+      title: "Choose the Katakana for mukade (centipede).",
       blocks: [
         {
           answers: [
             { title: "ムカデ", isTrue: true },
-            { title: "ムケダ", isTrue: false },
-            { title: "メカダ", isTrue: false },
+            { title: "ホテル", isTrue: false },
+            { title: "インド", isTrue: false },
           ],
         },
       ],
     },
     {
-      
-      title: "Dakuten ba, bi, bu, be, bo",
+      title: "Dakuon ba, bi, bu, be, bo.",
       blocks: [
         {
-          text: "Let's explore how applying Dakuten to syllables starting with 'h' changes them to the voiced 'b' sounds.",
+          text: "Now let's study the special dakuten marks for the line starting with 'h'.",
         },
         {
           table: [
-            ["Sound 'h'", "ハ(ha)", "ヒ(hi)", "フ(fu)", "ヘ(he)", "ホ(ho)"],
-            ["Sound 'b'", "バ(ba)", "ビ(bi)", "ブ(bu)", "ベ(be)", "ボ(bo)"],
+            ["Sound 'h'", "ハ (ha)", "ヒ (hi)", "フ (fu)", "ヘ (he)", "ホ (ho)"],
+            ["Sound 'b'", "バ (ba)", "ビ (bi)", "ブ (bu)", "ベ (be)", "ボ (bo)"],
           ],
         },
       ],
     },
     {
-      
-      title: "Choose the Katakana for buraun (brown)",
+      title: "Choose the Katakana for buraun (brown).",
       blocks: [
         {
           answers: [
             { title: "ブラウン", isTrue: true },
-            { title: "ブロン", isTrue: false },
-            { title: "バラン", isTrue: false },
+            { title: "バイク", isTrue: false },
+            { title: "ボリビア", isTrue: false },
           ],
         },
       ],
     },
     {
-      
-      title: "Handakuten pa, pi, pu, pe, po",
+      title: "Handakuon pa, pi, pu, pe, po.",
       blocks: [
         {
-          text: "A special series in Katakana starts with ハ (ha). By adding the Handakuten, a small circle, we change the sounds to 'p'.",
+          text: "The hiragana line starting with ハ (ha) is special! We can add not only dakuten but also handakuten, a small circle that transforms the sounds to 'p'.",
         },
         {
           table: [
-            ["Sound 'h'", "ハ(ha)", "ヒ(hi)", "フ(fu)", "ヘ(he)", "ホ(ho)"],
-            ["Sound 'b'", "バ(ba)", "ビ(bi)", "ブ(bu)", "ベ(be)", "ボ(bo)"],
-            ["Sound 'p'", "パ(pa)", "ピ(pi)", "プ(pu)", "ペ(pe)", "ポ(po)"],
+            ["Sound 'h'", "ハ (ha)", "ヒ (hi)", "フ (fu)", "ヘ (he)", "ホ (ho)"],
+            ["Sound 'b'", "バ (ba)", "ビ (bi)", "ブ (bu)", "ベ (be)", "ボ (bo)"],
+            ["Sound 'p'", "パ (pa)", "ピ (pi)", "プ (pu)", "ペ (pe)", "ポ (po)"],
           ],
         },
       ],
     },
     {
-      
-      title: "Choose the romaji for アパレル (clothing)",
+      title: "Choose the Romaji for アパレル (apparel).",
       blocks: [
         {
           answers: [
             { title: "apareru", isTrue: true },
-            { title: "aparelu", isTrue: false },
-            { title: "apalelu", isTrue: false },
+            { title: "abareru", isTrue: false },
+            { title: "ahareru", isTrue: false },
           ],
         },
       ],
-    }
+    },
   ],
 };

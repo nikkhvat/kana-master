@@ -1,18 +1,17 @@
 export const longVowels = {
   id: "17cac414-90ce-462c-8cda-7afdcc8a5b5e",
   title: "Long Vowels",
-  subTitle: "Long Vowels",
+  subTitle: "ああ, いい, うう, えい, おう",
   infoTitle: "Information",
-  infoSubTitle: "Here we will tell you about long vowels",
+  infoSubTitle: "Here we will tell you about long vowels.",
   icon: "子音",
   category: ["hiragana"],
   screens: [
     {
-      
-      title: "Long Vowels",
+      title: "Long Vowels.",
       blocks: [
         {
-          text: "We have previously touched on special signs in Hiragana. Today, we will delve deeper into the study of long vowels. Let's start with the basics — revising the five fundamental vowels.",
+          text: "Previously, we touched on the topic of special marks in hiragana. Today we will delve into the study of long vowels. Let's start with the basics and review the five basic vowels.",
         },
         {
           table: [
@@ -23,11 +22,10 @@ export const longVowels = {
       ],
     },
     {
-      
       title: "Tip!",
       blocks: [
         {
-          text: "Let's examine how long vowels can change the meaning of words. This is crucial for proper understanding and avoiding confusion.",
+          text: "Let's see how long vowels can change the meaning of words. This is critically important for proper understanding and avoiding confusion.",
         },
         {
           rules: [
@@ -38,18 +36,11 @@ export const longVowels = {
       ],
     },
     {
-      
       title: "Remember the Rule!",
       blocks: [
-        {
-          text: "**あ** (a) extends the vowel 'a' in hiragana, creating a long sound, for example, in the word かあ (kaa).",
-        },
-        {
-          text: "**い** (i) extends the vowel 'i', as in にい (nii).",
-        },
-        {
-          text: "**う** (u) extends the vowel 'u', as in くう (kuu).",
-        },
+        { text: "あ(a) makes any hiragana syllable ending in 'a' long (e.g., かあ - kaa)." },
+        { text: "い(i) makes any hiragana syllable ending in 'i' long (e.g., にい - nii)." },
+        { text: "う(u) makes any hiragana syllable ending in 'u' long (e.g., くう - kuu)." },
         {
           rules: [
             "おかあさん (okaasan) - mother",
@@ -60,24 +51,25 @@ export const longVowels = {
       ],
     },
     {
-      
-      title: "Match Hiragana with Romaji",
+      title: "Match Hiragana with Romaji.",
       blocks: [
         {
           pairs: [
-            ["おじいさん", "obaasan (grandmother)"],
-            ["おばあさん", "ojiisan (grandfather)"],
-            ["すうじ", "suuji (numbers)"],
+            ["おじいさん", "ojīsan (grandfather)"],
+            ["おばあさん", "obāsan (grandmother)"],
+            ["すうじ", "suuji (number)"],
           ],
         },
       ],
     },
     {
-      
       title: "Remember the Rule!",
       blocks: [
         {
-          text: "**い** (i) extends the vowel 'e' to 'ei', as in the word せい (sei), and **う** (u) extends the vowel 'o' to 'ou', as in こう (kou).",
+          text: "い (i) makes any hiragana syllable ending in 'e' long (e.g., せい - sei).",
+        },
+        {
+          text: "う (u) makes any hiragana syllable ending in 'o' long (e.g., こう - kou).",
         },
         {
           rules: [
@@ -88,24 +80,22 @@ export const longVowels = {
       ],
     },
     {
-      
-      title: "Match Hiragana with Romaji",
+      title: "Match Hiragana with Romaji.",
       blocks: [
         {
           pairs: [
-            ["せんせい", "gakusei (student)"],
-            ["がくせい", "houritsu (law)"],
-            ["ほうりつ", "sensei (teacher)"],
+            ["せんせい", "sensei (teacher)"],
+            ["がくせい", "gakusei (student)"],
+            ["ほうりつ", "houritsu (law)"],
           ],
         },
       ],
     },
     {
-      
       title: "Remember!",
       blocks: [
         {
-          text: "The topic marker 'wa', used to indicate the subject, is written as は (ha) but pronounced as 'wa'. This is a unique rule in the Japanese language.",
+          text: "The particle 'wa', which functions as a subject marker, is written as the hiragana は (ha). This is the only case where we write は (ha) but pronounce it as 'wa'.",
         },
         {
           rules: [

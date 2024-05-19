@@ -1,30 +1,32 @@
-import { ManuallyLesson } from "@/shared/constants/lessons";
-
-export const dakuonAndHandakuonLesson: ManuallyLesson = {
+export const dakuonAndHandakuonLesson = {
   id: "52aa8316-4669-41e6-98d3-2b3e42a941ff",
   title: "Dakuon and Handakuon",
-  subTitle: "Dakuon and Handakuon",
+  subTitle: "Special Hiragana Marks",
   infoTitle: "Information",
-  infoSubTitle: "Here we will tell you about special marks in Hiragana",
+  infoSubTitle: "Here we will tell you about special hiragana marks.",
   icon: "濁音",
   category: ["hiragana"],
   screens: [
     {
-      
-      title: "Dakuon and Handakuon",
+      title: "Dakuon and Handakuon.",
       blocks: [
         {
-          text: "Having mastered the basic syllables of Hiragana, it’s time to learn about dakuon and handakuon—special marks that alter the sounds of the syllables.",
+          text: "After mastering the basic hiragana syllables, it's time to get acquainted with dakuon and handakuon—special marks that change the sound of the syllables.",
+        },
+        {
+          text: "First, let's find out which hiragana syllables can use these marks:",
         },
         {
           table: [
             [
+              "Romaji",
               "ka, ki, ku, ke, ko",
               "sa, shi, su, se, so",
               "ta, chi, tsu, te, to",
               "ha, hi, fu, he, ho",
             ],
             [
+              "Hiragana",
               "か, き, く, け, こ",
               "さ, し, す, せ, そ",
               "た, ち, つ, て, と",
@@ -35,24 +37,22 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      
-      title: "Match Hiragana with Romaji",
+      title: "Match Hiragana with Romaji.",
       blocks: [
         {
           pairs: [
-            ["へた", "fuku (clothes)"],
-            ["ふく", "sushi"],
-            ["すし", "heta (clumsy)"],
+            ["きく", "kiku (to listen)"],
+            ["つち", "tsuchi (earth)"],
+            ["ほし", "hoshi (star)"],
           ],
         },
       ],
     },
     {
-      
-      title: "Dakuon ka, ki, ku, ke, ko",
+      title: "Dakuon ka, ki, ku, ke, ko.",
       blocks: [
         {
-          text: "By adding special marks called dakuten, which are two short lines, to the syllables, we create new sounds. See how this changes the pronunciation.",
+          text: "By adding dakuten marks, which are two short strokes in the upper right corner, to the syllables, we form new sounds. See how this changes the pronunciation.",
         },
         {
           table: [
@@ -70,8 +70,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      
-      title: "Choose the hiragana for kagi (key)",
+      title: "Choose the Hiragana for kagi (key).",
       blocks: [
         {
           answers: [
@@ -83,11 +82,10 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      
-      title: "Dakuon za, ji, zu, ze, zo",
+      title: "Dakuon za, ji, zu, ze, zo.",
       blocks: [
         {
-          text: "Similarly, we add dakuten to syllables starting with 's', turning them into voiced sounds.",
+          text: "Similarly, we add dakuten to syllables starting with 's', transforming them into voiced sounds.",
         },
         {
           table: [
@@ -98,8 +96,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      
-      title: "Choose the hiragana for suzuran (lily of the valley)",
+      title: "Choose the Hiragana for suzuran (lily of the valley).",
       blocks: [
         {
           sequence: ["す", "ず", "ら", "ん"]
@@ -107,8 +104,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      
-      title: "Dakuon da, ji, zu, de, do",
+      title: "Dakuon da, ji, zu, de, do.",
       blocks: [
         {
           text: "By adding dakuten to syllables starting with 't', we create another set of voiced sounds.",
@@ -122,26 +118,24 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      
       title: "Note!",
       blocks: [
         {
-          text: "The syllables じ (ji) and ぢ (ji), as well as ず (zu) and づ (zu), are pronounced the same in modern Japanese. They used to sound different but have merged over time.",
+          text: "The syllables じ (ji) and ぢ (ji), as well as ず (zu) and づ (zu), are pronounced the same in modern Japanese. Previously, these sounds were different but have merged over time.",
         },
         {
-          text: "Note that じ is most commonly used for 'ji', and ず for 'zu'. The syllables ぢ and づ are rarely used.",
+          text: "Note that for words with 'ji', じ is most commonly used, and for words with 'zu', ず is used. Only very few words use ぢ and づ.",
         },
         {
           rules: [
-            "じ (ji), ず (zu) - most commonly used",
-            "ぢ (ji), づ (zu) - rarely used",
+            "じ(ji), ず(zu) - used in most cases",
+            "ぢ(ji), づ(zu) - used only in a few words",
           ],
         },
       ],
     },
     {
-      
-      title: "Choose the hiragana for dashi (Japanese broth)",
+      title: "Choose the Hiragana for dashi (Japanese soup stock).",
       blocks: [
         {
           answers: [
@@ -153,11 +147,10 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      
-      title: "Dakuon ba, bi, bu, be, bo",
+      title: "Dakuon ba, bi, bu, be, bo.",
       blocks: [
         {
-          text: "Let's see how to apply dakuten to syllables starting with 'h', turning them into the voiced 'b' sounds.",
+          text: "Now let's study the special dakuten marks for the line starting with 'h'.",
         },
         {
           table: [
@@ -168,24 +161,22 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      
-      title: "Choose the hiragana for kabuki (Japanese theatre)",
+      title: "Choose the Hiragana for kabuki (Japanese theater).",
       blocks: [
         {
           answers: [
+            { title: "かふぎ", isTrue: false },
+            { title: "がぶき", isTrue: false },
             { title: "かぶき", isTrue: true },
-            { title: "かびき", isTrue: false },
-            { title: "かふき", isTrue: false },
           ],
         },
       ],
     },
     {
-      
-      title: "Handakuon pa, pi, pu, pe, po",
+      title: "Handakuon pa, pi, pu, pe, po.",
       blocks: [
         {
-          text: "A special line of Hiragana starting with 'は' (ha) can also be combined with another mark, the handakuten, a small circle, which transforms the sounds into 'p'.",
+          text: "The hiragana line starting with は(ha) is special! We can add not only dakuten but also handakuten, a small circle that transforms the sounds to 'p'.",
         },
         {
           table: [
@@ -197,8 +188,7 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      
-      title: "Choose the romaji for ぱくぱく (eating heartily)",
+      title: "Choose the Romaji for ぱくぱく (eating heartily).",
       blocks: [
         {
           answers: [
@@ -210,11 +200,10 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      
       title: "Tip!",
       blocks: [
         {
-          text: "Using special marks significantly changes the meanings of words, underscoring their importance in the Japanese language.",
+          text: "The use of special marks significantly changes the meanings of words, highlighting their importance in the Japanese language.",
         },
         {
           rules: [
@@ -227,14 +216,13 @@ export const dakuonAndHandakuonLesson: ManuallyLesson = {
       ],
     },
     {
-      
-      title: "Match hiragana with romaji",
+      title: "Match Hiragana with Romaji.",
       blocks: [
         {
           pairs: [
-            ["ここ", "goko (5 pieces)"],
-            ["ごこ", "gogo (in the afternoon)"],
-            ["ごご", "koko (here)"],
+            ["ここ", "koko (here)"],
+            ["ごこ", "goko (5 pieces)"],
+            ["ごご", "gogo (afternoon)"],
           ],
         },
       ],

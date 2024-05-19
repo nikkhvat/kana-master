@@ -1,24 +1,23 @@
 export const longVowelsKatakana = {
   id: "3e8bfb8e-6470-40d7-8b89-7635f23f4f92",
-  title: "Long Vowels in Katakana",
-  subTitle: "Long Vowels",
+  title: "Long Vowels",
+  subTitle: "アー, イー, ウー, エー, オー",
   infoTitle: "Information",
-  infoSubTitle: "Here we will tell you about long vowels in Katakana",
+  infoSubTitle: "Here we will tell you about long vowels.",
   icon: "母音",
   category: ["katakana"],
   screens: [
     {
-      
-      title: "Long Vowels in Katakana",
+      title: "Long Vowels in Katakana.",
       blocks: [
         {
-          text: "Katakana uses a unique method for denoting long vowel sounds. In this lesson, we will learn how to correctly write them.",
+          text: "Katakana uses a unique approach to denote long vowel sounds. In this lesson, we will learn how to write them correctly.",
         },
         {
-          text: "In Katakana, long vowels are indicated by a horizontal bar (ー), which differs from Hiragana, where elongated vowel symbols are used.",
+          text: "In katakana, long vowels are indicated using a horizontal bar (ー), which is different from hiragana, where the characters 'あ', 'い', and 'う' are used to extend vowels.",
         },
         {
-          text: "Check out these examples of long vowels in Katakana:",
+          text: "Familiarize yourself with examples of using long vowels in katakana:",
         },
         {
           table: [
@@ -29,11 +28,10 @@ export const longVowelsKatakana = {
       ],
     },
     {
-      
-      title: "Tip: The Importance of Long Vowels",
+      title: "Tip!",
       blocks: [
         {
-          text: "The distinction between short and long vowels in Katakana is critical as it can change the meaning of words. Here are some examples that show how the meaning of a word changes:",
+          text: "The difference between short and long vowels in katakana is critical as it can change the meaning of words. Here is an example showing how the meaning of a word changes:",
         },
         {
           rules: [
@@ -44,23 +42,21 @@ export const longVowelsKatakana = {
       ],
     },
     {
-      
-      title: "Match Katakana with Romaji",
+      title: "Match Katakana with Romaji.",
       blocks: [
         {
           pairs: [
             ["チーター", "chītā (cheetah)"],
             ["ローン", "rōn (loan)"],
             ["ユーロ", "yūro (euro)"],
-          ]
-        }
+          ],
+        },
       ],
     },
     {
-      
       title: "Choose the Katakana for apāto (apartment).",
       blocks: [
-        { sequence: ["ア", "パ", "ー", "ト"] }
+        { sequence: ["ア", "パ", "ー", "ト"] },
       ],
     },
   ],

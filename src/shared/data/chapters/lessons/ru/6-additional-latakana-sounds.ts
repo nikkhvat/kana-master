@@ -1,9 +1,9 @@
 export const additionalKatakanaSounds = {
   id: "b8e91c9c-d468-43b3-a6cc-67f05f46eb7d",
-  title: "Дополнительные звуки катаканы",
+  title: "Дополнительные звуки",
   subTitle: "ァ, ィ, ゥ, ェ, ォ",
   infoTitle: "Информация",
-  infoSubTitle: "Здесь мы расскажем вам о дополнительных звуках в катакане",
+  infoSubTitle: "Здесь мы расскажем вам о дополнительных звуках в катакане.",
   icon: "子音",
   category: ["katakana"],
   screens: [

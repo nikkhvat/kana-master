@@ -1,21 +1,20 @@
 export const additionalKatakanaSounds = {
   id: "b8e91c9c-d468-43b3-a6cc-67f05f46eb7d",
-  title: "Additional Katakana Sounds",
-  subTitle: "Additional Sounds",
+  title: "Additional Sounds",
+  subTitle: "ァ, ィ, ゥ, ェ, ォ",
   infoTitle: "Information",
-  infoSubTitle: "Here we will tell you about additional sounds in Katakana",
+  infoSubTitle: "Here we will tell you about additional sounds in katakana.",
   icon: "子音",
   category: ["katakana"],
   screens: [
     {
-      
-      title: "Adding Vowels to ‘フ’",
+      title: "Adding Vowels to 'フ'.",
       blocks: [
         {
-          text: "In Japanese, the 'r' and 'l' sounds are considered identical, as are 'h' and 'f' sounds. Therefore, instead of the 'l' sound, the row for 'r' is used, and for the 'f' sound, the row for 'h' is used. To address the use of the 'f' sound, a new form of notation combining vowels with reduced fonts was adopted.",
+          text: "In Japanese, the sounds 'r' and 'l' are considered identical, as are the sounds 'h' and 'f'. Therefore, the 'r' syllable row is used instead of the 'l' sound, and the 'h' syllable row for the 'f' sound. To address the issue of using the 'f' sound, a new form of writing was adopted, combining vowels with a smaller font.",
         },
         {
-          text: "The sound 'フ' (fu) can be combined with reduced vowel characters to create the sounds 'fa', 'fi', 'fe', and 'fo'.",
+          text: "The sound 'フ' (fu) can be combined with smaller vowel characters to create the sounds 'fa', 'fi', 'fe', and 'fo'.",
         },
         {
           table: [
@@ -26,27 +25,25 @@ export const additionalKatakanaSounds = {
       ],
     },
     {
-      
-      title: "Match Katakana with Romaji",
+      title: "Match Katakana with Romaji.",
       blocks: [
         {
           pairs: [
-            ["ファイル", "fairu (file)"],
-            ["フィリピン", "fōku (fork)"],
-            ["フォーク", "firipin (Philippines)"],
-          ]
-        }
-      ]
+            ["ファイル", "fairu (folder)"],
+            ["フィリピン", "firipin (Philippines)"],
+            ["フォーク", "fōku (fork)"],
+          ],
+        },
+      ],
     },
     {
-      
-      title: "Supplementing Sounds for ‘ワ’ wa (wa)",
+      title: "Adding Sounds to 'ワ' wa (wa).",
       blocks: [
         {
-          text: "You might wonder: if there is only the katakana 'ワ' for 'wa', how are other syllables with the letter 'v' formed, such as 'vo' or 've'? Or do they not exist at all? In Japanese, they indeed do not exist (and are not distinct from the 'b' sound), but they are still present for writing foreign words.",
+          text: "You may be wondering: if there is only the katakana 'wa', how are other syllables with the letter 'v', like 'vo' or 've', formed? Do they even exist? In Japanese, they do not exist (and are indistinguishable from the 'b' sound), but they are still present for writing foreign words.",
         },
         {
-          text: "In Katakana, there is only the syllable 'ワ' for 'wa' (wa), but to create sounds with 'v', we use vowels based on 'ウ' (u):",
+          text: "In katakana, there is only the syllable 'ワ' wa (wa), but to create sounds with 'v', we use vowels with the base 'ウ' (u):",
         },
         {
           table: [
@@ -59,47 +56,44 @@ export const additionalKatakanaSounds = {
         },
         {
           rules: [
-            "‘windows’ (ウィンドウズ)",
+            "‘window’ (ウィンドウズ)",
             "‘vodka’ (ウォッカ).",
-          ]
-        }
+          ],
+        },
       ],
     },
     {
-      
-      title: "Take Note!",
+      title: "Attention!",
       blocks: [
         {
-          text: "Sometimes you may encounter obsolete katakana characters 'ヰ', 'ヱ' and 'ヲ', which are not used in modern speech.",
+          text: "You may occasionally encounter the obsolete katakana characters 'ヰ', 'ヱ', and 'ヲ', which are not used in modern speech.",
         },
         {
           rules: [
             "‘ヰ’ wi (wi)",
             "‘ヱ’ we (we)",
             "‘ヲ’ wo (wo or o)",
-          ]
-        }
+          ],
+        },
       ],
     },
     {
-      
-      title: "Choose the Hiragana for haro wīn (Halloween).",
+      title: "Choose the Katakana for haro wīn (Halloween).",
       blocks: [
         {
-          rules: [
-            "ウェールズ ",
-            "ハロウィーン",
-            "ウォッカ",
-          ]
-        }
-      ]
+          answers: [
+            { title: "ウェールズ", isTrue: false },
+            { title: "ハロウィーン", isTrue: true },
+            { title: "ウォッカ", isTrue: false },
+          ],
+        },
+      ],
     },
     {
-      
-      title: "‘V’ Sounds Group",
+      title: "Group 'V' Sounds.",
       blocks: [
         {
-          text: "To create sounds of the 'v' group in Katakana, characters based on 'ウ' with the addition of a dakuten are used, making the sound harsher:",
+          text: "To create 'V' group sounds in katakana, characters based on 'ウ' with the addition of dakuten are used, making the sound harder:",
         },
         {
           table: [
@@ -108,102 +102,93 @@ export const additionalKatakanaSounds = {
           ],
         },
         {
-          text: "Japanese rarely use the hard 'v' sounds due to pronunciation difficulties.",
+          text: "Japanese people rarely use the hard 'ヴ' sounds due to the difficulty of pronunciation.",
         },
       ],
     },
     {
-      
-      title: "Choose the Hiragana for vikutoru (Victor).",
+      title: "Choose the Katakana for vikutoru (Victor).",
       blocks: [
         {
-          sequence: ["ク", "ィ", "ヴ", "ェ", "ト", "ル"]
-        }
-      ]
-    },
-    {
-      
-      title: "‘チェ’ Sounds",
-      blocks: [
-        {
-          text: "To express the sound 'che' in Katakana, use the character 'チェ'. This allows for the correct recording of foreign words.",
+          sequence: ["ヴ", "ィ", "ク", "ト", "ル"],
         },
       ],
     },
     {
-      
-      title: "Choose the Hiragana for cherī (cherry).",
+      title: "Sound 'チェ'.",
+      blocks: [
+        {
+          text: "To express the 'che' sound in katakana, use the symbol 'チェ'. This allows for the correct recording of foreign words.",
+        },
+      ],
+    },
+    {
+      title: "Choose the Katakana for cherī (cherry).",
       blocks: [
         {
           answers: [
-            { title: "アーチェリー", isTrue: true },
-            { title: "チェコ", isTrue: true },
+            { title: "アーチェリー", isTrue: false },
+            { title: "チェコ", isTrue: false },
             { title: "チェリー", isTrue: true },
-          ]
-        }
-      ]
-    },
-    {
-      
-      title: "Sounds 'ディ', 'ドゥ'",
-      blocks: [
-        {
-          text: "For the sounds 'di' and 'du' in Katakana, use the characters 'ディ' and 'ドゥ' respectively.",
+          ],
         },
       ],
     },
     {
-      
-      title: "Match Katakana with Romaji",
+      title: "Sounds 'ティ', 'トゥ'.",
+      blocks: [
+        {
+          text: "To express the sounds 'ti' and 'tu', use the symbols 'ティ' and 'トゥ'.",
+        },
+      ],
+    },
+    {
+      title: "Match Katakana with Romaji.",
       blocks: [
         {
           pairs: [
-            ["エーティーエム", "tūsu (tooth)"],
-            ["トゥース", "ētīemu (ATM)"],
+            ["エーティーエム", "ētīemu (ATM)"],
+            ["トゥース", "tūsu (tooth)"],
             ["ティーポット", "tīpotto (teapot)"],
-          ]
-        }
-      ]
-    },
-    {
-      
-      title: "Sounds 'ジェ', 'シェ'",
-      blocks: [
-        {
-          text: "To write the sound 'je' and 'she', use the characters 'ジェ'. and 'シェ'.",
+          ],
         },
       ],
     },
     {
-      
-      title: "Choose the Hiragana for dizunīrando (Disneyland).",
+      title: "Sounds 'ディ', 'ドゥ'.",
+      blocks: [
+        {
+          text: "For the sounds 'di' and 'du' in katakana, use the symbols 'ディ' and 'ドゥ' respectively.",
+        },
+      ],
+    },
+    {
+      title: "Choose the Katakana for dizunīrando (Disneyland).",
       blocks: [
         {
           answers: [
             { title: "ディズニーランド", isTrue: true },
-            { title: "カーディガン", isTrue: true },
-            { title: "モルディブ", isTrue: true },
-          ]
-        }
-      ]
-    },
-    {
-      
-      title: "Sounds 'ティ', 'トゥ'",
-      blocks: [
-        {
-          text: "To express the sounds 'ti' and 'tu', use the characters 'ティ' and 'トゥ'.",
+            { title: "カーディガン", isTrue: false },
+            { title: "モルディブ", isTrue: false },
+          ],
         },
       ],
     },
     {
-      
-      title: "Choose the Hiragana for shefu (chef).",
+      title: "Sounds 'シェ', 'ジェ'.",
       blocks: [
         {
-          sequence: ["ク", "ィ", "ヴ", "ェ", "シ", "フ"]
-        }
-      ]
+          text: "To write the sounds 'she' and 'je', use the symbols 'シェ' and 'ジェ'.",
+        },
+      ],
+    },
+    {
+      title: "Choose the Katakana for shefu (chef).",
+      blocks: [
+        {
+          sequence: ["シ", "ェ", "フ"],
+        },
+      ],
     },
   ],
 };

@@ -1,33 +1,31 @@
-import { ManuallyLesson } from "@/shared/constants/lessons";
-
-export const lessonIntroduction: ManuallyLesson = {
+export const lessonIntroduction = {
   id: "52aa8316-4669-41e6-98d3-2b3e42a943ff",
   title: "Introduction",
   subTitle: "Hiragana and Katakana",
   infoTitle: "Information",
-  infoSubTitle: "Here we will tell you about the alphabets in the Japanese language",
+  infoSubTitle: "Here we will tell you about the alphabets in the Japanese language.",
   icon: "序章",
   category: ["hiragana", "katakana"],
   screens: [
     {
-      title: "Did you know?",
+      title: "Did You Know?",
       blocks: [
         {
-          text: "Japanese uses two main alphabets — Hiragana and Katakana, each consisting of 46 characters.",
+          text: "The Japanese language uses two main alphabets - hiragana and katakana, each consisting of 46 characters.",
         },
         {
-          text: "Hiragana is primarily used for writing native Japanese words, while Katakana is often used for transcribing foreign words and names.",
+          text: "Hiragana is primarily used for writing native Japanese words, while katakana is often used for the transcription of foreign words and names.",
         },
         {
-          text: "Additionally, Japanese frequently uses Kanji characters, totaling about two thousand commonly used symbols.",
+          text: "In addition, the Japanese language actively uses kanji characters, which number about two thousand frequently used symbols.",
         },
       ],
     },
     {
-      title: "Hiragana, Katakana, Kanji — What's the difference?",
+      title: "Hiragana, Katakana, Kanji — What's the Difference?",
       blocks: [
         {
-          text: "Hiragana and Katakana are syllabic alphabets representing sounds, whereas Kanji carry meaning.",
+          text: "Hiragana and katakana are syllabic alphabets that represent sounds, whereas kanji convey meaning.",
         },
         {
           table: [
@@ -39,25 +37,25 @@ export const lessonIntroduction: ManuallyLesson = {
       ],
     },
     {
-      title: "Tip: How to Write Kanji",
+      title: "Tip!",
       blocks: [
         {
-          text: "Learning the correct stroke order is important for writing neat Kanji. Here are the basic rules:",
+          text: "Learning the correct stroke order is important for writing neat characters. Here are the main rules:",
         },
         {
           rules: [
-            "Write strokes from left to right",
-            "Write strokes from top to bottom",
-            "Most curves and circles are drawn clockwise",
+            "Strokes are written from left to right",
+            "Strokes are written from top to bottom",
+            "Curves and circles are drawn clockwise",
           ],
         },
       ],
     },
     {
-      title: "Practice: Stroke Order",
+      title: "Watch the Stroke Order.",
       blocks: [
         {
-          text: "Understanding and adhering to the correct stroke order is critically important for writing Japanese characters.",
+          text: "Following the correct stroke order helps in writing neat characters.",
         },
         {
           id: "a151eeeb-2537-463c-ae23-d484d1bcb835",
@@ -66,38 +64,28 @@ export const lessonIntroduction: ManuallyLesson = {
       ],
     },
     {
-      title: "Exercise: Choosing the Correct Writing Direction",
+      title: "Choose the Correct Writing Direction.",
       blocks: [
         {
-          text: "Determine the correct direction for writing characters:",
-        },
-        {
           answers: [
-            { title: "from right to left", isTrue: false },
-            { title: "from bottom to top", isTrue: false },
-            { title: "from left to right", isTrue: true },
+            { title: "right to left", isTrue: false },
+            { title: "bottom to top", isTrue: false },
+            { title: "left to right", isTrue: true },
           ],
         },
       ],
     },
     {
-      
-      title: "How to Properly Finish Strokes?",
+      title: "Stroke Completion.",
       blocks: [
         {
-          text: "Mastering the technique of properly finishing strokes helps achieve aesthetics and readability in writing.",
+          text: "Mastering the technique of proper stroke completion helps achieve aesthetic and legible writing.",
         },
         {
-          text: "A stroke can end with a hook, a sharp stop, or a gradual brush away.",
+          text: "To complete a stroke, we stop abruptly, make a hook, or gradually lift the brush.",
         },
-      ],
-    },
-    {
-      
-      title: "Practice: Finishing a Stroke",
-      blocks: [
         {
-          text: "Let's consider different ways of finishing strokes with examples.",
+          text: "Let's consider different ways of completing strokes, where the first stroke ends with a hook, and the second stops abruptly.",
         },
         {
           id: "11017078-148a-4a44-b3f7-21d1df02d981",

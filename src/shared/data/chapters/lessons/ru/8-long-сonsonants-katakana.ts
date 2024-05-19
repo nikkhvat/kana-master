@@ -1,6 +1,6 @@
 export const longConsonantsKatakana = {
   id: "7c56b8b0-832e-4e2e-badc-cf93f4e97a9e",
-  title: "Долгие согласные в катакане",
+  title: "Долгие согласные",
   subTitle: "ッ + k, ッ + s, ッ + t, ッ + p",
   infoTitle: "Информация",
   infoSubTitle: "Здесь мы раскажем вам о долгих согласных.",
@@ -9,7 +9,7 @@ export const longConsonantsKatakana = {
   screens: [
     { 
       
-      title: "Долгие согласные в катакане",
+      title: "Долгие согласные в катакане.",
       blocks: [
         {
           text: "В японском языке долгие согласные играют важную роль, особенно в катакане, где они обозначаются особым символом.",
