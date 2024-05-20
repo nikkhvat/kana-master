@@ -40,7 +40,8 @@
           "resizeMode": "cover",
           "backgroundColor": "#1F1F1F"
         }
-      }
+      },
+      "package": "pro.khvat.kanamaster"
     },
     "web": {
       "favicon": "./assets/favicon.png"
