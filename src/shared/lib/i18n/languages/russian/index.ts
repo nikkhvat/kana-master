@@ -165,6 +165,10 @@ const Russian = {
 		hepburn: "Hepburn (Хепбёрн)",
 		kunreiShiki: "Kunrei-shiki (Кунрей-сики)",
 		nihonShiki: "Nihon-shiki (Нихон-сики)",
+	},
+
+	joinOurCommunity: {
+		title: "Вступайте в наше сообщество",
 	}
 };
 

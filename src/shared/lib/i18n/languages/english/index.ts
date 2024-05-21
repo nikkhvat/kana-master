@@ -165,6 +165,10 @@ const English = {
 		hepburn: "Hepburn",
 		kunreiShiki: "Kunrei-shiki",
 		nihonShiki: "Nihon-shiki",
+	},
+
+	joinOurCommunity: {
+		title: "Join our community",
 	}
 };
 

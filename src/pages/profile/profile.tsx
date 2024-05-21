@@ -11,6 +11,7 @@ import SettingsTheme from "@/features/settings/settings-theme/settings-theme";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import SettingsTransliterations from "@/features/settings/settings-transliterations/settings-language";
 import PageTitle from "@/shared/ui/page-title/page-title";
+import JoinCommunity from "@/features/settings/join-community/join-community";
 
 const ProfilePage: React.FC = () => {
   const insets = useSafeAreaInsets();
@@ -27,6 +28,7 @@ const ProfilePage: React.FC = () => {
           <SettingsTheme />
           <SettingsLanguage />
           <SettingsTransliterations />
+          <JoinCommunity />
         </ScrollView>
       </AdaptiveLayout>
     </View>
