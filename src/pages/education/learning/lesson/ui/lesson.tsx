@@ -108,7 +108,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
     }
 
     if (isManualyLesson(lesson)) {
-      init([], "manually", lesson.screens);
+      init([], "manually", lesson.screens as InfoLessonScreen[]);
     }
 
     retry();
@@ -120,7 +120,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
     }
 
     if (isManualyLesson(lesson)) {
-      init([], "manually", lesson.screens);
+      init([], "manually", lesson.screens as InfoLessonScreen[]);
     }
   }, []);
 
@@ -153,7 +153,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
           />
         )}
       </View>
-      {isAutoLesson(lesson) && (
+      {isAutoLesson(lesson) && isAnyScreen && currentScreen?.name !== LessonScreen.Finish && (
         <View style={[styles.container, {
           paddingLeft: insets.left + 20,
           paddingRight: insets.right + 20,
@@ -217,17 +217,22 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
               key={currentScreen.sequence[0].id}
             />
           )}
-
-          {isAnyScreen && currentScreen?.name === LessonScreen.Finish && (
-            <FinishScreen
-              name={LessonScreen.Finish}
-              next={onComplete}
-              retry={onRetry}
-            />
-          )}
         </View>
       )}
-      {isManualyLesson(lesson) && (
+
+      {(isAutoLesson(lesson) || isManualyLesson(lesson)) && currentScreen !== null && isAnyLessonScreen(currentScreen) && currentScreen?.name === LessonScreen.Finish &&
+        <View style={[styles.container, {
+          paddingLeft: insets.left + 20,
+          paddingRight: insets.right + 20,
+        }]}>
+          <FinishScreen
+            name={LessonScreen.Finish}
+            next={onComplete}
+            retry={onRetry}
+          />
+        </View>}
+
+      {isManualyLesson(lesson) && !isAnyLessonScreen(currentScreen) && (
         <View style={styles.container}>
           {
           currentScreen !== null &&

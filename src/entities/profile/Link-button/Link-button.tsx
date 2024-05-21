@@ -19,7 +19,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({ children, link }) => {
       style={[styles.button, { borderColor: colors.color2 }]}
     >
       <FontAwesome5 name="telegram" size={24} color={colors.color4} />
-      <Text style={[styles.text, { borderColor: colors.color2 }]} >
+      <Text style={[styles.text, { color: colors.color4 }]} >
         {children}
       </Text>
     </Pressable>

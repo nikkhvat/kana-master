@@ -94,7 +94,12 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
       const screens = generateScreens(letters);
       setScreens(screens);
     } else {
-      setScreens(infoScreens);
+      setScreens([
+        ...infoScreens,
+        {
+          name: LessonScreen.Finish
+        }
+      ]);
     }
   };
 
