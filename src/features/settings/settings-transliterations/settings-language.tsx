@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
@@ -12,7 +12,7 @@ import LanguageButton from "@/entities/profile/language-button/language-button";
 const SettingsTransliterations: React.FC = () => {
   const { colors } = useThemeContext();  
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const romaji = [
     { key: Transliterations.HEP, short: "HEP", label: t("transliterationSystems.hepburn") },
@@ -32,6 +32,14 @@ const SettingsTransliterations: React.FC = () => {
     setTransliterationsTab(transliteration);
     updateTransliterations(transliteration);
   };
+
+  useEffect(() => {
+    if (i18n.language === "ru") {
+      onUpdateTransliterations(russian[0].key)
+    } else {
+      onUpdateTransliterations(romaji[0].key)
+    }
+  }, [i18n.language])
 
   return (
     <>
