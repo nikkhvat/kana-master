@@ -55,16 +55,14 @@ const TopicItem: React.FC<TopicItemProps> = ({
 
   const lineStyle = {
     backgroundColor: isPassed ? colors.second_color2 : colors.color2,
-    height: (isOpened ? "65%" : 24) as number,
+    height: (isOpened ? "64%" : 24) as number,
   };
 
   return (
     <Pressable
       style={[
         styles.container,
-        {
-          paddingBottom: (isOpened && !isLast) ? 15 : 35,
-        },
+        { paddingBottom: (isOpened && !isLast) ? 8 : 35 },
       ]}
       onPress={() => onClick?.()}
     >
@@ -103,6 +101,8 @@ const TopicItem: React.FC<TopicItemProps> = ({
                 onClick={onStartLesson}
                 customStyles={{
                   width: 108,
+                  marginTop: 0,
+                  marginBottom: 0,
                 }}
                 type={"general"}
                 title={isPassed ? t("common.retry") : t("common.start")}
@@ -140,9 +140,6 @@ const styles = StyleSheet.create({
     height: 72,
   },
   info: {
-    height: "100%",
-    justifyContent: "flex-start",
-    flexDirection: "column",
     gap: 5,
   },
   infoLine: {
@@ -205,7 +202,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 54,
     borderRadius: 4,
-    top: 80,
+    top: 82,
   },
   openedInfo: {
     width: "100%",

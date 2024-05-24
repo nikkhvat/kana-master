@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   text: {
     width: "50%",
-    fontSize: 15,
-    fontWeight: "500"
+    fontSize: 17,
+    fontWeight: "600"
   }
 });

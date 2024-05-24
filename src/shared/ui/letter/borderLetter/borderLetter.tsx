@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Dimensions, View } from "react-native";
+import { View } from "react-native";
 
 import Symbol from "@/entities/kana/symbol/symbol";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
@@ -11,16 +11,12 @@ type borderLetterProps = {
   kana: KanaAlphabet
 }
 
-const screenWidth = Dimensions.get("window").width;
-
 const BorderLetter: React.FC<borderLetterProps> = ({ id, kana }) => {
   const { colors } = useThemeContext();
 
   return (
     <View>
       <View style={{
-        width: screenWidth - 39,
-        height: screenWidth - 39,
         borderColor: colors.color2,
         borderWidth: 1,
         borderRadius: 12,

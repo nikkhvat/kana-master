@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyleProp, StyleSheet, TextStyle } from "react-native";
+import { StyleProp, StyleSheet, TextStyle, View } from "react-native";
 import { Text } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
@@ -17,9 +17,9 @@ const PageTitle: React.FC<PageTitleProps> = ({
   const { colors } = useThemeContext();
   
   return (
-    <Text style={[styles.title, { color: colors.color4 }, style]}>
+    children ? <Text style={[styles.title, { color: colors.color4 }, style]}>
       {children}
-    </Text>
+    </Text> : <View></View>
   );
 };
 

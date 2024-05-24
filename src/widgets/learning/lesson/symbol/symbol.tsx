@@ -45,8 +45,6 @@ const LessonSymbolScreen: React.FC<LessonSymbolScreenProps> = ({
           style={[
             styles.symbolContainer,
             {
-              width: screenWidth - 40,
-              height: screenWidth - 40,
               borderColor: colors.color2,
             },
           ]}
@@ -87,13 +85,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 12,
     marginTop: 30,
-    paddingTop: 4,
-    paddingLeft: 4,
   },
   title: {
     fontSize: 17,
     fontWeight: "600",
     textAlign: "center",
+    height: 50
   },
   bottomRow: {
     justifyContent: "space-between",

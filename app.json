@@ -3,7 +3,7 @@
     "name": "Kana master",
     "slug": "kana-master",
     "privacy": "public",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "githubUrl": "https://github.com/nikkhvat/kana-master",
     "icon": "./assets/icon.png",
@@ -41,7 +41,9 @@
           "backgroundColor": "#1F1F1F"
         }
       },
-      "package": "pro.khvat.kanamaster"
+      "package": "pro.khvat.kanamaster",
+      "version": "1.0.4",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"

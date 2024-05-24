@@ -34,6 +34,7 @@ const getTypeById = (id: LettersKeys) => {
 };
 
 const isIos = Platform.OS === "ios";
+const isAndroid = Platform.OS === "android";
 
 export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
@@ -69,7 +70,12 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
         <View style={[styles.container, { backgroundColor: colors.color1 }]}>
           {isIos && <View style={[styles.lineContainer, { top: 155, backgroundColor: colors.color2 }]} />}
           <PageTitle style={styles.title} >{t("tabs.kana")}</PageTitle>
-          <View style={styles.switcherContainer}>
+          <View style={[
+            styles.switcherContainer,
+            {
+              paddingBottom: isAndroid ? 20 : 0
+            }
+          ]}>
             <Switcher<KanaAlphabet>
               activeTab={activeTab}
               setActiveTab={setActiveTab}

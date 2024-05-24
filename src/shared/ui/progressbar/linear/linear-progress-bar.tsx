@@ -1,10 +1,11 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Pressable } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import IconButton from "../../icon-button";
 
 
 interface ProgressBarProp {
@@ -30,14 +31,9 @@ const LinearProgressBar: React.FC<ProgressBarProp> = ({ close, current, all, tit
         ]} />
       </View>
       <View style={styles.progressBarBottom}>
-        <TouchableOpacity style={styles.progressBarClose} onPress={() => close?.()}>
-          <Icon
-            onPress={() => close?.()}
-            name="close"
-            size={24}
-            color={colors.color3}
-          />
-        </TouchableOpacity>
+        <IconButton onPress={() => close?.()} >
+          <Icon name="close" size={24} color={colors.color3} />
+        </IconButton>
         <Text style={[styles.progressBarText, { color: colors.color3 }]}>
           {title ? title : t("practice.question")} {current} / {all}
         </Text>
@@ -48,14 +44,12 @@ const LinearProgressBar: React.FC<ProgressBarProp> = ({ close, current, all, tit
 
 const styles = StyleSheet.create({
   progressBarContainer: {
-    width: "100%",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
   },
   progressBarLine: {
     width: "100%",
-    height: 4,
   },
   progressBarLineActive: {
     height: 4,
@@ -65,13 +59,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: 6,
   },
   progressBarClose: {
+    zIndex: 999,
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: -15,
-    padding: 10,
   },
   progressBarText: {
     textAlign: "right",

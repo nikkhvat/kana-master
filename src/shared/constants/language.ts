@@ -5,9 +5,10 @@ export enum ShortLanguage {
   DE = "de",
   RU = "ru",
   IT = "it",
+  PT = "pt",
 }
 
-export type LanguageKeys = "en" | "es" | "fr" | "de" | "ru" | "it"
+export type LanguageKeys = "en" | "es" | "fr" | "de" | "ru" | "it" | "pt"
 
 export const LanguageName = {
   en: "English",
@@ -16,6 +17,7 @@ export const LanguageName = {
   de: "Deutsch",
   ru: "Русский",
   it: "Italiano",
+  pt: "Português",
 };
 
 export const languageRomanji: ("en" | "ru")[] = ["en", "ru"];
@@ -29,13 +31,15 @@ export const enumerationLanguageList = [
   ShortLanguage.DE,
   ShortLanguage.IT,
   ShortLanguage.RU,
+  ShortLanguage.PT,
 ];
 
 export const languageList = [
   { title: LanguageName.en, key: ShortLanguage.EN },
-  // { title: LanguageName.es, key: ShortLanguage.ES },
-  // { title: LanguageName.fr, key: ShortLanguage.FR },
+  { title: LanguageName.es, key: ShortLanguage.ES },
+  { title: LanguageName.fr, key: ShortLanguage.FR },
   { title: LanguageName.ru, key: ShortLanguage.RU },
-  // { title: LanguageName.de, key: ShortLanguage.DE },
-  // { title: LanguageName.it, key: ShortLanguage.IT },
+  { title: LanguageName.pt, key: ShortLanguage.PT },
+  { title: LanguageName.de, key: ShortLanguage.DE },
+  { title: LanguageName.it, key: ShortLanguage.IT },
 ];

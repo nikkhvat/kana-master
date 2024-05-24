@@ -70,7 +70,6 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
     return () => { };
   }, []);
 
-  // Вызываеться после ответа на вопрос
   const finishCallback = (onFinishPractice: boolean) => {
     if (onFinishPractice) {
       const result = getResult();
@@ -127,10 +126,13 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
   const question = questions[currentIndex];
 
   return (
-    <SafeLayout additionalPaddingTop={20} style={[styles.container, { 
-      backgroundColor: colors.color1,
-      gap: screenHeight < 700 ? 0 : 22
-    } ]}>
+    <SafeLayout 
+      additionalPaddingTop={20} 
+      style={[styles.container, { 
+        backgroundColor: colors.color1,
+        gap: screenHeight < 700 ? 0 : 22
+      }]}
+    >
         <View style={styles.header}>
           <LinearProgressBar
             close={navigation.goBack}
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
   header: {
     width: "100%",

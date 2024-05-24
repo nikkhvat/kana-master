@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Dimensions, Pressable, StyleSheet, View } from "react-native";
+import { Dimensions, Pressable, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
@@ -28,6 +28,7 @@ import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
 import DrawKana from "@/widgets/kana/draw-kana/ui/draw-kana";
+import IconButton from "@/shared/ui/icon-button";
 
 interface KanaInfoProps {
   route: RouteProp<RootStackParamList, "KanaInfo">;
@@ -38,8 +39,8 @@ const screenHeight = Dimensions.get("window").height;
 
 const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
   const { t } = useTranslation();
-
   const insets = useSafeAreaInsets();
+
   const { colors } = useThemeContext();
 
   const { id: LetterIdFromParams, kana: kanaFromParams } = route.params;
@@ -103,7 +104,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
     navigation.setOptions({
       headerTitleAlign: "center",
       headerLeft: () => (
-        <Pressable
+        <IconButton
           onPress={() => {
             if (isDrawSymbol) {
               setIsDrawSymbol(false);
@@ -117,7 +118,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
             size={24}
             color={colors.color4}
           />
-        </Pressable>
+        </IconButton>
       ),
       title:
         letterKana === KanaAlphabet.Hiragana
@@ -139,7 +140,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
                 kana={letterKana}
                 letter={letter as ILetter}
               />
-              <View style={{ marginTop: 35 }}>
+              <View style={{ marginTop: 30 }}>
                 <Symbol id={letter.id} kana={letterKana} />
               </View>
             </View>

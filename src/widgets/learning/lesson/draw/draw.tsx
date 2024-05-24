@@ -62,5 +62,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "600",
     textAlign: "center",
+    height: 50
   },
 });

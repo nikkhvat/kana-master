@@ -1,14 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import {
+  Platform,
   Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-
-import LetterText from "../letter/letter";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TEST_DELAY } from "@/shared/constants/kana";
@@ -24,11 +23,11 @@ type SequenceProps = {
 const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
   const { colors } = useThemeContext();
 
-  const shaffledLetters = useMemo(() => shuffleArray(sequence), [sequence]);
+  const shaffledLetters = useMemo(() => shuffleArray(sequence), [JSON.stringify(sequence)]);
 
   const emptyLetters = useMemo(
     () => sequence.map(() => null),
-    [sequence],
+    [JSON.stringify(sequence)],
   );
 
   const [selectedLetters, setSelectedLetters] = useState(
@@ -90,7 +89,7 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
 
   useEffect(() => {
     reset();
-  }, [sequence]);
+  }, [JSON.stringify(sequence)]);
 
   const getBorderLetterContainer = (
     letter: null | { letter: string; index: number },
@@ -108,6 +107,8 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
     };
   };
 
+  const isAndroid = Platform.OS === "android";
+
   return (
     <View style={styles.content}>
       <Pressable onPress={reset} style={styles.wordContainer}>
@@ -120,7 +121,7 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
             ]}
           >
             {letter !== null && (
-              <Text style={[styles.letter, { color: colors.color4 }]}>
+              letter.letter && <Text style={[styles.letter, { color: colors.color4 }]}>
                 {letter.letter}
               </Text>
             )}
@@ -144,12 +145,12 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
                 },
               ]}
             >
-              <LetterText
-                fontSize={22}
-                color={!selected ? colors.color4 : "transparent"}
-              >
-                {letter}
-              </LetterText>
+              <Text style={{
+                color: !selected ? colors.color4 : "transparent",
+                fontSize: 22,
+                fontWeight: "400",
+                marginTop: isAndroid ? -5 : 0
+              }} >{letter}</Text>
             </TouchableOpacity>
           );
         })}
@@ -174,7 +175,7 @@ const styles = StyleSheet.create({
   },
   letterContainer: {
     minWidth: 22,
-    height: 26,
+    minHeight: 32,
     borderBottomWidth: 2,
     display: "flex",
     justifyContent: "center",
@@ -195,7 +196,6 @@ const styles = StyleSheet.create({
   chooseLettersBox: {
     borderRadius: 12,
     borderWidth: 1,
-    padding: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",

@@ -77,9 +77,9 @@ const Cell: React.FC<CellProps> = ({
       )}
       {cell !== null && !isStartOfLine && (
         <>
-          <Text style={[styles.symbol, { fontSize: 17, color: colors.color4 }]}>
-            {cell && getKana(cell, kana)}
-          </Text>
+          {cell && <Text style={[styles.symbol, { fontSize: 17, color: colors.color4 }]}>
+            {getKana(cell, kana)}
+          </Text>}
           {cell && (
             <Text style={[styles.subText, { color: colors.color4 }]}>
               {getRomanji(cell).toUpperCase()}
@@ -95,7 +95,7 @@ const Cell: React.FC<CellProps> = ({
       )}
 
       {isPlus && (
-        <Text style={[styles.symbol, { fontSize: 17, color: colors.color4 }]}>
+        <Text style={[styles.symbol, { fontSize: 17, color: colors.color4}]}>
           {isStartOfLine}
         </Text>
       )}

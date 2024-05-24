@@ -26,19 +26,16 @@ const generateFindThePair = ({
 
   const word1 = getRandomWords([word.romanji], words);
   const word2 = getRandomWords([word.romanji, word1.romanji], words);
-  const word3 = getRandomWords([word.romanji, word1.romanji, word2.romanji], words);
 
   const kanaElements = [
     word?.kana,
     word1?.kana,
     word2?.kana,
-    word3?.kana,
   ];
   const romanjiElements = [
     `${word?.romanji} (${word[lang as "en"]})`,
     `${word1?.romanji} (${word1[lang as "en"]})`,
     `${word2?.romanji} (${word2[lang as "en"]})`,
-    `${word3?.romanji} (${word3[lang as "en"]})`,
   ];
 
   return {
@@ -54,7 +51,6 @@ const generateFindThePair = ({
       [word?.kana, word?.romanji],
       [word1?.kana, word1?.romanji],
       [word2?.kana, word2?.romanji],
-      [word3?.kana, word3?.romanji],
     ],
   };
 };

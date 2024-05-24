@@ -18,25 +18,26 @@ type SelectSequenceLettersProps = LessonSelectSequenceLetters & {
 
 const screenWidth = Dimensions.get("window").width;
 
-const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ name, sequence, kana, next }) => {
-
+const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ sequence, kana, next }) => {
   const { colors } = useThemeContext();
-  
+  const { getRomanji } = useGetRomanji();
   const { t } = useTranslation();
 
-  const shafledArray = useMemo(() => shuffleArray(sequence), []);
-  const shafledArray2 = useMemo(() => shuffleArray(sequence), []);
+  const sequenceTrans = sequence.map(item => item.transliterations[0]).join(", ")
 
-  const { getRomanji } = useGetRomanji();
+  console.log('sequenceTrans -> ',sequenceTrans);
 
-  const shafledArrayString =  shafledArray.map(item => getRomanji(item)).join(", ");
-  const shafledArray2String =  shafledArray2.map(item => getRomanji(item)).join(", ");
+  const shafledArray = useMemo(() => shuffleArray(sequence), [sequenceTrans]);
+  const shafledArray2 = useMemo(() => shuffleArray(sequence), [sequenceTrans]);
 
+
+  const shafledArrayString = shafledArray.map(item => getRomanji(item)).join(", ");
+  const shafledArray2String = shafledArray2.map(item => getRomanji(item)).join(", ");
 
   const btns = useMemo(() => shuffleArray([
     shafledArrayString,
     shafledArray2String
-  ]), [sequence]);
+  ]), [sequenceTrans]);
 
   const [states, setStates] = useState<(null | false | true)[]>();
 

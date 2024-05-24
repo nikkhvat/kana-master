@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { completeLesson } from "../../model/slice";
@@ -71,6 +71,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
 
   const { init, currentScreen, screen, lessonScreens, next, retry } =
     useEducationLessonContext();
+
 
   const addMarkCompleteLessonInStore = () => {
     if (isAutoLesson(lesson)) {
@@ -204,7 +205,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
               sequence={currentScreen.sequence}
               kana={lesson.kana || KanaAlphabet.Hiragana}
               next={next}
-              key={currentScreen.sequence[0].id}
+              key={currentScreen.sequence.join()}
             />
           )}
 
