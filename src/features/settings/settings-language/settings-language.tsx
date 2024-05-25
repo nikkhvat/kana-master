@@ -19,7 +19,7 @@ const SettingsLanguage: React.FC = () => {
   const setLanguage = async (lang: LanguageKeys) => {
     await AsyncStorage.setItem("lang", lang);
     i18n.changeLanguage(lang);
-
+    
     dispatch(updateLessons({ lang }))
   };
 
