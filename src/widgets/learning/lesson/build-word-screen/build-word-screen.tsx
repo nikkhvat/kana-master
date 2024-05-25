@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
@@ -9,6 +9,7 @@ import { LessonBuildWord } from "@/shared/constants/lessons";
 import getKana from "@/shared/helpers/getKanaKey";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import Sequence from "@/shared/ui/sequence";
+import { shuffleArray } from "@/shared/helpers/letters";
 
 
 type SelectSequenceLettersProps = LessonBuildWord & {
@@ -19,10 +20,12 @@ type SelectSequenceLettersProps = LessonBuildWord & {
 const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ sequence, kana, next }) => {
   const { colors } = useThemeContext();
 
-  const sequenceArray = sequence.map(item => getKana(item, kana));
   const { t } = useTranslation();
-
+  
   const { getRomanji } = useGetRomanji();
+  
+  const shaffledSequence = useMemo(() => shuffleArray(sequence), [JSON.stringify(sequence)]);
+  const sequenceArray = shaffledSequence.map(item => getKana(item, kana));
 
   return (
     <View style={styles.container} >
@@ -35,14 +38,10 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ seq
         color: colors.color4,
         marginBottom: 60
       }]} >
-        {sequence.map(item => getRomanji(item)).join(", ")}
+        {shaffledSequence.map(item => getRomanji(item)).join(", ")}
       </Text>
 
-      <Sequence
-        key={sequenceArray.join("")}
-        onFinish={next}
-        sequence={sequenceArray}
-      />
+      <Sequence onFinish={next} sequence={sequenceArray} />
     </View>
   );
 };

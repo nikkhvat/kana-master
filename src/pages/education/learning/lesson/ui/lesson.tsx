@@ -165,7 +165,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
               symbol={currentScreen.symbol}
               kana={lesson.kana || KanaAlphabet.Hiragana}
               next={next}
-              key={currentScreen.symbol.id}
+              key={screen}
             />
           )}
 
@@ -175,7 +175,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
               symbol={currentScreen.symbol}
               kana={lesson.kana || KanaAlphabet.Hiragana}
               next={next}
-              key={currentScreen.symbol.id}
+              key={screen}
             />
           )}
 
@@ -185,7 +185,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
               symbols={currentScreen.symbols}
               kana={lesson.kana || KanaAlphabet.Hiragana}
               next={next}
-              key={currentScreen.symbols[0].id}
+              key={screen}
             />
           )}
 
@@ -195,7 +195,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
               symbols={currentScreen.symbols}
               kana={lesson.kana || KanaAlphabet.Hiragana}
               next={next}
-              key={currentScreen.symbols[0].id}
+              key={screen}
             />
           )}
 
@@ -205,7 +205,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
               sequence={currentScreen.sequence}
               kana={lesson.kana || KanaAlphabet.Hiragana}
               next={next}
-              key={currentScreen.sequence.join()}
+              key={screen}
             />
           )}
 
@@ -215,7 +215,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
               sequence={currentScreen.sequence}
               kana={lesson.kana || KanaAlphabet.Hiragana}
               next={next}
-              key={currentScreen.sequence[0].id}
+              key={screen}
             />
           )}
         </View>

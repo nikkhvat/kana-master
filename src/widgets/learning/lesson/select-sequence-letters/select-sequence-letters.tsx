@@ -25,8 +25,6 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({ seq
 
   const sequenceTrans = sequence.map(item => item.transliterations[0]).join(", ")
 
-  console.log('sequenceTrans -> ',sequenceTrans);
-
   const shafledArray = useMemo(() => shuffleArray(sequence), [sequenceTrans]);
   const shafledArray2 = useMemo(() => shuffleArray(sequence), [sequenceTrans]);
 

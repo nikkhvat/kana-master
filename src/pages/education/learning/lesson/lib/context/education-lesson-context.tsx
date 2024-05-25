@@ -71,10 +71,11 @@ function generateScreens(letters: ILetter[]): AnyLesson[] {
     }
   }
 
-  screens.push({ name: LessonScreen.SelectSequenceLetters, sequence: shuffleArray(letters) });
-  screens.push({ name: LessonScreen.SelectSequenceLetters, sequence: shuffleArray(letters) });
-  screens.push({ name: LessonScreen.BuildWord, sequence: shuffleArray(letters) });
-  screens.push({ name: LessonScreen.BuildWord, sequence: shuffleArray(letters) });
+  
+  screens.push({ name: LessonScreen.SelectSequenceLetters, sequence: letters });
+  screens.push({ name: LessonScreen.SelectSequenceLetters, sequence: letters });
+  screens.push({ name: LessonScreen.BuildWord, sequence: letters });
+  screens.push({ name: LessonScreen.BuildWord, sequence: letters });
   screens.push({ name: LessonScreen.Finish });
 
   return screens;
