@@ -55,7 +55,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
 
   const lineStyle = {
     backgroundColor: isPassed ? colors.second_color2 : colors.color2,
-    height: (isOpened ? "64%" : 24) as number,
+    height: (isOpened ? "65%" : 24) as number,
   };
 
   return (
@@ -101,7 +101,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
                 onClick={onStartLesson}
                 customStyles={{
                   width: 108,
-                  marginTop: 0,
+                  marginTop: 10,
                   marginBottom: 0,
                 }}
                 type={"general"}
