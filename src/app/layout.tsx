@@ -145,6 +145,9 @@ const Layout = () => {
               component={KanaInfo}
               options={({ route }) => ({ 
                 title: route.params.title,
+                contentStyle: {
+                  borderTopWidth: 0,
+                }
               })} />
             <Stack.Screen 
               name="KanaSelect" 
