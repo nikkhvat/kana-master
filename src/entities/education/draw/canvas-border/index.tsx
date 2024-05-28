@@ -15,20 +15,20 @@ const CanvasBorder: React.FC<CanvasBorderProps> = ({ canvasSize }) => {
       <Line
         stroke={colors.color2}
         strokeWidth={1}
-        strokeDasharray="16, 16"
+        strokeDasharray="10, 10"
         x1={canvasSize / 2}
         x2={canvasSize / 2}
         y1="0"
-        y2={canvasSize}
+        y2={canvasSize - 2}
       />
       <Line
         stroke={colors.color2}
         strokeWidth={1}
-        strokeDasharray="16, 16"
+        strokeDasharray="10, 10"
         y1={canvasSize / 2}
         y2={canvasSize / 2}
         x1="0"
-        x2={canvasSize}
+        x2={canvasSize - 2}
       />
     </>    
   )

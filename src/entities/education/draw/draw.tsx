@@ -108,18 +108,18 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
               },
             ]}
           >
+            {isShowLetter && (
+              <View
+                style={[
+                  styles.drawContainerImage,
+                  { width: canvasSize - 2, height: canvasSize - 1 },
+                ]}
+              >
+                <Symbol id={letter?.id} kana={kana} />
+              </View>
+            )}
             <Svg height={canvasSize} width={canvasSize}>
               {isShowBorder && <CanvasBorder canvasSize={canvasSize} />}
-              {isShowLetter && (
-                <View
-                  style={[
-                    styles.drawContainerImage,
-                    { width: canvasSize - 2, height: canvasSize - 1 },
-                  ]}
-                >
-                  <Symbol id={letter?.id} kana={kana} />
-                </View>
-              )}
               {paths.map((path, index) => (
                 <Path
                   key={`path-${index}`}
