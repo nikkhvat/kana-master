@@ -145,7 +145,6 @@ const Layout = () => {
               component={KanaInfo}
               options={({ route }) => ({ 
                 title: route.params.title,
-                presentation: "fullScreenModal",
               })} />
             <Stack.Screen 
               name="KanaSelect" 

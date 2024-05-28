@@ -10,7 +10,7 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 const ToggleShowLetter: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const isShowLetter = useAppSelector((state) => state.profile.draw.isShowLetter);
+  const isShowLetter = useAppSelector((state) => state.profile?.draw?.isShowLetter);
 
   const toggle = () => {
     dispatch(toggleShowLetter(null))

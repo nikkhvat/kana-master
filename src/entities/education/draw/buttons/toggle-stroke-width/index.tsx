@@ -17,21 +17,26 @@ const ToggleStrokeWidth: React.FC = () => {
   }
 
   const { colors } = useThemeContext();
+
+  const BIG_WIDTH = 14;
+  const MIDDLE_WIDTH = 10;
+  const SMALL_WIDTH = 6;
+
   
   return (
     <Button
       customStyles={{ width: 50, height: 50 }}
       type={"weak"}
       icon={
-        strokeWidth === 14 ?
+        strokeWidth === BIG_WIDTH ?
           <Icon name={"circle-slice-8"} size={24} color={colors.color4} />
-          : strokeWidth === 9 ?
+          : strokeWidth === MIDDLE_WIDTH ?
             <Icon name={"circle-double"} size={24} color={colors.color4} />
             :
             <Icon name={"circle-outline"} size={24} color={colors.color4} />
       }
-      onClick={() => strokeWidth === 14 ? setStrokeWidth(9)
-          : strokeWidth === 9 ? setStrokeWidth(7) : setStrokeWidth(14)}
+      onClick={() => strokeWidth === BIG_WIDTH ? setStrokeWidth(MIDDLE_WIDTH)
+        : strokeWidth === MIDDLE_WIDTH ? setStrokeWidth(SMALL_WIDTH) : setStrokeWidth(BIG_WIDTH)}
     />
   )
 };

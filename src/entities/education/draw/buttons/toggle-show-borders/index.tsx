@@ -10,7 +10,7 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 const ToggleShowBorders: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const isShowBorder = useAppSelector((state) => state.profile.draw.isShowBorder);
+  const isShowBorder = useAppSelector((state) => state.profile?.draw?.isShowBorder);
 
   const toggle = () => {
     dispatch(toggleShowBorder(null))
