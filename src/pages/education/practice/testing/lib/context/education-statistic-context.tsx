@@ -58,9 +58,9 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
 
 
   const init = () => {
+    items = [];
     const now = new Date().getTime();
     setTime(now);
-    items = [];
   };
 
   const pickAnswer = ({

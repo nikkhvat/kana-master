@@ -68,6 +68,8 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
       time: now - time,
       correctAnswer,
     });
+
+    setTime(now);
   };
 
   const registrError = (data: RegistErrorProps) => {

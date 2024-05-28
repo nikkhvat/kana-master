@@ -74,6 +74,7 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
     setTimeout(() => {
       if (onFinishPractice) {
         const result = getResult();
+
         navigation.navigate("Results", { result });
       }
     }, TEST_DELAY);
