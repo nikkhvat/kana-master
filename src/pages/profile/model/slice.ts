@@ -3,7 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { InitialState } from "./types";
 
 const initialState: InitialState = {
-  drawLine: 14,
+  draw: {
+    lineWidth: 14,
+
+    isShowBorder: true,
+    isShowLetter: true,
+  }
 };
 
 export const profileSlice = createSlice({
@@ -11,11 +16,17 @@ export const profileSlice = createSlice({
   initialState,
   reducers: {
     updateDrawLine: (state, action) => {
-      state.drawLine = action.payload;
+      state.draw.lineWidth = action.payload;
+    },
+    toggleShowBorder: (state, action) => {
+      state.draw.isShowBorder = !state.draw.isShowBorder;
+    },
+    toggleShowLetter: (state, action) => {
+      state.draw.isShowLetter = !state.draw.isShowLetter;
     }
   },
 });
 
-export const { updateDrawLine } = profileSlice.actions;
+export const { updateDrawLine, toggleShowBorder, toggleShowLetter } = profileSlice.actions;
 
 export default profileSlice.reducer;

@@ -1,4 +1,9 @@
 
 export interface InitialState {
-  drawLine: number
+  draw: {
+    lineWidth: number
+
+    isShowBorder: boolean
+    isShowLetter: boolean
+  }
 }

@@ -7,7 +7,6 @@ import {
   GestureResponderEvent,
 } from "react-native";
 import { Svg, Path } from "react-native-svg";
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import Symbol from "@/entities/kana/symbol/symbol";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
@@ -15,9 +14,12 @@ import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import { verticalScale } from "@/shared/helpers/metrics";
-import Button from "@/shared/ui/button/button";
-import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
-import { updateDrawLine } from "@/pages/profile/model/slice";
+import { useAppSelector } from "@/shared/model/hooks";
+import ToggleStrokeWidth from "./buttons/toggle-stroke-width";
+import ToggleShowBorders from "./buttons/toggle-show-borders";
+import ToggleShowLetter from "./buttons/toggle-show-letter";
+import ClearButtons from "./buttons/clear-buttons";
+import CanvasBorder from "./canvas-border";
 
 const { width } = Dimensions.get("window");
 
@@ -33,12 +35,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
     [],
   );
 
-  const dispatch = useAppDispatch();
-
   const [paths, setPaths] = useState<{ x: number; y: number }[][]>([]);
-
-  const [isShowBorder, setIsShowBorder] = useState<boolean>(true);
-  const [isShowKana, setIsShowKana] = useState<boolean>(true);
 
   const { colors } = useThemeContext();
 
@@ -47,11 +44,9 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
     40 -
     (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0);
   
-  const strokeWidth = useAppSelector((state) => state.profile.drawLine);
-
-  const setStrokeWidth = (width: number) => {
-    dispatch(updateDrawLine(width))
-  }
+  const strokeWidth = useAppSelector((state) => state.profile.draw?.lineWidth);
+  const isShowLetter = useAppSelector((state) => state.profile.draw.isShowLetter);
+  const isShowBorder = useAppSelector((state) => state.profile.draw.isShowBorder);
 
   const onTouchEnd = () => {
     setPaths((prevPaths) => [...prevPaths, currentPath]);
@@ -127,33 +122,18 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
           onStartShouldSetResponder={() => true}
           onMoveShouldSetResponder={() => true}
         >
-          {isShowBorder && (
-            <>
-              <View
-                style={[
-                  styles.drawContainerLeftBlock,
-                  { borderRightColor: colors.color2 },
-                ]}
-              />
-              <View
-                style={[
-                  styles.drawContainerTopBlock,
-                  { borderBottomColor: colors.color2 },
-                ]}
-              />
-            </>
-          )}
-          {isShowKana && (
-            <View
-              style={[
-                styles.drawContainerImage,
-                { width: canvasSize - 2, height: canvasSize - 1 },
-              ]}
-            >
-              <Symbol id={letter?.id} kana={kana} />
-            </View>
-          )}
           <Svg height={canvasSize} width={canvasSize}>
+            {isShowBorder && <CanvasBorder canvasSize={canvasSize} />}
+            {isShowLetter && (
+              <View
+                style={[
+                  styles.drawContainerImage,
+                  { width: canvasSize - 2, height: canvasSize - 1 },
+                ]}
+              >
+                <Symbol id={letter?.id} kana={kana} />
+              </View>
+            )}
             {paths.map((path, index) => (
               <Path
                 key={`path-${index}`}
@@ -176,60 +156,13 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
           </Svg>
         </View>
       </View>
-      <View style={styles.buttonsContainer}>
-        <Button
-          customStyles={{ flex: 0.5, height: 50 }}
-          type={"inactive"}
-          icon={<Icon name={"keyboard-backspace"} size={24} color={colors.color4} />}
-          onClick={handleClearStepButtonClick}
-        />
-        <Button
-          customStyles={{ flex: 0.5, height: 50 }}
-          type={"inactive"}
-          icon={<Icon name={"replay"} size={24} color={colors.color4} />}
-          onClick={handleClearButtonClick}
-        />
-      </View>
+      <ClearButtons clearFull={handleClearButtonClick} clearStep={handleClearStepButtonClick} />
       <View style={styles.buttonsContainer}>
         <View style={styles.buttonsCell}>
-          <Button
-            customStyles={{ width: 50, height: 50 }}
-            type={isShowBorder ? "active" : "inactive"}
-            icon={
-              <Icon
-                name={"border-outside"}
-                size={24}
-                color={isShowBorder ? colors.color5 : colors.color4}
-              />
-            }
-            onClick={() => setIsShowBorder((prev) => !prev)}
-          />
-          <Button
-            customStyles={{ width: 50, height: 50 }}
-            type={isShowKana ? "active" : "inactive"}
-            icon={
-              <Icon
-                name={"eye-outline"}
-                size={24}
-                color={isShowKana ? colors.color5 : colors.color4}
-              />
-            }
-            onClick={() => setIsShowKana((prev) => !prev)}
-          />
+          <ToggleShowBorders />
+          <ToggleShowLetter />
         </View>
-        <Button
-          customStyles={{ width: 50, height: 50 }}
-          type={"weak"}
-          icon={
-            strokeWidth === 14 ?
-              <Icon name={"circle-slice-8"} size={24} color={colors.color4} />
-              : strokeWidth === 9 ?
-                <Icon name={"circle-double"} size={24} color={colors.color4} />
-                :
-                <Icon name={"circle-outline"} size={24} color={colors.color4} />
-          }
-          onClick={() => strokeWidth === 14 ? setStrokeWidth(9) : strokeWidth === 9 ? setStrokeWidth(7) : setStrokeWidth(14)}
-        />
+        <ToggleStrokeWidth />
       </View>
     </View>
   );
@@ -248,24 +181,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     opacity: 0.3,
-  },
-  drawContainerLeftBlock: {
-    borderRightWidth: 1,
-    borderStyle: "solid",
-    position: "absolute",
-    left: 0,
-    top: 0,
-    width: "50%",
-    height: "100%",
-  },
-  drawContainerTopBlock: {
-    borderBottomWidth: 1,
-    borderStyle: "solid",
-    position: "absolute",
-    left: 0,
-    top: 0,
-    width: "100%",
-    height: "50%",
   },
   buttonsContainer: {
     flexDirection: "row",
