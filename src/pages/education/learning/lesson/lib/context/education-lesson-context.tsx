@@ -3,6 +3,7 @@ import React, { createContext, FC, PropsWithChildren, useContext, useState } fro
 import { AnyLesson, InfoLessonScreen, LessonScreen } from "@/shared/constants/lessons";
 import { ILetter } from "@/shared/data/lettersTable";
 
+import * as Haptics from "expo-haptics";
 
 interface EducationLessonContextValue {
   init: (letters: ILetter[], type: "auto" | "manually", infoScreens: InfoLessonScreen[]) => void;
@@ -124,6 +125,8 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
     if (screen + 1 !== screens.length) {
       setScreen(prev => prev + 1);
     }
+    
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
   const retry = () => {
