@@ -7,6 +7,7 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { TestMode } from "@/shared/constants/kana";
 import Button from "@/shared/ui/button/button";
 
+import * as Haptics from "expo-haptics";
 
 export type CardModeSelectProps = {
   hiraAvailable: boolean
@@ -59,6 +60,8 @@ const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
   ];
 
   const toggle = (key: TestMode) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
     if (selectedCardMode.includes(key)) {
       setSelectedCardMode(prev => prev.filter((item) => item !== key));
       setMode(prev => prev.filter((item) => item !== key));

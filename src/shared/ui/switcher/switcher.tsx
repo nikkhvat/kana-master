@@ -6,6 +6,7 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
 import { verticalScale } from "@/shared/helpers/metrics";
 
+import * as Haptics from "expo-haptics";
 interface SwitcherProps<T extends string > {
   activeTab: T;
   options: T[];
@@ -29,6 +30,7 @@ function Switcher<T extends string>(props: SwitcherProps<T>) {
 
   const handlePress = (index: number) => {
     setActiveTab(options[index]);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
   useEffect(() => {

@@ -8,6 +8,7 @@ import { DifficultyLevelType } from "@/shared/constants/kana";
 import Button from "@/shared/ui/button/button";
 import Switcher from "@/shared/ui/switcher/switcher";
 
+import * as Haptics from "expo-haptics";
 
 export type CardModeSelectProps = {
   available: boolean
@@ -49,7 +50,9 @@ const TestModeSelect: React.FC<CardModeSelectProps> = ({
     }]
   ];
 
-  const toggle = (key: DifficultyLevelType) => {
+  const toggle = (key: DifficultyLevelType) => {    
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
     if (selectedCardMode.includes(key)) {
       setSelectedCardMode(prev => prev.filter((item) => item !== key));
       setCards(prev => prev.filter((item) => item !== key));
