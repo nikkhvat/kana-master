@@ -3,7 +3,7 @@
     "name": "Kana master",
     "slug": "kana-master",
     "privacy": "public",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "orientation": "portrait",
     "githubUrl": "https://github.com/nikkhvat/kana-master",
     "icon": "./assets/icon.png",

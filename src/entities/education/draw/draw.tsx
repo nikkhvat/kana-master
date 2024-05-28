@@ -16,6 +16,8 @@ import { KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import { verticalScale } from "@/shared/helpers/metrics";
 import Button from "@/shared/ui/button/button";
+import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
+import { updateDrawLine } from "@/pages/profile/model/slice";
 
 const { width } = Dimensions.get("window");
 
@@ -30,6 +32,9 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
   const [currentPath, setCurrentPath] = useState<{ x: number; y: number }[]>(
     [],
   );
+
+  const dispatch = useAppDispatch();
+
   const [paths, setPaths] = useState<{ x: number; y: number }[][]>([]);
 
   const [isShowBorder, setIsShowBorder] = useState<boolean>(true);
@@ -41,7 +46,12 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
     width -
     40 -
     (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0);
-  const strokeWidth = 14;
+  
+  const strokeWidth = useAppSelector((state) => state.profile.drawLine);
+
+  const setStrokeWidth = (width: number) => {
+    dispatch(updateDrawLine(width))
+  }
 
   const onTouchEnd = () => {
     setPaths((prevPaths) => [...prevPaths, currentPath]);
@@ -64,6 +74,19 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
       event.preventDefault();
     }
   };
+
+  const handleClearStepButtonClick = () => {
+    setCurrentPath(prev => {
+      const newPath = [...prev];
+      newPath.pop();
+      return newPath;
+    });
+    setPaths(prev => {
+      const newPath = [...prev];
+      newPath.pop();
+      return newPath;
+    });
+  }
 
   const handleClearButtonClick = () => {
     setPaths([]);
@@ -154,6 +177,20 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
         </View>
       </View>
       <View style={styles.buttonsContainer}>
+        <Button
+          customStyles={{ flex: 0.5, height: 50 }}
+          type={"inactive"}
+          icon={<Icon name={"keyboard-backspace"} size={24} color={colors.color4} />}
+          onClick={handleClearStepButtonClick}
+        />
+        <Button
+          customStyles={{ flex: 0.5, height: 50 }}
+          type={"inactive"}
+          icon={<Icon name={"replay"} size={24} color={colors.color4} />}
+          onClick={handleClearButtonClick}
+        />
+      </View>
+      <View style={styles.buttonsContainer}>
         <View style={styles.buttonsCell}>
           <Button
             customStyles={{ width: 50, height: 50 }}
@@ -182,9 +219,16 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
         </View>
         <Button
           customStyles={{ width: 50, height: 50 }}
-          type={"inactive"}
-          icon={<Icon name={"replay"} size={24} color={colors.color4} />}
-          onClick={handleClearButtonClick}
+          type={"weak"}
+          icon={
+            strokeWidth === 14 ?
+              <Icon name={"circle-slice-8"} size={24} color={colors.color4} />
+              : strokeWidth === 9 ?
+                <Icon name={"circle-double"} size={24} color={colors.color4} />
+                :
+                <Icon name={"circle-outline"} size={24} color={colors.color4} />
+          }
+          onClick={() => strokeWidth === 14 ? setStrokeWidth(9) : strokeWidth === 9 ? setStrokeWidth(7) : setStrokeWidth(14)}
         />
       </View>
     </View>
@@ -227,6 +271,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
+    gap: 15
   },
   buttonsCell: {
     flexDirection: "row",

@@ -59,7 +59,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
   const [letterKana, setLetterKana] = useState(kanaFromParams);
 
   const level = useAppSelector(
-    (state) => state.statistics.statistics[kanaFromParams][letterId],
+    (state) => state.statistics.statistics[letterKana][letterId],
   );
 
   const isEnabledStats = useAppSelector((state) => state.statistics.isEnabled);
