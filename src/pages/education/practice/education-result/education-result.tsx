@@ -3,7 +3,7 @@ import React from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
@@ -15,6 +15,7 @@ import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Button from "@/shared/ui/button/button";
 import CircularProgressBar from "@/shared/ui/progressbar/circular/circular-progress-bar";
 
+import * as StoreReview from 'expo-store-review';
 
 type LearnResultsNavigationProp = StackNavigationProp<RootStackParamList, "Results">;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, "Results">;
@@ -35,6 +36,14 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
 
   const home = () => {
     navigation.navigate("Root");
+    
+    try {
+      if (Platform.OS === "ios") {
+        StoreReview.requestReview();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const millisecondsToSeconds = (milliseconds: number) => {

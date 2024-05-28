@@ -1,11 +1,14 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { LessonFinish } from "@/shared/constants/lessons";
 import Button from "@/shared/ui/button/button";
+
+import * as StoreReview from 'expo-store-review';
+
 
 type FinishScreenProps = LessonFinish & {
   next: () => void
@@ -17,6 +20,18 @@ const FinishScreen: React.FC<FinishScreenProps> = ({ next, retry }) => {
 
   const { t } = useTranslation();
   const { colors } = useThemeContext();
+
+  const onNext = () => {
+    next()
+
+    try {
+      if (Platform.OS === "ios") {
+        StoreReview.requestReview();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   
   return (
     <View style={styles.container} >
@@ -44,7 +59,7 @@ const FinishScreen: React.FC<FinishScreenProps> = ({ next, retry }) => {
           customStyles={{ width: "100%" }}
           type={"general"}
           title={t("common.complete")}
-          onClick={next}
+          onClick={onNext}
         />
       </View>
     </View>
