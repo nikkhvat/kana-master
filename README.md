@@ -1,7 +1,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/nikkhvat/kana-master">
-    <img src="./assets/icon.png" style="border-radius: 10px" alt="Logo" width="80" height="80">
+    <img src="./docs/image/logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Kana Master - Learn Japanese</h3>
