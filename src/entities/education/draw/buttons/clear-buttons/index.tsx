@@ -42,7 +42,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
-    gap: 15
+    gap: 15,
+    height: 70
   },
 });
 

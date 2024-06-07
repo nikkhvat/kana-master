@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Svg, Path } from "react-native-svg";
 import { GestureHandlerRootView, PanGestureHandler, GestureHandlerGestureEvent } from "react-native-gesture-handler";
 import Symbol from "@/entities/kana/symbol/symbol";
@@ -93,7 +93,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
 
   return (
     <GestureHandlerRootView>
-      <View style={{ height: screenHeight - 200 }} >
+      <View>
         <PanGestureHandler
           onGestureEvent={onGestureEvent}
           onHandlerStateChange={onHandlerStateChange}
@@ -142,8 +142,10 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
             </Svg>
           </View>
         </PanGestureHandler>
+        
         <View style={styles.buttons} >
           <ClearButtons clearFull={handleClearButtonClick} clearStep={handleClearStepButtonClick} />
+
           <View style={styles.buttonsContainer}>
             <View style={styles.buttonsCell}>
               <ToggleShowBorders />
@@ -173,7 +175,7 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flex: 1,
-    height: 300,
+    flexDirection: "column",
   },
   buttonsContainer: {
     flexDirection: "row",
