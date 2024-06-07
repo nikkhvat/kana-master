@@ -7,11 +7,15 @@
   <h3 align="center">Kana Master - Learn Japanese</h3>
 
   <p align="center">
-    Kana Master - Learn Japanese" is your reliable guide to mastering the Japanese language.
+    Kana Master - Learn Japanese <br />
+    is your reliable guide to mastering the Japanese language.
     <br />
-    <a href="https://apps.apple.com/us/app/kana-master-learn-japanese/id6479753061">Apps Store</a>
+    <br />
+    <a href="https://apps.apple.com/us/app/kana-master-learn-japanese/id6479753061">App Store</a>
     ·
-    <a href="https://kana-master.khvat.pro/">WebSite</a>
+    <a href="https://kana-master.khvat.pro/">Website</a>
+    ·
+    <a href="https://www.behance.net/gallery/200432749/Mobile-App-Kana-Master">Behance</a>
   </p>
 </div>
 
