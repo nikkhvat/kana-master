@@ -23,7 +23,6 @@ interface DrawProps {
 }
 
 const screenWidth = Dimensions.get("window").width;
-const screenHeight = Dimensions.get("window").height;
 
 const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
   const [currentPath, setCurrentPath] = useState<{ x: number; y: number }[]>([]);
@@ -92,7 +91,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
   };
 
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ height: canvasSize + 165}} >
       <View>
         <PanGestureHandler
           onGestureEvent={onGestureEvent}
