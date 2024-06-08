@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text } from "react-native";
@@ -13,6 +13,10 @@ const SettingsTheme: React.FC = () => {
 
   const { t } = useTranslation();
   const [themeTab, setThemeTab] = useState<string>(themeString);
+
+  useEffect(() => {
+    setThemeTab(themeString);
+  }, [themeString])
 
   const onUpdateTheme = (theme: string) => {
     setThemeTab(theme);

@@ -11,7 +11,7 @@ type Colors = typeof darkTheme;
 
 const colors = {
   "dark": darkTheme,
-  "ligth": lightTheme,
+  "light": lightTheme,
 };
 
 interface ThemeContextType {
@@ -22,7 +22,7 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  colors: colors.ligth,
+  colors: colors.light,
   theme: Theme.Light,
   themeString: "light",
   updateTheme: () => { },
@@ -34,16 +34,16 @@ interface ThemeProviderProps {
 
 const getColors = (theme: Theme) => {
   if (theme === Theme.Dark) return colors["dark"];
-  if (theme === Theme.Light) return colors["ligth"];
+  if (theme === Theme.Light) return colors["light"];
 
   if (theme === Theme.Auto) {
     const themeDetected = Appearance.getColorScheme();
-    if (themeDetected === null || themeDetected === undefined) return colors["ligth"];
+    if (themeDetected === null || themeDetected === undefined) return colors["light"];
     if (themeDetected === "dark") return colors["dark"];
-    if (themeDetected === "light") return colors["ligth"];
+    if (themeDetected === "light") return colors["light"];
   }
 
-  return colors["ligth"];
+  return colors["light"];
 };
 
 export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({ children }) => {
@@ -71,9 +71,7 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({ children 
 
   const colors = getColors(theme);
 
-  const autoTheme = useColorScheme()
-
-  const themeString = theme === Theme.Auto ? "auto" : autoTheme === "dark" ? "dark" : "light";
+  const themeString = theme === Theme.Auto ? "auto" : theme === Theme.Dark ? "dark" : "light";
 
   return (
     <ThemeContext.Provider value={{ updateTheme, colors, theme, themeString: themeString }}>
