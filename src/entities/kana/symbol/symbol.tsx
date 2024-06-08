@@ -13,6 +13,8 @@ interface SymbolProps {
   kana: KanaAlphabet.Hiragana | KanaAlphabet.Katakana
   width?: number
   height?: number
+
+  isGray?: boolean
 }
 
 
@@ -26,14 +28,32 @@ const canvasSize =
 const Symbol: React.FC<SymbolProps> = ({
   id,
   kana,
+
+  isGray,
 }) => {
 
   const { colors } = useThemeContext();
   
-  const THEME = colors._theme === "dark" ? "DARK" : "LIGHT";
+  colors._theme === "dark" ? "DARK" : "LIGHT";
 
-  const getImagePath = (key: string | undefined, theme: "DARK" | "LIGHT") => {
-    const key_formated = `${kana}_${theme === "DARK" ? "dark" : "light"}_${key?.replaceAll("-", "_")}`;
+  let letterColors = [null, null] as (null | string)[];
+
+  if (colors._theme === "dark") {
+    if (isGray) {
+      letterColors = [colors.color2, colors.color2]
+    } else {
+      letterColors = [colors.second_color3, colors.color4]
+    }
+  } else {
+    if (isGray) {
+      letterColors = [colors.color2, colors.color2]
+    } else {
+      letterColors = [colors.second_color3, colors.color4]
+    }
+  }
+
+  const getImagePath = (key: string | undefined) => {
+    const key_formated = `${kana}_${key?.replaceAll("-", "_")}`;
 
     return getImage(key_formated);
   };
@@ -46,7 +66,7 @@ const Symbol: React.FC<SymbolProps> = ({
     alignItems: "center",
     justifyContent: "center"
   }} >
-    {getImagePath(id, THEME)}
+    {getImagePath(id)(letterColors[0] as string, letterColors[1] as string)}
   </View>;
 };
 
