@@ -12,6 +12,8 @@ import * as Haptics from "expo-haptics";
 export type CardModeSelectProps = {
   hiraAvailable: boolean
   kanaAvailable: boolean
+  
+  modeAvailable: boolean
 
   setMode: React.Dispatch<React.SetStateAction<TestMode[]>>
 };
@@ -19,6 +21,9 @@ export type CardModeSelectProps = {
 const WordGameModeSelect: React.FC<CardModeSelectProps> = ({ 
   hiraAvailable,
   kanaAvailable,
+
+  modeAvailable,
+
   setMode,
  }) => {
   const { colors } = useThemeContext();
@@ -29,32 +34,32 @@ const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
   useEffect(() => {
     const initial = [];
 
-    hiraAvailable && initial.push(TestMode.Choice);
-    hiraAvailable && initial.push(TestMode.FindPair);
-    hiraAvailable && initial.push(TestMode.WordBuilding);
+    modeAvailable && initial.push(TestMode.Choice);
+    modeAvailable && initial.push(TestMode.FindPair);
+    modeAvailable && initial.push(TestMode.WordBuilding);
 
     setSelectedCardMode(initial);
     setMode(initial);
-  }, [hiraAvailable, kanaAvailable, setMode]);
+  }, [hiraAvailable, kanaAvailable, modeAvailable, setMode]);
 
   const cards =[
     [
       {
         title: t("wordGame.choice"),
         key: TestMode.Choice,
-        condition: hiraAvailable || kanaAvailable,
+        condition: modeAvailable,
       },
       {
         title: t("wordGame.wordBuilding"),
         key: TestMode.WordBuilding,
-        condition: hiraAvailable || kanaAvailable,
+        condition: modeAvailable,
       },
     ],
     [
       {
         title: t("wordGame.findThePair"),
         key: TestMode.FindPair,
-        condition: hiraAvailable || kanaAvailable,
+        condition: modeAvailable,
       },
     ]
   ];

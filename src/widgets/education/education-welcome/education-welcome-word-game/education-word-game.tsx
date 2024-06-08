@@ -51,6 +51,7 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
         />
         
         <WordGameModeSelect 
+          modeAvailable={(selectedWords.hiragana.length + selectedWords.katakana.length) >= 10}
           hiraAvailable={isHiragana} 
           kanaAvailable={isKatakana} 
           setMode={setMode}

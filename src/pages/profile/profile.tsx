@@ -18,6 +18,8 @@ const ProfilePage: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useThemeContext();
 
+  const isJoinCommunity = false;
+
   return (
     <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.color1 }]}>
       <AdaptiveLayout>
@@ -28,7 +30,7 @@ const ProfilePage: React.FC = () => {
           <SettingsTheme />
           <SettingsLanguage />
           <SettingsTransliterations />
-          <JoinCommunity />
+          {isJoinCommunity && <JoinCommunity />}
         </ScrollView>
       </AdaptiveLayout>
     </View>
