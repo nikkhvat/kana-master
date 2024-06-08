@@ -114,7 +114,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
                   { width: canvasSize - 2, height: canvasSize - 1 },
                 ]}
               >
-                <Symbol id={letter?.id} kana={kana} />
+                <Symbol isGray id={letter?.id} kana={kana} />
               </View>
             )}
             <Svg height={canvasSize} width={canvasSize}>
@@ -170,7 +170,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    opacity: 0.3,
   },
   buttons: {
     flex: 1,
