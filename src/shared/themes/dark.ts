@@ -8,7 +8,7 @@ const darkTheme = {
   second_color2: "#60BA53",
   second_color3: "#C08D6B",
   second_color4: "#4B4745",
-  second_color5: "#60BA53",
+  second_color5: "#F0B153",
 
   primary: "#9A7861",
   background: "#1F1F1F",
