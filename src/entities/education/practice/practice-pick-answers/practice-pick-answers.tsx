@@ -8,37 +8,40 @@ import AnswerCard from "./answer-card/answer-card";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
 import { CardMode, Kana, TEST_DELAY } from "@/shared/constants/kana";
-import { ILetter, dakuonFlatLettersId, handakuonFlatLettersId, yoonFlatLettersId } from "@/shared/data/lettersTable";
+import {
+  ILetter,
+  dakuonFlatLettersId,
+  handakuonFlatLettersId,
+  yoonFlatLettersId,
+} from "@/shared/data/lettersTable";
 import { verticalScale } from "@/shared/helpers/metrics";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { Question } from "@/shared/types/questions";
 interface EducationPracticeSelectAnswersProps {
-  question: Question
+  question: Question;
   onError?: (id: number | string) => void;
   onCompleted?: (isErrors: boolean, pickedAnswer: ILetter) => void;
 }
 
-const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersProps> = ({ 
-  question,
-  onError, 
-  onCompleted
-}) => {
+const EducationPracticeSelectAnswers: React.FC<
+  EducationPracticeSelectAnswersProps
+> = ({ question, onError, onCompleted }) => {
   const screenWidth = Dimensions.get("window").width;
   const { colors } = useThemeContext();
   const { t } = useTranslation();
 
   const [errors, setErrors] = useState([] as (string | number)[]);
   const [corrected, setCorrected] = useState(null as string | number | null);
-  
+
   useEffect(() => {
     setErrors([]);
     setCorrected(null);
   }, [question]);
-  
+
   const pick = (letter: ILetter) => {
     if (corrected !== null) return;
 
-    if (errors.includes(letter.id)) return; 
+    if (errors.includes(letter.id)) return;
 
     if (letter.id !== question.trueAnswer) {
       setErrors((prev) => [...prev, letter.id]);
@@ -46,7 +49,7 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
       setTimeout(() => {
         onError?.(letter.id);
       }, TEST_DELAY);
-      return; 
+      return;
     }
 
     setCorrected(letter.id);
@@ -59,8 +62,11 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
   const isCorrectAnswer = (id: string): boolean => id === corrected;
   const isInCorrectAnswer = (id: string): boolean => errors.includes(id);
 
-  const width = screenWidth - (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING * 2) : 0) - (20 * 2);
-  const widthCard = ((width - 15)) / 2;
+  const width =
+    screenWidth -
+    (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING * 2) : 0) -
+    20 * 2;
+  const widthCard = (width - 15) / 2;
 
   const kana = question?.kana;
   const symbol = question?.symbol;
@@ -68,14 +74,21 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
 
   const { getRomanji } = useGetRomanji();
 
-  const symbolLable = kana === Kana.Romanji
-    ? getRomanji(symbol) : kana === Kana.Hiragana
-      ? symbol?.hi : symbol?.ka;
+  const symbolLable =
+    kana === Kana.Romanji
+      ? getRomanji(symbol)
+      : kana === Kana.Hiragana
+        ? symbol?.hi
+        : symbol?.ka;
 
   const getTitle = (answer: ILetter) => {
-    const isKatakana = (question?.mode === CardMode.hiraganaToKatakana || question?.mode === CardMode.romajiToKatakana);
-    const isHiragana = (question?.mode === CardMode.romajiToHiragana || question?.mode === CardMode.katakanaToHiragana);
-    
+    const isKatakana =
+      question?.mode === CardMode.hiraganaToKatakana ||
+      question?.mode === CardMode.romajiToKatakana;
+    const isHiragana =
+      question?.mode === CardMode.romajiToHiragana ||
+      question?.mode === CardMode.katakanaToHiragana;
+
     return isKatakana ? answer.ka : isHiragana ? answer.hi : getRomanji(answer);
   };
 
@@ -89,40 +102,46 @@ const EducationPracticeSelectAnswers: React.FC<EducationPracticeSelectAnswersPro
   };
 
   const getSubTitle = () => {
-    const isHiragana = (question?.mode === CardMode.hiraganaToKatakana || question?.mode === CardMode.hiraganaToRomaji);
-    const isKatakana = (question?.mode === CardMode.katakanaToHiragana || question?.mode === CardMode.katakanaToRomaji);
+    const isHiragana =
+      question?.mode === CardMode.hiraganaToKatakana ||
+      question?.mode === CardMode.hiraganaToRomaji;
+    const isKatakana =
+      question?.mode === CardMode.katakanaToHiragana ||
+      question?.mode === CardMode.katakanaToRomaji;
 
     const displayKana = isKatakana
-      ? t("kana.katakana") 
-        : isHiragana
-        ? t("kana.hiragana") 
-          : t("kana.romanji");
+      ? t("kana.katakana")
+      : isHiragana
+        ? t("kana.hiragana")
+        : t("kana.romanji");
 
     return displayKana + ` (${getTypeById(symbol?.id)})`;
   };
 
-
   return (
     <>
       <View>
-        <Text style={[styles.symbol, { color: colors.color4 }]}>{symbolLable}</Text>
+        <Text style={[styles.symbol, { color: colors.color4 }]}>
+          {symbolLable}
+        </Text>
         <Text style={[styles.subText, { color: colors.color3 }]}>
           {getSubTitle()}
         </Text>
       </View>
       <View style={styles.container}>
-        {answers?.length > 0 && answers.map(answer => (
-          <AnswerCard 
-            key={answer.id}
-            value={answer}
-            width={widthCard}
-            redMarked={isInCorrectAnswer(answer.id)}
-            greenMarked={isCorrectAnswer(answer.id)}
-            onClick={pick}
-          >
-            {getTitle(answer)}
-          </AnswerCard>
-        ))}
+        {answers?.length > 0 &&
+          answers.map((answer) => (
+            <AnswerCard
+              key={answer.id}
+              value={answer}
+              width={widthCard}
+              redMarked={isInCorrectAnswer(answer.id)}
+              greenMarked={isCorrectAnswer(answer.id)}
+              onClick={pick}
+            >
+              {getTitle(answer)}
+            </AnswerCard>
+          ))}
       </View>
     </>
   );
@@ -132,7 +151,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 15
+    gap: 15,
   },
   symbol: {
     textAlign: "center",
@@ -144,6 +163,5 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
 });
-
 
 export default EducationPracticeSelectAnswers;

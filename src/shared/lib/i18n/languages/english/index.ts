@@ -1,175 +1,179 @@
 const English = {
-	common: {
-		close: "Close",
-		reset: "Reset",
-		next: "Next",
-		retry: "Retry",
-		complete: "Complete",
-		start: "Start",
-		auto: "Auto",
-	},
+  common: {
+    close: "Close",
+    reset: "Reset",
+    next: "Next",
+    retry: "Retry",
+    complete: "Complete",
+    start: "Start",
+    auto: "Auto",
+  },
 
-	tabs: {
-		learning: "Learning",
-		practice: "Practice",
-		kana: "Kana",
-		profile: "Settings",
-	},
+  tabs: {
+    learning: "Learning",
+    practice: "Practice",
+    kana: "Kana",
+    profile: "Settings",
+  },
 
-	profile: {
-		theme: "Theme",
-		language: "Language"
-	},
+  profile: {
+    theme: "Theme",
+    language: "Language",
+  },
 
-	learning: {
-		practice: "Practice",
-		testing: "Testing",
-		wordGame: "Word game"
-	},
+  learning: {
+    practice: "Practice",
+    testing: "Testing",
+    wordGame: "Word game",
+  },
 
-	practice: {
-		start: "Start",
+  practice: {
+    start: "Start",
 
-		question: "Question",
+    question: "Question",
 
-		timer: {
-			fast: "3 sec",
-			medium: "5 sec",
-			slow: "7 sec",
-		},
+    timer: {
+      fast: "3 sec",
+      medium: "5 sec",
+      slow: "7 sec",
+    },
 
-		selectCorrectTransliteration: "Select the Correct Transliteration.",
-		
-		selectHiraganaForWord: "Choose the hiragana in the correct order.",
-		selectKatakanaForWord: "Choose the katakana in the correct order.",
-	},
+    selectCorrectTransliteration: "Select the Correct Transliteration.",
 
-	testing: {
-		cardMode: "Cards",
-		testMode: "Mode",
-		difficultyLevel: "Difficulty level",
-		start: "Start"
-	},
+    selectHiraganaForWord: "Choose the hiragana in the correct order.",
+    selectKatakanaForWord: "Choose the katakana in the correct order.",
+  },
 
-	difficultyLevel: {
-		timeTest: "Timer",
-		oneAttempt: "One attempt",
-	},
+  testing: {
+    cardMode: "Cards",
+    testMode: "Mode",
+    difficultyLevel: "Difficulty level",
+    start: "Start",
+  },
 
-	wordGame: {
-		mode: "Mode",
+  difficultyLevel: {
+    timeTest: "Timer",
+    oneAttempt: "One attempt",
+  },
 
-		choice: "Choice",
-		wordBuilding: "Word Building",
-		findThePair: "Match The Pair",
-	},
+  wordGame: {
+    mode: "Mode",
 
-	kana: {
-		hiragana: "Hiragana",
-		katakana: "Katakana",
-		romanji: "Romanji",
+    choice: "Choice",
+    wordBuilding: "Word Building",
+    findThePair: "Match The Pair",
+  },
 
-		basic: "Basic",
-		dakuon: "Dakuon",
-		handakuon: "Handakuon",
-		yoon: "Yoon",
+  kana: {
+    hiragana: "Hiragana",
+    katakana: "Katakana",
+    romanji: "Romanji",
 
-		kana: "Kana"
-	},
+    basic: "Basic",
+    dakuon: "Dakuon",
+    handakuon: "Handakuon",
+    yoon: "Yoon",
 
-	selectKana: {
-		words: "Words",
-		letters: "Letters",
-		nothingSelected: "Nothing selected"
-	},
+    kana: "Kana",
+  },
 
-	quickSelectKana: {
-		title: "Kana quick selection",
-		confirm: "Confirm",
+  selectKana: {
+    words: "Words",
+    letters: "Syllables",
+    nothingSelected: "Nothing selected",
+  },
 
-		entriesInScope: "Entries in scope",
-		availableWords: "Available words",
-	},
+  quickSelectKana: {
+    title: "Kana quick selection",
+    confirm: "Confirm",
 
-	displayStatistics: {
-		title: "Display statistics",
-		turnOn: "Turn on",
-		turnOff: "Turn off",
-	},
+    entriesInScope: "Entries in scope",
+    availableWords: "Available words",
+  },
 
-	result: {
-		title: "Practice complete",
-		score: "Score",
+  displayStatistics: {
+    title: "Display statistics",
+    turnOn: "Turn on",
+    turnOff: "Turn off",
+  },
 
-		wellDoneNoErrors: "Well done, no errors!",
+  result: {
+    title: "Practice complete",
+    score: "Score",
 
-		sec: "sec",
-		min: "min",
-		
-		question: "Question",
+    wellDoneNoErrors: "Well done, no errors!",
 
-		details: "Details",
+    sec: "sec",
+    min: "min",
 
-		alphabet: "Alphabet",
+    question: "Question",
 
-		fastestAnswer: "Fastest answer",
-		slowestAnswer: "Slowest answer",
+    details: "Details",
 
-		incorrectAnswers: "Incorrect answers",
+    alphabet: "Alphabet",
 
-		incorrectWordBuilding: "Incorrect word building answers",
-		incorrectFindPair: "Incorrect find pair answers",
-		incorrectChoice: "Incorrect choice answers",
+    fastestAnswer: "Fastest answer",
+    slowestAnswer: "Slowest answer",
 
-		done: "Done"
-	},
+    incorrectAnswers: "Incorrect answers",
 
-	tooltip: {
-		syllablesSelectMoreThan5: "* Should be selected more than 5 syllables",
-		cardSelectAtLeastOne: "* At least one card type must be selected",
-		wordsSelectMoreThan10: "* Should be available more than 10 words",
-		modeSelectAtLeastOne: "* At least one mode must be selected",
-	},
+    incorrectWordBuilding: "Incorrect word building answers",
+    incorrectFindPair: "Incorrect find pair answers",
+    incorrectChoice: "Incorrect choice answers",
 
-	lessonsList: {
-		chapter: "Chapter",
-		completed: "completed",
-		lesson: "Lesson",
+    done: "Done",
+  },
 
-		grammar: "Grammar",
+  tooltip: {
+    syllablesSelectMoreThan5: "* Should be selected more than 5 syllables",
+    cardSelectAtLeastOne: "* At least one card type must be selected",
+    wordsSelectMoreThan10: "* Should be available more than 10 words",
+    modeSelectAtLeastOne: "* At least one mode must be selected",
+  },
 
-		firstLessonInSectionTitle: "Learn to write the first {{count}} syllables.",
-		continuingLessonsTitle: "Learn to write the next {{count}} syllables.",
-		finalLessonInSectionTitle: "Learn to write the last {{count}} syllables.",
-	},
+  lessonsList: {
+    chapter: "Chapter",
+    completed: "completed",
+    lesson: "Lesson",
 
-	lesson: {
-		rememberWritingAndSoundLetter: "Memorize the stroke order and pronunciation of this syllable.",
-		drawSyllable: "Draw the syllable «{{syllable}}» in the correct sequence.",
-		matchHiraganaWithTransliteration: "Match Hiragana with Transliteration.",
-		matchKatakanaWithTransliteration: "Match Katakana with Transliteration.",
-		selectCorrectTransliteration: "Select the Correct Transliteration of the Syllable «{{syllable}}».",
-		chooseCorrectTransliterationSequence: "Choose the Correct Transliteration Sequence.",
-		arrangeSyllablesInCorrectOrder: "Arrange the Syllables in the Correct Order.",
-		practiceEveryDay: "Practice every day to consolidate your knowledge.",
-		learningComplete: "Learning complete!",
-	},
+    grammar: "Grammar",
 
-	transliterationSystems: {
-		transliterationSystems: "Transliteration Systems",
-		transliterationInCyrillic: "Transliteration in Cyrillic",
-		romajiLatin: "Romaji (Latin)",
+    firstLessonInSectionTitle: "Learn to write the first {{count}} syllables.",
+    continuingLessonsTitle: "Learn to write the next {{count}} syllables.",
+    finalLessonInSectionTitle: "Learn to write the last {{count}} syllables.",
+  },
 
-		russianPhoneticTransliteration: "Russian Phonetic Transliteration",
+  lesson: {
+    rememberWritingAndSoundLetter:
+      "Memorize the stroke order and pronunciation of this syllable.",
+    drawSyllable: "Draw the syllable «{{syllable}}» in the correct sequence.",
+    matchHiraganaWithTransliteration: "Match Hiragana with Transliteration.",
+    matchKatakanaWithTransliteration: "Match Katakana with Transliteration.",
+    selectCorrectTransliteration:
+      "Select the Correct Transliteration of the Syllable «{{syllable}}».",
+    chooseCorrectTransliterationSequence:
+      "Choose the Correct Transliteration Sequence.",
+    arrangeSyllablesInCorrectOrder:
+      "Arrange the Syllables in the Correct Order.",
+    practiceEveryDay: "Practice every day to consolidate your knowledge.",
+    learningComplete: "Learning complete!",
+  },
 
-		hepburn: "Hepburn",
-		kunreiShiki: "Kunrei-shiki",
-		nihonShiki: "Nihon-shiki",
-	},
+  transliterationSystems: {
+    transliterationSystems: "Transliteration Systems",
+    transliterationInCyrillic: "Transliteration in Cyrillic",
+    romajiLatin: "Romaji (Latin)",
 
-	joinOurCommunity: {
-		title: "Join our community",
-	}
+    russianPhoneticTransliteration: "Russian Phonetic Transliteration",
+
+    hepburn: "Hepburn",
+    kunreiShiki: "Kunrei-shiki",
+    nihonShiki: "Nihon-shiki",
+  },
+
+  joinOurCommunity: {
+    title: "Join our community",
+  },
 };
 
 export default English;

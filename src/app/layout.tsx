@@ -27,7 +27,7 @@ import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 
-import * as SplashScreen from 'expo-splash-screen';
+import * as SplashScreen from "expo-splash-screen";
 import { TEST_DELAY } from "@/shared/constants/kana";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -41,11 +41,11 @@ const headerSettings = {
 };
 
 type Icons = {
-  Learning: "school-outline",
-  Practice: "cards-outline",
-  Settings: "cog-outline",
-  Kana: "syllabary-hiragana",
-}
+  Learning: "school-outline";
+  Practice: "cards-outline";
+  Settings: "cog-outline";
+  Kana: "syllabary-hiragana";
+};
 
 const icons: Icons = {
   Learning: "school-outline",
@@ -54,7 +54,7 @@ const icons: Icons = {
   Kana: "syllabary-hiragana",
 };
 
-type KeysIcon = "Learning" | "Settings" | "Kana"
+type KeysIcon = "Learning" | "Settings" | "Kana";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -67,21 +67,30 @@ function BottomTabNavigator() {
     if (appIsReady) {
       SplashScreen.hideAsync();
     }
-  }, [appIsReady])
+  }, [appIsReady]);
 
   useEffect(() => {
     setTimeout(() => {
-      setAppIsReady(true)
-    }, TEST_DELAY * 2)
-  }, [])
+      setAppIsReady(true);
+    }, TEST_DELAY * 2);
+  }, []);
 
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: 
-          ({ color, size }) => <Icon name={icons[route.name as KeysIcon]} size={size} color={color} />,
-        tabBarButton: 
-          (props) => <Pressable {...props} style={[props.style, { height: 45, marginTop: 5 }]} />,
+        tabBarIcon: ({ color, size }) => (
+          <Icon
+            name={icons[route.name as KeysIcon]}
+            size={size}
+            color={color}
+          />
+        ),
+        tabBarButton: (props) => (
+          <Pressable
+            {...props}
+            style={[props.style, { height: 45, marginTop: 5 }]}
+          />
+        ),
         tabBarStyle: {
           height: 60 + insets.bottom,
           flexDirection: "column",
@@ -89,17 +98,50 @@ function BottomTabNavigator() {
         },
       })}
     >
-      <Tab.Screen name="Learning" component={LearningList} options={{ title: t("tabs.learning"), headerTransparent: true, headerTitle: "", }} />
-      <Tab.Screen name="Practice" component={PracticeWelcomePage} options={{ title: t("tabs.practice"), headerTransparent: true, headerTitle: "", }} />
-      <Tab.Screen name="Kana" component={Kana} options={{ title: t("tabs.kana"), headerTransparent: true, headerTitle: "", lazy: true }} />
-      <Tab.Screen name="Settings" component={ProfilePage} options={{ title: t("tabs.profile"), headerTransparent: true, headerTitle: "", }} />
+      <Tab.Screen
+        name="Learning"
+        component={LearningList}
+        options={{
+          title: t("tabs.learning"),
+          headerTransparent: true,
+          headerTitle: "",
+        }}
+      />
+      <Tab.Screen
+        name="Practice"
+        component={PracticeWelcomePage}
+        options={{
+          title: t("tabs.practice"),
+          headerTransparent: true,
+          headerTitle: "",
+        }}
+      />
+      <Tab.Screen
+        name="Kana"
+        component={Kana}
+        options={{
+          title: t("tabs.kana"),
+          headerTransparent: true,
+          headerTitle: "",
+          lazy: true,
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={ProfilePage}
+        options={{
+          title: t("tabs.profile"),
+          headerTransparent: true,
+          headerTitle: "",
+        }}
+      />
     </Tab.Navigator>
   );
 }
 
 const Layout = () => {
   const { colors } = useThemeContext();
-  const { i18n } = useTranslation();  
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     const loadLang = async () => {
@@ -123,40 +165,72 @@ const Layout = () => {
 
   return (
     <>
-      <StatusBar 
+      <StatusBar
         barStyle={colors._theme === "dark" ? "light-content" : "dark-content"}
-        backgroundColor={colors.color1} 
+        backgroundColor={colors.color1}
       />
       <NavigationContainer
-        theme={colors._theme === "dark" ? { dark: true, colors: darkTheme } : { dark: false, colors: lightTheme }} >
+        theme={
+          colors._theme === "dark"
+            ? { dark: true, colors: darkTheme }
+            : { dark: false, colors: lightTheme }
+        }
+      >
         <Stack.Navigator>
-          <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-          <Stack.Screen name="ChooseAlphabet" component={EducationKanaQuickSelectionPage} options={{ headerShown: false }} />
-          <Stack.Screen name="EducationPractice" component={TestingPage} options={{ title: "Practice", ...headerSettings }} />
-          <Stack.Screen name="EducationWordGame" component={EducationWordGamePage} options={{ title: "Word Game", ...headerSettings }} />
-          <Stack.Screen name="LessonPage" component={LessonPage} options={{ ...headerSettings }} />
-          <Stack.Screen name="Results" component={EducationResultPage} options={{ title: "Results", ...headerSettings }} />
-          <Stack.Group screenOptions={{
-            presentation: "modal",
-            orientation: "portrait",
-          }}>
-            <Stack.Screen 
-              name="KanaInfo" 
+          <Stack.Screen
+            name="Root"
+            component={BottomTabNavigator}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ChooseAlphabet"
+            component={EducationKanaQuickSelectionPage}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="EducationPractice"
+            component={TestingPage}
+            options={{ title: "Practice", ...headerSettings }}
+          />
+          <Stack.Screen
+            name="EducationWordGame"
+            component={EducationWordGamePage}
+            options={{ title: "Word Game", ...headerSettings }}
+          />
+          <Stack.Screen
+            name="LessonPage"
+            component={LessonPage}
+            options={{ ...headerSettings }}
+          />
+          <Stack.Screen
+            name="Results"
+            component={EducationResultPage}
+            options={{ title: "Results", ...headerSettings }}
+          />
+          <Stack.Group
+            screenOptions={{
+              presentation: "modal",
+              orientation: "portrait",
+            }}
+          >
+            <Stack.Screen
+              name="KanaInfo"
               component={KanaInfo}
-              options={({ route }) => ({ 
+              options={({ route }) => ({
                 title: route.params.title,
                 contentStyle: {
                   borderTopWidth: 0,
-                }
-              })} />
-            <Stack.Screen 
-              name="KanaSelect" 
+                },
+              })}
+            />
+            <Stack.Screen
+              name="KanaSelect"
               component={EducationKanaSelection}
               options={({ route }) => ({
                 title: route.params.title,
                 contentStyle: {
                   borderTopWidth: 0,
-                }
+                },
               })}
             />
           </Stack.Group>
