@@ -17,13 +17,12 @@ const screenWidth = Dimensions.get("window").width;
 
 const progressBarWidth = screenWidth - 40 - 95;
 
-
 const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
   initial = 5,
   onTimerEnd,
   currentIndex,
   questions,
-  customStyles = {}
+  customStyles = {},
 }) => {
   const { colors } = useThemeContext();
 
@@ -66,19 +65,19 @@ const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
 
   return (
     <View style={[styles.container, customStyles]}>
-      <View style={[
-        styles.timerContainer, 
-        { backgroundColor: colors.color2, width: progressBarWidth }
-      ]}>
+      <View
+        style={[
+          styles.timerContainer,
+          { backgroundColor: colors.color2, width: progressBarWidth },
+        ]}
+      >
         <Animated.View
-          style={
-            {
-              ...styles.timerStroke,
-              width: animatedValue,
-              backgroundColor:
-                fullProgress <= 40 ? colors.second_color1 : colors.second_color2,
-            }
-          }
+          style={{
+            ...styles.timerStroke,
+            width: animatedValue,
+            backgroundColor:
+              fullProgress <= 40 ? colors.second_color1 : colors.second_color2,
+          }}
         />
       </View>
       <View style={styles.timerTextContainer}>
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    gap: 15,
+    gap: 16,
   },
   timerContainer: {
     flex: 1,

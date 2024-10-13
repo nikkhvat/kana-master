@@ -1,14 +1,14 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { View } from "react-native";
 
-import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonSelectSymbol } from "@/shared/constants/lessons";
 import getKana from "@/shared/helpers/getKanaKey";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import SelectAnswer from "@/shared/ui/select-answer/select-answer";
+import { LearningTitle } from "../ui/title";
 
 type SelectLettersScreenProps = LessonSelectSymbol & {
   next: () => void;
@@ -20,9 +20,12 @@ const SelectLettersScreen: React.FC<SelectLettersScreenProps> = ({
   kana,
   next,
 }) => {
-  const { colors } = useThemeContext();
   const { t } = useTranslation();
   const { getRomanji } = useGetRomanji();
+
+  const title = t("lesson.selectCorrectTransliteration", {
+    syllable: getRomanji(symbols[0]),
+  });
 
   const answers = symbols.map((item) => ({
     title: getKana(item, kana),
@@ -30,37 +33,17 @@ const SelectLettersScreen: React.FC<SelectLettersScreenProps> = ({
   }));
 
   return (
-    <View style={styles.container}>
-      <Text
-        style={[
-          styles.title,
-          {
-            color: colors.color4,
-          },
-        ]}
-      >
-        {t("lesson.selectCorrectTransliteration", {
-          syllable: getRomanji(symbols[0]),
-        })}
-      </Text>
+    <View
+      style={{
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+      }}
+    >
+      <LearningTitle>{title}</LearningTitle>
 
-      <SelectAnswer onFinish={() => next()} answers={answers} />
+      <SelectAnswer onFinish={next} answers={answers} />
     </View>
   );
 };
 
 export default SelectLettersScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-  },
-  title: {
-    width: "100%",
-    fontSize: 17,
-    fontWeight: "600",
-    textAlign: "center",
-    marginBottom: 30,
-  },
-});

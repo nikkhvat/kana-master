@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Svg, Path } from "react-native-svg";
-import { GestureHandlerRootView, PanGestureHandler, GestureHandlerGestureEvent } from "react-native-gesture-handler";
+import {
+  GestureHandlerRootView,
+  PanGestureHandler,
+  GestureHandlerGestureEvent,
+} from "react-native-gesture-handler";
 import Symbol from "@/entities/kana/symbol/symbol";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
@@ -25,7 +29,9 @@ interface DrawProps {
 const screenWidth = Dimensions.get("window").width;
 
 const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
-  const [currentPath, setCurrentPath] = useState<{ x: number; y: number }[]>([]);
+  const [currentPath, setCurrentPath] = useState<{ x: number; y: number }[]>(
+    [],
+  );
   const [paths, setPaths] = useState<{ x: number; y: number }[][]>([]);
   const { colors } = useThemeContext();
 
@@ -34,9 +40,14 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
     40 -
     (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0);
 
-  const strokeWidth = useAppSelector((state) => state.profile?.draw?.lineWidth) || 14;
-  const isShowLetter = useAppSelector((state) => state.profile?.draw?.isShowLetter);
-  const isShowBorder = useAppSelector((state) => state.profile?.draw?.isShowBorder);
+  const strokeWidth =
+    useAppSelector((state) => state.profile?.draw?.lineWidth) || 14;
+  const isShowLetter = useAppSelector(
+    (state) => state.profile?.draw?.isShowLetter,
+  );
+  const isShowBorder = useAppSelector(
+    (state) => state.profile?.draw?.isShowBorder,
+  );
 
   const onGestureEvent = (event: GestureHandlerGestureEvent) => {
     const { x, y } = event.nativeEvent;
@@ -49,7 +60,8 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
   };
 
   const onHandlerStateChange = (event: GestureHandlerGestureEvent) => {
-    if (event.nativeEvent.state === 5) { // State.END
+    if (event.nativeEvent.state === 5) {
+      // State.END
       setPaths((prevPaths) => [...prevPaths, currentPath]);
       setCurrentPath([]);
     }
@@ -80,9 +92,9 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
       const midPoint =
         i > 1
           ? {
-            x: (points[i - 1].x + points[i].x) / 2,
-            y: (points[i - 1].y + points[i].y) / 2,
-          }
+              x: (points[i - 1].x + points[i].x) / 2,
+              y: (points[i - 1].y + points[i].y) / 2,
+            }
           : points[i - 1];
       d += ` Q ${points[i - 1].x},${points[i - 1].y} ${midPoint.x},${midPoint.y}`;
     }
@@ -91,7 +103,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
   };
 
   return (
-    <GestureHandlerRootView style={{ height: canvasSize + 165}} >
+    <GestureHandlerRootView style={{ height: canvasSize + 165 }}>
       <View>
         <PanGestureHandler
           onGestureEvent={onGestureEvent}
@@ -103,7 +115,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
               {
                 height: canvasSize,
                 width: canvasSize,
-                borderColor: colors.color2,
+                borderColor: colors.BgLightGray,
               },
             ]}
           >
@@ -123,7 +135,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
                 <Path
                   key={`path-${index}`}
                   d={generatePathDAttribute(path)}
-                  stroke={colors.color4}
+                  stroke={colors.BgContrast}
                   fill="transparent"
                   strokeWidth={strokeWidth}
                   strokeLinejoin="round"
@@ -132,7 +144,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
               ))}
               <Path
                 d={generatePathDAttribute(currentPath)}
-                stroke={colors.color4}
+                stroke={colors.BgContrast}
                 fill="transparent"
                 strokeWidth={strokeWidth}
                 strokeLinejoin="round"
@@ -141,12 +153,14 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
             </Svg>
           </View>
         </PanGestureHandler>
-        
-        <View style={styles.buttons} >
-          <ClearButtons clearFull={handleClearButtonClick} clearStep={handleClearStepButtonClick} />
 
+        <View>
+          <ClearButtons
+            clearFull={handleClearButtonClick}
+            clearStep={handleClearStepButtonClick}
+          />
           <View style={styles.buttonsContainer}>
-            <View style={styles.buttonsCell}>
+            <View style={styles.actionButtons}>
               <ToggleShowBorders />
               <ToggleShowLetter />
             </View>
@@ -161,8 +175,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
 const styles = StyleSheet.create({
   drawContainer: {
     borderWidth: 1,
-    borderRadius: 12,
-    marginTop: 30,
+    borderRadius: 24,
     position: "relative",
   },
   drawContainerImage: {
@@ -171,19 +184,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  buttons: {
-    flex: 1,
-    flexDirection: "column",
-  },
   buttonsContainer: {
     flexDirection: "row",
     width: "100%",
     justifyContent: "space-between",
-    gap: 15,
+    marginTop: 16,
   },
-  buttonsCell: {
+  actionButtons: {
     flexDirection: "row",
-    gap: 15,
+    gap: 16,
   },
 });
 

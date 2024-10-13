@@ -8,7 +8,9 @@ const initialState: InitialState = {
 
     isShowBorder: true,
     isShowLetter: true,
-  }
+  },
+
+  isEnabledHaptic: true,
 };
 
 const check = (state: any) => {
@@ -18,9 +20,13 @@ const check = (state: any) => {
 
       isShowBorder: true,
       isShowLetter: true,
-    }
+    };
   }
-}
+
+  if (!state.isEnabledHaptic) {
+    state.isEnabledHaptic = true;
+  }
+};
 
 export const profileSlice = createSlice({
   name: "profile",
@@ -40,10 +46,22 @@ export const profileSlice = createSlice({
       check(state);
 
       state.draw.isShowLetter = !state.draw.isShowLetter;
-    }
+    },
+    toggleHaptic: (state) => {
+      check(state);
+
+      console.log("state", state.isEnabledHaptic);
+      state.isEnabledHaptic = !state.isEnabledHaptic;
+      console.log("state", state.isEnabledHaptic);
+    },
   },
 });
 
-export const { updateDrawLine, toggleShowBorder, toggleShowLetter } = profileSlice.actions;
+export const {
+  updateDrawLine,
+  toggleShowBorder,
+  toggleShowLetter,
+  toggleHaptic,
+} = profileSlice.actions;
 
 export default profileSlice.reducer;

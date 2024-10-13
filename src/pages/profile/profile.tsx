@@ -12,6 +12,8 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import SettingsTransliterations from "@/features/settings/settings-transliterations/settings-language";
 import PageTitle from "@/shared/ui/page-title/page-title";
 import JoinCommunity from "@/features/settings/join-community/join-community";
+import SettingsSection from "@/entities/profile/setting-sectoin/settings-section";
+import SettingsHaptic from "@/features/settings/settings-haptic/settings-haptic";
 
 const ProfilePage: React.FC = () => {
   const insets = useSafeAreaInsets();
@@ -21,13 +23,23 @@ const ProfilePage: React.FC = () => {
   const isJoinCommunity = false;
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top, backgroundColor: colors.color1 }]}>
+    <View
+      style={[
+        styles.container,
+        { paddingTop: insets.top, backgroundColor: colors.color1 },
+      ]}
+    >
       <AdaptiveLayout>
-        <PageTitle style={styles.title} >{t("tabs.profile")}</PageTitle>
+        <PageTitle style={styles.title}>{t("tabs.profile")}</PageTitle>
 
-        <ScrollView contentContainerStyle={styles.scroll} >
-          <SettingsStatistics />
-          <SettingsTheme />
+        <ScrollView contentContainerStyle={styles.scroll}>
+          <SettingsSection>
+            <SettingsStatistics />
+            <SettingsHaptic />
+            <SettingsTheme />
+          </SettingsSection>
+
+          {/* <SettingsStatistics /> */}
           <SettingsLanguage />
           <SettingsTransliterations />
           {isJoinCommunity && <JoinCommunity />}
@@ -42,10 +54,10 @@ export default ProfilePage;
 const styles = StyleSheet.create({
   container: {},
   scroll: {
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     paddingBottom: 160,
   },
   title: {
-    marginLeft: 20
+    marginLeft: 20,
   },
 });

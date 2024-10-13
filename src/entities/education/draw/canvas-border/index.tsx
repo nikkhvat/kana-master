@@ -3,17 +3,16 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { Line } from "react-native-svg";
 
 interface CanvasBorderProps {
-  canvasSize: number
+  canvasSize: number;
 }
 
 const CanvasBorder: React.FC<CanvasBorderProps> = ({ canvasSize }) => {
-
   const { colors } = useThemeContext();
 
   return (
     <>
       <Line
-        stroke={colors.color2}
+        stroke={colors.BorderDefault}
         strokeWidth={1}
         strokeDasharray="10, 10"
         x1={canvasSize / 2}
@@ -22,7 +21,7 @@ const CanvasBorder: React.FC<CanvasBorderProps> = ({ canvasSize }) => {
         y2={canvasSize - 2}
       />
       <Line
-        stroke={colors.color2}
+        stroke={colors.BorderDefault}
         strokeWidth={1}
         strokeDasharray="10, 10"
         y1={canvasSize / 2}
@@ -30,8 +29,8 @@ const CanvasBorder: React.FC<CanvasBorderProps> = ({ canvasSize }) => {
         x1="0"
         x2={canvasSize - 2}
       />
-    </>    
-  )
-}
+    </>
+  );
+};
 
 export default CanvasBorder;

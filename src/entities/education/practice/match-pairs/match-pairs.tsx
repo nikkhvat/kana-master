@@ -190,12 +190,18 @@ const MatchPairs: React.FC<MatchPairsProps> = ({
               onPress={() => handlePress(item, index, idx)}
               disabled={status[index]?.status === "complete"}
             >
-              <Text style={[
-                styles.pairText,
-                textColors,
-                (status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "complete" ||
-                  status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "error") && { color: colors.color5 }
-              ]}>{item}</Text>
+              <Text
+                style={[
+                  styles.pairText,
+                  textColors,
+                  (status[`${index}/${idx === 0 ? "left" : "right"}`]
+                    ?.status === "complete" ||
+                    status[`${index}/${idx === 0 ? "left" : "right"}`]
+                      ?.status === "error") && { color: colors.color5 },
+                ]}
+              >
+                {item}
+              </Text>
             </Pressable>
           ))}
         </View>
@@ -212,13 +218,13 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    gap: 15,
+    gap: 16,
   },
   pair: {
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-    gap: 15,
+    gap: 16,
   },
   pairItem: {
     borderWidth: 1,
@@ -226,7 +232,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 12,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   pairText: {
     fontWeight: "400",

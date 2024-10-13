@@ -1,10 +1,9 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import {
   AnyBlock,
   InfoLessonScreen,
@@ -16,16 +15,16 @@ import {
   TableBlock,
   TextBlock,
 } from "@/shared/constants/lessons";
-import Button from "@/shared/ui/button/button";
 import BorderLetter from "@/shared/ui/letter/borderLetter/borderLetter";
-import MatchPairs from "@/shared/ui/match-pairs/match-pairs";
 import Rules from "@/shared/ui/rules/rules";
 import SelectAnswer from "@/shared/ui/select-answer/select-answer";
 import Sequence from "@/shared/ui/sequence";
 import Table from "@/shared/ui/table/table";
 import BlockText from "@/shared/ui/text/text";
 import { KanaAlphabet } from "@/shared/constants/kana";
-
+import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
+import MatchPairs from "@/entities/education/practice/match-pairs/match-pairs";
+import { LearningTitle } from "../ui/title";
 
 type InfoScreenProps = InfoLessonScreen & {
   next: () => void;
@@ -55,7 +54,6 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
 }) => {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
-  const { colors } = useThemeContext();
 
   const interactiveBlocks = blocks.filter(
     (item) =>
@@ -76,33 +74,30 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
     }
   };
 
-  const textColor = {
-    color: colors.color4,
-  };
-
   const getButtons = () => {
     if (interactiveBlocks.length) return <View></View>;
 
     return (
-      <View style={[styles.btnsContainer,
-        {
-          paddingLeft: insets.left + 20,
-          paddingRight: insets.right + 20,
-        }
-      ]}>
+      <View
+        style={[
+          styles.btnsContainer,
+          {
+            paddingLeft: insets.left + 20,
+            paddingRight: insets.right + 20,
+          },
+        ]}
+      >
         {!isLast && (
-          <Button
-            customStyles={{ width: "100%" }}
-            type={"general"}
-            title={t("common.next")}
+          <PrimaryButton
+            isFullWidth
+            text={t("common.next")}
             onClick={nextScreen}
           />
         )}
         {isLast && (
-          <Button
-            customStyles={{ width: "100%" }}
-            type={"general"}
-            title={t("common.complete")}
+          <PrimaryButton
+            isFullWidth
+            text={t("common.complete")}
             onClick={finish}
           />
         )}
@@ -112,13 +107,17 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={{
-        paddingTop: 22,
-      }} style={[styles.content, {
-        paddingLeft: insets.left + 20,
-        paddingRight: insets.right + 20,
-      }]}>
-        <Text style={[styles.title, textColor]}>{title}</Text>
+      <ScrollView
+        contentContainerStyle={{
+          paddingTop: 22,
+        }}
+        style={{
+          paddingLeft: insets.left + 20,
+          paddingRight: insets.right + 20,
+          width: "100%",
+        }}
+      >
+        <LearningTitle>{title}</LearningTitle>
 
         <View style={styles.blocks}>
           {blocks.map((block, idx) => {
@@ -129,11 +128,12 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
             } else if (blockType.isRules(block)) {
               return <Rules key={idx} rules={block.rules} />;
             } else if (blockType.isLetter(block)) {
-              return <BorderLetter 
-                kana={block.kana === "hiragana" ? KanaAlphabet.Hiragana : KanaAlphabet.Katakana}
-                key={idx}
-                id={block.id}
-              />;
+              const blockKana =
+                block?.kana === "hiragana"
+                  ? KanaAlphabet.Hiragana
+                  : KanaAlphabet.Katakana;
+
+              return <BorderLetter kana={blockKana} key={idx} id={block.id} />;
             } else if (blockType.isSelectAnswer(block)) {
               return (
                 <SelectAnswer
@@ -163,7 +163,6 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
             }
           })}
         </View>
-      
       </ScrollView>
       {getButtons()}
     </View>
@@ -178,30 +177,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-start",
   },
-  content: {
-    width: "100%",
-  },
-  title: {
-    fontSize: 17,
-    fontWeight: "600",
-    textAlign: "center",
-    width: "100%",
-    marginBottom: 30,
-  },
-  subtitle: {
-    fontSize: 17,
-    fontWeight: "400",
-    textAlign: "center",
-    paddingLeft: 30,
-    paddingRight: 30,
-    width: "100%",
-  },
   btnsContainer: {
     width: "100%",
     alignItems: "center",
   },
 
   blocks: {
-    gap: 15,
+    gap: 16,
   },
 });

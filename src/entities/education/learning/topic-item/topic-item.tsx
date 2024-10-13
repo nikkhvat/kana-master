@@ -5,7 +5,7 @@ import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import Button from "@/shared/ui/button/button";
+import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
 
 interface TopicItemProps {
   isPassed?: boolean;
@@ -62,7 +62,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
     <Pressable
       style={[
         styles.container,
-        { paddingBottom: (isOpened && !isLast) ? 8 : 35 },
+        { paddingBottom: isOpened && !isLast ? 8 : 35 },
       ]}
       onPress={() => onClick?.()}
     >
@@ -89,7 +89,9 @@ const TopicItem: React.FC<TopicItemProps> = ({
           {isOpened && (
             <View style={styles.openedInfo}>
               <View>
-                <View style={[styles.infoLine, { backgroundColor: colors.color2 }]} />
+                <View
+                  style={[styles.infoLine, { backgroundColor: colors.color2 }]}
+                />
                 <Text style={[styles.infoTitle, { color: colors.color4 }]}>
                   {infoTitle}
                 </Text>
@@ -97,15 +99,11 @@ const TopicItem: React.FC<TopicItemProps> = ({
                   {infoSubTitle}
                 </Text>
               </View>
-              <Button
+
+              <PrimaryButton
+                width={108}
+                text={isPassed ? t("common.retry") : t("common.start")}
                 onClick={onStartLesson}
-                customStyles={{
-                  width: 108,
-                  marginTop: 10,
-                  marginBottom: 0,
-                }}
-                type={"general"}
-                title={isPassed ? t("common.retry") : t("common.start")}
               />
             </View>
           )}
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: "100%",
     alignItems: "flex-start",
-    gap: 15,
+    gap: 16,
   },
   indicator: {
     position: "relative",
@@ -144,11 +142,11 @@ const styles = StyleSheet.create({
   },
   infoLine: {
     width: "100%",
-    marginTop: 15,
+    marginTop: 16,
     height: 1,
   },
   infoTitle: {
-    marginTop: 15,
+    marginTop: 16,
     fontWeight: "bold",
     fontSize: 17,
   },

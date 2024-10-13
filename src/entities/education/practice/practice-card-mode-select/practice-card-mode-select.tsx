@@ -6,22 +6,23 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { CardMode } from "@/shared/constants/kana";
-import Button from "@/shared/ui/button/button";
 
 import * as Haptics from "expo-haptics";
+import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
+import { Typography } from "@/shared/typography";
 
 export type CardModeSelectProps = {
-  hiraAvailable: boolean
-  kanaAvailable: boolean
+  hiraAvailable: boolean;
+  kanaAvailable: boolean;
 
-  setCards: React.Dispatch<React.SetStateAction<CardMode[]>>
+  setCards: React.Dispatch<React.SetStateAction<CardMode[]>>;
 };
 
-const CardModeSelect: React.FC<CardModeSelectProps> = ({ 
+const CardModeSelect: React.FC<CardModeSelectProps> = ({
   hiraAvailable,
   kanaAvailable,
   setCards,
- }) => {
+}) => {
   const { colors } = useThemeContext();
   const { t } = useTranslation();
 
@@ -42,80 +43,105 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
   enum CardType {
     Active,
     Incative,
-    Disbled
+    Disbled,
   }
 
   const getTextStyle = (type: CardType) => [
-    styles.text, 
-    { 
-      color: type === CardType.Active ? colors.color5 :
-        type === CardType.Incative ? colors.color4 : colors.color3
-    }
+    Typography.boldH4,
+    {
+      width: 18,
+      color:
+        type === CardType.Active
+          ? colors.TextContrastSecondary
+          : type === CardType.Incative
+            ? colors.TextPrimary
+            : colors.TextSecondary,
+    },
   ];
 
-  const icon = (type: CardType) => <Icon 
-    name={"chevron-right"} 
-    size={20}
-    color={type === CardType.Active ? colors.color5 :
-      type === CardType.Incative ? colors.color4 : colors.color3} />;
+  const icon = (type: CardType) => (
+    <Icon
+      name={"chevron-right"}
+      size={24}
+      color={
+        type === CardType.Active
+          ? colors.TextContrastSecondary
+          : type === CardType.Incative
+            ? colors.TextPrimary
+            : colors.TextSecondary
+      }
+    />
+  );
 
-  const cards =[
+  const cards = [
     [
       {
-        title: (type: CardType) => <View style={styles.line} >
-          <Text style={getTextStyle(type)}>あ</Text>
-          {icon(type)}
-          <Text style={getTextStyle(type)}>A</Text>
-        </View>,
+        title: (type: CardType) => (
+          <View style={styles.line}>
+            <Text style={getTextStyle(type)}>あ</Text>
+            {icon(type)}
+            <Text style={getTextStyle(type)}>A</Text>
+          </View>
+        ),
         key: CardMode.hiraganaToRomaji,
-        condition: hiraAvailable
+        condition: hiraAvailable,
       },
       {
-        title: (type: CardType) => <View style={styles.line} >
-          <Text style={getTextStyle(type)}>A</Text>
-          {icon(type)}
-          <Text style={getTextStyle(type)}>あ</Text>
-        </View>,
+        title: (type: CardType) => (
+          <View style={styles.line}>
+            <Text style={getTextStyle(type)}>A</Text>
+            {icon(type)}
+            <Text style={getTextStyle(type)}>あ</Text>
+          </View>
+        ),
         key: CardMode.romajiToHiragana,
-        condition: hiraAvailable
+        condition: hiraAvailable,
       },
       {
-        title: (type: CardType) => <View style={styles.line} >
-          <Text style={getTextStyle(type)}>あ</Text>
-          {icon(type)}
-          <Text style={getTextStyle(type)}>ア</Text>
-        </View>,
+        title: (type: CardType) => (
+          <View style={styles.line}>
+            <Text style={getTextStyle(type)}>あ</Text>
+            {icon(type)}
+            <Text style={getTextStyle(type)}>ア</Text>
+          </View>
+        ),
         key: CardMode.hiraganaToKatakana,
-        condition: hiraAvailable && kanaAvailable
+        condition: hiraAvailable && kanaAvailable,
       },
     ],
     [
       {
-        title: (type: CardType) => <View style={styles.line} >
-          <Text style={getTextStyle(type)}>ア</Text>
-          {icon(type)}
-          <Text style={getTextStyle(type)}>A</Text>
-        </View>,
+        title: (type: CardType) => (
+          <View style={styles.line}>
+            <Text style={getTextStyle(type)}>ア</Text>
+            {icon(type)}
+            <Text style={getTextStyle(type)}>A</Text>
+          </View>
+        ),
         key: CardMode.katakanaToRomaji,
-        condition: kanaAvailable
+        condition: kanaAvailable,
       },
       {
-        title: (type: CardType) => <View style={styles.line} >
-          <Text style={getTextStyle(type)}>A</Text>
-          {icon(type)}
-          <Text style={getTextStyle(type)}>ア</Text>
-        </View>,
+        title: (type: CardType) => (
+          <View style={styles.line}>
+            <Text style={getTextStyle(type)}>A</Text>
+            {icon(type)}
+            <Text style={getTextStyle(type)}>ア</Text>
+          </View>
+        ),
         key: CardMode.romajiToKatakana,
-        condition: kanaAvailable
+        condition: kanaAvailable,
       },
       {
-        title: (type: CardType) => <View style={styles.line} >
-          <Text style={getTextStyle(type)}>ア</Text>
-          {icon(type)}
-          <Text style={getTextStyle(type)}>あ</Text>
-        </View>,
+        title: (type: CardType) => (
+          <View style={styles.line}>
+            <Text style={getTextStyle(type)}>ア</Text>
+            {icon(type)}
+            <Text style={getTextStyle(type)}>あ</Text>
+          </View>
+        ),
         key: CardMode.katakanaToHiragana,
-        condition: hiraAvailable && kanaAvailable
+        condition: hiraAvailable && kanaAvailable,
       },
     ],
   ];
@@ -124,32 +150,35 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 
     if (selectedCardMode.includes(key)) {
-      setSelectedCardMode(prev => prev.filter((item) => item !== key));
-      setCards(prev => prev.filter((item) => item !== key));
+      setSelectedCardMode((prev) => prev.filter((item) => item !== key));
+      setCards((prev) => prev.filter((item) => item !== key));
     } else {
-      setSelectedCardMode(prev => [...prev, key]);
-      setCards(prev => [...prev, key]);
+      setSelectedCardMode((prev) => [...prev, key]);
+      setCards((prev) => [...prev, key]);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, { color: colors.color4 }]}>{t("testing.cardMode")}</Text>
+      <Text style={[Typography.boldH3, { color: colors.TextPrimary }]}>
+        {t("testing.cardMode")}
+      </Text>
+
       <View style={styles.buttonsContainer}>
         {cards.map((column, columnIndex) => (
           <View key={`column-${columnIndex}`} style={styles.column}>
             {column.map((btn) => (
-              <Button
+              <SecondaryButton
                 key={btn.key}
-                title={btn.title(btn.condition ? selectedCardMode.includes(btn.key)
-                  ? CardType.Active
-                  : CardType.Incative 
-                  : CardType.Disbled)}
-                type={btn.condition 
-                    ? selectedCardMode.includes(btn.key) 
-                      ? "active" 
-                      : "inactive" 
-                    : "disabled"}
+                content={btn.title(
+                  btn.condition
+                    ? selectedCardMode.includes(btn.key)
+                      ? CardType.Active
+                      : CardType.Incative
+                    : CardType.Disbled,
+                )}
+                isDisabled={!btn.condition}
+                isOutline={!selectedCardMode.includes(btn.key)}
                 onClick={() => toggle(btn.key)}
               />
             ))}
@@ -160,39 +189,32 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
   );
 };
 
-
 export default CardModeSelect;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 30,
-  },
-  title: {
-    fontSize: 17,
-    fontWeight: "700",
-    lineHeight: 22,
-    letterSpacing: -0.43,
-    color: "#000",
+    marginTop: 32,
   },
   buttonsContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    gap: 15
+    gap: 16,
+    marginTop: 16,
   },
   column: {
     flexDirection: "column",
     justifyContent: "space-between",
     flex: 1,
+    gap: 16,
   },
   text: {
     fontWeight: "700",
     fontSize: 15,
-    width: 13
+    width: 13,
   },
   line: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 10,
-  }
+    gap: 4,
+  },
 });

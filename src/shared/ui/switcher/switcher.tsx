@@ -1,13 +1,21 @@
-import React, {useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
-import { View, Text, StyleSheet, Animated, Pressable, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Animated,
+  Pressable,
+  Dimensions,
+} from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
 import { verticalScale } from "@/shared/helpers/metrics";
 
 import * as Haptics from "expo-haptics";
-interface SwitcherProps<T extends string > {
+import { Typography } from "@/shared/typography";
+interface SwitcherProps<T extends string> {
   activeTab: T;
   options: T[];
   translate?: (React.ReactNode | string)[];
@@ -18,15 +26,16 @@ interface SwitcherProps<T extends string > {
 const screenWidth = Dimensions.get("window").width;
 
 function Switcher<T extends string>(props: SwitcherProps<T>) {
-
   const { activeTab, setActiveTab, options, translate } = props;
 
   const { colors } = useThemeContext();
   const animatedValue = useRef(new Animated.Value(0)).current;
 
-  const adaptivePadding = screenWidth > TABLET_WIDTH ? (40 + verticalScale(TABLET_PADDING * 2)) : 40;
+  const adaptivePadding =
+    screenWidth > TABLET_WIDTH ? 40 + verticalScale(TABLET_PADDING * 2) : 40;
 
-  const itemWidth = (Dimensions.get("window").width - adaptivePadding - 4) / (options.length);
+  const itemWidth =
+    (Dimensions.get("window").width - adaptivePadding - 4) / options.length;
 
   const handlePress = (index: number) => {
     setActiveTab(options[index]);
@@ -44,18 +53,17 @@ function Switcher<T extends string>(props: SwitcherProps<T>) {
 
   return (
     <View style={[styles.content]}>
-      <View style={[styles.tabs, { backgroundColor: colors.second_color4 }]}>
+      <View
+        style={[styles.tabs, { backgroundColor: colors.BgAccentSecondary }]}
+      >
         {options.map((tab, index) => (
           <Pressable
             key={tab as string}
             onPress={() => handlePress(index)}
-            style={[
-              styles.tab,
-              { backgroundColor: "transparent" },
-            ]}
+            style={[styles.tab, { backgroundColor: "transparent" }]}
           >
-            <Text style={[styles.tabText, { color: colors.color4 }]}>
-              {(translate && translate.length === options.length) 
+            <Text style={[Typography.boldH4, { color: colors.TextPrimary }]}>
+              {translate && translate.length === options.length
                 ? translate[index]
                 : tab}
             </Text>
@@ -88,7 +96,7 @@ export default Switcher;
 const styles = StyleSheet.create({
   content: {
     width: "100%",
-    height: 52
+    height: 50,
   },
   tabs: {
     padding: 2,
@@ -101,13 +109,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    height: 48,
+    height: 46,
     borderRadius: 10,
-  },
-  tabText: {
-    fontSize: 15,
-    fontWeight: "400",
-    textTransform: "capitalize",
   },
   indicator: {
     position: "absolute",
@@ -115,6 +118,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     zIndex: -1,
     marginTop: 2,
-    marginLeft: 2
+    marginLeft: 2,
   },
 });

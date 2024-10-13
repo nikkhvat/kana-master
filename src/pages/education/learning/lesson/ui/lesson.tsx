@@ -30,7 +30,6 @@ import SelectLettersScreen from "@/widgets/learning/lesson/select-letters/select
 import SelectSequenceLettersScreen from "@/widgets/learning/lesson/select-sequence-letters/select-sequence-letters";
 import LessonSymbolScreen from "@/widgets/learning/lesson/symbol/symbol";
 
-
 type HomeScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   "LessonPage"
@@ -44,22 +43,24 @@ interface LearnScreenProps {
 
 const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
   const insets = useSafeAreaInsets();
-  
+
   const isAutoLesson = (
     item: AutoLesson | ManuallyLesson,
   ): item is AutoLesson => "letters" in item;
-  
+
   const isManualyLesson = (
     item: AutoLesson | ManuallyLesson,
   ): item is ManuallyLesson => "screens" in item;
-  
+
   const isInfoLessonScreen = (
     item: AnyLesson | InfoLessonScreen | null | undefined,
-  ): item is InfoLessonScreen => item !== null && typeof item === 'object' && !("name" in item);
+  ): item is InfoLessonScreen =>
+    item !== null && typeof item === "object" && !("name" in item);
 
   const isAnyLessonScreen = (
     item: AnyLesson | InfoLessonScreen | null | undefined,
-  ): item is AnyLesson => item !== null && typeof item === 'object' && "name" in item;
+  ): item is AnyLesson =>
+    item !== null && typeof item === "object" && "name" in item;
 
   const { lesson } = route.params;
 
@@ -71,7 +72,6 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
 
   const { init, currentScreen, screen, lessonScreens, next, retry } =
     useEducationLessonContext();
-
 
   const addMarkCompleteLessonInStore = () => {
     if (isAutoLesson(lesson)) {
@@ -125,7 +125,8 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
     }
   }, []);
 
-  const isAnyScreen = currentScreen !== null && isAnyLessonScreen(currentScreen);
+  const isAnyScreen =
+    currentScreen !== null && isAnyLessonScreen(currentScreen);
 
   return (
     <SafeLayout
@@ -140,10 +141,12 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
         },
       ]}
     >
-      <View style={{
-        paddingLeft: insets.left + 20,
-        paddingRight: insets.right + 20,
-      }}>
+      <View
+        style={{
+          paddingLeft: insets.left + 20,
+          paddingRight: insets.right + 20,
+        }}
+      >
         {(isManualyLesson(lesson)
           ? true
           : screen + 1 !== lessonScreens.length) && (
@@ -154,90 +157,107 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
           />
         )}
       </View>
-      {isAutoLesson(lesson) && isAnyScreen && currentScreen?.name !== LessonScreen.Finish && (
-        <View style={[styles.container, {
-          paddingLeft: insets.left + 20,
-          paddingRight: insets.right + 20,
-        }]}>
-          {isAnyScreen && currentScreen?.name === LessonScreen.Symbol && (
-            <LessonSymbolScreen
-              name={LessonScreen.Symbol}
-              symbol={currentScreen.symbol}
-              kana={lesson.kana || KanaAlphabet.Hiragana}
-              next={next}
-              key={screen}
-            />
-          )}
+      {isAutoLesson(lesson) &&
+        isAnyScreen &&
+        currentScreen?.name !== LessonScreen.Finish && (
+          <View
+            style={[
+              styles.container,
+              {
+                paddingLeft: insets.left + 20,
+                paddingRight: insets.right + 20,
+              },
+            ]}
+          >
+            {isAnyScreen && currentScreen?.name === LessonScreen.Symbol && (
+              <LessonSymbolScreen
+                name={LessonScreen.Symbol}
+                symbol={currentScreen.symbol}
+                kana={lesson.kana || KanaAlphabet.Hiragana}
+                next={next}
+                key={screen}
+              />
+            )}
 
-          {isAnyScreen && currentScreen?.name === LessonScreen.Draw && (
-            <LessonDrawScreen
-              name={LessonScreen.Draw}
-              symbol={currentScreen.symbol}
-              kana={lesson.kana || KanaAlphabet.Hiragana}
-              next={next}
-              key={screen}
-            />
-          )}
+            {isAnyScreen && currentScreen?.name === LessonScreen.Draw && (
+              <LessonDrawScreen
+                name={LessonScreen.Draw}
+                symbol={currentScreen.symbol}
+                kana={lesson.kana || KanaAlphabet.Hiragana}
+                next={next}
+                key={screen}
+              />
+            )}
 
-          {isAnyScreen && currentScreen?.name === LessonScreen.MatchSymbols && (
-            <MatchLettersScreen
-              name={LessonScreen.MatchSymbols}
-              symbols={currentScreen.symbols}
-              kana={lesson.kana || KanaAlphabet.Hiragana}
-              next={next}
-              key={screen}
-            />
-          )}
+            {isAnyScreen &&
+              currentScreen?.name === LessonScreen.MatchSymbols && (
+                <MatchLettersScreen
+                  name={LessonScreen.MatchSymbols}
+                  symbols={currentScreen.symbols}
+                  kana={lesson.kana || KanaAlphabet.Hiragana}
+                  next={next}
+                  key={screen}
+                />
+              )}
 
-          {isAnyScreen && currentScreen?.name === LessonScreen.SelectSymbol && (
-            <SelectLettersScreen
-              name={LessonScreen.SelectSymbol}
-              symbols={currentScreen.symbols}
-              kana={lesson.kana || KanaAlphabet.Hiragana}
-              next={next}
-              key={screen}
-            />
-          )}
+            {isAnyScreen &&
+              currentScreen?.name === LessonScreen.SelectSymbol && (
+                <SelectLettersScreen
+                  name={LessonScreen.SelectSymbol}
+                  symbols={currentScreen.symbols}
+                  kana={lesson.kana || KanaAlphabet.Hiragana}
+                  next={next}
+                  key={screen}
+                />
+              )}
 
-          {isAnyScreen && currentScreen?.name === LessonScreen.SelectSequenceLetters && (
-            <SelectSequenceLettersScreen
-              name={LessonScreen.SelectSequenceLetters}
-              sequence={currentScreen.sequence}
-              kana={lesson.kana || KanaAlphabet.Hiragana}
-              next={next}
-              key={screen}
-            />
-          )}
+            {isAnyScreen &&
+              currentScreen?.name === LessonScreen.SelectSequenceLetters && (
+                <SelectSequenceLettersScreen
+                  name={LessonScreen.SelectSequenceLetters}
+                  sequence={currentScreen.sequence}
+                  kana={lesson.kana || KanaAlphabet.Hiragana}
+                  next={next}
+                  key={screen}
+                />
+              )}
 
-          {isAnyScreen && currentScreen?.name === LessonScreen.BuildWord && (
-            <BuildWordScreen
-              name={LessonScreen.BuildWord}
-              sequence={currentScreen.sequence}
-              kana={lesson.kana || KanaAlphabet.Hiragana}
-              next={next}
-              key={screen}
-            />
-          )}
-        </View>
-      )}
+            {isAnyScreen && currentScreen?.name === LessonScreen.BuildWord && (
+              <BuildWordScreen
+                name={LessonScreen.BuildWord}
+                sequence={currentScreen.sequence}
+                kana={lesson.kana || KanaAlphabet.Hiragana}
+                next={next}
+                key={screen}
+              />
+            )}
+          </View>
+        )}
 
-      {(isAutoLesson(lesson) || isManualyLesson(lesson)) && currentScreen !== null && isAnyLessonScreen(currentScreen) && currentScreen?.name === LessonScreen.Finish &&
-        <View style={[styles.container, {
-          paddingLeft: insets.left + 20,
-          paddingRight: insets.right + 20,
-        }]}>
-          <FinishScreen
-            name={LessonScreen.Finish}
-            next={onComplete}
-            retry={onRetry}
-          />
-        </View>}
+      {(isAutoLesson(lesson) || isManualyLesson(lesson)) &&
+        currentScreen !== null &&
+        isAnyLessonScreen(currentScreen) &&
+        currentScreen?.name === LessonScreen.Finish && (
+          <View
+            style={[
+              styles.container,
+              {
+                paddingLeft: insets.left + 20,
+                paddingRight: insets.right + 20,
+              },
+            ]}
+          >
+            <FinishScreen
+              name={LessonScreen.Finish}
+              next={onComplete}
+              retry={onRetry}
+            />
+          </View>
+        )}
 
       {isManualyLesson(lesson) && !isAnyLessonScreen(currentScreen) && (
         <View style={styles.container}>
-          {
-          currentScreen !== null &&
-          isInfoLessonScreen(currentScreen) && (
+          {currentScreen !== null && isInfoLessonScreen(currentScreen) && (
             <InfoScreen
               next={next}
               finish={onComplete}

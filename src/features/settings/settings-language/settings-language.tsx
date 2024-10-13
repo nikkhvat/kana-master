@@ -1,6 +1,6 @@
 import React from "react";
 
-import AsyncStorage from "@react-native-async-storage/async-storage"; 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -11,29 +11,32 @@ import { useAppDispatch } from "@/shared/model/hooks";
 import { updateLessons } from "@/pages/education/learning/model/slice";
 
 const SettingsLanguage: React.FC = () => {
-  const { colors } = useThemeContext();  
-  const dispatch = useAppDispatch()
+  const { colors } = useThemeContext();
+  const dispatch = useAppDispatch();
 
   const { t, i18n } = useTranslation();
 
   const setLanguage = async (lang: LanguageKeys) => {
     await AsyncStorage.setItem("lang", lang);
     i18n.changeLanguage(lang);
-    
-    dispatch(updateLessons({ lang }))
+
+    dispatch(updateLessons({ lang }));
   };
 
   return (
     <>
-      <Text style={[styles.title, { color: colors.color4 }]}>{t("profile.language")}</Text>
+      <Text style={[styles.title, { color: colors.color4 }]}>
+        {t("profile.language")}
+      </Text>
 
       <View style={styles.sectionButtonsColumn}>
-        {languageList.map(lang => (
+        {languageList.map((lang) => (
           <LanguageButton
             key={lang.key}
             langKey={lang.key}
             onPress={() => setLanguage(lang.key)}
-            active={i18n.language === lang.key}>
+            active={i18n.language === lang.key}
+          >
             {lang.title}
           </LanguageButton>
         ))}
@@ -49,7 +52,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     fontSize: 17,
     fontWeight: "700",
-    marginBottom: 15,
+    marginBottom: 16,
   },
   sectionButtonsColumn: {
     width: "100%",

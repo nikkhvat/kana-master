@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
 
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text } from "react-native";
-import Icon from "@expo/vector-icons/Feather";
+import { ActionSheetIOS } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { Theme } from "@/shared/constants/theme";
-import Switcher from "@/shared/ui/switcher/switcher";
+import SettingItem from "@/entities/profile/setting-item/setting-item";
 
 const SettingsTheme: React.FC = () => {
-  const { colors, updateTheme, themeString } = useThemeContext();  
+  const { updateTheme, themeString } = useThemeContext();
 
   const { t } = useTranslation();
   const [themeTab, setThemeTab] = useState<string>(themeString);
 
   useEffect(() => {
     setThemeTab(themeString);
-  }, [themeString])
+  }, [themeString]);
 
   const onUpdateTheme = (theme: string) => {
     setThemeTab(theme);
@@ -27,44 +26,34 @@ const SettingsTheme: React.FC = () => {
     updateTheme(Theme.Auto);
   };
 
-  return (
-    <>
-      <Text style={[styles.title, { color: colors.color4 }]}>{t("profile.theme")}</Text>
+  const onPress = () =>
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ["Cancel", "Light", "Dark", "Auto"],
+        cancelButtonIndex: 0,
+        userInterfaceStyle: themeString as "dark" | "light",
+      },
+      (buttonIndex) => {
+        if (buttonIndex === 1) {
+          onUpdateTheme("light");
+        } else if (buttonIndex === 2) {
+          onUpdateTheme("dark");
+        } else if (buttonIndex === 3) {
+          onUpdateTheme("auto");
+        }
+      },
+    );
 
-      <Switcher
-        activeTab={themeTab}
-        options={[
-          "light",
-          "dark",
-          "auto",
-        ]}
-        setActiveTab={onUpdateTheme}
-        translate={[
-          <Icon
-            key={"sun"}
-            name={"sun"}
-            size={24}
-            color={colors._theme === "dark" ? colors.color4 : colors.color4}
-          />,
-          <Icon
-            key={"moon"}
-            name={"moon"}
-            size={24}
-            color={colors._theme === "light" ? colors.color4 : colors.color4}
-          />,
-          t("common.auto"),
-        ]} />
-    </>
+  return (
+    <SettingItem
+      text={t("profile.theme")}
+      subText={themeTab}
+      isLast
+      onClick={() => {
+        onPress();
+      }}
+    />
   );
 };
 
 export default SettingsTheme;
-
-const styles = StyleSheet.create({
-  title: {
-    marginTop: 30,
-    fontSize: 17,
-    fontWeight: "700",
-    marginBottom: 15,
-  },
-});

@@ -8,7 +8,8 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonDraw } from "@/shared/constants/lessons";
 import getKana from "@/shared/helpers/getKanaKey";
-import Button from "@/shared/ui/button/button";
+import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
+import { LearningTitle } from "../ui/title";
 
 type LessonDrawScreenProps = LessonDraw & {
   next: () => void;
@@ -26,26 +27,16 @@ const LessonDrawScreen: React.FC<LessonDrawScreenProps> = ({
   return (
     <View style={styles.container}>
       <View>
-        <Text
-          style={[
-            styles.title,
-            {
-              color: colors.color4,
-            },
-          ]}
-        >
+        <LearningTitle>
           {t("lesson.drawSyllable", { syllable: getKana(symbol, kana) })}
-        </Text>
+        </LearningTitle>
 
         <Draw kana={kana} letter={symbol} />
       </View>
 
-      <Button
-        customStyles={{ width: "100%" }}
-        type={"general"}
-        title={t("common.next")}
-        onClick={next}
-      />
+      <View style={styles.buttonContainer}>
+        <PrimaryButton isFullWidth text={t("common.next")} onClick={next} />
+      </View>
     </View>
   );
 };
@@ -58,10 +49,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-start",
   },
+  buttonContainer: {
+    width: "100%",
+    height: 50,
+  },
   title: {
     fontSize: 17,
     fontWeight: "600",
     textAlign: "center",
-    height: 50
+    height: 50,
   },
 });

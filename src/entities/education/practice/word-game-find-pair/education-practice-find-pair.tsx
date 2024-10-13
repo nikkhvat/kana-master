@@ -7,14 +7,13 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { RegistErrorProps } from "@/pages/education/practice/education-word-game/ui/education-practice";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { QuestionFindPair } from "@/shared/types/questions";
-import MatchPairs from "@/shared/ui/match-pairs/match-pairs";
-
+import MatchPairs from "../match-pairs/match-pairs";
 
 interface EducationPracticeFindPairProps {
   onCompleted?: (hasError: boolean) => void;
   onError?: (data: RegistErrorProps) => void;
-  question: QuestionFindPair
-  hideTitle?: boolean
+  question: QuestionFindPair;
+  hideTitle?: boolean;
 }
 const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
   question,
@@ -22,32 +21,33 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
   onCompleted,
   onError,
 }) => {
-
-  const { 
-    pairs,
-    kana,
-  } = question;
+  const { pairs, kana } = question;
   const { t } = useTranslation();
   const { colors } = useThemeContext();
 
-  const pairsList = useMemo(() => pairs.map(item => item.map(e => e.title)), [pairs]);
+  const pairsList = useMemo(
+    () => pairs.map((item) => item.map((e) => e.title)),
+    [pairs],
+  );
 
   return (
     <View style={styles.container}>
-      {!hideTitle && <Text style={[styles.question, {color: colors.color4}]}>
-        {kana === KanaAlphabet.Hiragana
-          ? t("lesson.matchHiraganaWithTransliteration")
-          : t("lesson.matchKatakanaWithTransliteration")}
-      </Text>}
+      {!hideTitle && (
+        <Text style={[styles.question, { color: colors.color4 }]}>
+          {kana === KanaAlphabet.Hiragana
+            ? t("lesson.matchHiraganaWithTransliteration")
+            : t("lesson.matchKatakanaWithTransliteration")}
+        </Text>
+      )}
 
-      <MatchPairs 
+      <MatchPairs
         key={pairsList.join()}
-        pairs={pairsList} 
+        pairs={pairsList}
         onComplete={onCompleted}
         onError={(pair) => {
           onError?.({
             type: "find-pair-word",
-            pair: [pair[0], pair[1]]
+            pair: [pair[0], pair[1]],
           });
         }}
       />

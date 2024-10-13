@@ -3,11 +3,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Dimensions, Pressable, StyleSheet, TouchableWithoutFeedback, View } from "react-native";
+import Draw from "@/entities/education/draw/draw";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-
-import { StatisticLevel } from "../../kana-list/model/types";
 
 import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
 import SoundLetter from "@/entities/kana/sound-letter/sound-letter";
@@ -26,16 +25,18 @@ import {
 } from "@/shared/data/lettersTable";
 import { useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
-import Button from "@/shared/ui/button/button";
-import DrawKana from "@/widgets/kana/draw-kana/ui/draw-kana";
 import IconButton from "@/shared/ui/icon-button";
+import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
 
 interface KanaInfoProps {
   route: RouteProp<RootStackParamList, "KanaInfo">;
   navigation: StackNavigationProp<RootStackParamList, "KanaInfo">;
 }
 
-const screenHeight = Dimensions.get("window").height;
+enum Screen {
+  Symbol,
+  Draw,
+}
 
 const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
   const { t } = useTranslation();
@@ -44,6 +45,22 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
   const { colors } = useThemeContext();
 
   const { id: LetterIdFromParams, kana: kanaFromParams } = route.params;
+
+  const [letterId, setLetterId] = useState(LetterIdFromParams);
+  const [letterKana, setLetterKana] = useState(kanaFromParams);
+  const [currentScreen, setCurrentScreen] = useState(Screen.Symbol);
+
+  const leftIcon = (
+    <Icon name={"chevron-left"} size={24} color={colors.IconPrimary} />
+  );
+
+  const rightIcon = (
+    <Icon name={"chevron-right"} size={24} color={colors.IconPrimary} />
+  );
+
+  const pencilIcon = (
+    <Icon name={"pencil-outline"} size={24} color={colors.IconPrimary} />
+  );
 
   const flatLetters = useMemo(
     () => [
@@ -55,166 +72,128 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
     [],
   );
 
-  const [letterId, setLetterId] = useState(LetterIdFromParams);
-  const [letterKana, setLetterKana] = useState(kanaFromParams);
-
-  const level = useAppSelector(
+  const letterStat = useAppSelector(
     (state) => state.statistics.statistics[letterKana][letterId],
   );
 
-  const isEnabledStats = useAppSelector((state) => state.statistics.isEnabled);
-  const indicatorColor =
-    level === undefined
-      ? null
-      : level?.level === StatisticLevel.Green
-        ? colors.second_color2
-        : level?.level === StatisticLevel.Yellow
-          ? colors.second_color5
-          : colors.second_color1;
+  const headerTitle =
+    letterKana === KanaAlphabet.Hiragana
+      ? t("kana.hiragana")
+      : t("kana.katakana");
 
-  const [isDrawSymbol, setIsDrawSymbol] = useState(false);
-
-  const prevLetter = () => {
-    const active = lettersTableById[letterId as LettersKeys];
-    const activeIndex = flatLetters.findIndex(
-      (element) => element === active.id,
-    );
-    if (activeIndex === 0) return;
-
-    setLetterId(flatLetters[activeIndex - 1]);
-  };
-
-  const nextLetter = () => {
-    const active = lettersTableById[letterId as LettersKeys];
-    const activeIndex = flatLetters.findIndex(
-      (element) => element === active.id,
-    );
-    if (flatLetters.length === activeIndex + 1) return;
-
-    setLetterId(flatLetters[activeIndex + 1]);
-  };
-
-  const letter = lettersTableById[letterId as LettersKeys];
-
-  const drawSymbol = () => {
-    setIsDrawSymbol(true);
-  };
+  const switchButtonText = `${letterKana === KanaAlphabet.Hiragana ? t("kana.katakana") : t("kana.hiragana")} →`;
 
   useEffect(() => {
     navigation.setOptions({
       headerTitleAlign: "center",
       headerLeft: () => (
-        <IconButton
-          onPress={() => {
-            if (isDrawSymbol) {
-              setIsDrawSymbol(false);
-            } else {
-              navigation.goBack();
-            }
-          }}
-        >
+        <IconButton onPress={switchScreen}>
           <Icon
-            name={isDrawSymbol ? "keyboard-backspace" : "close"}
-            size={24}
+            name={currentScreen === Screen.Draw ? "chevron-left" : "close"}
+            size={29}
             color={colors.color4}
           />
         </IconButton>
       ),
-      title:
-        letterKana === KanaAlphabet.Hiragana
-          ? t("kana.hiragana")
-          : t("kana.katakana"),
+      title: headerTitle,
       headerShadowVisible: false,
     });
-  }, [navigation, isDrawSymbol, letterKana]);
+  }, [navigation, currentScreen, letterKana]);
+
+  const isEnabledStats = useAppSelector((state) => state.statistics.isEnabled);
+
+  const active = lettersTableById[letterId as LettersKeys];
+  const activeIndex = flatLetters.findIndex((element) => element === active.id);
+
+  const prevLetter = () =>
+    activeIndex !== 0 && setLetterId(flatLetters[activeIndex - 1]);
+
+  const nextLetter = () =>
+    flatLetters.length !== activeIndex + 1 &&
+    setLetterId(flatLetters[activeIndex + 1]);
+
+  const letter = lettersTableById[letterId as LettersKeys];
+
+  const goToDrawScreen = () => setCurrentScreen(Screen.Draw);
+
+  const switchScreen = () => {
+    if (currentScreen) {
+      return setCurrentScreen(Screen.Symbol);
+    }
+
+    navigation.goBack();
+  };
+
+  const switchKana = () => {
+    if (letterKana === KanaAlphabet.Hiragana) {
+      return setLetterKana(KanaAlphabet.Katakana);
+    }
+
+    setLetterKana(KanaAlphabet.Hiragana);
+  };
 
   return (
     <AdaptiveLayout style={{ flex: 1 }}>
-      {isDrawSymbol === false ? (
-        <View style={[styles.container, { backgroundColor: colors.color1 }]}>
-          {letter !== null && (
-            <View style={styles.symbolContainer}>
-              <SymbolHeader
-                indicatorColor={isEnabledStats ? indicatorColor : null}
-                hideTitle
-                kana={letterKana}
-                letter={letter as ILetter}
-              />
-              <View style={{ marginTop: 30 }}>
-                <Symbol id={letter.id} kana={letterKana} />
-              </View>
+      <View style={styles.container}>
+        <View style={styles.symbolContainer}>
+          <SymbolHeader
+            indicatorColor={isEnabledStats ? letterStat?.level : null}
+            hideTitle
+            kana={letterKana}
+            letter={letter as ILetter}
+          />
+
+          {currentScreen === Screen.Symbol && (
+            <View style={{ marginTop: 16 + 1 }}>
+              <Symbol id={letter.id} kana={letterKana} />
             </View>
           )}
 
-          {letter !== null && (
-            <View style={styles.buttonContainer}>
-              <View style={styles.buttons}>
-                <SoundLetter
-                  customStyles={{ flex: 1, marginTop: 0 }}
-                  id={letter.id}
-                />
-                <Button
-                  customStyles={{ flex: 1, marginTop: 0 }}
-                  title={"Draw"}
-                  onClick={drawSymbol}
-                  type={"inactive"}
-                  image={"gesture-tap-hold"}
-                />
-              </View>
-              <View style={styles.buttons}>
-                {screenHeight < 700 && (
-                  <Button
-                    customStyles={{ flex: 1, width: 50, marginTop: 0 }}
-                    type={"inactive"}
-                    image={"chevron-left"}
-                    onClick={() => prevLetter()}
-                  />
-                )}
-                <Button
-                  customStyles={{ flex: 1, marginTop: 0 }}
-                  title={`${letterKana === KanaAlphabet.Hiragana ? t("kana.katakana") : t("kana.hiragana")} →`}
-                  onClick={() => {
-                    setLetterKana(
-                      letterKana === KanaAlphabet.Hiragana
-                        ? KanaAlphabet.Katakana
-                        : KanaAlphabet.Hiragana,
-                    );
-                  }}
-                  type={"inactive"}
-                />
-                {screenHeight < 700 && (
-                  <Button
-                    customStyles={{ width: 50, marginTop: 0 }}
-                    title={"Draw"}
-                    type={"inactive"}
-                    image={"chevron-right"}
-                    onClick={() => nextLetter()}
-                  />
-                )}
-              </View>
+          {currentScreen === Screen.Draw && (
+            <View style={{ marginTop: 16 }}>
+              <Draw kana={letterKana} letter={letter as ILetter} />
             </View>
           )}
+        </View>
 
-          {screenHeight > 700 && (
-            <View style={[styles.buttons, { paddingBottom: insets.bottom }]}>
-              <Button
-                customStyles={{ width: 50 }}
-                type={"inactive"}
-                image={"chevron-left"}
-                onClick={() => prevLetter()}
-              />
-              <Button
-                customStyles={{ width: 50 }}
-                type={"inactive"}
-                image={"chevron-right"}
-                onClick={() => nextLetter()}
+        <View style={styles.buttonContainer}>
+          {currentScreen === Screen.Symbol && (
+            <View style={styles.buttons}>
+              <SoundLetter id={letter.id} />
+
+              <SecondaryButton
+                icon={pencilIcon}
+                isOutline
+                isFullWidth
+                onClick={goToDrawScreen}
               />
             </View>
           )}
         </View>
-      ) : (
-        <DrawKana letter={letter as ILetter} kana={letterKana} />
-      )}
+
+        <View style={[styles.buttons, { paddingBottom: insets.bottom }]}>
+          <SecondaryButton
+            icon={leftIcon}
+            isOutline
+            width={50}
+            onClick={() => prevLetter()}
+          />
+
+          <SecondaryButton
+            text={switchButtonText}
+            isOutline
+            isFullWidth
+            onClick={switchKana}
+          />
+
+          <SecondaryButton
+            icon={rightIcon}
+            isOutline
+            width={50}
+            onClick={() => nextLetter()}
+          />
+        </View>
+      </View>
     </AdaptiveLayout>
   );
 };
@@ -224,13 +203,6 @@ export default KanaInfo;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    paddingLeft: 20,
-    paddingRight: 20,
   },
   symbolContainer: {
     flexDirection: "column",
@@ -249,14 +221,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingLeft: 20,
     paddingRight: 20,
-    marginTop: 15,
-    gap: 15,
-  },
-  close: {
-    marginTop: 10,
-    marginLeft: 10,
-    position: "absolute",
-    padding: 10,
-    zIndex: 9,
+    marginTop: 16,
+    gap: 16,
   },
 });
