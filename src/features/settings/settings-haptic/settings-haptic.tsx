@@ -15,8 +15,6 @@ const SettingsStatistics: React.FC = () => {
     (state) => state.profile.isEnabledHaptic,
   );
 
-  console.log("isEnabledHaptic", isEnabledHaptic);
-
   return (
     <SettingItem
       text={"Haptic feedback"}

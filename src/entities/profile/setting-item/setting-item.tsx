@@ -2,7 +2,14 @@ import React from "react";
 
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-import { StyleSheet, Text, View, Switch } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Switch,
+  Linking,
+  Pressable,
+} from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { Typography } from "@/shared/typography";
@@ -14,6 +21,7 @@ interface SettingItemProps {
   onValueChange?: () => void;
   onClick?: () => void;
   isLast?: boolean;
+  link?: string;
 }
 
 const SettingItem: React.FC<SettingItemProps> = ({
@@ -23,11 +31,12 @@ const SettingItem: React.FC<SettingItemProps> = ({
   onValueChange,
   isLast,
   onClick,
+  link,
 }) => {
   const { colors } = useThemeContext();
 
   return (
-    <View
+    <Pressable
       style={[
         styles.container,
         !isLast
@@ -39,6 +48,15 @@ const SettingItem: React.FC<SettingItemProps> = ({
           : {},
         !subText ? { height: 44 } : { height: 64 },
       ]}
+      onPress={() => {
+        if (link) {
+          Linking.openURL(link);
+        }
+
+        if (onClick !== undefined) {
+          onClick();
+        }
+      }}
     >
       <View
         style={{
@@ -78,15 +96,14 @@ const SettingItem: React.FC<SettingItemProps> = ({
         />
       )}
 
-      {onClick !== undefined && (
-        <Icon
-          onPress={onClick}
-          name={"chevron-right"}
-          size={24}
-          color={colors.IconSecondary}
-        />
+      {link && (
+        <Icon name={"chevron-right"} size={24} color={colors.IconSecondary} />
       )}
-    </View>
+
+      {onClick !== undefined && (
+        <Icon name={"chevron-right"} size={24} color={colors.IconSecondary} />
+      )}
+    </Pressable>
   );
 };
 

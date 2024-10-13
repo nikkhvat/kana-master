@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   btnsContainer: {
     width: "100%",
-    alignItems: "center",
+    height: 50,
   },
 
   blocks: {

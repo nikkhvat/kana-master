@@ -7,7 +7,6 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { DifficultyLevelType } from "@/shared/constants/kana";
 import Switcher from "@/shared/ui/switcher/switcher";
 
-import * as Haptics from "expo-haptics";
 import { Typography } from "@/shared/typography";
 import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
 
@@ -62,8 +61,6 @@ const TestModeSelect: React.FC<CardModeSelectProps> = ({
   ];
 
   const toggle = (key: DifficultyLevelType) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
     if (selectedCardMode.includes(key)) {
       setSelectedCardMode((prev) => prev.filter((item) => item !== key));
       setCards((prev) => prev.filter((item) => item !== key));
@@ -85,6 +82,7 @@ const TestModeSelect: React.FC<CardModeSelectProps> = ({
             <View key={`column-${columnIndex}`} style={styles.column}>
               {column.map((btn) => (
                 <SecondaryButton
+                  isHapticFeedback
                   key={btn.key}
                   text={btn.title}
                   isDisabled={!btn.condition}

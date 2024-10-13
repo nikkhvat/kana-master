@@ -1,57 +1,81 @@
-import React, { createContext, FC, PropsWithChildren, useContext, useState } from "react";
+import React, {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useContext,
+  useState,
+} from "react";
 
 import * as Haptics from "expo-haptics";
 
 import { RootState } from "@/app/store";
-import { CardMode, Kana, QuestionTypeChooseLetter } from "@/shared/constants/kana";
-import { ILetter, LettersKeys, lettersTableById } from "@/shared/data/lettersTable";
+import {
+  CardMode,
+  Kana,
+  QuestionTypeChooseLetter,
+} from "@/shared/constants/kana";
+import {
+  ILetter,
+  LettersKeys,
+  lettersTableById,
+} from "@/shared/data/lettersTable";
 import { shuffleArray } from "@/shared/helpers/letters";
 import { getAnswersWithRandom } from "@/shared/helpers/words";
 import { Question } from "@/shared/types/questions";
+import { useAppSelector } from "@/shared/model/hooks";
 
 interface generateQuestionsProps {
-  selectedLetters: RootState["kana"]["selected"]
-  keysCardModeState: CardMode[]
+  selectedLetters: RootState["kana"]["selected"];
+  keysCardModeState: CardMode[];
 }
 interface EducationPracticeContextValue {
   init: (questions: Question[]) => void;
   generateQuestions: (options: generateQuestionsProps) => Question[];
   submit: (
     trueSelected: boolean,
-    callback?: (onFinishPractice: boolean, trueAnswer: boolean) => void
+    callback?: (onFinishPractice: boolean, trueAnswer: boolean) => void,
   ) => void;
-  questions: Question[]
-  currentIndex: number
+  questions: Question[];
+  currentIndex: number;
 }
 
-export const EducationPracticeContext = createContext<EducationPracticeContextValue>({
-  init: () => { },
-  submit: () => { },
-  generateQuestions: () => [],
-  questions: [],
-  currentIndex: 0
-});
+export const EducationPracticeContext =
+  createContext<EducationPracticeContextValue>({
+    init: () => {},
+    submit: () => {},
+    generateQuestions: () => [],
+    questions: [],
+    currentIndex: 0,
+  });
 
-export const useEducationPracticeContext = () => useContext(EducationPracticeContext);
+export const useEducationPracticeContext = () =>
+  useContext(EducationPracticeContext);
 
-export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ children }) => {
+export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
+  children,
+}) => {
   const [currentIndex, setQuestionIndex] = useState(0);
   const [questions, setQuestions] = useState<Question[]>([]);
+
+  const isEnabledHaptic = useAppSelector(
+    (state) => state.profile.isEnabledHaptic,
+  );
 
   // Когда отвечаешь на вопрос вызываеться эта функция
   // параметр trueSelected: правильный ли ответ
   // callback передаёться
   // > onFinishPractice - true если вопросы закончились
-  // > trueAnswer - true если вопросы был правильный 
+  // > trueAnswer - true если вопросы был правильный
   const submit = (
     trueSelected: boolean,
     callback?: (onFinishPractice: boolean, trueAnswer: boolean) => void,
   ) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    if (isEnabledHaptic) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
 
-    
     if (currentIndex > questions.length - 1) return;
-    
+
     setQuestionIndex((prev) => prev + 1);
     if (currentIndex === questions.length - 1) {
       callback?.(true, trueSelected);
@@ -60,7 +84,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
     }
   };
 
-  // Передаёться масив вопросов 
+  // Передаёться масив вопросов
   const init = (questions: Question[]) => {
     setQuestions(questions);
   };
@@ -83,20 +107,19 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
     selectedLetters,
     keysCardModeState,
   }: generateQuestionsProps): Question[] => {
-
     const kanaLetters = [
       ...selectedLetters.base.katakana,
       ...selectedLetters.dakuon.katakana,
       ...selectedLetters.handakuon.katakana,
       ...selectedLetters.yoon.katakana,
-    ].map(item => lettersTableById[item as LettersKeys]);
+    ].map((item) => lettersTableById[item as LettersKeys]);
 
     const hiraLetters = [
       ...selectedLetters.base.hiragana,
       ...selectedLetters.dakuon.hiragana,
       ...selectedLetters.handakuon.hiragana,
       ...selectedLetters.yoon.hiragana,
-    ].map(item => lettersTableById[item as LettersKeys]);
+    ].map((item) => lettersTableById[item as LettersKeys]);
 
     const questions: Question[] = [];
 
@@ -104,29 +127,32 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
       // Generate questions for Kana
       const questionTypes = [];
 
-      if (keysCardModeState.includes(CardMode.romajiToKatakana)) questionTypes.push(CardMode.romajiToKatakana);
-      if (keysCardModeState.includes(CardMode.katakanaToRomaji)) questionTypes.push(CardMode.katakanaToRomaji);
-      if (keysCardModeState.includes(CardMode.katakanaToHiragana)) questionTypes.push(CardMode.katakanaToHiragana);
-      
+      if (keysCardModeState.includes(CardMode.romajiToKatakana))
+        questionTypes.push(CardMode.romajiToKatakana);
+      if (keysCardModeState.includes(CardMode.katakanaToRomaji))
+        questionTypes.push(CardMode.katakanaToRomaji);
+      if (keysCardModeState.includes(CardMode.katakanaToHiragana))
+        questionTypes.push(CardMode.katakanaToHiragana);
+
       if (questionTypes.length > 0) {
         for (let i = 0; i < kanaLetters.length; i++) {
           const letter = kanaLetters[i] as ILetter;
           if (letter !== undefined) {
-            
-            const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
-            const kanaType  = type === CardMode.romajiToKatakana
-              ? Kana.Romanji : Kana.Katakana;
-  
+            const type =
+              questionTypes[Math.floor(Math.random() * questionTypes.length)];
+            const kanaType =
+              type === CardMode.romajiToKatakana ? Kana.Romanji : Kana.Katakana;
+
             questions.push({
               type: QuestionTypeChooseLetter,
               symbol: letter,
               kana: kanaType,
               answers: getAnswersWithRandom(
-                [kanaLetters] as ILetter[][], 
-                letter, 
+                [kanaLetters] as ILetter[][],
+                letter,
               ),
               trueAnswer: letter.id,
-              mode: type
+              mode: type,
             });
           }
         }
@@ -136,18 +162,22 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
     {
       const questionTypes = [];
 
-      if (keysCardModeState.includes(CardMode.hiraganaToKatakana)) questionTypes.push(CardMode.hiraganaToKatakana);
-      if (keysCardModeState.includes(CardMode.hiraganaToRomaji)) questionTypes.push(CardMode.hiraganaToRomaji);
-      if (keysCardModeState.includes(CardMode.romajiToHiragana)) questionTypes.push(CardMode.romajiToHiragana);
+      if (keysCardModeState.includes(CardMode.hiraganaToKatakana))
+        questionTypes.push(CardMode.hiraganaToKatakana);
+      if (keysCardModeState.includes(CardMode.hiraganaToRomaji))
+        questionTypes.push(CardMode.hiraganaToRomaji);
+      if (keysCardModeState.includes(CardMode.romajiToHiragana))
+        questionTypes.push(CardMode.romajiToHiragana);
 
       if (questionTypes.length > 0) {
         for (let i = 0; i < hiraLetters.length; i++) {
           const letter = hiraLetters[i] as ILetter;
           if (letter !== undefined) {
-            const type = questionTypes[Math.floor(Math.random() * questionTypes.length)];
-            const kanaType = type === CardMode.romajiToHiragana
-              ? Kana.Romanji : Kana.Hiragana;
-            
+            const type =
+              questionTypes[Math.floor(Math.random() * questionTypes.length)];
+            const kanaType =
+              type === CardMode.romajiToHiragana ? Kana.Romanji : Kana.Hiragana;
+
             questions.push({
               type: QuestionTypeChooseLetter,
               symbol: letter,
@@ -157,7 +187,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
                 letter,
               ),
               trueAnswer: letter.id,
-              mode: type
+              mode: type,
             });
           }
         }
@@ -180,7 +210,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({ childr
         submit,
         questions,
         currentIndex,
-        generateQuestions
+        generateQuestions,
       }}
     >
       {children}

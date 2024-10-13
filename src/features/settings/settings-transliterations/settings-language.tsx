@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { ActionSheetIOS, StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "../settings-theme/theme-context";
 
@@ -10,10 +10,10 @@ import {
   useTransliterationsContext,
 } from "./context/transliteration";
 
-import LanguageButton from "@/entities/profile/language-button/language-button";
+import SettingItem from "@/entities/profile/setting-item/setting-item";
 
 const SettingsTransliterations: React.FC = () => {
-  const { colors } = useThemeContext();
+  const { colors, themeString } = useThemeContext();
 
   const { t, i18n } = useTranslation();
 
@@ -62,65 +62,48 @@ const SettingsTransliterations: React.FC = () => {
     }
   }, [i18n.language]);
 
-  return (
-    <>
-      <Text style={[styles.title, { color: colors.color4 }]}>
-        {t("transliterationSystems.transliterationSystems")}
-      </Text>
+  const transliterationSystems = [
+    t("transliterationSystems.hepburn"),
+    t("transliterationSystems.kunreiShiki"),
+    t("transliterationSystems.nihonShiki"),
+    t("transliterationSystems.russianPhoneticTransliteration"),
+  ];
 
-      <View style={styles.sectionButtonsColumn}>
-        <Text style={[styles.subtitle, { color: colors.color3 }]}>
-          {t("transliterationSystems.romajiLatin")}
-        </Text>
-        {romaji.map((item) => (
-          <LanguageButton
-            isLongKey
-            key={item.key}
-            langKey={item.short}
-            onPress={() => onUpdateTransliterations(item.key)}
-            active={transliterationsTab === item.key}
-          >
-            {item.label}
-          </LanguageButton>
-        ))}
-        <Text style={[styles.subtitle, { color: colors.color3 }]}>
-          {t("transliterationSystems.transliterationInCyrillic")}
-        </Text>
-        {russian.map((item) => (
-          <LanguageButton
-            isLongKey
-            key={item.key}
-            langKey={item.short}
-            onPress={() => onUpdateTransliterations(item.key)}
-            active={transliterationsTab === item.key}
-          >
-            {item.label}
-          </LanguageButton>
-        ))}
-      </View>
-    </>
+  const onPress = () =>
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: ["Cancel", ...transliterationSystems],
+        cancelButtonIndex: 0,
+        userInterfaceStyle: themeString as "dark" | "light",
+      },
+      (buttonIndex) => {
+        switch (buttonIndex) {
+          case 1:
+            onUpdateTransliterations(Transliterations.HEP);
+            break;
+          case 2:
+            onUpdateTransliterations(Transliterations.KUN);
+            break;
+          case 3:
+            onUpdateTransliterations(Transliterations.NIH);
+            break;
+          case 4:
+            onUpdateTransliterations(Transliterations.RUS);
+            break;
+          default:
+            break;
+        }
+      },
+    );
+
+  return (
+    <SettingItem
+      isLast
+      text={t("transliterationSystems.transliterationSystems")}
+      subText={transliterationSystems[transliterationsTab]}
+      onClick={onPress}
+    />
   );
 };
 
 export default SettingsTransliterations;
-
-const styles = StyleSheet.create({
-  title: {
-    marginTop: 30,
-    fontSize: 17,
-    fontWeight: "700",
-    marginBottom: 16,
-  },
-  subtitle: {
-    fontSize: 15,
-    fontWeight: "700",
-    textAlign: "left",
-    width: "100%",
-  },
-  sectionButtonsColumn: {
-    width: "100%",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: 12,
-  },
-});

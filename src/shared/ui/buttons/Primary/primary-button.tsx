@@ -5,6 +5,7 @@ import { FC, ReactNode } from "react";
 import * as Haptics from "expo-haptics";
 
 import { Text, StyleSheet, Pressable } from "react-native";
+import { useAppSelector } from "@/shared/model/hooks";
 
 interface PrimaryButtonProps {
   content?: ReactNode;
@@ -49,10 +50,14 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
 }) => {
   const { colors } = useThemeContext();
 
+  const isEnabledHaptic = useAppSelector(
+    (state) => state.profile.isEnabledHaptic,
+  );
+
   const onPress = () => {
     if (isDisabled) return;
 
-    if (isHapticFeedback) {
+    if (isHapticFeedback && isEnabledHaptic) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
 

@@ -23,7 +23,7 @@ const check = (state: any) => {
     };
   }
 
-  if (!state.isEnabledHaptic) {
+  if (state.isEnabledHaptic === undefined) {
     state.isEnabledHaptic = true;
   }
 };
@@ -51,7 +51,12 @@ export const profileSlice = createSlice({
       check(state);
 
       console.log("state", state.isEnabledHaptic);
-      state.isEnabledHaptic = !state.isEnabledHaptic;
+
+      if (state.isEnabledHaptic !== undefined) {
+        state.isEnabledHaptic = !state.isEnabledHaptic;
+      } else {
+        state.isEnabledHaptic = false;
+      }
       console.log("state", state.isEnabledHaptic);
     },
   },
