@@ -82,8 +82,6 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({
   }, []);
 
   const updateTheme = (newTheme: Theme) => {
-    console.log("CHENGE THEME ON: ", newTheme);
-
     let activeTheme: "dark" | "light" =
       newTheme === Theme.Dark ? "dark" : "light";
 

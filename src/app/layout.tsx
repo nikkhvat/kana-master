@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialCommunityIcon from "@expo/vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -26,8 +26,11 @@ import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 
-import * as SplashScreen from "expo-splash-screen";
-import { TEST_DELAY } from "@/shared/constants/kana";
+import * as Font from 'expo-font';
+import * as Icon from '@expo/vector-icons';
+
+import * as SplashScreen from 'expo-splash-screen';
+import { isAndroid } from "@/shared/constants/platformUtil";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -55,30 +58,15 @@ const icons: Icons = {
 
 type KeysIcon = "Learning" | "Settings" | "Kana";
 
-SplashScreen.preventAutoHideAsync();
-
 function BottomTabNavigator() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const [appIsReady, setAppIsReady] = useState(false);
-
-  useEffect(() => {
-    if (appIsReady) {
-      SplashScreen.hideAsync();
-    }
-  }, [appIsReady]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setAppIsReady(true);
-    }, TEST_DELAY * 2);
-  }, []);
 
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => (
-          <Icon
+          <MaterialCommunityIcon
             name={icons[route.name as KeysIcon]}
             size={size}
             color={color}
@@ -137,9 +125,40 @@ function BottomTabNavigator() {
   );
 }
 
+SplashScreen.preventAutoHideAsync();
 const Layout = () => {
+  const [appIsReady, setAppIsReady] = useState(false);
+
   const { colors } = useThemeContext();
   const { i18n } = useTranslation();
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await Font.loadAsync({
+          ...(isAndroid() ? {
+          'ZenKaku-Black': require('../shared/fonts/ZenKakuGothicNewBlack.ttf'),
+          'ZenKaku-Bold': require('../shared/fonts/ZenKakuGothicNewBold.ttf'),
+          'ZenKaku-Light': require('../shared/fonts/ZenKakuGothicNewLight.ttf'),
+          'ZenKaku-Medium': require('../shared/fonts/ZenKakuGothicNewMedium.ttf'),
+          'ZenKaku-Regular': require('../shared/fonts/ZenKakuGothicNewRegular.ttf'),
+        } : {}),
+          ...Icon.Ionicons.font,
+          ...Icon.MaterialCommunityIcons.font,
+        })
+
+        await new Promise(resolve => setTimeout(resolve, 300));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+
+        setAppIsReady(true);
+        await SplashScreen.hideAsync();
+      }
+    }
+
+    prepare();
+  }, []);
 
   useEffect(() => {
     const loadLang = async () => {
@@ -159,6 +178,10 @@ const Layout = () => {
   if (Platform.OS === "android") {
     SystemUI.setBackgroundColorAsync(colors.background);
     NavigationBar.setBackgroundColorAsync(colors.background);
+  }
+
+  if (!appIsReady) {
+    return null;
   }
 
   return (

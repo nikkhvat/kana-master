@@ -90,7 +90,7 @@ function Switcher<T extends string>(props: SwitcherProps<T>) {
                   }),
                 },
               ],
-              backgroundColor: colors.color1,
+              backgroundColor: colors.BgPrimary,
             },
           ]}
         />

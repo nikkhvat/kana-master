@@ -12,6 +12,7 @@ import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
 import { useAppDispatch } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import Switcher from "@/shared/ui/switcher/switcher";
+import { Typography } from "@/shared/typography";
 
 interface KanaInfoProps {
   navigation: StackNavigationProp<RootStackParamList, "KanaSelect">;
@@ -38,14 +39,16 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ navigation }) => {
     navigation.setOptions({
       headerTitleAlign: "center",
       title: activeTab === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana"),
-      headerLeft: () => <TouchableOpacity 
-        onPress={navigation.goBack} 
-        style={{ padding: 14, margin: -14 }}>
-        <Text style={{ color: colors.color4, fontSize: 17, fontWeight: "400" }}>{t("common.close")}</Text>
-      </TouchableOpacity>,
-      headerRight: () => <TouchableOpacity onPress={() => dispatch(resetKanaSelected())} style={{ padding: 14, margin: -14 }}>
-        <Text style={{ color: colors.second_color3, fontSize: 17, fontWeight: "400" }}>{t("common.reset")}</Text>
-      </TouchableOpacity>,
+      headerLeft: () => (
+          <TouchableOpacity onPress={navigation.goBack}>
+            <Text style={[Typography.regularH4, { color: colors.TextSecondary }]}>{t("common.close")}</Text>
+          </TouchableOpacity>
+      ),
+      headerRight: () => (
+        <TouchableOpacity onPress={() => dispatch(resetKanaSelected())}>
+          <Text style={[Typography.regularH4, { color: colors.TextPrimary }]}>{t("common.reset")}</Text>
+        </TouchableOpacity>
+      ),
       headerShadowVisible: false,
     });
   }, [activeTab, dispatch, navigation, t]);
@@ -54,8 +57,8 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ navigation }) => {
 
   return (
     <>
-      <View style={{ flex: 1, backgroundColor: colors.color1, paddingBottom: 40 + insets.bottom }}>
-        {Platform.OS === "ios" && <View style={[styles.lineContainer, { top: 40, backgroundColor: colors.color2 }]} />}
+      <View style={{ flex: 1, backgroundColor: colors.BgPrimary, paddingBottom: 40 + insets.bottom }}>
+        {Platform.OS === "ios" && <View style={[styles.lineContainer, { top: 40, backgroundColor: colors.BorderDefault }]} />}
         <SectionList
           sections={sections}
           keyExtractor={(item, index) => item + index}
@@ -70,8 +73,8 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ navigation }) => {
             </React.Suspense>
           )}
           renderSectionHeader={({ section: { title } }) => (
-            <View style={[styles.nameContainer, { backgroundColor: colors.color1 }]}>
-              <Text style={[styles.name, { color: colors.color4 }]}>{title}</Text>
+            <View style={[styles.nameContainer, { backgroundColor: colors.BgPrimary }]}>
+              <Text style={[styles.name, { color: colors.TextPrimary }]}>{title}</Text>
             </View>
           )}
         />
@@ -80,8 +83,8 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ navigation }) => {
         styles.switcherContainer, 
         { 
           bottom: insets.bottom, 
-          backgroundColor: colors.color1, 
-          borderColor: colors.color2, 
+          backgroundColor: colors.BgPrimary, 
+          borderColor: colors.BorderDefault, 
         }]}>
         <Switcher<KanaAlphabet>
           activeTab={activeTab}

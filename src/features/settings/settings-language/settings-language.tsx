@@ -4,7 +4,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
 import { ActionSheetIOS, StyleSheet, Text, View } from "react-native";
 
-import LanguageButton from "@/entities/profile/language-button/language-button";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import {
   LanguageKeys,
@@ -16,7 +15,12 @@ import { useAppDispatch } from "@/shared/model/hooks";
 import { updateLessons } from "@/pages/education/learning/model/slice";
 import SettingItem from "@/entities/profile/setting-item/setting-item";
 
+import { useActionSheet } from '@expo/react-native-action-sheet';
+
+
 const SettingsLanguage: React.FC = () => {
+  const { showActionSheetWithOptions } = useActionSheet();
+
   const { colors, themeString } = useThemeContext();
 
   const dispatch = useAppDispatch();
@@ -30,52 +34,55 @@ const SettingsLanguage: React.FC = () => {
     dispatch(updateLessons({ lang }));
   };
 
-  const onPress = () =>
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        options: [
-          "Cancel",
-          LanguageName.en,
-          LanguageName.es,
-          LanguageName.fr,
-          LanguageName.ru,
-          LanguageName.pt,
-          LanguageName.de,
-          LanguageName.it,
-        ],
-        cancelButtonIndex: 0,
-        userInterfaceStyle: themeString as "dark" | "light",
-      },
-      (buttonIndex) => {
-        console.log("buttonIndex -> ", buttonIndex);
 
-        switch (buttonIndex) {
-          case 1:
-            setLanguage(ShortLanguage.EN);
-            break;
-          case 2:
-            setLanguage(ShortLanguage.ES);
-            break;
-          case 3:
-            setLanguage(ShortLanguage.FR);
-            break;
-          case 4:
-            setLanguage(ShortLanguage.RU);
-            break;
-          case 5:
-            setLanguage(ShortLanguage.PT);
-            break;
-          case 6:
-            setLanguage(ShortLanguage.DE);
-            break;
-          case 7:
-            setLanguage(ShortLanguage.IT);
-            break;
-          default:
-            break;
-        }
-      },
-    );
+  const onPress = () => {
+    const options = [
+      "Cancel",
+      LanguageName.en,
+      LanguageName.es,
+      LanguageName.fr,
+      LanguageName.ru,
+      LanguageName.pt,
+      LanguageName.de,
+      LanguageName.it,
+    ];
+    const cancelButtonIndex = 0;
+
+    console.log('show action with options')
+
+    showActionSheetWithOptions({
+      options,
+      cancelButtonIndex,
+      userInterfaceStyle: themeString as "dark" | "light"
+    }, (buttonIndex?: number) => {
+      switch (buttonIndex) {
+        case 1:
+          setLanguage(ShortLanguage.EN);
+          break;
+        case 2:
+          setLanguage(ShortLanguage.ES);
+          break;
+        case 3:
+          setLanguage(ShortLanguage.FR);
+          break;
+        case 4:
+          setLanguage(ShortLanguage.RU);
+          break;
+        case 5:
+          setLanguage(ShortLanguage.PT);
+          break;
+        case 6:
+          setLanguage(ShortLanguage.DE);
+          break;
+        case 7:
+          setLanguage(ShortLanguage.IT);
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
 
   return (
     <SettingItem

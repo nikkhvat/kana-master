@@ -12,8 +12,12 @@ import {
 
 import SettingItem from "@/entities/profile/setting-item/setting-item";
 
+import { useActionSheet } from '@expo/react-native-action-sheet';
+
 const SettingsTransliterations: React.FC = () => {
   const { colors, themeString } = useThemeContext();
+
+  const { showActionSheetWithOptions } = useActionSheet();
 
   const { t, i18n } = useTranslation();
 
@@ -69,32 +73,35 @@ const SettingsTransliterations: React.FC = () => {
     t("transliterationSystems.russianPhoneticTransliteration"),
   ];
 
-  const onPress = () =>
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        options: ["Cancel", ...transliterationSystems],
-        cancelButtonIndex: 0,
-        userInterfaceStyle: themeString as "dark" | "light",
-      },
-      (buttonIndex) => {
-        switch (buttonIndex) {
-          case 1:
-            onUpdateTransliterations(Transliterations.HEP);
-            break;
-          case 2:
-            onUpdateTransliterations(Transliterations.KUN);
-            break;
-          case 3:
-            onUpdateTransliterations(Transliterations.NIH);
-            break;
-          case 4:
-            onUpdateTransliterations(Transliterations.RUS);
-            break;
-          default:
-            break;
-        }
-      },
-    );
+  const onPress = () => {
+    const options = ["Cancel", ...transliterationSystems];
+    const cancelButtonIndex = 0;
+
+    console.log('show action with options')
+
+    showActionSheetWithOptions({
+      options,
+      cancelButtonIndex,
+      userInterfaceStyle: themeString as "dark" | "light"
+    }, (buttonIndex?: number) => {
+      switch (buttonIndex) {
+        case 1:
+          onUpdateTransliterations(Transliterations.HEP);
+          break;
+        case 2:
+          onUpdateTransliterations(Transliterations.KUN);
+          break;
+        case 3:
+          onUpdateTransliterations(Transliterations.NIH);
+          break;
+        case 4:
+          onUpdateTransliterations(Transliterations.RUS);
+          break;
+        default:
+          break;
+      }
+    });
+  }
 
   return (
     <SettingItem

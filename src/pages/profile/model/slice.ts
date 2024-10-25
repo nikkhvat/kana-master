@@ -50,14 +50,11 @@ export const profileSlice = createSlice({
     toggleHaptic: (state) => {
       check(state);
 
-      console.log("state", state.isEnabledHaptic);
-
       if (state.isEnabledHaptic !== undefined) {
         state.isEnabledHaptic = !state.isEnabledHaptic;
       } else {
         state.isEnabledHaptic = false;
       }
-      console.log("state", state.isEnabledHaptic);
     },
   },
 });

@@ -11,6 +11,8 @@ import { ThemeProvider } from "@/features/settings/settings-theme/theme-context"
 import "@/shared/lib/i18n/index"; 
 import { TransliterationsProvider } from "@/features/settings/settings-transliterations/context/transliteration";
 
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
+
 const App = () => {
   return (
     <Provider store={store}>
@@ -18,7 +20,9 @@ const App = () => {
         <SafeAreaProvider>
           <ThemeProvider>
             <TransliterationsProvider>
-              <Layout />
+              <ActionSheetProvider> 
+                <Layout />
+              </ActionSheetProvider>
             </TransliterationsProvider>
           </ThemeProvider>
         </SafeAreaProvider>
