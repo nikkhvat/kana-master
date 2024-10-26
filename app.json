@@ -6,7 +6,7 @@
     "version": "2.0.1",
     "orientation": "portrait",
     "githubUrl": "https://github.com/nikkhvat/kana-master",
-    "icon": "./assets/icon.png",
+    "icon": "./src/shared/assets/icon.png",
     "userInterfaceStyle": "automatic",
     "assetBundlePatterns": [
       "**/*"
@@ -16,28 +16,28 @@
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "pro.khvat.kanamaster",
       "splash": {
-        "image": "./assets/splash.png",
+        "image": "./src/shared/assets/splash.png",
         "resizeMode": "cover",
         "backgroundColor": "#FFFFFF",
         "dark": {
-          "image": "./assets/splash-dark.png",
+          "image": "./src/shared/assets/splash-dark.png",
           "resizeMode": "cover",
           "backgroundColor": "#1F1F1F"
         }
       }
     },
     "android": {
-      "icon": "./assets/android-icon.png",
+      "icon": "./src/shared/assets/android-icon.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./src/shared/assets/adaptive-icon.png",
         "backgroundColor": "#1F1F1F"
       },
       "splash": {
-        "image": "./assets/splash.png",
+        "image": "./src/shared/assets/splash.png",
         "resizeMode": "cover",
         "backgroundColor": "#FFFFFF",
         "dark": {
-          "image": "./assets/splash-dark.png",
+          "image": "./src/shared/assets/splash-dark.png",
           "resizeMode": "cover",
           "backgroundColor": "#1F1F1F"
         }
@@ -47,7 +47,7 @@
       "versionCode": 3
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./src/shared/assets/favicon.png"
     },
     "extra": {
       "eas": {
