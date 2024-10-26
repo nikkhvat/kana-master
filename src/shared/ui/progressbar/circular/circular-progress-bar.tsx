@@ -19,13 +19,13 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ progress }) =
 
   return (
     <View>
-      <Svg style={{ backgroundColor: colors.color1 }}>
+      <Svg style={{ backgroundColor: colors.BgPrimary }}>
         <Circle
           cx={50}
           cy={50}
           r={radius}
-          stroke={colors.color2}
-          fill={colors.color1}
+          stroke={colors.BgLightGray}
+          fill={colors.BgPrimary}
           strokeWidth={8}
           origin="50, 50"
         />
@@ -33,7 +33,7 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ progress }) =
           cx={50}
           cy={50}
           r={radius}
-          stroke={progress < 51 ? colors.second_color1 : colors.second_color2}
+          stroke={progress < 51 ? colors.BgDanger : colors.BgSuccess}
           strokeWidth={6}
           fill="transparent"
           strokeDasharray={circumference}
@@ -43,7 +43,7 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({ progress }) =
           origin="50, 50"
         />
         <View style={{ position: "absolute", top: 38, width: 100 }}>
-          <Text style={{ width: "100%", textAlign: "center", fontSize: 17, color: colors.color4, fontWeight: "700" }}>
+          <Text style={{ width: "100%", textAlign: "center", fontSize: 17, color: colors.TextPrimary, fontWeight: "700" }}>
             {`${Math.round(progress)}%`}
           </Text>
         </View>

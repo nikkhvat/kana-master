@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useKeepAwake } from "expo-keep-awake";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View, Text } from "react-native";
 
 import { useEducationPracticeContext } from "../lib/context/education-practice-context";
 import { useEducationStatisticContext } from "../lib/context/education-statistic-context";
@@ -164,17 +164,18 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
       style={[
         styles.container,
         {
-          backgroundColor: colors.color1,
+          backgroundColor: colors.BgPrimary,
           gap: screenHeight < 700 ? 0 : 22,
         },
       ]}
     >
-      <View style={styles.header}>
+      <View>
         <LinearProgressBar
           close={navigation.goBack}
-          current={currentIndex + 1}
+          current={currentIndex}
           all={questions.length}
         />
+
         {IS_TIMER && (
           <EducationPracticeTimer
             customStyles={{}}
@@ -202,9 +203,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-between",
     alignItems: "center",
-  },
-  header: {
-    width: "100%",
-    flexDirection: "column",
   },
 });

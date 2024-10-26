@@ -17,7 +17,7 @@ const PageTitle: React.FC<PageTitleProps> = ({
   const { colors } = useThemeContext();
   
   return (
-    children ? <Text style={[styles.title, { color: colors.color4 }, style]}>
+    children ? <Text style={[styles.title, { color: colors.TextPrimary }, style]}>
       {children}
     </Text> : <View></View>
   );

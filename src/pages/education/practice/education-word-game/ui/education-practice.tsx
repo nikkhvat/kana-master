@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useKeepAwake } from "expo-keep-awake";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
 import { useEducationPracticeContext } from "../lib/context/education-practice-context";
 import { useEducationStatisticContext } from "../lib/context/education-statistic-context";
@@ -96,16 +96,11 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
   return (
     <SafeLayout
       additionalPaddingTop={20}
-      style={[
-        styles.container,
-        {
-          backgroundColor: colors.color1
-        }
-      ]} >
+      style={styles.container} >
       <View style={styles.header}>
         <LinearProgressBar
           close={navigation.goBack}
-          current={currentIndex + 1}
+          current={currentIndex}
           all={questions.length}
         />
       </View>

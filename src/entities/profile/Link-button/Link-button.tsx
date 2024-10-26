@@ -16,11 +16,11 @@ const LinkButton: React.FC<LinkButtonProps> = ({ children, link }) => {
   return (
     <Pressable 
       onPress={() => Linking.openURL(link)} 
-      style={[styles.button, { borderColor: colors.color2 }]}
+      style={[styles.button, { borderColor: colors.BorderDefault }]}
     >
-      <FontAwesome5 name="telegram" size={24} color={colors.color4} />
-      <Text style={[styles.text, { color: colors.color4 }]} >
-        {children}
+      <FontAwesome5 name="telegram" size={24} color={colors.IconPrimary} />
+      <Text style={[styles.text, { color: colors.TextPrimary }]} >
+        {children} 
       </Text>
     </Pressable>
   )

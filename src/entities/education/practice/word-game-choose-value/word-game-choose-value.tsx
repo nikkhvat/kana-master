@@ -8,6 +8,7 @@ import { RegistErrorProps } from "@/pages/education/practice/education-word-game
 import { TEST_DELAY } from "@/shared/constants/kana";
 import { Word } from "@/shared/data/words";
 import SelectAnswer from "@/shared/ui/select-answer/select-answer";
+import { Typography } from "@/shared/typography";
 
 
 
@@ -40,10 +41,10 @@ const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> 
 
   return (
     <View style={styles.container}>
-      {!hideTitle && <Text style={[styles.question, { color: colors.color4, marginTop: 35 }]}>
+      {!hideTitle && <Text style={[styles.question, Typography.boldH4, { color: colors.TextPrimary, marginTop: 35 }]}>
         {t("practice.selectCorrectTransliteration")}
       </Text>}
-      {!hideTitle && <Text style={[styles.question, { color: colors.color4, marginBottom: 40 }]}>
+      {!hideTitle && <Text style={[styles.question, Typography.boldH4, { color: colors.TextPrimary, marginBottom: 40 }]}>
         {title}
       </Text>}
 
@@ -70,8 +71,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   question: {
-    fontSize: 17,
-    fontWeight: "600",
     marginTop: 10,
     width: "100%",
     textAlign: "center",

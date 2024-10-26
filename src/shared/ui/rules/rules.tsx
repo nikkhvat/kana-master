@@ -12,15 +12,15 @@ const Rules: React.FC<RulesProps> = ({ rules }) => {
   const { colors } = useThemeContext();
 
   const rulesColors = {
-    borderColor: colors.color2,
+    borderColor: colors.BorderDefault,
   };
+
   const textContainerColors = {
-    borderColor: colors.color2,
-    color: colors.color4,
+    borderColor: colors.BorderDefault,
   };
+
   const textColors = {
-    borderColor: colors.color2,
-    color: colors.color4,
+    color: colors.TextPrimary,
   };
 
   return (

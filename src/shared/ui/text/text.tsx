@@ -44,7 +44,7 @@ const BlockText: React.FC<TextProps> = ({ text }) => {
 
   return (
     <View>
-      <Text style={[styles.blockText, { color: colors.color4 }]}>
+      <Text style={[styles.blockText, { color: colors.TextPrimary }]}>
         {parseString(text)}
       </Text>
     </View>

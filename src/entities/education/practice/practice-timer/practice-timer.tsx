@@ -68,7 +68,7 @@ const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
       <View
         style={[
           styles.timerContainer,
-          { backgroundColor: colors.color2, width: progressBarWidth },
+          { backgroundColor: colors.BgLightGray, width: progressBarWidth },
         ]}
       >
         <Animated.View
@@ -76,13 +76,13 @@ const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
             ...styles.timerStroke,
             width: animatedValue,
             backgroundColor:
-              fullProgress <= 40 ? colors.second_color1 : colors.second_color2,
+              fullProgress <= 40 ? colors.BgDanger : colors.BgSuccess,
           }}
         />
       </View>
       <View style={styles.timerTextContainer}>
-        <Icon name={"timer-outline"} size={24} color={colors.color4} />
-        <Text style={[styles.timerTime, { color: colors.color4 }]}>
+        <Icon name={"timer-outline"} size={24} color={colors.TextPrimary} />
+        <Text style={[styles.timerTime, { color: colors.IconPrimary }]}>
           00:0{timeLeft}
         </Text>
       </View>

@@ -91,7 +91,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
           <Icon
             name={currentScreen === Screen.Draw ? "chevron-left" : "close"}
             size={29}
-            color={colors.color4}
+            color={colors.IconPrimary}
           />
         </IconButton>
       ),

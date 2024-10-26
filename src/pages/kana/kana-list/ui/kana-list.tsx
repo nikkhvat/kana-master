@@ -62,20 +62,19 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const { colors } = useThemeContext();  
 
-  const scrollHeight = screenHeight - insets.top - 210;
-
   return (
     <SafeLayout disableLeft disableRight >
       <AdaptiveLayout>
-        <View style={[styles.container, { backgroundColor: colors.BgPrimary }]}>
+        <View style={[{
+          backgroundColor: colors.BgPrimary,
+          flexDirection: "column",
+          height: screenHeight - insets.bottom - (isAndroid ? 120 : 90),
+        }]}>
           {isIos && <View style={[styles.lineContainer, { top: 155, backgroundColor: colors.BorderDefault }]} />}
+          
           <PageTitle style={styles.title} >{t("tabs.kana")}</PageTitle>
-          <View style={[
-            styles.switcherContainer,
-            {
-              paddingBottom: isAndroid ? 20 : 0
-            }
-          ]}>
+          
+          <View style={{ paddingBottom: isAndroid ? 20 : 0, paddingHorizontal: 20 }}>
             <Switcher<KanaAlphabet>
               activeTab={activeTab}
               setActiveTab={setActiveTab}
@@ -89,8 +88,8 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
               ]}
             />
           </View>
+
           <SectionList
-            style={{ height: scrollHeight }}
             sections={sections}
             keyExtractor={(item, index) => item + index}
             renderItem={({ item }) => (
@@ -119,12 +118,6 @@ export default Kana;
 
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "column",
-  },
-  switcherContainer: {
-    paddingHorizontal: 20,
-  },
   title: {
     marginLeft: 20,
   },

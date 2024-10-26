@@ -69,7 +69,7 @@ const Chapter: React.FC<ChapterProps> = ({
   
   return (
     <View>
-      <Text style={[styles.title, { color: colors.color4 }]}>
+      <Text style={[styles.title, { color: colors.TextPrimary }]}>
         {title}
       </Text>
       <Text
@@ -78,8 +78,8 @@ const Chapter: React.FC<ChapterProps> = ({
           {
             color:
               firstChapterProgress.length === firstChapterIds.length
-                ? colors.second_color2
-                : colors.color4,
+                ? colors.TextSuccess
+                : colors.TextPrimary,
           },
         ]}
       >
@@ -137,7 +137,7 @@ const Chapter: React.FC<ChapterProps> = ({
         );
       })}
       {!isLast && <View style={[styles.line, {
-        backgroundColor: colors.color2
+        backgroundColor: colors.BorderDefault
       }]} ></View>}
     </View>
   );

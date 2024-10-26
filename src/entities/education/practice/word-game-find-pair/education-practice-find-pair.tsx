@@ -33,7 +33,7 @@ const EducationPracticeFindPair: React.FC<EducationPracticeFindPairProps> = ({
   return (
     <View style={styles.container}>
       {!hideTitle && (
-        <Text style={[styles.question, { color: colors.color4 }]}>
+        <Text style={[styles.question, { color: colors.TextPrimary }]}>
           {kana === KanaAlphabet.Hiragana
             ? t("lesson.matchHiraganaWithTransliteration")
             : t("lesson.matchKatakanaWithTransliteration")}

@@ -53,12 +53,12 @@ const SelectAnswer: React.FC<SelectAnswerProps> = ({
           onPress={() => onAnswer(answer)}
           style={[
             styles.question,
-            { borderColor: colors.color2 },
+            { borderColor: colors.BorderDefault },
             errors.includes(answer.title) && {
-              backgroundColor: colors.second_color1,
+              backgroundColor: colors.BgDanger,
             },
             correct.includes(answer.title) && {
-              backgroundColor: colors.second_color2,
+              backgroundColor: colors.BgSuccess,
             },
           ]}
           key={answer.title}
@@ -66,10 +66,10 @@ const SelectAnswer: React.FC<SelectAnswerProps> = ({
           <Text
             style={[
               styles.text,
-              { color: colors.color4 },
+              { color: colors.TextPrimary },
               (errors.includes(answer.title) ||
                 correct.includes(answer.title)) && {
-                color: colors.color5,
+                color: colors.TextContrastSecondary,
               },
             ]}
           >

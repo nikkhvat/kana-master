@@ -8,6 +8,7 @@ import { KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import getKana from "@/shared/helpers/getKanaKey";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
+import { Typography } from "@/shared/typography";
 
 interface CellProps {
   isLong: boolean;
@@ -44,10 +45,10 @@ const Cell: React.FC<CellProps> = ({
 
   const indicatorColor =
     indicator === StatisticLevel.Green
-      ? colors.second_color2
+      ? colors.BgSuccess
       : indicator === StatisticLevel.Yellow
-        ? colors.second_color5
-        : colors.second_color1;
+        ? colors.BgWarning
+        : colors.BgDanger;
 
   const { getRomanji } = useGetRomanji();
 
@@ -61,12 +62,12 @@ const Cell: React.FC<CellProps> = ({
           height: widthStandart,
           backgroundColor:
             active && !isPlus
-              ? colors.second_color4
+              ? colors.BgAccentSecondary
               : active
-                ? colors.second_color3
+                ? colors.BgAccentPrimary
                 : "transparent",
           borderColor:
-            (!cell || active) && !isPlus ? "transparent" : colors.color2,
+            (!cell || active) && !isPlus ? "transparent" : colors.BorderDefault,
         },
       ]}
     >
@@ -77,11 +78,11 @@ const Cell: React.FC<CellProps> = ({
       )}
       {cell !== null && !isStartOfLine && (
         <>
-          {cell && <Text style={[styles.symbol, { fontSize: 17, color: colors.color4 }]}>
+          {cell && <Text style={[styles.symbol, Typography.regularH4, { color: colors.TextPrimary }]}>
             {getKana(cell, kana)}
           </Text>}
           {cell && (
-            <Text style={[styles.subText, { color: colors.color4 }]}>
+            <Text style={[Typography.regularLabel, { color: colors.TextPrimary }]}>
               {getRomanji(cell).toUpperCase()}
             </Text>
           )}
@@ -89,13 +90,13 @@ const Cell: React.FC<CellProps> = ({
       )}
 
       {!cell && isStartOfLine && !isPlus && (
-        <Text style={[styles.symbol, { fontSize: 13, color: colors.color3 }]}>
+        <Text style={[styles.symbol, Typography.regularLabel, { color: colors.TextSecondary }]}>
           {isStartOfLine}
         </Text>
       )}
 
       {isPlus && (
-        <Text style={[styles.symbol, { fontSize: 17, color: colors.color4}]}>
+        <Text style={[styles.symbol, Typography.regularH3, { color: colors.TextPrimary }]}>
           {isStartOfLine}
         </Text>
       )}
@@ -122,10 +123,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   symbol: {
-    fontWeight: "400",
     textTransform: "uppercase",
-  },
-  subText: {
-    fontSize: 13,
   },
 });

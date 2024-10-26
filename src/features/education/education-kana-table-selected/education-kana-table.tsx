@@ -135,7 +135,7 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
     <View
       style={[
         styles.container,
-        { borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.color2 },
+        { borderBottomWidth: last ? 0 : 1, borderBottomColor: colors.BorderDefault },
       ]}
     >
       {letters.length > 1 && (

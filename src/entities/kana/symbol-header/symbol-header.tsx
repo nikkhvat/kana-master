@@ -73,15 +73,15 @@ const SymbolHeader: React.FC<SymbolHeaderProps> = ({
         />
       )}
       {!hideTitle && !bottomTitle && (
-        <Text style={[styles.title, { color: colors.color4 }]}>
+        <Text style={[styles.title, { color: colors.TextPrimary }]}>
           {title[kana]} ({getTypeById(letter?.id)})
         </Text>
       )}
-      <Text style={[styles.subTitle, { color: colors.color4 }]}>
+      <Text style={[styles.subTitle, { color: colors.TextPrimary }]}>
         {getRomanji(letter).toUpperCase()}
       </Text>
       {!hideTitle && bottomTitle && (
-        <Text style={[styles.title, { color: colors.color4 }]}>
+        <Text style={[styles.title, { color: colors.TextPrimary }]}>
           {title[kana]} ({getTypeById(letter?.id)})
         </Text>
       )}

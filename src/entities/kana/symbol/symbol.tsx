@@ -31,31 +31,12 @@ const Symbol: React.FC<SymbolProps> = ({
 
   isGray,
 }) => {
-
   const { colors } = useThemeContext();
-  
-  colors._theme === "dark" ? "DARK" : "LIGHT";
-
-  let letterColors = [null, null] as (null | string)[];
-
-  if (colors._theme === "dark") {
-    if (isGray) {
-      letterColors = [colors.color2, colors.color2]
-    } else {
-      letterColors = [colors.second_color3, colors.color4]
-    }
-  } else {
-    if (isGray) {
-      letterColors = [colors.color2, colors.color2]
-    } else {
-      letterColors = [colors.second_color3, colors.color4]
-    }
-  }
 
   const getImagePath = (key: string | undefined) => {
-    const key_formated = `${kana}_${key?.replaceAll("-", "_")}`;
+    const keyString = `${kana}_${key?.replaceAll("-", "_")}`;
 
-    return getImage(key_formated);
+    return getImage(keyString);
   };
 
   return <View style={{
@@ -66,7 +47,7 @@ const Symbol: React.FC<SymbolProps> = ({
     alignItems: "center",
     justifyContent: "center"
   }} >
-    {getImagePath(id)(letterColors[0] as string, letterColors[1] as string)}
+    {getImagePath(id)(isGray ? colors.BgLightGray : colors.BgAccentPrimary, isGray ? colors.BgLightGray : colors.BgContrast)}
   </View>;
 };
 

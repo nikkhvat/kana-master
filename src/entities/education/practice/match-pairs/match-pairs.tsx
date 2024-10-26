@@ -5,6 +5,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TEST_DELAY } from "@/shared/constants/kana";
 import { isCorrectPair } from "@/shared/helpers/letters";
+import { Typography } from "@/shared/typography";
 
 function toShuffledPairs(pairs: string[][]): string[][] {
   const left = pairs.map((pair) => pair[0]);
@@ -64,10 +65,10 @@ const MatchPairs: React.FC<MatchPairsProps> = ({
   const [status, setStatus] = useState<Status>({});
 
   const pairItemColors = {
-    borderColor: colors.color2,
+    borderColor: colors.BorderDefault,
   };
   const textColors = {
-    color: colors.color4,
+    color: colors.TextPrimary,
   };
 
   const mixedPairs: string[][] = useMemo(() => toShuffledPairs(pairs), [pairs]);
@@ -142,13 +143,25 @@ const MatchPairs: React.FC<MatchPairsProps> = ({
 
   const stylesColor = {
     selectedPair: {
-      borderColor: colors.second_color2,
+      borderColor: colors.BgSuccess,
     },
     complete: {
-      backgroundColor: colors.second_color2,
+      backgroundColor: colors.BgSuccess,
     },
     error: {
-      backgroundColor: colors.second_color1,
+      backgroundColor: colors.BgDanger,
+    },
+  };
+  
+  const textColor = {
+    selectedPair: {
+      color: colors.TextPrimary,
+    },
+    complete: {
+      color: colors.TextContrastSecondary,
+    },
+    error: {
+      color: colors.TextContrastSecondary,
     },
   };
 
@@ -179,12 +192,9 @@ const MatchPairs: React.FC<MatchPairsProps> = ({
               style={[
                 styles.pairItem,
                 pairItemColors,
-                status[`${index}/${idx === 0 ? "left" : "right"}`]?.status ===
-                  "selected" && stylesColor.selectedPair,
-                status[`${index}/${idx === 0 ? "left" : "right"}`]?.status ===
-                  "complete" && stylesColor.complete,
-                status[`${index}/${idx === 0 ? "left" : "right"}`]?.status ===
-                  "error" && stylesColor.error,
+                status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "selected" && stylesColor.selectedPair,
+                status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "complete" && stylesColor.complete,
+                status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "error" && stylesColor.error,
               ]}
               key={item}
               onPress={() => handlePress(item, index, idx)}
@@ -194,10 +204,10 @@ const MatchPairs: React.FC<MatchPairsProps> = ({
                 style={[
                   styles.pairText,
                   textColors,
-                  (status[`${index}/${idx === 0 ? "left" : "right"}`]
-                    ?.status === "complete" ||
-                    status[`${index}/${idx === 0 ? "left" : "right"}`]
-                      ?.status === "error") && { color: colors.color5 },
+                  Typography.regularH4,
+                  status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "selected" && textColor.selectedPair,
+                  status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "complete" && textColor.complete,
+                  status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "error" && textColor.error,
                 ]}
               >
                 {item}
@@ -235,8 +245,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   pairText: {
-    fontWeight: "400",
-    fontSize: 17,
     textAlign: "center",
   },
 });

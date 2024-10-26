@@ -176,8 +176,8 @@ const Layout = () => {
   }, [i18n]);
 
   if (Platform.OS === "android") {
-    SystemUI.setBackgroundColorAsync(colors.background);
-    NavigationBar.setBackgroundColorAsync(colors.background);
+    SystemUI.setBackgroundColorAsync(colors.BgPrimary);
+    NavigationBar.setBackgroundColorAsync(colors.BgPrimary);
   }
 
   if (!appIsReady) {

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Pressable, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { ILetter } from "@/shared/data/lettersTable";
@@ -28,17 +28,18 @@ const AnswerCard: React.FC<AnswerCardProps> = ({
 
   const { colors } = useThemeContext();
 
-  const cardColor = redMarked ? colors.second_color1 : greenMarked ? colors.second_color2 : colors.color2;
-  const textColor = (redMarked || greenMarked) ? colors.color5 : colors.color4;
+  const cardColor = redMarked ? colors.BgDanger : greenMarked ? colors.BgSuccess : colors.BgPrimary;
+  const borderColor = redMarked ? colors.BgDanger : greenMarked ? colors.BgSuccess : colors.BorderDefault;
+  const textColor = (redMarked || greenMarked) ? colors.TextContrastSecondary : colors.TextPrimary;
 
   
   return (
-    <TouchableOpacity
-      style={[
+    <Pressable
+      style={({ pressed }) => [
         styles.answersItem,
         { width: width, height: width },
-        { borderColor: cardColor },
-        { backgroundColor: cardColor },
+        { borderColor: pressed ? colors.BorderDefault : borderColor },
+        { backgroundColor: pressed ? colors.BgPrimaryPressed : cardColor } ,
       ]}
       onPress={() => onClick?.(value)}
     >
@@ -50,7 +51,7 @@ const AnswerCard: React.FC<AnswerCardProps> = ({
       >
         {children}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

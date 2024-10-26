@@ -121,10 +121,10 @@ const EducationPracticeSelectAnswers: React.FC<
   return (
     <>
       <View>
-        <Text style={[styles.symbol, { color: colors.color4 }]}>
+        <Text style={[styles.symbol, { color: colors.TextPrimary }]}>
           {symbolLable}
         </Text>
-        <Text style={[styles.subText, { color: colors.color3 }]}>
+        <Text style={[styles.subText, { color: colors.TextSecondary }]}>
           {getSubTitle()}
         </Text>
       </View>
@@ -141,7 +141,7 @@ const EducationPracticeSelectAnswers: React.FC<
             >
               {getTitle(answer)}
             </AnswerCard>
-          ))}
+          ))} 
       </View>
     </>
   );

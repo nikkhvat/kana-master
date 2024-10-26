@@ -137,7 +137,6 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
         styles.container,
         {
           flex: 1,
-          backgroundColor: colors.color1,
         },
       ]}
     >
@@ -152,7 +151,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
           : screen + 1 !== lessonScreens.length) && (
           <LinearProgressBar
             close={navigation.goBack}
-            current={screen + 1}
+            current={screen}
             all={lessonScreens.length}
           />
         )}

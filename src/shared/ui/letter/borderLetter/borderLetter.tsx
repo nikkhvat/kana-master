@@ -17,7 +17,7 @@ const BorderLetter: React.FC<borderLetterProps> = ({ id, kana }) => {
   return (
     <View>
       <View style={{
-        borderColor: colors.color2,
+        borderColor: colors.BorderDefault,
         borderWidth: 1,
         borderRadius: 12,
         marginTop: 30

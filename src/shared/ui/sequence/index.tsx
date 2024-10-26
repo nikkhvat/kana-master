@@ -98,12 +98,12 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
     return {
       borderColor:
         letter === null && selectedLetters[idx - 1] !== null
-          ? colors.second_color3
+          ? colors.BgAccentPrimary
           : trueAnswers[idx] === null
-            ? colors.color3
+            ? colors.BgLightGray
             : trueAnswers[idx]
-              ? colors.second_color2
-              : colors.second_color1,
+              ? colors.BgSuccess
+              : colors.BgDanger,
     };
   };
 
@@ -121,7 +121,7 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
             ]}
           >
             {letter !== null && (
-              letter.letter && <Text style={[styles.letter, { color: colors.color4 }]}>
+              letter.letter && <Text style={[styles.letter, { color: colors.TextPrimary }]}>
                 {letter.letter}
               </Text>
             )}
@@ -141,12 +141,12 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
               style={[
                 styles.chooseLettersBox,
                 {
-                  borderColor: !selected ? colors.color2 : "transparent",
+                  borderColor: !selected ? colors.BorderDefault : "transparent",
                 },
               ]}
             >
               <Text style={{
-                color: !selected ? colors.color4 : "transparent",
+                color: !selected ? colors.TextPrimary : "transparent",
                 fontSize: 22,
                 fontWeight: "400",
                 marginTop: isAndroid ? -5 : 0

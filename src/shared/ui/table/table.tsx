@@ -11,13 +11,13 @@ interface TableProps {
 const Table: React.FC<TableProps> = ({ data }) => {
   const { colors } = useThemeContext();
 
-  const tableColors = { borderColor: colors.color2 };
+  const tableColors = { borderColor: colors.BorderDefault };
   const columnStyles = {
-    borderColor: colors.color2,
+    borderColor: colors.BorderDefault,
     width: 100 / data.length + "%",
   };
-  const cellStyles = { borderColor: colors.color2 };
-  const cellTextStyles = { color: colors.color4 };
+  const cellStyles = { borderColor: colors.BorderDefault };
+  const cellTextStyles = { color: colors.TextPrimary };
   const boldTextStyles = {
     fontWeight: "bold",
     fontSize: 15,

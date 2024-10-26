@@ -1,12 +1,10 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { View, Text, TouchableOpacity, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, TouchableOpacity } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import IconButton from "../../icon-button";
-
 
 interface ProgressBarProp {
   close?: () => void;
@@ -21,21 +19,21 @@ const LinearProgressBar: React.FC<ProgressBarProp> = ({ close, current, all, tit
 
   return (
     <View style={styles.progressBarContainer}>
-      <View style={[styles.progressBarLine, { backgroundColor: colors.color2 }]}>
+      <View style={[styles.progressBarLine, { backgroundColor: colors.BgLightGray }]}>
         <View style={[
           styles.progressBarLineActive, 
           { 
             width: `${(current / all) * 100}%`,
-            backgroundColor: colors.color4,
+            backgroundColor: colors.BgContrast,
           },
         ]} />
       </View>
       <View style={styles.progressBarBottom}>
-        <IconButton onPress={() => close?.()} >
-          <Icon name="close" size={24} color={colors.color3} />
-        </IconButton>
-        <Text style={[styles.progressBarText, { color: colors.color3 }]}>
-          {title ? title : t("practice.question")} {current} / {all}
+        <TouchableOpacity style={styles.progressBarPressble} onPress={() => close?.()}>
+          <Icon name="close" size={24} color={colors.IconPrimary} />
+        </TouchableOpacity>
+        <Text style={[styles.progressBarText, { color: colors.TextSecondary }]}>
+          {title ? title : t("practice.question")} {current + 1} / {all}
         </Text>
       </View>
     </View>
@@ -44,6 +42,7 @@ const LinearProgressBar: React.FC<ProgressBarProp> = ({ close, current, all, tit
 
 const styles = StyleSheet.create({
   progressBarContainer: {
+    paddingTop: 25,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
@@ -72,6 +71,10 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     lineHeight: 22,
     letterSpacing: -0.43,
+  },
+  progressBarPressble: {
+    padding: 10,
+    paddingLeft: 0,
   }
 });
 

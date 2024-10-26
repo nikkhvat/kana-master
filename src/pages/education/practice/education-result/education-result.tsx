@@ -123,7 +123,7 @@ const EducationResultPage: React.FC<EducationResultProps> = ({
               <Text
                 style={[
                   Typography.boldH4,
-                  { color: colors.color4 },
+                  { color: colors.TextPrimary },
                 ]}
               >
                 {result.correctQuestions} / {result.totalQuestions}
