@@ -1,37 +1,39 @@
 import React from "react";
 
-import Button from "@/shared/ui/button/button";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { toggleShowBorder } from "@/pages/profile/model/slice";
 
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
 
 const ToggleShowBorders: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const isShowBorder = useAppSelector((state) => state.profile?.draw?.isShowBorder);
+  const isShowBorder = useAppSelector(
+    (state) => state.profile?.draw?.isShowBorder,
+  );
 
   const toggle = () => {
-    dispatch(toggleShowBorder(null))
-  }
+    dispatch(toggleShowBorder(null));
+  };
 
   const { colors } = useThemeContext();
 
   return (
-    <Button
-      customStyles={{ width: 50, height: 50 }}
-      type={isShowBorder ? "active" : "inactive"}
+    <SecondaryButton
       icon={
         <Icon
-          name={"border-outside"}
+          name={isShowBorder ? "border-outside" : "border-all-variant"}
           size={24}
-          color={isShowBorder ? colors.color5 : colors.color4}
+          color={isShowBorder ? colors.IconContrast : colors.IconPrimary}
         />
       }
+      isOutline={!isShowBorder}
       onClick={toggle}
+      width={50}
     />
-  )
+  );
 };
 
 export default ToggleShowBorders;

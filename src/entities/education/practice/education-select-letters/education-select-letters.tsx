@@ -109,10 +109,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "center",
-    paddingBottom: 15,
+    paddingBottom: 16,
     position: "relative",
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   header: {
     display: "flex",

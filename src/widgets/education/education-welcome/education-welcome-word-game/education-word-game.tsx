@@ -36,8 +36,6 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
     (state: RootState) => state.kana.selectedWords,
   );
 
-  console.log("selectedWords", selectedWords);
-
   const isHiragana = selectedWords.hiragana.length >= 10;
   const isKatakana = selectedWords.katakana.length >= 10;
 

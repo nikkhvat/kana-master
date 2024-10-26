@@ -5,24 +5,23 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { LessonFinish } from "@/shared/constants/lessons";
-import Button from "@/shared/ui/button/button";
 
-import * as StoreReview from 'expo-store-review';
-
+import * as StoreReview from "expo-store-review";
+import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
+import { LearningTitle } from "../ui/title";
+import { Typography } from "@/shared/typography";
 
 type FinishScreenProps = LessonFinish & {
-  next: () => void
-  retry: () => void
-}
-
+  next: () => void;
+  retry: () => void;
+};
 
 const FinishScreen: React.FC<FinishScreenProps> = ({ next, retry }) => {
-
   const { t } = useTranslation();
   const { colors } = useThemeContext();
 
   const onNext = () => {
-    next()
+    next();
 
     try {
       if (Platform.OS === "ios") {
@@ -31,34 +30,27 @@ const FinishScreen: React.FC<FinishScreenProps> = ({ next, retry }) => {
     } catch (error) {
       console.log(error);
     }
-  }
-  
+  };
+
   return (
-    <View style={styles.container} >
-      <View style={styles.titleContainer} >
-        <Text style={[styles.title, {
-          color: colors.color4
-        }]} >
+    <View style={styles.container}>
+      <View style={styles.titleContainer}>
+        <LearningTitle style={[Typography.boldH1]}>
           {t("lesson.learningComplete")}
-        </Text>
-        <Text style={[styles.subtitle, {
-          color: colors.color3
-        }]} >
+        </LearningTitle>
+        <LearningTitle
+          style={[Typography.regularParagraph, { color: colors.TextSecondary }]}
+        >
           {t("lesson.practiceEveryDay")}
-        </Text>
+        </LearningTitle>
       </View>
 
-      <View style={styles.btnsContainer} >
-        <Button
-          customStyles={{ width: "100%" }}
-          type={"inactive"}
-          title={t("common.retry")}
-          onClick={retry}
-        />
-        <Button
-          customStyles={{ width: "100%" }}
-          type={"general"}
-          title={t("common.complete")}
+      <View style={styles.btnsContainer}>
+        <PrimaryButton isFullWidth text={t("common.retry")} onClick={retry} />
+        <PrimaryButton
+          isOutline
+          isFullWidth
+          text={t("common.complete")}
           onClick={onNext}
         />
       </View>
@@ -74,30 +66,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-start",
   },
-  title: {
-    fontSize: 28,
-    fontWeight: "600",
-    textAlign: "center",
-    marginBottom: 15,
-    width: "100%",
-  },
-  subtitle: {
-    fontSize: 17,
-    fontWeight: "400",
-    textAlign: "center",
-    paddingLeft: 30,
-    paddingRight: 30,
-    width: "100%",
-  },
   titleContainer: {
     width: "100%",
     flex: 1,
+    gap: 16,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
   },
   btnsContainer: {
     width: "100%",
-    alignItems: "center",
-  }
+    gap: 16,
+
+    height: 116,
+  },
 });

@@ -1,24 +1,39 @@
-import React, { createContext, FC, PropsWithChildren, useContext, useState } from "react";
+import React, {
+  createContext,
+  FC,
+  PropsWithChildren,
+  useContext,
+  useState,
+} from "react";
 
-import { AnyLesson, InfoLessonScreen, LessonScreen } from "@/shared/constants/lessons";
+import {
+  AnyLesson,
+  InfoLessonScreen,
+  LessonScreen,
+} from "@/shared/constants/lessons";
 import { ILetter } from "@/shared/data/lettersTable";
 
 import * as Haptics from "expo-haptics";
+import { useAppSelector } from "@/shared/model/hooks";
 
 interface EducationLessonContextValue {
-  init: (letters: ILetter[], type: "auto" | "manually", infoScreens: InfoLessonScreen[]) => void;
-  next: (hasError?: boolean) => void,
-  retry: () => void,
-  lessonScreens: (AnyLesson | InfoLessonScreen)[]
-  currentScreen: (AnyLesson | InfoLessonScreen) | null
-  screen: number
+  init: (
+    letters: ILetter[],
+    type: "auto" | "manually",
+    infoScreens: InfoLessonScreen[],
+  ) => void;
+  next: (hasError?: boolean) => void;
+  retry: () => void;
+  lessonScreens: (AnyLesson | InfoLessonScreen)[];
+  currentScreen: (AnyLesson | InfoLessonScreen) | null;
+  screen: number;
 }
 
 export const EducationLessonContext =
   createContext<EducationLessonContextValue>({
-    init: () => { },
-    next: (hasError?: boolean) => { },
-    retry: () => { },
+    init: () => {},
+    next: (hasError?: boolean) => {},
+    retry: () => {},
     lessonScreens: [],
     currentScreen: null,
     screen: 0,
@@ -47,32 +62,40 @@ function generateScreens(letters: ILetter[]): AnyLesson[] {
     if (addedLetters.length % 2 === 0) {
       screens.push({
         name: LessonScreen.MatchSymbols,
-        symbols: [letter, letters[i - 1]]
+        symbols: [letter, letters[i - 1]],
       });
     }
     if (addedLetters.length % 3 === 0) {
-      screens.push({ name: LessonScreen.SelectSymbol, 
-        symbols: shuffleArray([
-          letters[i],
-          letters[i - 1],
-          letters[i - 2],
-        ]),
+      screens.push({
+        name: LessonScreen.SelectSymbol,
+        symbols: shuffleArray([letters[i], letters[i - 1], letters[i - 2]]),
       });
       screens.push({
         name: LessonScreen.MatchSymbols,
-        symbols: [letter, letters[i - 1]]
+        symbols: [letter, letters[i - 1]],
       });
     }
-    
-    if (letters.length -1 === i) {
-      screens.push({ name: LessonScreen.SelectSymbol, symbols: shuffleArray(letters).slice(0, 3) });
-      screens.push({ name: LessonScreen.SelectSymbol, symbols: shuffleArray(letters).slice(0, 3) });
-      screens.push({ name: LessonScreen.MatchSymbols, symbols: shuffleArray(letters).slice(0, 3) });
-      screens.push({ name: LessonScreen.MatchSymbols, symbols: shuffleArray(letters).slice(0, 3) });
+
+    if (letters.length - 1 === i) {
+      screens.push({
+        name: LessonScreen.SelectSymbol,
+        symbols: shuffleArray(letters).slice(0, 3),
+      });
+      screens.push({
+        name: LessonScreen.SelectSymbol,
+        symbols: shuffleArray(letters).slice(0, 3),
+      });
+      screens.push({
+        name: LessonScreen.MatchSymbols,
+        symbols: shuffleArray(letters).slice(0, 3),
+      });
+      screens.push({
+        name: LessonScreen.MatchSymbols,
+        symbols: shuffleArray(letters).slice(0, 3),
+      });
     }
   }
 
-  
   screens.push({ name: LessonScreen.SelectSequenceLetters, sequence: letters });
   screens.push({ name: LessonScreen.SelectSequenceLetters, sequence: letters });
   screens.push({ name: LessonScreen.BuildWord, sequence: letters });
@@ -88,10 +111,20 @@ export const useEducationLessonContext = () =>
 export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
-  const [screens, setScreens] = useState([] as (AnyLesson | InfoLessonScreen)[]);
+  const [screens, setScreens] = useState(
+    [] as (AnyLesson | InfoLessonScreen)[],
+  );
   const [screen, setScreen] = useState(0);
 
-  const init = (letters: ILetter[], type: "auto" | "manually", infoScreens: InfoLessonScreen[]) => {
+  const isEnabledHaptic = useAppSelector(
+    (state) => state.profile.isEnabledHaptic,
+  );
+
+  const init = (
+    letters: ILetter[],
+    type: "auto" | "manually",
+    infoScreens: InfoLessonScreen[],
+  ) => {
     if (type === "auto") {
       const screens = generateScreens(letters);
       setScreens(screens);
@@ -99,8 +132,8 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
       setScreens([
         ...infoScreens,
         {
-          name: LessonScreen.Finish
-        }
+          name: LessonScreen.Finish,
+        },
       ]);
     }
   };
@@ -109,24 +142,28 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
     if (hasError) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if ((screens[screen] as any).retry !== 2) {
-        setScreens(prev => [
+        setScreens((prev) => [
           ...prev.slice(0, -1),
-          { 
-            ...screens[screen], 
+          {
+            ...screens[screen],
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            retry: (screens[screen] as any)?.retry ? (screens[screen] as any)?.retry + 1 : 1
+            retry: (screens[screen] as any)?.retry
+              ? (screens[screen] as any)?.retry + 1
+              : 1,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           },
-          { name: LessonScreen.Finish }
+          { name: LessonScreen.Finish },
         ]);
       }
     }
 
     if (screen + 1 !== screens.length) {
-      setScreen(prev => prev + 1);
+      setScreen((prev) => prev + 1);
     }
-    
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
+    if (isEnabledHaptic) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
   };
 
   const retry = () => {
@@ -141,7 +178,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
         retry,
         lessonScreens: screens,
         screen,
-        currentScreen: screens[screen]
+        currentScreen: screens[screen],
       }}
     >
       {children}

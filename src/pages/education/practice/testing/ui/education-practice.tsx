@@ -15,18 +15,25 @@ import EducationPracticeTimer from "@/entities/education/practice/practice-timer
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { recalculate } from "@/pages/kana/kana-list/model/slice";
 import { countAvailableWords } from "@/pages/kana/kana-quick-selection/model/slice";
-import { CardMode, DifficultyLevelType, KanaAlphabet } from "@/shared/constants/kana";
+import {
+  CardMode,
+  DifficultyLevelType,
+  KanaAlphabet,
+} from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "EducationPractice">;
+type HomeScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "EducationPractice"
+>;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, "EducationPractice">;
 
 interface LearnScreenProps {
-  route: LearnScreenRouteProp
-  navigation: HomeScreenNavigationProp
+  route: LearnScreenRouteProp;
+  navigation: HomeScreenNavigationProp;
 }
 
 const screenHeight = Dimensions.get("window").height;
@@ -41,22 +48,31 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
     dispatch(countAvailableWords());
   }, [dispatch]);
 
-  const selectedLetters = useAppSelector((state: RootState) => state.kana.selected);
+  const selectedLetters = useAppSelector(
+    (state: RootState) => state.kana.selected,
+  );
+
+  const { keysCardModeState, timerDeration, keysDifficultyLevelState } =
+    route.params;
+
+  const IS_TIMER = keysDifficultyLevelState.includes(
+    DifficultyLevelType.TimeTest,
+  );
+  const ONE_ATTEMPT = keysDifficultyLevelState.includes(
+    DifficultyLevelType.OneAttempt,
+  );
+
+  const TIMER_SPEED =
+    timerDeration === "fast" ? 3 : timerDeration === "slow" ? 7 : 5;
+
+  const { init, submit, questions, currentIndex, generateQuestions } =
+    useEducationPracticeContext();
 
   const {
-    keysCardModeState,
-    timerDeration,
-    keysDifficultyLevelState,
-  } = route.params;
-
-  const IS_TIMER = keysDifficultyLevelState.includes(DifficultyLevelType.TimeTest);
-  const ONE_ATTEMPT = keysDifficultyLevelState.includes(DifficultyLevelType.OneAttempt);
-
-  const TIMER_SPEED = timerDeration === "fast" ? 3 : timerDeration === "slow" ? 7 : 5;
-
-  const { init, submit, questions, currentIndex, generateQuestions } = useEducationPracticeContext();
-
-  const { init: initStat, pickAnswer, getResult } = useEducationStatisticContext();
+    init: initStat,
+    pickAnswer,
+    getResult,
+  } = useEducationStatisticContext();
 
   useEffect(() => {
     const generateQuestion = generateQuestions({
@@ -67,34 +83,48 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
     init(generateQuestion);
     initStat();
 
-    return () => { };
+    return () => {};
   }, []);
 
   const finishCallback = (onFinishPractice: boolean) => {
     if (onFinishPractice) {
       const result = getResult();
 
-      dispatch(recalculate({
-        data: result.incorrect.map(item => {
-          const isChapterHiragana = item.mode === CardMode.hiraganaToKatakana || item.mode === CardMode.hiraganaToRomaji || item.mode === CardMode.romajiToHiragana;
-          return {
-            chapter: isChapterHiragana ? KanaAlphabet.Hiragana : KanaAlphabet.Katakana,
-            id: item.letter.id,
-            isCorrect: false,
-          };
-        })
-      }));
-      
-      dispatch(recalculate({
-        data: result.correct.map(item => {
-          const isChapterHiragana = item.mode === CardMode.hiraganaToKatakana || item.mode === CardMode.hiraganaToRomaji || item.mode === CardMode.romajiToHiragana;
-          return {
-            chapter: isChapterHiragana ? KanaAlphabet.Hiragana : KanaAlphabet.Katakana,
-            id: item.letter.id,
-            isCorrect: true,
-          };
-        })
-      }));
+      dispatch(
+        recalculate({
+          data: result.incorrect.map((item) => {
+            const isChapterHiragana =
+              item.mode === CardMode.hiraganaToKatakana ||
+              item.mode === CardMode.hiraganaToRomaji ||
+              item.mode === CardMode.romajiToHiragana;
+            return {
+              chapter: isChapterHiragana
+                ? KanaAlphabet.Hiragana
+                : KanaAlphabet.Katakana,
+              id: item.letter.id,
+              isCorrect: false,
+            };
+          }),
+        }),
+      );
+
+      dispatch(
+        recalculate({
+          data: result.correct.map((item) => {
+            const isChapterHiragana =
+              item.mode === CardMode.hiraganaToKatakana ||
+              item.mode === CardMode.hiraganaToRomaji ||
+              item.mode === CardMode.romajiToHiragana;
+            return {
+              chapter: isChapterHiragana
+                ? KanaAlphabet.Hiragana
+                : KanaAlphabet.Katakana,
+              id: item.letter.id,
+              isCorrect: true,
+            };
+          }),
+        }),
+      );
 
       navigation.navigate("Results", { result });
     }
@@ -109,7 +139,10 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
 
   const endTime = () => onSubmitTestQuestion(false);
 
-  const onSubmitTestQuestion = (correctAnswer: boolean, pickedAnswer?: ILetter) => {
+  const onSubmitTestQuestion = (
+    correctAnswer: boolean,
+    pickedAnswer?: ILetter,
+  ) => {
     if (currentIndex < questions.length) {
       pickAnswer({
         correctAnswer: correctAnswer,
@@ -126,34 +159,38 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
   const question = questions[currentIndex];
 
   return (
-    <SafeLayout 
-      additionalPaddingTop={20} 
-      style={[styles.container, { 
-        backgroundColor: colors.color1,
-        gap: screenHeight < 700 ? 0 : 22
-      }]}
+    <SafeLayout
+      additionalPaddingTop={20}
+      style={[
+        styles.container,
+        {
+          backgroundColor: colors.color1,
+          gap: screenHeight < 700 ? 0 : 22,
+        },
+      ]}
     >
-        <View style={styles.header}>
-          <LinearProgressBar
-            close={navigation.goBack}
-            current={currentIndex + 1}
-            all={questions.length}
-          />
-          {IS_TIMER &&
-            <EducationPracticeTimer
-              customStyles={{}}
-              currentIndex={currentIndex}
-              questions={questions.length}
-              onTimerEnd={endTime}
-              initial={TIMER_SPEED}
-            />}
-        </View>
-
-        <EducationPracticeSelectAnswers
-          question={question}
-          onCompleted={onSubmitTestQuestion}
-          onError={onError}
+      <View style={styles.header}>
+        <LinearProgressBar
+          close={navigation.goBack}
+          current={currentIndex + 1}
+          all={questions.length}
         />
+        {IS_TIMER && (
+          <EducationPracticeTimer
+            customStyles={{}}
+            currentIndex={currentIndex}
+            questions={questions.length}
+            onTimerEnd={endTime}
+            initial={TIMER_SPEED}
+          />
+        )}
+      </View>
+
+      <EducationPracticeSelectAnswers
+        question={question}
+        onCompleted={onSubmitTestQuestion}
+        onError={onError}
+      />
     </SafeLayout>
   );
 }
@@ -169,5 +206,5 @@ const styles = StyleSheet.create({
   header: {
     width: "100%",
     flexDirection: "column",
-  }
+  },
 });

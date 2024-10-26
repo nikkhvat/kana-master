@@ -2,20 +2,20 @@ import React from "react";
 
 import { Audio } from "expo-av";
 
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import getSound from "@/shared/resources/sounds";
-import Button from "@/shared/ui/button/button";
+import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 
 interface SoundLetterProps {
-  id: string
-  customStyles?: Record<string, string | number>;
+  id: string;
+  width?: number;
 }
 
-const SoundLetter: React.FC<SoundLetterProps> = ({
-  id,
-  customStyles = {}
-}) => {
-  Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+const SoundLetter: React.FC<SoundLetterProps> = ({ id, width }) => {
+  const { colors } = useThemeContext();
 
+  Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
 
   const playSound = async (id: string) => {
     try {
@@ -31,13 +31,17 @@ const SoundLetter: React.FC<SoundLetterProps> = ({
     }
   };
 
+  const soundIcon = (
+    <Icon name={"ear-hearing"} size={24} color={colors.IconPrimary} />
+  );
+
   return (
-    <Button
-      customStyles={{marginTop: 0, ...customStyles}}
-      title={"Sound"}
+    <SecondaryButton
+      icon={soundIcon}
+      width={width}
+      isOutline
+      isFullWidth={!width}
       onClick={() => playSound(id)}
-      type={"inactive"}
-      image={"volume-high"}
     />
   );
 };

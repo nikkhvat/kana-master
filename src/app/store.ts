@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage"; // or your preferred storage engine
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 
@@ -29,14 +29,14 @@ export const makeStore = () => {
         serializableCheck: {
           ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
         },
+        immutableCheck: { warnAfter: 128 },
       }),
   });
 };
 
-
 export const store = makeStore();
 export const persistor = persistStore(store);
 
-export type AppStore = ReturnType<typeof makeStore>
-export type RootState = ReturnType<AppStore["getState"]>
-export type AppDispatch = AppStore["dispatch"]
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];

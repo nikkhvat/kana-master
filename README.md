@@ -1,7 +1,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/nikkhvat/kana-master">
-    <img src="./docs/image/logo.png" alt="Logo" width="80" height="80">
+    <img src="./README/docs/image/logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Kana Master - Learn Japanese</h3>
@@ -17,6 +17,12 @@
     ·
     <a href="https://www.behance.net/gallery/200432749/Mobile-App-Kana-Master">Behance</a>
   </p>
+  
+  <p align="center">
+    <a href="./README/RU.md">RU</a>
+    |
+    <a href="./README.md">EN</a>
+  </p>
 </div>
 
 
@@ -25,19 +31,19 @@
 
 <table>
   <tr>
-    <td><img src="docs/image/1.jpg" /></td>
-    <td><img src="docs/image/2.jpg" /></td>
-    <td><img src="docs/image/3.jpg" /></td>
-    <td><img src="docs/image/4.jpg" /></td>
+    <td><img src="./README/docs/image/1.jpg" /></td>
+    <td><img src="./README/docs/image/2.jpg" /></td>
+    <td><img src="./README/docs/image/3.jpg" /></td>
+    <td><img src="./README/docs/image/4.jpg" /></td>
   </tr>
 </table>
 
 <table>
   <tr>
-    <td><img src="docs/image/5.jpg" /></td>
-    <td><img src="docs/image/6.jpg" /></td>
-    <td><img src="docs/image/7.jpg" /></td>
-    <td><img src="docs/image/8.jpg" /></td>
+    <td><img src="./README/docs/image/5.jpg" /></td>
+    <td><img src="./README/docs/image/6.jpg" /></td>
+    <td><img src="./README/docs/image/7.jpg" /></td>
+    <td><img src="./README/docs/image/8.jpg" /></td>
   </tr>
 </table>
 

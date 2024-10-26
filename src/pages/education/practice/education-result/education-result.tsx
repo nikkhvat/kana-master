@@ -12,12 +12,17 @@ import { CardMode, Kana } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
-import Button from "@/shared/ui/button/button";
 import CircularProgressBar from "@/shared/ui/progressbar/circular/circular-progress-bar";
 
-import * as StoreReview from 'expo-store-review';
+import * as StoreReview from "expo-store-review";
+import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
+import { Typography } from "@/shared/typography";
+import ResultItem from "@/entities/education/result-item/result-item";
 
-type LearnResultsNavigationProp = StackNavigationProp<RootStackParamList, "Results">;
+type LearnResultsNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Results"
+>;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, "Results">;
 
 interface EducationResultProps {
@@ -25,7 +30,10 @@ interface EducationResultProps {
   navigation: LearnResultsNavigationProp;
 }
 
-const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation }) => {
+const EducationResultPage: React.FC<EducationResultProps> = ({
+  route,
+  navigation,
+}) => {
   const { result } = route.params;
 
   const { t } = useTranslation();
@@ -36,7 +44,7 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
 
   const home = () => {
     navigation.navigate("Root");
-    
+
     try {
       if (Platform.OS === "ios") {
         StoreReview.requestReview();
@@ -57,126 +65,164 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
     }
   };
 
-
   const getKeyByKana = (letter: ILetter, kana: CardMode) => {
-    const isKatakana = (kana === CardMode.katakanaToHiragana || kana === CardMode.katakanaToRomaji);
-    const isHiragana = (kana === CardMode.hiraganaToKatakana || kana === CardMode.hiraganaToRomaji);
+    const isKatakana =
+      kana === CardMode.katakanaToHiragana ||
+      kana === CardMode.katakanaToRomaji;
+    const isHiragana =
+      kana === CardMode.hiraganaToKatakana ||
+      kana === CardMode.hiraganaToRomaji;
 
     return isKatakana ? letter.ka : isHiragana ? letter.hi : getRomanji(letter);
   };
 
   const getKeyAnswer = (letter: ILetter, mode: CardMode) => {
-    if (mode === CardMode.hiraganaToKatakana) return `${letter.hi} (${letter.ka})`;
-    if (mode === CardMode.hiraganaToRomaji) return `${letter.hi} (${getRomanji(letter)})`;
-    if (mode === CardMode.romajiToHiragana) return `${getRomanji(letter)} (${letter.hi})`;
-    if (mode === CardMode.katakanaToHiragana) return `${letter.ka} (${letter.hi})`;
-    if (mode === CardMode.katakanaToRomaji) return `${letter.ka} (${getRomanji(letter)})`;
-    if (mode === CardMode.romajiToKatakana) return `${getRomanji(letter)} (${letter.ka})`;
+    if (mode === CardMode.hiraganaToKatakana)
+      return `${letter.hi} (${letter.ka})`;
+    if (mode === CardMode.hiraganaToRomaji)
+      return `${letter.hi} (${getRomanji(letter)})`;
+    if (mode === CardMode.romajiToHiragana)
+      return `${getRomanji(letter)} (${letter.hi})`;
+    if (mode === CardMode.katakanaToHiragana)
+      return `${letter.ka} (${letter.hi})`;
+    if (mode === CardMode.katakanaToRomaji)
+      return `${letter.ka} (${getRomanji(letter)})`;
+    if (mode === CardMode.romajiToKatakana)
+      return `${getRomanji(letter)} (${letter.ka})`;
   };
 
   return (
-    <AdaptiveLayout style={{flex: 1}} >
-      <View style={[
-        containerStyles.container, 
-        { 
-          paddingTop: insets.top, 
-          paddingBottom: insets.bottom, 
-          backgroundColor: colors.color1
-        }]}>
-        <Text style={[containerStyles.title, { color: colors.color4 }]}>{t("result.title")}</Text>
+    <AdaptiveLayout style={{ flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          paddingTop: insets.top,
+          paddingBottom: insets.bottom,
+          backgroundColor: colors.BgPrimary,
+        }}
+      >
+        <Text style={[containerStyles.title, Typography.boldH3, { color: colors.TextPrimary }]}>
+          {t("result.title")}
+        </Text>
 
-        <View style={[containerStyles.statsCard, { borderColor: colors.color2 }]}>
+        <View
+          style={[containerStyles.statsCard, Typography.boldH4, { borderColor: colors.BorderDefault }]}
+        >
           <View style={containerStyles.statsGraph}>
             <CircularProgressBar
-              progress={((result.correctQuestions) / (result.totalQuestions)) * 100}
+              progress={(result.correctQuestions / result.totalQuestions) * 100}
             />
           </View>
-          <View style={containerStyles.statsDescription}>
-            <Text style={[containerStyles.statsTitle, { color: colors.color4 }]}>{t("result.score")}</Text>
+          <View>
+            <Text
+              style={[Typography.boldH3, { color: colors.TextPrimary }]}
+            >
+              {t("result.score")}
+            </Text>
             <View style={containerStyles.statsSubText}>
-              <Text style={[containerStyles.statsSubTitleLarge, { color: colors.color4 }]}>
-                {result.correctQuestions}
-              </Text>
-              <Text style={[containerStyles.statsSubTitle, { color: colors.color4 }]}>
-                / {result.totalQuestions}
+              <Text
+                style={[
+                  Typography.boldH4,
+                  { color: colors.color4 },
+                ]}
+              >
+                {result.correctQuestions} / {result.totalQuestions}
               </Text>
             </View>
-            <Text style={[containerStyles.statsSubTime, { color: colors.color3 }]}>
-              {millisecondsToSeconds(result.totalTime)} 
-              {" "}
-              ({millisecondsToSeconds(result.avgTime)} / {t("result.question")?.toLocaleLowerCase()})
+            <Text
+              style={[Typography.regularLabel, { color: colors.TextSecondary }]}
+            >
+              {millisecondsToSeconds(result.totalTime)} (
+              {millisecondsToSeconds(result.avgTime)} /{" "}
+              {t("result.question")?.toLocaleLowerCase()})
             </Text>
           </View>
         </View>
 
         <ScrollView style={containerStyles.scroll}>
-          {!(result.type === "RESULT_WORD_GAME" && (result.incorrectWordBuilding.length + result.incorrectFindThePair.length + result.incorrectChoice.length) === 0) && 
-            <Text style={[containerStyles.metricsTitle, {
-            color: colors.color4
-          }]} >{t("result.details")}</Text>}
-          {result.type === "RESULT_PRACTICE" && <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
-            <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.alphabet")}:</Text>
-            <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
-              {result.alphabets.map(alphabet => 
-                alphabet === Kana.Romanji 
-                ? t("kana.romanji") 
-                : alphabet === Kana.Hiragana 
-                ? t("kana.hiragana")
-                : t("kana.katakana")).join(", ")}
+          {!(
+            result.type === "RESULT_WORD_GAME" &&
+            result.incorrectWordBuilding.length +
+              result.incorrectFindThePair.length +
+              result.incorrectChoice.length ===
+              0
+          ) && (
+            <Text
+              style={[
+                Typography.boldH3,
+                {
+                  marginTop: 30,
+                  color: colors.TextPrimary,
+                },
+              ]}
+            >
+              {t("result.details")}
             </Text>
-          </View>}
-          {result.type === "RESULT_PRACTICE" && <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
-            <Text style={[containerStyles.detailsCardTitle, { color: colors.color3}]} >{t("result.fastestAnswer")}:</Text>
-            <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
-              {getKeyByKana(result.fastesAnswer.answer, result.fastesAnswer.type)}:
-              {" "}{millisecondsToSeconds(result.fastesAnswer.time)}
-            </Text>
-          </View>}
-          {result.type === "RESULT_PRACTICE" && <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
-            <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.slowestAnswer")}:</Text>
-            <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
-              {getKeyByKana(result.slowestAnswer.answer, result.slowestAnswer.type)}:
-              {" "}{millisecondsToSeconds(result.slowestAnswer.time)}
-            </Text>
-          </View>}
-          {(result.type === "RESULT_PRACTICE" && result.incorrect.length > 0) &&
-          <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
-            <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.incorrectAnswers")}:</Text>
-            <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
-              {result.incorrect.map(item => `${getKeyAnswer(item.letter, item.mode)}`).join(", ")}
-            </Text>
-          </View>}
-          {result.type === "RESULT_WORD_GAME" && result.incorrectWordBuilding.length > 0 &&
-          <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
-            <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.incorrectWordBuilding")}:</Text>
-            <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
-              {result.incorrectWordBuilding.map(item => `${item[0]} (${item[1]})`).join(", ")}
-            </Text>
-          </View>}
-          {result.type === "RESULT_WORD_GAME" && result.incorrectFindThePair.length > 0 &&
-          <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
-            <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.incorrectFindPair")}:</Text>
-            <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
-              {result.incorrectFindThePair.map(item => `${item[0]} (${item[1]})`).join(", ")}
-            </Text>
-          </View>}
-          {result.type === "RESULT_WORD_GAME" && result.incorrectChoice.length > 0 &&
-          <View style={[containerStyles.detailsCard, { borderColor: colors.color2}]} >
-            <Text style={[containerStyles.detailsCardTitle, { color: colors.color3 }]} >{t("result.incorrectChoice")}:</Text>
-            <Text style={[containerStyles.detailsCardValue, { color: colors.color4}]} >
-              {result.incorrectChoice.map(item => `${item[0]} (${item[1]})`).join(", ")}
-            </Text>
-          </View>}
+          )}
 
-          {(result.type === "RESULT_WORD_GAME" && (result.incorrectWordBuilding.length + result.incorrectFindThePair.length + result.incorrectChoice.length) === 0) && 
-            <Text style={[containerStyles.wellDoneNoErrors, { color: colors.color4 }]} >{t("result.wellDoneNoErrors")}</Text>}
+          {result.type === "RESULT_PRACTICE" && (
+          <ResultItem title={t("result.alphabet")} body={result.alphabets.map((alphabet) =>
+              alphabet === Kana.Romanji
+                ? t("kana.romanji")
+                : alphabet === Kana.Hiragana
+                  ? t("kana.hiragana")
+                  : t("kana.katakana"),
+            )
+            .join(", ")} />
+            )}
+
+          {result.type === "RESULT_PRACTICE" && (
+            <ResultItem title={t("result.fastestAnswer")} body={`${getKeyByKana( result.fastesAnswer.answer, result.fastesAnswer.type)} : ${millisecondsToSeconds(result.fastesAnswer.time)}`} />
+          )}
+
+          {result.type === "RESULT_PRACTICE" && (
+            <ResultItem title={t("result.slowestAnswer")} body={`${getKeyByKana(result.slowestAnswer.answer, result.slowestAnswer.type)} : ${millisecondsToSeconds(result.slowestAnswer.time)}`} />
+          )}
+          
+          {result.type === "RESULT_PRACTICE" && (
+            <ResultItem title={t("result.incorrectAnswers")} body={result.incorrect
+              .map((item) => `${getKeyAnswer(item.letter, item.mode)}`)
+              .join(", ")} />
+          )}
+          
+          {result.type === "RESULT_WORD_GAME" && (
+            <ResultItem title={t("result.incorrectWordBuilding")} body={result.incorrectWordBuilding
+              .map((item) => `${item[0]} (${item[1]})`)
+              .join(", ")} />
+          )}
+          
+          {result.type === "RESULT_WORD_GAME" && (
+            <ResultItem title={t("result.incorrectFindPair")} body={result.incorrectFindThePair
+              .map((item) => `${item[0]} (${item[1]})`)
+              .join(", ")} />
+          )}
+          
+          {result.type === "RESULT_WORD_GAME" && (
+            <ResultItem title={t("result.incorrectChoice")} body={result.incorrectChoice
+              .map((item) => `${item[0]} (${item[1]})`)
+              .join(", ")} />
+          )}
+          
+
+          {result.type === "RESULT_WORD_GAME" &&
+            result.incorrectWordBuilding.length +
+              result.incorrectFindThePair.length +
+              result.incorrectChoice.length ===
+              0 && (
+              <Text
+                style={[
+                  containerStyles.wellDoneNoErrors,
+                  { color: colors.TextPrimary },
+                ]}
+              >
+                {t("result.wellDoneNoErrors")}
+              </Text>
+            )}
         </ScrollView>
-        <View style={[containerStyles.buttons, {marginBottom: insets.bottom}]} >
-          <Button
-            type={"general"}
-            title={t("result.done")}
-            onClick={home}
-          />
+        <View
+          style={{ marginBottom: insets.bottom, paddingHorizontal: 20 }}
+        >
+          <PrimaryButton text={t("result.done")} onClick={home} />
         </View>
       </View>
     </AdaptiveLayout>
@@ -184,23 +230,10 @@ const EducationResultPage: React.FC<EducationResultProps> = ({ route, navigation
 };
 
 const containerStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   title: {
-    fontSize: 28,
-    fontWeight: "700",
     marginTop: 20,
     marginBottom: 10,
-    marginLeft: 20
-  },
-  buttons: {
-    paddingHorizontal: 20,
-  },
-  metricsTitle: {
-    fontSize: 17,
-    fontWeight: "700",
-    marginTop: 30,
+    marginLeft: 20,
   },
   scroll: {
     padding: 20,
@@ -212,35 +245,16 @@ const containerStyles = StyleSheet.create({
     height: 130,
     flexDirection: "row",
     padding: 15,
-    gap: 15
+    gap: 16,
   },
   statsGraph: {
     width: 100,
     height: 100,
-    borderRadius: 50
-  },
-  statsDescription: {},
-  statsTitle: {
-    fontSize: 17,
-    fontWeight: "700",
-  },
-  statsSubTitleLarge: {
-    fontSize: 22,
-    fontWeight: "700",
-    marginRight: 4,
-  },
-  statsSubTitle: {
-    fontSize: 17,
-    fontWeight: "400",
+    borderRadius: 50,
   },
   statsSubText: {
     flexDirection: "row",
     alignItems: "center",
-  },
-  statsSubTime: {
-    fontSize: 13,
-    fontWeight: "400",
-    marginTop: 30,
   },
   detailsCard: {
     width: "100%",
@@ -251,8 +265,8 @@ const containerStyles = StyleSheet.create({
     padding: 15,
     borderRadius: 12,
     borderWidth: 1,
-    marginTop: 15,
-    gap: 10
+    marginTop: 16,
+    gap: 10,
   },
   detailsCardTitle: {
     fontSize: 17,
@@ -260,13 +274,13 @@ const containerStyles = StyleSheet.create({
   },
   detailsCardValue: {
     fontSize: 17,
-    fontWeight: "700"
+    fontWeight: "700",
   },
   wellDoneNoErrors: {
     marginTop: 20,
     fontSize: 17,
-    fontWeight: "700"
-  }
+    fontWeight: "700",
+  },
 });
 
 export default EducationResultPage;

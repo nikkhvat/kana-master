@@ -4,17 +4,19 @@ import { FC, ReactNode } from "react";
 
 import * as Haptics from "expo-haptics";
 
-import { Text, StyleSheet, Pressable } from "react-native";
+import { Text, StyleSheet, Pressable, DimensionValue } from "react-native";
+import { useAppSelector } from "@/shared/model/hooks";
 
 interface SecondaryButtonProps {
   content?: ReactNode;
 
   text?: string;
+  icon?: React.ReactElement;
 
   isDisabled?: boolean;
   isOutline?: boolean;
 
-  width?: number;
+  width?: DimensionValue;
   isFullWidth?: boolean;
 
   isHapticFeedback?: boolean;
@@ -28,6 +30,8 @@ interface SecondaryButtonProps {
 const SecondaryButton: FC<SecondaryButtonProps> = ({
   content,
   text,
+
+  icon,
 
   isDisabled,
   isOutline,
@@ -44,10 +48,14 @@ const SecondaryButton: FC<SecondaryButtonProps> = ({
 }) => {
   const { colors } = useThemeContext();
 
+  const isEnabledHaptic = useAppSelector(
+    (state) => state.profile.isEnabledHaptic,
+  );
+
   const onPress = () => {
     if (isDisabled) return;
 
-    if (isHapticFeedback) {
+    if (isHapticFeedback && isEnabledHaptic) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
 
@@ -56,68 +64,64 @@ const SecondaryButton: FC<SecondaryButtonProps> = ({
     }
   };
 
-  const normalColors = {
-    backgroundColor: colors.BgAccentPrimary,
-    borderColor: colors.BgAccentPrimary,
-  };
+  const getButtonStyles = (pressed: boolean) => [
+    isFullWidth ? { flex: 1 } : { width },
 
-  const outlineColors = {
-    backgroundColor: colors.BgPrimary,
-    borderColor: colors.BorderDefault,
-  };
+    {
+      backgroundColor: colors.BgAccentPrimary,
+      borderColor: colors.BgAccentPrimary,
+    },
 
-  const pressedoutlineColors = {
-    backgroundColor: colors.BgPrimaryPressed,
-    borderColor: colors.BorderDefault,
-  };
+    pressed &&
+    !isOutline && {
+      backgroundColor: colors.BgAccentPrimaryPressed,
+      borderColor: colors.BgAccentPrimaryPressed,
+    },
 
-  const pressedColors = {
-    backgroundColor: colors.BgAccentPrimaryPressed,
-    borderColor: colors.BgAccentPrimaryPressed,
-  };
+    isOutline && {
+      backgroundColor: colors.BgPrimary,
+      borderColor: colors.BorderDefault,
+    },
 
-  const disablesColors = {
-    backgroundColor: colors.BgLightGray,
-    borderColor: colors.BgLightGray,
-  };
+    isDisabled && {
+      backgroundColor: colors.BgLightGray,
+      borderColor: colors.BgLightGray,
+    },
+
+    pressed &&
+    isOutline &&
+    !isDisabled && {
+      backgroundColor: colors.BgPrimaryPressed,
+      borderColor: colors.BorderDefault,
+    },
+
+    styles.button,
+    containerStyles && containerStyles,
+  ];
+
+  const getTextStyles = () => [
+    {
+      color: colors.TextContrastSecondary,
+    },
+    isOutline && {
+      color: colors.TextPrimary,
+    },
+    isDisabled && {
+      color: colors.TextSecondary,
+    },
+    Typography.boldH4,
+    textStyles && textStyles,
+  ];
 
   return (
     <Pressable
       onPress={onPress}
-      style={({ pressed }) => [
-        {
-          width: width ? width : isFullWidth ? "100%" : "auto",
-        },
-        normalColors,
-        pressed && !isOutline && pressedColors,
-        isOutline && outlineColors,
-        isDisabled && disablesColors,
-        pressed && isOutline && pressedoutlineColors,
-        styles.button,
-        containerStyles && containerStyles,
-      ]}
+      style={({ pressed }) => getButtonStyles(pressed)}
     >
-      {!content && text && (
-        <Text
-          style={[
-            {
-              color: colors.TextContrastSecondary,
-            },
-            isOutline && {
-              color: colors.TextPrimary,
-            },
-            isDisabled && {
-              color: colors.TextSecondary,
-            },
-            Typography.boldH4,
-            textStyles && textStyles,
-          ]}
-        >
-          {text}
-        </Text>
-      )}
+      {!content && text && <Text style={getTextStyles()}>{text}</Text>}
 
       {content && !text && content}
+      {icon && icon}
     </Pressable>
   );
 };

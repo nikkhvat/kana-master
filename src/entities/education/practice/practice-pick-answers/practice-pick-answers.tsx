@@ -66,7 +66,7 @@ const EducationPracticeSelectAnswers: React.FC<
     screenWidth -
     (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING * 2) : 0) -
     20 * 2;
-  const widthCard = (width - 15) / 2;
+  const widthCard = (width - 16) / 2;
 
   const kana = question?.kana;
   const symbol = question?.symbol;
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 15,
+    gap: 16,
   },
   symbol: {
     textAlign: "center",

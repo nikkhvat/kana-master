@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { InitialState } from "./types";
-import { getDumpLessons } from "@/shared/data/chapters";
 import { getChapters, ping } from "./api";
 import { AutoLesson, ManuallyLesson } from "@/shared/constants/lessons";
 
@@ -52,9 +51,6 @@ export const lessonsSlice = createSlice({
       if (action.payload?.ok) {
         state.chapters = action.payload?.chapters
         state.lastUpdate = +new Date()
-        state.lang = action.payload.lang as "en"
-      } else if (state.lang !== action?.payload?.lang) {
-        state.chapters = getDumpLessons(action?.payload?.lang as "en").chapters as (AutoLesson | ManuallyLesson)[][];
         state.lang = action.payload.lang as "en"
       }
     })

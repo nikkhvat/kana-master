@@ -1,9 +1,9 @@
-
 export interface InitialState {
   draw: {
-    lineWidth: number
+    lineWidth: number;
 
-    isShowBorder: boolean
-    isShowLetter: boolean
-  }
+    isShowBorder: boolean;
+    isShowLetter: boolean;
+  };
+  isEnabledHaptic: boolean;
 }

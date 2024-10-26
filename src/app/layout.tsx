@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import MaterialCommunityIcon from "@expo/vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -20,15 +20,17 @@ import PracticeWelcomePage from "@/pages/education/practice/practice-welcome/pra
 import TestingPage from "@/pages/education/practice/testing";
 import KanaInfo from "@/pages/kana/kana-info/ui";
 import Kana from "@/pages/kana/kana-list/ui/kana-list";
-import EducationKanaQuickSelectionPage from "@/pages/kana/kana-quick-selection/kana-quick-selection";
 import EducationKanaSelection from "@/pages/kana/kana-select/ui";
 import ProfilePage from "@/pages/profile/profile";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
 import { RootStackParamList } from "@/shared/types/navigationTypes";
 
-import * as SplashScreen from "expo-splash-screen";
-import { TEST_DELAY } from "@/shared/constants/kana";
+import * as Font from 'expo-font';
+import * as Icon from '@expo/vector-icons';
+
+import * as SplashScreen from 'expo-splash-screen';
+import { isAndroid } from "@/shared/constants/platformUtil";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
@@ -42,44 +44,29 @@ const headerSettings = {
 
 type Icons = {
   Learning: "school-outline";
-  Practice: "cards-outline";
+  Practice: "layers-outline";
   Settings: "cog-outline";
   Kana: "syllabary-hiragana";
 };
 
 const icons: Icons = {
   Learning: "school-outline",
-  Practice: "cards-outline",
+  Practice: "layers-outline",
   Settings: "cog-outline",
   Kana: "syllabary-hiragana",
 };
 
 type KeysIcon = "Learning" | "Settings" | "Kana";
 
-SplashScreen.preventAutoHideAsync();
-
 function BottomTabNavigator() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const [appIsReady, setAppIsReady] = useState(false);
-
-  useEffect(() => {
-    if (appIsReady) {
-      SplashScreen.hideAsync();
-    }
-  }, [appIsReady]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setAppIsReady(true);
-    }, TEST_DELAY * 2);
-  }, []);
 
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => (
-          <Icon
+          <MaterialCommunityIcon
             name={icons[route.name as KeysIcon]}
             size={size}
             color={color}
@@ -99,6 +86,15 @@ function BottomTabNavigator() {
       })}
     >
       <Tab.Screen
+        name="Kana"
+        component={Kana}
+        options={{
+          title: t("tabs.kana"),
+          headerTransparent: true,
+          headerTitle: "",
+        }}
+      />
+      <Tab.Screen
         name="Learning"
         component={LearningList}
         options={{
@@ -117,16 +113,6 @@ function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Kana"
-        component={Kana}
-        options={{
-          title: t("tabs.kana"),
-          headerTransparent: true,
-          headerTitle: "",
-          lazy: true,
-        }}
-      />
-      <Tab.Screen
         name="Settings"
         component={ProfilePage}
         options={{
@@ -139,9 +125,40 @@ function BottomTabNavigator() {
   );
 }
 
+SplashScreen.preventAutoHideAsync();
 const Layout = () => {
+  const [appIsReady, setAppIsReady] = useState(false);
+
   const { colors } = useThemeContext();
   const { i18n } = useTranslation();
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await Font.loadAsync({
+          ...(isAndroid() ? {
+            'ZenKaku-Black': require('../shared/fonts/ZenKakuGothicNewBlack.ttf'),
+            'ZenKaku-Bold': require('../shared/fonts/ZenKakuGothicNewBold.ttf'),
+            'ZenKaku-Light': require('../shared/fonts/ZenKakuGothicNewLight.ttf'),
+            'ZenKaku-Medium': require('../shared/fonts/ZenKakuGothicNewMedium.ttf'),
+            'ZenKaku-Regular': require('../shared/fonts/ZenKakuGothicNewRegular.ttf'),
+          } : {}),
+          ...Icon.Ionicons.font,
+          ...Icon.MaterialCommunityIcons.font,
+        })
+
+        await new Promise(resolve => setTimeout(resolve, 300));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+
+        setAppIsReady(true);
+        await SplashScreen.hideAsync();
+      }
+    }
+
+    prepare();
+  }, []);
 
   useEffect(() => {
     const loadLang = async () => {
@@ -163,11 +180,15 @@ const Layout = () => {
     NavigationBar.setBackgroundColorAsync(colors.background);
   }
 
+  if (!appIsReady) {
+    return null;
+  }
+
   return (
     <>
       <StatusBar
         barStyle={colors._theme === "dark" ? "light-content" : "dark-content"}
-        backgroundColor={colors.color1}
+        backgroundColor={colors.BgPrimary}
       />
       <NavigationContainer
         theme={
@@ -180,11 +201,6 @@ const Layout = () => {
           <Stack.Screen
             name="Root"
             component={BottomTabNavigator}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ChooseAlphabet"
-            component={EducationKanaQuickSelectionPage}
             options={{ headerShown: false }}
           />
           <Stack.Screen

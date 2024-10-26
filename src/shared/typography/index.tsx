@@ -1,8 +1,16 @@
 import { TextStyle, StyleSheet } from "react-native";
+import { isAndroid } from "../constants/platformUtil";
+
+const fontTitleFamilyBold = isAndroid() ? "ZenKaku-Bold" : "SFProDisplay-Bold";
+const fontTitleFamilyRegular = isAndroid() ? "ZenKaku-Medium" : "SFProDisplay-Regular";
+
+const fontTextFamilyRegular = isAndroid() ? "ZenKaku-Medium" : "SFProText-Regular";
+const fontTextFamilySemibold = isAndroid() ? "ZenKaku-Black" : "SFProDisplay-Semibold";
+const fontTextFamilyBold = isAndroid() ? "ZenKaku-Bold" : "SFProText-Bold";
 
 // Regular Large
 export const TypographyRegularLarge: TextStyle = {
-  fontFamily: "SFProDisplay-Bold",
+  fontFamily: fontTitleFamilyBold,
   fontSize: 96,
   lineHeight: 104,
   fontWeight: "700",
@@ -10,7 +18,7 @@ export const TypographyRegularLarge: TextStyle = {
 
 // Regular H1
 export const TypographyRegularH1: TextStyle = {
-  fontFamily: "SFProDisplay-Regular",
+  fontFamily: fontTitleFamilyRegular,
   fontSize: 28,
   lineHeight: 32,
   fontWeight: "400",
@@ -18,7 +26,7 @@ export const TypographyRegularH1: TextStyle = {
 
 // Regular H3
 export const TypographyRegularH3: TextStyle = {
-  fontFamily: "SFProText-Regular",
+  fontFamily: fontTextFamilyRegular,
   fontSize: 19,
   lineHeight: 24,
   fontWeight: "400",
@@ -26,7 +34,7 @@ export const TypographyRegularH3: TextStyle = {
 
 // Regular H4
 export const TypographyRegularH4: TextStyle = {
-  fontFamily: "SFProText-Regular",
+  fontFamily: fontTextFamilyRegular,
   fontSize: 17,
   lineHeight: 22,
   fontWeight: "400",
@@ -34,7 +42,7 @@ export const TypographyRegularH4: TextStyle = {
 
 // Regular Paragraph
 export const TypographyRegularParagraph: TextStyle = {
-  fontFamily: "SFProText-Regular",
+  fontFamily: fontTextFamilyRegular,
   fontSize: 15,
   lineHeight: 20,
   fontWeight: "400",
@@ -42,7 +50,7 @@ export const TypographyRegularParagraph: TextStyle = {
 
 // Regular Label
 export const TypographyRegularLabel: TextStyle = {
-  fontFamily: "SFProText-Regular",
+  fontFamily: fontTextFamilyRegular,
   fontSize: 13,
   lineHeight: 16,
   fontWeight: "400",
@@ -50,15 +58,63 @@ export const TypographyRegularLabel: TextStyle = {
 
 // Regular Caption
 export const TypographyRegularCaption: TextStyle = {
-  fontFamily: "SFProText-Regular",
+  fontFamily: fontTextFamilyRegular,
   fontSize: 11,
   lineHeight: 14,
   fontWeight: "400",
 };
 
+// Semi-Bold H1
+export const TypographySemiBoldH1: TextStyle = {
+  fontFamily: fontTextFamilySemibold,
+  fontSize: 28,
+  lineHeight: 32,
+  fontWeight: "600",
+};
+
+// Semi-Bold H2
+export const TypographySemiBoldH2: TextStyle = {
+  fontFamily: fontTextFamilySemibold,
+  fontSize: 22,
+  lineHeight: 26,
+  fontWeight: "600",
+};
+
+// Semi-Bold H3
+export const TypographySemiBoldH3: TextStyle = {
+  fontFamily: fontTextFamilySemibold,
+  fontSize: 19,
+  lineHeight: 24,
+  fontWeight: "600",
+};
+
+// Semi-Bold H4
+export const TypographySemiBoldH4: TextStyle = {
+  fontFamily: fontTextFamilySemibold,
+  fontSize: 17,
+  lineHeight: 22,
+  fontWeight: "600",
+};
+
+// Semi-Bold Paragraph
+export const TypographySemiBoldParagraph: TextStyle = {
+  fontFamily: fontTextFamilySemibold,
+  fontSize: 15,
+  lineHeight: 20,
+  fontWeight: "600",
+};
+
+// Semi-Bold Label
+export const TypographySemiBoldLabel: TextStyle = {
+  fontFamily: fontTextFamilySemibold,
+  fontSize: 13,
+  lineHeight: 16,
+  fontWeight: "600",
+};
+
 // Bold H1
 export const TypographyBoldH1: TextStyle = {
-  fontFamily: "SFProDisplay-Bold",
+  fontFamily: fontTitleFamilyBold,
   fontSize: 28,
   lineHeight: 32,
   fontWeight: "700",
@@ -66,7 +122,7 @@ export const TypographyBoldH1: TextStyle = {
 
 // Bold H2
 export const TypographyBoldH2: TextStyle = {
-  fontFamily: "SFProDisplay-Bold",
+  fontFamily: fontTitleFamilyBold,
   fontSize: 22,
   lineHeight: 26,
   fontWeight: "700",
@@ -74,7 +130,7 @@ export const TypographyBoldH2: TextStyle = {
 
 // Bold H3
 export const TypographyBoldH3: TextStyle = {
-  fontFamily: "SFProText-Bold",
+  fontFamily: fontTextFamilyBold,
   fontSize: 19,
   lineHeight: 24,
   fontWeight: "700",
@@ -82,7 +138,7 @@ export const TypographyBoldH3: TextStyle = {
 
 // Bold H4
 export const TypographyBoldH4: TextStyle = {
-  fontFamily: "SFProText-Bold",
+  fontFamily: fontTextFamilyBold,
   fontSize: 17,
   lineHeight: 22,
   fontWeight: "700",
@@ -90,7 +146,7 @@ export const TypographyBoldH4: TextStyle = {
 
 // Bold Paragraph
 export const TypographyBoldParagraph: TextStyle = {
-  fontFamily: "SFProText-Bold",
+  fontFamily: fontTextFamilyBold,
   fontSize: 15,
   lineHeight: 20,
   fontWeight: "700",
@@ -98,7 +154,7 @@ export const TypographyBoldParagraph: TextStyle = {
 
 // Bold Label
 export const TypographyBoldLabel: TextStyle = {
-  fontFamily: "SFProText-Bold",
+  fontFamily: fontTextFamilyBold,
   fontSize: 13,
   lineHeight: 16,
   fontWeight: "700",
@@ -113,10 +169,12 @@ export const Typography = StyleSheet.create({
   regularLabel: TypographyRegularLabel,
   regularCaption: TypographyRegularCaption,
 
-  boldH1: TypographyBoldH1,
-  boldH2: TypographyBoldH2,
-  boldH3: TypographyBoldH3,
-  boldH4: TypographyBoldH4,
-  boldParagraph: TypographyBoldParagraph,
-  boldLabel: TypographyBoldLabel,
+  boldH1: TypographySemiBoldH1,
+  boldH2: TypographySemiBoldH2,
+  boldH3: TypographySemiBoldH3,
+  boldH4: TypographySemiBoldH4,
+  boldParagraph: TypographySemiBoldParagraph,
+  boldLabel: TypographySemiBoldLabel,
+
+  semiBoldH4: TypographySemiBoldH4,
 });

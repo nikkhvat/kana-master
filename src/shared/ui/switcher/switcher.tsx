@@ -15,6 +15,8 @@ import { verticalScale } from "@/shared/helpers/metrics";
 
 import * as Haptics from "expo-haptics";
 import { Typography } from "@/shared/typography";
+import { useAppSelector } from "@/shared/model/hooks";
+
 interface SwitcherProps<T extends string> {
   activeTab: T;
   options: T[];
@@ -31,6 +33,10 @@ function Switcher<T extends string>(props: SwitcherProps<T>) {
   const { colors } = useThemeContext();
   const animatedValue = useRef(new Animated.Value(0)).current;
 
+  const isEnabledHaptic = useAppSelector(
+    (state) => state.profile.isEnabledHaptic,
+  );
+
   const adaptivePadding =
     screenWidth > TABLET_WIDTH ? 40 + verticalScale(TABLET_PADDING * 2) : 40;
 
@@ -39,7 +45,10 @@ function Switcher<T extends string>(props: SwitcherProps<T>) {
 
   const handlePress = (index: number) => {
     setActiveTab(options[index]);
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+
+    if (isEnabledHaptic) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
   };
 
   useEffect(() => {
@@ -82,7 +91,7 @@ function Switcher<T extends string>(props: SwitcherProps<T>) {
                   }),
                 },
               ],
-              backgroundColor: colors.color1,
+              backgroundColor: colors.BgPrimary,
             },
           ]}
         />

@@ -5,9 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TestMode } from "@/shared/constants/kana";
-import Button from "@/shared/ui/button/button";
 
-import * as Haptics from "expo-haptics";
 import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
 import { Typography } from "@/shared/typography";
 
@@ -67,8 +65,6 @@ const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
   ];
 
   const toggle = (key: TestMode) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
     if (selectedCardMode.includes(key)) {
       setSelectedCardMode((prev) => prev.filter((item) => item !== key));
       setMode((prev) => prev.filter((item) => item !== key));
@@ -88,6 +84,7 @@ const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
           <View key={`column-${columnIndex}`} style={styles.column}>
             {column.map((btn) => (
               <SecondaryButton
+                isHapticFeedback
                 key={btn.key}
                 text={btn.title}
                 isDisabled={!btn.condition}

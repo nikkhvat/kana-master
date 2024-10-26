@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, Text } from "react-native";
 
 import Chapter from "../chapter/chapter";
 
@@ -16,6 +16,8 @@ import PageTitle from "@/shared/ui/page-title/page-title";
 import Switcher from "@/shared/ui/switcher/switcher";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { updateLessons } from "../model/slice";
+import { Typography } from "@/shared/typography";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 
 type HomeScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -29,6 +31,8 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
+
+  const { colors } = useThemeContext();
 
   const { lessonsKey } = useGetRomanji();
 
@@ -47,17 +51,9 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
   };
 
   const chapters = useAppSelector((state) => state.lessons.chapters)
-  const lastUpdate = useAppSelector((state) => state.lessons.lastUpdate)
   const chaptersLang = useAppSelector((state) => state.lessons.lang)
 
-  useEffect(() => {
-    const now = +new Date();
-    const timeDifference = now - lastUpdate;
-
-    if (timeDifference >= 3600000 || lastUpdate === undefined) {
-      dispatch(updateLessons({lang: lessonsKey}))
-    }
-    
+  useEffect(() => {    
     if (chaptersLang !== lessonsKey) {
       dispatch(updateLessons({
         lang: lessonsKey
@@ -67,7 +63,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
     if (!chapters || chapters.length === 0) {
       dispatch(updateLessons({ lang: lessonsKey }))
     }
-  }, [chapters, chaptersLang, lessonsKey, lastUpdate])
+  }, [chapters, chaptersLang, lessonsKey])
 
   return (
     <SafeLayout style={{ flex: 1, paddingBottom: 0 }} disableLeft disableRight>
@@ -76,20 +72,25 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
           <PageTitle style={{ paddingHorizontal: 20 }}>
             {t("tabs.learning")}
           </PageTitle>
-          <View style={{ paddingBottom: 20, paddingHorizontal: 20 }}>
+          {chapters && <View style={{ paddingBottom: 20, paddingHorizontal: 20 }}>
             <Switcher<KanaAlphabet>
               activeTab={activeTab}
               setActiveTab={setActiveTab}
               options={[KanaAlphabet.Hiragana, KanaAlphabet.Katakana]}
               translate={[t("kana.hiragana"), t("kana.katakana")]}
             />
-          </View>
-          <ScrollView
+          </View>}
+
+          {!chapters && <Text style={[styles.connectionError, Typography.boldH2, {
+            color: colors.TextPrimary
+          }]} >Server connection error</Text>}
+
+          {chapters && <ScrollView
             style={styles.scroll}
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
-          >
-            {chapters && chapters.map((item, index) => (
+          > 
+            {chapters.map((item, index) => (
               <Chapter
                 title={`${t("lessonsList.chapter")} ${index + 1}. ${index === 0 ? t("kana.basic") : ""} ${index === 1 ? t("lessonsList.grammar") : ""}`}
                 lessons={item}
@@ -99,7 +100,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
                 isLast={index + 1 === chapters.length}
               />
             ))}
-          </ScrollView>
+          </ScrollView>}
         </>
       </AdaptiveLayout>
     </SafeLayout>
@@ -115,4 +116,8 @@ const styles = StyleSheet.create({
   scrollContent: {
     paddingBottom: 20,
   },
+  connectionError: {
+    marginTop: 100,
+    textAlign: 'center',
+  }
 });

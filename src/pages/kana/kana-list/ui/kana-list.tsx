@@ -67,8 +67,8 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   return (
     <SafeLayout disableLeft disableRight >
       <AdaptiveLayout>
-        <View style={[styles.container, { backgroundColor: colors.color1 }]}>
-          {isIos && <View style={[styles.lineContainer, { top: 155, backgroundColor: colors.color2 }]} />}
+        <View style={[styles.container, { backgroundColor: colors.BgPrimary }]}>
+          {isIos && <View style={[styles.lineContainer, { top: 155, backgroundColor: colors.BorderDefault }]} />}
           <PageTitle style={styles.title} >{t("tabs.kana")}</PageTitle>
           <View style={[
             styles.switcherContainer,
@@ -104,8 +104,8 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
               </React.Suspense>
             )}
             renderSectionHeader={({ section: { title } }) => (
-              <View style={[styles.nameContainer, { backgroundColor: colors.color1 }]}>
-                <Text style={[styles.name, { color: colors.color4 }]}>{title}</Text>
+              <View style={[styles.nameContainer, { backgroundColor: colors.BgPrimary }]}>
+                <Text style={[styles.name, { color: colors.TextPrimary }]}>{title}</Text>
               </View>
             )}
           />

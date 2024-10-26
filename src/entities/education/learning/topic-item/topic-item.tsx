@@ -5,7 +5,8 @@ import { Dimensions, Pressable, StyleSheet, Text, View } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import Button from "@/shared/ui/button/button";
+import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
+import { Typography } from "@/shared/typography";
 
 interface TopicItemProps {
   isPassed?: boolean;
@@ -40,21 +41,21 @@ const TopicItem: React.FC<TopicItemProps> = ({
   const { t } = useTranslation();
 
   const indicatorRoundColors = {
-    borderColor: isPassed ? colors.second_color2 : colors.color2,
+    borderColor: isPassed ? colors.BgSuccess : colors.BgAccentSecondary,
     backgroundColor: "transparent",
   };
 
   const indicatorCheckColors = {
-    borderColor: colors.color1,
-    backgroundColor: colors.second_color2,
+    borderColor: colors.BgSuccess,
+    backgroundColor: colors.BgSuccess,
   };
 
   const indicatorIconColors = {
-    backgroundColor: colors.second_color4,
+    backgroundColor: colors.BgAccentSecondary,
   };
 
   const lineStyle = {
-    backgroundColor: isPassed ? colors.second_color2 : colors.color2,
+    backgroundColor: isPassed ? colors.BgSuccess : colors.BgAccentSecondary,
     height: (isOpened ? "65%" : 24) as number,
   };
 
@@ -62,7 +63,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
     <Pressable
       style={[
         styles.container,
-        { paddingBottom: (isOpened && !isLast) ? 8 : 35 },
+        { paddingBottom: isOpened && !isLast ? 8 : 35 },
       ]}
       onPress={() => onClick?.()}
     >
@@ -70,42 +71,40 @@ const TopicItem: React.FC<TopicItemProps> = ({
         <View style={styles.indicator}>
           <View style={[styles.indicatorRound, indicatorRoundColors]}></View>
           <View style={[styles.indicatorIcon, indicatorIconColors]}>
-            <Text style={[styles.indicatorIconText, { color: colors.color4 }]}>
+            <Text style={[Typography.boldH2, { color: colors.BgContrast }]}>
               {icon}
             </Text>
           </View>
           {isPassed && (
             <View style={[styles.indicatorCheck, indicatorCheckColors]}>
-              <Icon name={"check-bold"} size={12} color={colors.color5} />
+              <Icon name={"check-bold"} size={12} color={colors.IconContrast} />
             </View>
           )}
         </View>
         <View style={[styles.info, { width: screenWidth - 130 }]}>
-          <Text style={[styles.title, { color: colors.color4 }]}>{title}</Text>
-          <Text style={[styles.subtitle, { color: colors.color4 }]}>
+          <Text style={[Typography.boldH4, { color: colors.BgContrast, marginTop: 12 }]}>{title}</Text>
+          <Text style={[Typography.regularParagraph, { color: colors.BgContrast }]}>
             {subtitle}
           </Text>
 
           {isOpened && (
             <View style={styles.openedInfo}>
               <View>
-                <View style={[styles.infoLine, { backgroundColor: colors.color2 }]} />
-                <Text style={[styles.infoTitle, { color: colors.color4 }]}>
+                <View
+                  style={[styles.infoLine, { backgroundColor: colors.BorderDefault }]}
+                />
+                <Text style={[Typography.boldH4, { color: colors.BgContrast, marginTop: 16 }]}>
                   {infoTitle}
                 </Text>
-                <Text style={[styles.infoSubTitle, { color: colors.color4 }]}>
+                <Text style={[Typography.regularParagraph, { color: colors.BgContrast, marginTop: 4, }]}>
                   {infoSubTitle}
                 </Text>
               </View>
-              <Button
+
+              <PrimaryButton
+                width={108}
+                text={isPassed ? t("common.retry") : t("common.start")}
                 onClick={onStartLesson}
-                customStyles={{
-                  width: 108,
-                  marginTop: 10,
-                  marginBottom: 0,
-                }}
-                type={"general"}
-                title={isPassed ? t("common.retry") : t("common.start")}
               />
             </View>
           )}
@@ -132,7 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: "100%",
     alignItems: "flex-start",
-    gap: 15,
+    gap: 16,
   },
   indicator: {
     position: "relative",
@@ -144,27 +143,8 @@ const styles = StyleSheet.create({
   },
   infoLine: {
     width: "100%",
-    marginTop: 15,
+    marginTop: 16,
     height: 1,
-  },
-  infoTitle: {
-    marginTop: 15,
-    fontWeight: "bold",
-    fontSize: 17,
-  },
-  infoSubTitle: {
-    marginTop: 5,
-    fontWeight: "400",
-    fontSize: 15,
-  },
-  title: {
-    fontSize: 17,
-    fontWeight: "600",
-    marginTop: 12,
-  },
-  subtitle: {
-    fontSize: 15,
-    fontWeight: "400",
   },
   indicatorRound: {
     borderRadius: 72,
@@ -179,12 +159,9 @@ const styles = StyleSheet.create({
     borderRadius: 54,
     left: 9,
     top: 9,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  indicatorIconText: {
-    fontWeight: "600",
-    fontSize: 22,
+
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   indicatorCheck: {
     position: "absolute",

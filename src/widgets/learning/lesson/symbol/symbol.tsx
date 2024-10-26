@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import SoundLetter from "@/entities/kana/sound-letter/sound-letter";
 import Symbol from "@/entities/kana/symbol/symbol";
@@ -9,14 +9,13 @@ import SymbolHeader from "@/entities/kana/symbol-header/symbol-header";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonSymbol } from "@/shared/constants/lessons";
-import Button from "@/shared/ui/button/button";
+import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
+import { LearningTitle } from "../ui/title";
 
 type LessonSymbolScreenProps = LessonSymbol & {
   next: () => void;
   kana: KanaAlphabet;
 };
-
-const screenWidth = Dimensions.get("window").width;
 
 const LessonSymbolScreen: React.FC<LessonSymbolScreenProps> = ({
   symbol,
@@ -30,32 +29,23 @@ const LessonSymbolScreen: React.FC<LessonSymbolScreenProps> = ({
   return (
     <View style={styles.container}>
       <View>
-        <Text
-          style={[
-            styles.title,
-            {
-              color: colors.color4,
-            },
-          ]}
-        >
+        <LearningTitle>
           {t("lesson.rememberWritingAndSoundLetter")}
-        </Text>
+        </LearningTitle>
 
         <View
           style={[
             styles.symbolContainer,
             {
-              borderColor: colors.color2,
+              borderColor: colors.BorderDefault,
             },
           ]}
         >
           <Symbol id={symbol?.id} kana={kana} />
         </View>
+
         <View style={styles.bottomRow}>
-          <SoundLetter
-            customStyles={{ width: 50, height: 50 }}
-            id={symbol.id}
-          />
+          <SoundLetter width={50} id={symbol.id} />
           <View>
             <SymbolHeader bottomTitle kana={kana} letter={symbol} />
           </View>
@@ -63,12 +53,9 @@ const LessonSymbolScreen: React.FC<LessonSymbolScreenProps> = ({
         </View>
       </View>
 
-      <Button
-        customStyles={{ width: "100%" }}
-        type={"general"}
-        title={t("common.next")}
-        onClick={next}
-      />
+      <View style={styles.buttonContainer}>
+        <PrimaryButton isFullWidth text={t("common.next")} onClick={next} />
+      </View>
     </View>
   );
 };
@@ -84,13 +71,10 @@ const styles = StyleSheet.create({
   symbolContainer: {
     borderWidth: 1,
     borderRadius: 12,
-    marginTop: 30,
   },
-  title: {
-    fontSize: 17,
-    fontWeight: "600",
-    textAlign: "center",
-    height: 50
+  buttonContainer: {
+    width: "100%",
+    height: 50,
   },
   bottomRow: {
     justifyContent: "space-between",

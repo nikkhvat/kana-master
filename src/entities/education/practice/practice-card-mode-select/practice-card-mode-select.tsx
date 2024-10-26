@@ -7,7 +7,6 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { CardMode } from "@/shared/constants/kana";
 
-import * as Haptics from "expo-haptics";
 import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
 import { Typography } from "@/shared/typography";
 
@@ -147,8 +146,6 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
   ];
 
   const toggle = (key: CardMode) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-
     if (selectedCardMode.includes(key)) {
       setSelectedCardMode((prev) => prev.filter((item) => item !== key));
       setCards((prev) => prev.filter((item) => item !== key));
@@ -169,6 +166,7 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
           <View key={`column-${columnIndex}`} style={styles.column}>
             {column.map((btn) => (
               <SecondaryButton
+                isHapticFeedback
                 key={btn.key}
                 content={btn.title(
                   btn.condition

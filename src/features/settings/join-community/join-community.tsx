@@ -8,7 +8,7 @@ import { useThemeContext } from "../settings-theme/theme-context";
 import LinkButton from "@/entities/profile/Link-button/Link-button";
 
 const JoinCommunity: React.FC = () => {
-  const { colors } = useThemeContext();  
+  const { colors } = useThemeContext();
 
   const { t, i18n } = useTranslation();
 
@@ -21,19 +21,17 @@ const JoinCommunity: React.FC = () => {
       </Text>
 
       <View style={styles.sectionButtonsColumn}>
-        {language !== "ru" && 
-          <LinkButton 
-            link="https://t.me/kanamaster_learn_japanese"
-          >
+        {language !== "ru" && (
+          <LinkButton link="https://t.me/kanamaster_learn_japanese">
             Telegram channel
-        </LinkButton>}
+          </LinkButton>
+        )}
 
-        {language === "ru" && 
-          <LinkButton 
-            link="https://t.me/kanamaster_learn_japanese_rus"
-          >
+        {language === "ru" && (
+          <LinkButton link="https://t.me/kanamaster_learn_japanese_rus">
             Телеграм канал
-        </LinkButton>}
+          </LinkButton>
+        )}
       </View>
     </>
   );
@@ -46,7 +44,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     fontSize: 17,
     fontWeight: "700",
-    marginBottom: 15,
+    marginBottom: 16,
   },
   sectionButtonsColumn: {
     width: "100%",

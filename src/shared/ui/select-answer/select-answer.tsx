@@ -12,7 +12,11 @@ type SelectAnswerProps = {
   onFinish?: (hasError: boolean) => void;
 };
 
-const SelectAnswer: React.FC<SelectAnswerProps> = ({ answers, onError, onFinish }) => {
+const SelectAnswer: React.FC<SelectAnswerProps> = ({
+  answers,
+  onError,
+  onFinish,
+}) => {
   const { colors } = useThemeContext();
 
   const shuffleAnswers = useMemo(() => shuffleArray(answers), [answers]);
@@ -59,11 +63,16 @@ const SelectAnswer: React.FC<SelectAnswerProps> = ({ answers, onError, onFinish 
           ]}
           key={answer.title}
         >
-          <Text style={[styles.text,
-            {color: colors.color4}, 
-            (errors.includes(answer.title) || correct.includes(answer.title)) && {
-              color: colors.color5,
-            }]}>
+          <Text
+            style={[
+              styles.text,
+              { color: colors.color4 },
+              (errors.includes(answer.title) ||
+                correct.includes(answer.title)) && {
+                color: colors.color5,
+              },
+            ]}
+          >
             {answer.title}
           </Text>
         </Pressable>
@@ -79,8 +88,8 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "column",
     borderRadius: 12,
-    marginTop: 15,
-    gap: 15,
+    marginTop: 16,
+    gap: 16,
   },
   question: {
     flexDirection: "row",

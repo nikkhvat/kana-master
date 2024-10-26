@@ -1,14 +1,14 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { View } from "react-native";
 
 import EducationPracticeFindPair from "@/entities/education/practice/word-game-find-pair/education-practice-find-pair";
-import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonMatchSymbols } from "@/shared/constants/lessons";
 import getKana from "@/shared/helpers/getKanaKey";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
+import { LearningTitle } from "../ui/title";
 
 type LessonDrawScreenProps = LessonMatchSymbols & {
   next: () => void;
@@ -21,19 +21,24 @@ const MatchLettersScreen: React.FC<LessonDrawScreenProps> = ({
   kana,
   next,
 }) => {
-  const { colors } = useThemeContext();
-
   const { t } = useTranslation();
   const { getRomanji } = useGetRomanji();
 
+  const title =
+    kana === KanaAlphabet.Hiragana
+      ? t("lesson.matchHiraganaWithTransliteration")
+      : t("lesson.matchKatakanaWithTransliteration");
+
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "space-between",
+        alignItems: "flex-start",
+      }}
+    >
       <View>
-        <Text style={[styles.title, { color: colors.color4 }]}>
-          {kana === KanaAlphabet.Hiragana
-            ? t("lesson.matchHiraganaWithTransliteration")
-            : t("lesson.matchKatakanaWithTransliteration")}
-        </Text>
+        <LearningTitle>{title}</LearningTitle>
 
         <EducationPracticeFindPair
           hideTitle
@@ -57,17 +62,3 @@ const MatchLettersScreen: React.FC<LessonDrawScreenProps> = ({
 };
 
 export default MatchLettersScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "space-between",
-    alignItems: "flex-start",
-  },
-  title: {
-    fontSize: 17,
-    fontWeight: "600",
-    textAlign: "center",
-    marginBottom: 30,
-  },
-});
