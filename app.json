@@ -12,7 +12,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": false,
+      "supportsTablet": true,
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "pro.khvat.kanamaster",
       "splash": {
@@ -27,6 +27,7 @@
       }
     },
     "android": {
+      "icon": "./assets/android-icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#1F1F1F"
@@ -42,7 +43,7 @@
         }
       },
       "package": "pro.khvat.kanamaster",
-      "version": "1.0.6",
+      "version": "2.0.1",
       "versionCode": 3
     },
     "web": {
