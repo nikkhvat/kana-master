@@ -21,8 +21,6 @@ const SettingsTheme: React.FC = () => {
     const options = ["Cancel", "Light", "Dark", "Auto"];
     const cancelButtonIndex = 0;
 
-    console.log('show action with options')
-
     showActionSheetWithOptions({
       options,
       cancelButtonIndex

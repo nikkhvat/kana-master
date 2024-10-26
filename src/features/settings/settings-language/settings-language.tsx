@@ -48,8 +48,6 @@ const SettingsLanguage: React.FC = () => {
     ];
     const cancelButtonIndex = 0;
 
-    console.log('show action with options')
-
     showActionSheetWithOptions({
       options,
       cancelButtonIndex,

@@ -1,6 +1,6 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { StatisticLevel } from "@/pages/kana/kana-list/model/types";
@@ -12,7 +12,7 @@ import { Typography } from "@/shared/typography";
 
 interface CellProps {
   isLong: boolean;
-  widthStandart: number;
+  widthDefault: number;
   widthLong: number;
 
   active?: boolean;
@@ -24,15 +24,16 @@ interface CellProps {
 
   cell: ILetter | null | undefined;
 
-  isStartOfLine?: string | null | undefined | false;
+  isStartOfLine?: string | null | undefined | false | ReactNode;
 
   indicator?: StatisticLevel;
 }
 
 const Cell: React.FC<CellProps> = ({
   onPress,
+
   isLong,
-  widthStandart,
+  widthDefault,
   widthLong,
   kana,
   cell,
@@ -42,65 +43,75 @@ const Cell: React.FC<CellProps> = ({
   indicator,
 }) => {
   const { colors } = useThemeContext();
-
-  const indicatorColor =
-    indicator === StatisticLevel.Green
-      ? colors.BgSuccess
-      : indicator === StatisticLevel.Yellow
-        ? colors.BgWarning
-        : colors.BgDanger;
-
   const { getRomanji } = useGetRomanji();
 
+  const getIndicatorColor = (indicator?: StatisticLevel) => {
+    switch (indicator) {
+      case StatisticLevel.Green: return colors.BgSuccess
+      case StatisticLevel.Yellow: return colors.BgWarning
+      case StatisticLevel.Red: return colors.BgDanger
+      default:
+        return "transparent"
+    }
+  }
+
+  if (isPlus) {
+    return (
+      <Pressable
+        onPress={() => onPress?.("")}
+        style={({ pressed }) => [
+          styles.cell,
+          {
+            width: isLong ? widthLong : widthDefault,
+            height: widthDefault,
+            backgroundColor: active ? pressed ? colors.BgAccentPrimaryPressed : colors.BgAccentPrimary : pressed ? colors.BgPrimaryPressed : "transparent",
+            borderColor: colors.BorderDefault,
+          },
+        ]}
+      >
+        {typeof isStartOfLine === 'string' && <Text style={[Typography.regularH3, { color: colors.TextPrimary }]}>
+          {isStartOfLine}
+        </Text>}
+        
+        {!(typeof isStartOfLine === 'string') && isStartOfLine}
+      </Pressable>
+    )
+  }
+
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={() => (cell ? onPress?.(cell.id) : onPress?.(""))}
       style={[
         styles.cell,
         {
-          width: isLong ? widthLong : widthStandart,
-          height: widthStandart,
-          backgroundColor:
-            active && !isPlus
-              ? colors.BgAccentSecondary
-              : active
-                ? colors.BgAccentPrimary
-                : "transparent",
+          width: isLong ? widthLong : widthDefault,
+          height: widthDefault,
+          backgroundColor: active ? colors.BgAccentSecondary : "transparent",
           borderColor:
-            (!cell || active) && !isPlus ? "transparent" : colors.BorderDefault,
+            (!cell || active) ? "transparent" : colors.BorderDefault,
         },
       ]}
     >
-      {indicator && (
-        <View
-          style={[styles.cellIndicator, { backgroundColor: indicatorColor }]}
-        ></View>
-      )}
-      {cell !== null && !isStartOfLine && (
+      <View style={[styles.cellIndicator, { backgroundColor: getIndicatorColor(indicator) }]} ></View>
+
+      {cell && (
         <>
-          {cell && <Text style={[styles.symbol, Typography.regularH4, { color: colors.TextPrimary }]}>
+          <Text style={[Typography.regularH4, { color: colors.TextPrimary }]}>
             {getKana(cell, kana)}
-          </Text>}
-          {cell && (
-            <Text style={[Typography.regularLabel, { color: colors.TextPrimary }]}>
-              {getRomanji(cell).toUpperCase()}
-            </Text>
-          )}
+          </Text>
+
+          <Text style={[Typography.regularLabel, { color: colors.TextPrimary }]}>
+            {getRomanji(cell).toUpperCase()}
+          </Text>
         </>
       )}
 
-      {!cell && isStartOfLine && !isPlus && (
-        <Text style={[styles.symbol, Typography.regularLabel, { color: colors.TextSecondary }]}>
+      {!cell && !isPlus && (
+        <Text style={[Typography.regularLabel, { color: colors.TextSecondary }]}>
           {isStartOfLine}
         </Text>
       )}
-
-      {isPlus && (
-        <Text style={[styles.symbol, Typography.regularH3, { color: colors.TextPrimary }]}>
-          {isStartOfLine}
-        </Text>
-      )}
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
@@ -121,8 +132,5 @@ const styles = StyleSheet.create({
     top: 5,
     right: 5,
     borderRadius: 10,
-  },
-  symbol: {
-    textTransform: "uppercase",
   },
 });

@@ -12,20 +12,21 @@ export function getLettersWithStatuses(
     return letters.every(row => {
       const item = row[index];
       
-      return typeof selectedLettersSet.has(item?.id);
+      if (!item) return true;
+      
+      return selectedLettersSet.has(item?.id);
     });
   };
 
   const columns = letters[0]?.length || 0;
   const columnsList = Array.from({ length: columns }, (_, i) => isActiveColumn(i));
 
-  const isActiveRow = (items: (ILetter)[]) => items.every(item =>
-    typeof selectedLettersSet.has(item.id)
+  const isActiveRow = (items: (ILetter)[]) => items.every(item => selectedLettersSet.has(item.id)
   );
 
   return letters.map(group => {
     const items = group.map((item, index) => {
-      const commonFields = { data: item, column: columnsList[index], active: false };
+      const commonFields = { data: item, column: columnsList[index], active: isActiveColumn(index) };
       return {
         ...commonFields,
         active: selectedLettersSet.has(item.id)

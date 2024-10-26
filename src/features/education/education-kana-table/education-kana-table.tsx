@@ -87,7 +87,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
           <Cell
             key={"0/start_of_line"}
             isLong={false}
-            widthStandart={itemWidth}
+            widthDefault={itemWidth}
             widthLong={itemWidthLong}
             kana={kana}
             cell={null}
@@ -97,7 +97,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
             <Cell
               key={`${cellIndex}/start_of_column`}
               isLong={letters[0].length === 3}
-              widthStandart={itemWidth}
+              widthDefault={itemWidth}
               widthLong={itemWidthLong}
               kana={kana}
               cell={null}
@@ -113,7 +113,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
               <Cell
                 key={`${rowIndex}/start_of_line`}
                 isLong={false}
-                widthStandart={itemWidth}
+                widthDefault={itemWidth}
                 widthLong={itemWidthLong}
                 kana={kana}
                 cell={null}
@@ -137,7 +137,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
                   row.length === 3 &&
                   row[0].id !== "9e4e7b1b-2b3c-467d-8c24-be83a4ae5a89"
                 }
-                widthStandart={itemWidth}
+                widthDefault={itemWidth}
                 widthLong={itemWidthLong}
                 kana={kana}
                 cell={cell}

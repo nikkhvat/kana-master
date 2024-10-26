@@ -77,8 +77,6 @@ const SettingsTransliterations: React.FC = () => {
     const options = ["Cancel", ...transliterationSystems];
     const cancelButtonIndex = 0;
 
-    console.log('show action with options')
-
     showActionSheetWithOptions({
       options,
       cancelButtonIndex,

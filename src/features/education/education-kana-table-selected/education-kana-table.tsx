@@ -1,15 +1,16 @@
 import React, { useCallback, useMemo } from "react";
 
-import { Dimensions, View, ScrollView, StyleSheet } from "react-native";
+import { Dimensions, View, ScrollView, StyleSheet, Text } from "react-native";
 
 import { RootState } from "@/app/store";
 import Cell from "@/entities/kana/cell/cell";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import {
+  setKanaSelected,
   toggleLetter,
   toggleSome,
 } from "@/pages/kana/kana-quick-selection/model/slice";
-import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
+import { Alphabet, KanaAlphabet, KanaSection, LETTERS_COUNT } from "@/shared/constants/kana";
 import {
   ILetter,
   dakuon,
@@ -20,10 +21,11 @@ import {
 import { getLettersWithStatuses } from "@/shared/helpers/kana";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+
 interface EducationKanaTableProps {
   kana: KanaAlphabet.Hiragana | KanaAlphabet.Katakana;
   type: Alphabet;
-  isEditMode?: boolean;
   last?: boolean;
 }
 
@@ -36,7 +38,6 @@ const itemWidthLong = screenAdaptiveWidth / 3 - itemWidth / 3 - 23;
 const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
   kana,
   type,
-  isEditMode,
   last,
 }) => {
   const dispatch = useAppDispatch();
@@ -50,9 +51,11 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
     else if (type === "yoon") return yoon;
   }, []);
 
-  const selectedLetters = useAppSelector(
-    (state: RootState) => state.kana.selected[type][kana],
+  const selected = useAppSelector(
+    (state: RootState) => state.kana.selected,
   );
+
+  const selectedLetters = selected[type][kana]
 
   const data = useMemo(() => getData(type), [getData, type]);
 
@@ -131,6 +134,39 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
     [data, selectedLetters],
   );
 
+  const getKanaSelected = () => {
+    if (type === "base" && kana === KanaAlphabet.Hiragana) return KanaSection.BasicHiragana
+    if (type === "base" && kana === KanaAlphabet.Hiragana) return KanaSection.BasicKatakana
+    if (type === "dakuon" && kana === KanaAlphabet.Hiragana) return KanaSection.DakuonHiragana
+    if (type === "dakuon" && kana === KanaAlphabet.Hiragana) return KanaSection.DakuonKatakana
+    if (type === "handakuon" && kana === KanaAlphabet.Hiragana) return KanaSection.HandakuonHiragana
+    if (type === "handakuon" && kana === KanaAlphabet.Hiragana) return KanaSection.HandakuonKatakana
+    if (type === "yoon" && kana === KanaAlphabet.Hiragana) return KanaSection.YoonHiragana
+    if (type === "yoon" && kana === KanaAlphabet.Hiragana) return KanaSection.YoonKatakana
+  }
+  
+  const isKanaSelected = () => {
+    const IS_BASIC_HIRA = selected.base.hiragana.length === LETTERS_COUNT.basic;
+    const IS_DAKUON_HIRA = selected.dakuon.hiragana.length === LETTERS_COUNT.dakuon;
+    const IS_HANDAKUON_HIRA = selected.handakuon.hiragana.length === LETTERS_COUNT.handakuon;
+    const IS_YOON_HIRA = selected.yoon.hiragana.length === LETTERS_COUNT.yoon;
+
+    const IS_BASIC_KATA = selected.base.katakana.length === LETTERS_COUNT.basic;
+    const IS_DAKUON_KATA = selected.dakuon.katakana.length === LETTERS_COUNT.dakuon;
+    const IS_HANDAKUON_KATA = selected.handakuon.katakana.length === LETTERS_COUNT.handakuon;
+    const IS_YOON_KATA = selected.yoon.katakana.length === LETTERS_COUNT.yoon;
+
+
+    if (type === "base" && kana === KanaAlphabet.Hiragana) return IS_BASIC_HIRA
+    if (type === "base" && kana === KanaAlphabet.Hiragana) return IS_BASIC_KATA
+    if (type === "dakuon" && kana === KanaAlphabet.Hiragana) return IS_DAKUON_HIRA
+    if (type === "dakuon" && kana === KanaAlphabet.Hiragana) return IS_DAKUON_KATA
+    if (type === "handakuon" && kana === KanaAlphabet.Hiragana) return IS_HANDAKUON_HIRA
+    if (type === "handakuon" && kana === KanaAlphabet.Hiragana) return IS_HANDAKUON_KATA
+    if (type === "yoon" && kana === KanaAlphabet.Hiragana) return IS_YOON_HIRA
+    if (type === "yoon" && kana === KanaAlphabet.Hiragana) return IS_YOON_KATA
+  }
+
   return (
     <View
       style={[
@@ -140,18 +176,38 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
     >
       {letters.length > 1 && (
         <View style={styles.rowButtons}>
+          <Cell
+            key={`selectAll`}
+            isLong={false}
+            widthDefault={itemWidth}
+            widthLong={itemWidthLong}
+            active={isKanaSelected()}
+            kana={kana}
+            cell={null}
+            isPlus
+            onPress={() => dispatch(setKanaSelected(getKanaSelected()))}
+            isStartOfLine={!isKanaSelected() ? 
+              <Icon name={"check-all"} size={18} color={colors.IconContrast} /> :
+              <Icon name={"close"} size={18} color={colors.IconContrast} />
+            }
+          />
+
           {letters[0].items.map((cell, cellIndex) => {
             return (
               <Cell
                 key={`${cellIndex}/plus`}
-                isLong={letters[0].items.length === 3}
-                widthStandart={itemWidth}
+                isLong={type === 'yoon'}
+                widthDefault={itemWidth}
                 widthLong={itemWidthLong}
+                active={cell.column}
                 kana={kana}
                 cell={null}
                 isPlus
                 onPress={() => onPlus?.("cell", cellIndex, type)}
-                isStartOfLine={isEditMode ? "+" : "-"}
+                isStartOfLine={!cell.column ?
+                  <Icon name={"plus"} size={18} color={colors.IconContrast} /> :
+                  <Icon name={"minus"} size={18} color={colors.IconContrast} />
+                }
               />
             );
           })}
@@ -165,22 +221,23 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
               <Cell
                 key={`${rowIndex}/start_of_line`}
                 isLong={false}
-                widthStandart={itemWidth}
+                widthDefault={itemWidth}
                 widthLong={itemWidthLong}
                 kana={kana}
                 cell={null}
                 isPlus
                 onPress={() => onPlus?.("row", rowIndex, type)}
-                isStartOfLine={isEditMode ? "+" : "-"}
+                active={row.activeInRow}
+                isStartOfLine={!row.activeInRow ?
+                  <Icon name={"plus"} size={18} color={colors.IconContrast} /> :
+                  <Icon name={"minus"} size={18} color={colors.IconContrast} />
+                }
               />
             </View>
-            {(row.items[0].data.id === "9e4e7b1b-2b3c-467d-8c24-be83a4ae5a89"
-              ? [row.items[0], null, row.items[1], null, row.items[2]]
-              : row.items[0].data.id === "a53d8501-373d-4944-a76b-657f672162f9"
-                ? [row.items[0], null, null, null, row.items[1]]
-                : row.items[0].data.id ===
-                    "2a481d17-0d7c-492a-85fc-cab60e9fb6df"
-                  ? [null, null, row.items[0], null, null]
+
+            {((rowIndex === 7 && type === "base") ? [row.items[0], null, row.items[1], null, row.items[2]]
+              : (rowIndex === 9 && type === "base") ? [row.items[0], null, null, null, row.items[1]]
+                : (rowIndex == 10 && type === "base")  ? [null, null, row.items[0], null, null] 
                   : row.items
             ).map((cell, cellIndex) => {
               return (
@@ -190,12 +247,8 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
                     cell?.data &&
                     onPress?.([cell.data, rowIndex, cellIndex, type])
                   }
-                  isLong={
-                    row.items.length === 3 &&
-                    row.items[0].data.id !==
-                      "9e4e7b1b-2b3c-467d-8c24-be83a4ae5a89"
-                  }
-                  widthStandart={itemWidth}
+                  isLong={type === "yoon"}
+                  widthDefault={itemWidth}
                   widthLong={itemWidthLong}
                   kana={kana}
                   cell={cell?.data}
@@ -219,7 +272,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 30,
     paddingBottom: 30,
-    gap: 9,
   },
   row: {
     flexDirection: "row",
