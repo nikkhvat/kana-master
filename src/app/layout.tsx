@@ -1,131 +1,31 @@
 import React, { useEffect, useState } from "react";
 
-import MaterialCommunityIcon from "@expo/vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as NavigationBar from "expo-navigation-bar";
 import * as SystemUI from "expo-system-ui";
 import { useTranslation } from "react-i18next";
-import { Platform, Pressable, StatusBar } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Platform, StatusBar } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import LessonPage from "@/pages/education/learning/lesson";
-import LearningList from "@/pages/education/learning/list/learning-list";
-import EducationResultPage from "@/pages/education/practice/education-result/education-result";
-import EducationWordGamePage from "@/pages/education/practice/education-word-game/index";
-import PracticeWelcomePage from "@/pages/education/practice/practice-welcome/practice-welcome";
-import TestingPage from "@/pages/education/practice/testing";
-import KanaInfo from "@/pages/kana/kana-info/ui";
-import Kana from "@/pages/kana/kana-list/ui/kana-list";
-import EducationKanaSelection from "@/pages/kana/kana-select/ui";
-import ProfilePage from "@/pages/profile/profile";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
+import { RootStackParamList, ROUTES } from "@/app/navigationTypes";
 
 import * as Font from 'expo-font';
 import * as Icon from '@expo/vector-icons';
 
 import * as SplashScreen from 'expo-splash-screen';
 import { isAndroid } from "@/shared/constants/platformUtil";
+import BottomTabNavigator from "./BottomTabNavigator";
+import { screens } from "./routes";
+import { ScreenItem, ScreensArray } from "./types";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
-const Tab = createBottomTabNavigator();
-
-const headerSettings = {
-  headerTitle: "",
-  headerTransparent: true,
-  gestureEnabled: false,
-  headerBackVisible: false,
-};
-
-type Icons = {
-  Learning: "school-outline";
-  Practice: "layers-outline";
-  Settings: "cog-outline";
-  Kana: "syllabary-hiragana";
-};
-
-const icons: Icons = {
-  Learning: "school-outline",
-  Practice: "layers-outline",
-  Settings: "cog-outline",
-  Kana: "syllabary-hiragana",
-};
-
-type KeysIcon = "Learning" | "Settings" | "Kana";
-
-function BottomTabNavigator() {
-  const { t } = useTranslation();
-  const insets = useSafeAreaInsets();
-
-  return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcon
-            name={icons[route.name as KeysIcon]}
-            size={size}
-            color={color}
-          />
-        ),
-        tabBarButton: (props) => (
-          <Pressable
-            {...props}
-            style={[props.style, { height: 45, marginTop: 5 }]}
-          />
-        ),
-        tabBarStyle: {
-          height: 60 + insets.bottom,
-          flexDirection: "column",
-          alignItems: "center",
-        },
-      })}
-    >
-      <Tab.Screen
-        name="Kana"
-        component={Kana}
-        options={{
-          title: t("tabs.kana"),
-          headerTransparent: true,
-          headerTitle: "",
-        }}
-      />
-      <Tab.Screen
-        name="Learning"
-        component={LearningList}
-        options={{
-          title: t("tabs.learning"),
-          headerTransparent: true,
-          headerTitle: "",
-        }}
-      />
-      <Tab.Screen
-        name="Practice"
-        component={PracticeWelcomePage}
-        options={{
-          title: t("tabs.practice"),
-          headerTransparent: true,
-          headerTitle: "",
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={ProfilePage}
-        options={{
-          title: t("tabs.profile"),
-          headerTransparent: true,
-          headerTitle: "",
-        }}
-      />
-    </Tab.Navigator>
-  );
-}
 
 SplashScreen.preventAutoHideAsync();
+
 const Layout = () => {
   const [appIsReady, setAppIsReady] = useState(false);
 
@@ -180,9 +80,18 @@ const Layout = () => {
     NavigationBar.setBackgroundColorAsync(colors.BgPrimary);
   }
 
+  function instanceOfScreensArray(object: any): object is ScreensArray {
+    return object?.children;
+  }
+
+  function instanceOfScreenItem(object: any): object is ScreenItem {
+    return object?.component;
+  }
+
   if (!appIsReady) {
     return null;
   }
+  
 
   return (
     <>
@@ -199,57 +108,41 @@ const Layout = () => {
       >
         <Stack.Navigator>
           <Stack.Screen
-            name="Root"
+            name={ROUTES.ROOT}
             component={BottomTabNavigator}
             options={{ headerShown: false }}
           />
-          <Stack.Screen
-            name="EducationPractice"
-            component={TestingPage}
-            options={{ title: "Practice", ...headerSettings }}
-          />
-          <Stack.Screen
-            name="EducationWordGame"
-            component={EducationWordGamePage}
-            options={{ title: "Word Game", ...headerSettings }}
-          />
-          <Stack.Screen
-            name="LessonPage"
-            component={LessonPage}
-            options={{ ...headerSettings }}
-          />
-          <Stack.Screen
-            name="Results"
-            component={EducationResultPage}
-            options={{ title: "Results", ...headerSettings }}
-          />
-          <Stack.Group
-            screenOptions={{
-              presentation: "modal",
-              orientation: "portrait",
-            }}
-          >
-            <Stack.Screen
-              name="KanaInfo"
-              component={KanaInfo}
-              options={({ route }) => ({
-                title: route.params.title,
-                contentStyle: {
-                  borderTopWidth: 0,
-                },
-              })}
-            />
-            <Stack.Screen
-              name="KanaSelect"
-              component={EducationKanaSelection}
-              options={({ route }) => ({
-                title: route.params.title,
-                contentStyle: {
-                  borderTopWidth: 0,
-                },
-              })}
-            />
-          </Stack.Group>
+
+          {screens.map(screen => {
+            if (instanceOfScreensArray(screen)) {
+              return (
+                <Stack.Group
+                  screenOptions={screen.options}
+                  key={"groups"}
+                >
+                  {screen?.children.map(childScreen => (
+                    <Stack.Screen
+                      key={childScreen.name}
+                      name={childScreen.name}
+                      component={childScreen.component}
+                      options={childScreen.options}
+                    />
+                  ))}
+                </Stack.Group>
+              )
+            }
+
+            if (instanceOfScreenItem(screen)) {
+              return (  
+                <Stack.Screen
+                  key={screen.name}
+                  name={screen.name}
+                  component={screen.component}
+                  options={screen.options}
+                />
+              )
+            }
+          })}
         </Stack.Navigator>
       </NavigationContainer>
     </>

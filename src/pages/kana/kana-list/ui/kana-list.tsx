@@ -11,11 +11,12 @@ import EducationKanaTable from "@/features/education/education-kana-table/educat
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
 import { LettersKeys, dakuonFlatLettersId, handakuonFlatLettersId, yoonFlatLettersId } from "@/shared/data/lettersTable";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
+import { RootStackParamList } from "@/app/navigationTypes";
 import PageTitle from "@/shared/ui/page-title/page-title";
 import Switcher from "@/shared/ui/switcher/switcher";
+import { ROUTES } from "@/app/navigationTypes";
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, typeof ROUTES.KANA_TABLE_ROOT>;
 
 interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
@@ -43,7 +44,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState<KanaAlphabet>(KanaAlphabet.Hiragana);
 
   const openModal = useCallback((id: LettersKeys) => {
-    navigation.navigate("KanaInfo", {
+    navigation.navigate(ROUTES.KANA_INFO, {
       id: id,
       kana: activeTab,
       title: `${activeTab === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")} (${t(getTypeById(id))})`

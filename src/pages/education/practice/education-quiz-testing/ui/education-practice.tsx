@@ -22,14 +22,15 @@ import {
 } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
+import { RootStackParamList } from "@/app/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
+import { ROUTES } from "@/app/navigationTypes";
 
 type HomeScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "EducationPractice"
+  typeof ROUTES.PRACTICE_TESTING
 >;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, "EducationPractice">;
+type LearnScreenRouteProp = RouteProp<RootStackParamList, typeof ROUTES.PRACTICE_TESTING>;
 
 interface LearnScreenProps {
   route: LearnScreenRouteProp;
@@ -126,7 +127,7 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
         }),
       );
 
-      navigation.navigate("Results", { result });
+      navigation.navigate(ROUTES.RESULTS, { result });
     }
   };
 

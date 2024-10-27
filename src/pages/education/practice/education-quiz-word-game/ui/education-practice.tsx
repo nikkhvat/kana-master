@@ -18,11 +18,12 @@ import { countAvailableWords } from "@/pages/kana/kana-quick-selection/model/sli
 import { QuestionTypeBuildingWord, QuestionTypeChooseWord, QuestionTypeFindPairWord, TEST_DELAY } from "@/shared/constants/kana";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
+import { RootStackParamList } from "@/app/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
+import { ROUTES } from "@/app/navigationTypes";
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "EducationWordGame">;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, "EducationWordGame">;
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, typeof ROUTES.PRACTICE_WORD_GAME>;
+type LearnScreenRouteProp = RouteProp<RootStackParamList, typeof ROUTES.PRACTICE_WORD_GAME>;
 
 interface LearnScreenProps {
   route: LearnScreenRouteProp
@@ -69,13 +70,12 @@ function EducationWordGame({ route, navigation }: LearnScreenProps) {
     return () => {};
   }, [wordKey, keysModeState, selectedLetters, selectedWords]);
 
-  // Вызываеться после ответа на вопрос
   const finishCallback = (onFinishPractice: boolean) => {
     setTimeout(() => {
       if (onFinishPractice) {
         const result = getResult();
 
-        navigation.navigate("Results", { result });
+        navigation.navigate(ROUTES.RESULTS, { result });
       }
     }, TEST_DELAY);
   };

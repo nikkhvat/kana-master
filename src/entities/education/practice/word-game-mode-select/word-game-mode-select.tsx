@@ -10,8 +10,8 @@ import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
 import { Typography } from "@/shared/typography";
 
 export type CardModeSelectProps = {
-  hiraAvailable: boolean;
-  kanaAvailable: boolean;
+  isHiraganaAvailable: boolean;
+  isKatakanaAvailable: boolean;
 
   modeAvailable: boolean;
 
@@ -19,8 +19,8 @@ export type CardModeSelectProps = {
 };
 
 const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
-  hiraAvailable,
-  kanaAvailable,
+  isHiraganaAvailable,
+  isKatakanaAvailable,
 
   modeAvailable,
 
@@ -40,7 +40,7 @@ const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
 
     setSelectedCardMode(initial);
     setMode(initial);
-  }, [hiraAvailable, kanaAvailable, modeAvailable, setMode]);
+  }, [isHiraganaAvailable, isKatakanaAvailable, modeAvailable, setMode]);
 
   const cards = [
     [

@@ -1,9 +1,8 @@
 import React from "react";
-
-import { Pressable, StyleSheet, Text, TouchableOpacity } from "react-native";
-
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { ILetter } from "@/shared/data/lettersTable";
+import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
+import { Typography } from "@/shared/typography";
 
 interface AnswerCardProps {
   value: ILetter
@@ -32,40 +31,24 @@ const AnswerCard: React.FC<AnswerCardProps> = ({
   const borderColor = redMarked ? colors.BgDanger : greenMarked ? colors.BgSuccess : colors.BorderDefault;
   const textColor = (redMarked || greenMarked) ? colors.TextContrastSecondary : colors.TextPrimary;
 
-  
   return (
-    <Pressable
-      style={({ pressed }) => [
-        styles.answersItem,
-        { width: width, height: width },
-        { borderColor: pressed ? colors.BorderDefault : borderColor },
-        { backgroundColor: pressed ? colors.BgPrimaryPressed : cardColor } ,
-      ]}
-      onPress={() => onClick?.(value)}
-    >
-      <Text
-        style={[
-          styles.answersItemText,
-          { color: textColor },
-        ]}
-      >
-        {children}
-      </Text>
-    </Pressable>
-  );
+    <PrimaryButton
+      isHapticFeedback
+      onClick={() => onClick?.(value)}
+      containerStylesFunc={({ pressed }) => ({
+        width: width,
+        height: width,
+        borderColor: pressed ? colors.BorderDefault : borderColor,
+        backgroundColor: pressed ? colors.BgPrimaryPressed : cardColor,
+      })}
+      isOutline
+      text={children}
+      textStyles={{
+        ...Typography.regularH4,
+        color: textColor,
+      }}
+    />
+  )
 };
 
 export default AnswerCard;
-
-const styles = StyleSheet.create({
-  answersItem: {
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 1,
-    borderRadius: 12,
-  },
-  answersItemText: {
-    fontSize: 22,
-  },
-});
-

@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { InitialState } from "./types";
-import { getChapters, ping } from "./api";
-import { AutoLesson, ManuallyLesson } from "@/shared/constants/lessons";
+import { getChapters } from "./api";
 
 const initialState: InitialState = {
   completedLesson: [],

@@ -14,11 +14,12 @@ import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
 import { TestMode } from "@/shared/constants/kana";
 import { verticalScale } from "@/shared/helpers/metrics";
 import { useAppSelector } from "@/shared/model/hooks";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
+import { RootStackParamList } from "@/app/navigationTypes";
+import { ROUTES } from "@/app/navigationTypes";
 
 type WordBuildingNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "Home"
+  typeof ROUTES.PRACTICE_ROOT
 >;
 
 interface WordBuildingProps {
@@ -43,10 +44,10 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
     selectedWords.hiragana.length + selectedWords.katakana.length;
 
   const toChooseAlphabetScreen = () =>
-    navigation.navigate("KanaSelect", { title: "" });
+    navigation.navigate(ROUTES.KANA_SELECT, { title: "" });
 
   const toPractice = () =>
-    navigation.navigate("EducationWordGame", {
+    navigation.navigate(ROUTES.PRACTICE_WORD_GAME, {
       keysModeState: mode,
     });
 
@@ -74,8 +75,8 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
           modeAvailable={
             selectedWords.hiragana.length + selectedWords.katakana.length >= 10
           }
-          hiraAvailable={isHiragana}
-          kanaAvailable={isKatakana}
+          isHiraganaAvailable={isHiragana}
+          isKatakanaAvailable={isKatakana}
           setMode={setMode}
         />
 

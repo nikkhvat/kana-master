@@ -61,11 +61,6 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
     (state) => state.profile.isEnabledHaptic,
   );
 
-  // Когда отвечаешь на вопрос вызываеться эта функция
-  // параметр trueSelected: правильный ли ответ
-  // callback передаёться
-  // > onFinishPractice - true если вопросы закончились
-  // > trueAnswer - true если вопросы был правильный
   const submit = (
     trueSelected: boolean,
     callback?: (onFinishPractice: boolean, trueAnswer: boolean) => void,
@@ -84,7 +79,6 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
     }
   };
 
-  // Передаёться масив вопросов
   const init = (questions: Question[]) => {
     setQuestions(questions);
   };
@@ -124,7 +118,6 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
     const questions: Question[] = [];
 
     {
-      // Generate questions for Kana
       const questionTypes = [];
 
       if (keysCardModeState.includes(CardMode.romajiToKatakana))

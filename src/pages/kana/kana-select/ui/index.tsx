@@ -10,12 +10,13 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { resetKanaSelected } from "@/pages/kana/kana-quick-selection/model/slice";
 import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
 import { useAppDispatch } from "@/shared/model/hooks";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
+import { RootStackParamList } from "@/app/navigationTypes";
 import Switcher from "@/shared/ui/switcher/switcher";
 import { Typography } from "@/shared/typography";
+import { ROUTES } from "@/app/navigationTypes";
 
 interface KanaInfoProps {
-  navigation: StackNavigationProp<RootStackParamList, "KanaSelect">;
+  navigation: StackNavigationProp<RootStackParamList, typeof ROUTES.KANA_SELECT>;
 }
 
 const EducationKanaSelection: React.FC<KanaInfoProps> = ({ navigation }) => {
@@ -65,7 +66,6 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ navigation }) => {
           renderItem={({ section }) => (
             <React.Suspense fallback={<View />}>
               <EducationKanaTableSelected
-                isEditMode={true}
                 type={section.type as Alphabet}
                 kana={activeTab}
                 last={section.type === "yoon"}

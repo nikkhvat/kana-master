@@ -7,12 +7,11 @@ import { EducationPracticeContextProvider } from "./lib/context/education-lesson
 import Lesson from "./ui/lesson";
 
 import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
+import { RootStackParamList } from "@/app/navigationTypes";
+import { ROUTES } from "@/app/navigationTypes";
 
-
-
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "LessonPage">;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, "LessonPage">;
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, typeof ROUTES.LESSON_PAGE>;
+type LearnScreenRouteProp = RouteProp<RootStackParamList, typeof ROUTES.LESSON_PAGE>;
 
 interface LearnScreenProps {
   route: LearnScreenRouteProp

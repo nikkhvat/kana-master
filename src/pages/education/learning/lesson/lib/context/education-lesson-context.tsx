@@ -140,17 +140,14 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
 
   const next = (hasError?: boolean) => {
     if (hasError) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if ((screens[screen] as any).retry !== 2) {
         setScreens((prev) => [
           ...prev.slice(0, -1),
           {
             ...screens[screen],
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             retry: (screens[screen] as any)?.retry
               ? (screens[screen] as any)?.retry + 1
               : 1,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           },
           { name: LessonScreen.Finish },
         ]);

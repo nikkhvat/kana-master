@@ -11,19 +11,20 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { CardMode, Kana } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
+import { RootStackParamList } from "@/app/navigationTypes";
 import CircularProgressBar from "@/shared/ui/progressbar/circular/circular-progress-bar";
 
 import * as StoreReview from "expo-store-review";
 import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
 import { Typography } from "@/shared/typography";
 import ResultItem from "@/entities/education/result-item/result-item";
+import { ROUTES } from "@/app/navigationTypes";
 
 type LearnResultsNavigationProp = StackNavigationProp<
   RootStackParamList,
   "Results"
 >;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, "Results">;
+type LearnScreenRouteProp = RouteProp<RootStackParamList, typeof ROUTES.RESULTS>;
 
 interface EducationResultProps {
   route: LearnScreenRouteProp;
@@ -43,7 +44,7 @@ const EducationResultPage: React.FC<EducationResultProps> = ({
   const { colors } = useThemeContext();
 
   const home = () => {
-    navigation.navigate("Root");
+    navigation.navigate(ROUTES.ROOT);
 
     try {
       if (Platform.OS === "ios") {
@@ -172,7 +173,7 @@ const EducationResultPage: React.FC<EducationResultProps> = ({
             )}
 
           {result.type === "RESULT_PRACTICE" && (
-            <ResultItem title={t("result.fastestAnswer")} body={`${getKeyByKana( result.fastesAnswer.answer, result.fastesAnswer.type)} : ${millisecondsToSeconds(result.fastesAnswer.time)}`} />
+            <ResultItem title={t("result.fastestAnswer")} body={`${getKeyByKana(result.fastestAnswer.answer, result.fastestAnswer.type)} : ${millisecondsToSeconds(result.fastestAnswer.time)}`} />
           )}
 
           {result.type === "RESULT_PRACTICE" && (

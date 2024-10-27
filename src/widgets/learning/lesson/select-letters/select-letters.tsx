@@ -25,7 +25,7 @@ const SelectLettersScreen: React.FC<SelectLettersScreenProps> = ({
 
   const title = t("lesson.selectCorrectTransliteration", {
     syllable: getRomanji(symbols[0]),
-  }) + "wed";
+  });
 
   const answers = symbols.map((item) => ({
     title: getKana(item, kana),

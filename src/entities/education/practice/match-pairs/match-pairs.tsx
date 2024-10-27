@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TEST_DELAY } from "@/shared/constants/kana";
 import { isCorrectPair } from "@/shared/helpers/letters";
 import { Typography } from "@/shared/typography";
+import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
 
 function toShuffledPairs(pairs: string[][]): string[][] {
   const left = pairs.map((pair) => pair[0]);
@@ -188,31 +189,28 @@ const MatchPairs: React.FC<MatchPairsProps> = ({
       {mixedPairs.map((pair, index) => (
         <View key={pair[0] + pair[1]} style={styles.pair}>
           {pair.map((item, idx) => (
-            <Pressable
-              style={[
-                styles.pairItem,
+            <PrimaryButton
+              isHapticFeedback
+              containerStylesFunc={() => [
                 pairItemColors,
                 status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "selected" && stylesColor.selectedPair,
                 status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "complete" && stylesColor.complete,
                 status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "error" && stylesColor.error,
               ]}
+              textStyles={{
+                ...Typography.regularH4,
+                ...{ color: colors.TextPrimary },
+                ...(status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "selected" ? textColor.selectedPair : {}),
+                ...(status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "complete" ? textColor.complete : {}),
+                ...(status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "error" ? textColor.error : {}),
+              }}
+              isOutline
+              isFullWidth
               key={item}
-              onPress={() => handlePress(item, index, idx)}
-              disabled={status[index]?.status === "complete"}
-            >
-              <Text
-                style={[
-                  styles.pairText,
-                  textColors,
-                  Typography.regularH4,
-                  status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "selected" && textColor.selectedPair,
-                  status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "complete" && textColor.complete,
-                  status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "error" && textColor.error,
-                ]}
-              >
-                {item}
-              </Text>
-            </Pressable>
+              onClick={() => handlePress(item, index, idx)}
+              isDisabled={status[index]?.status === "complete"}
+              text={item}
+            />
           ))}
         </View>
       ))}
@@ -235,16 +233,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     gap: 16,
-  },
-  pairItem: {
-    borderWidth: 1,
-    padding: 14,
-    flex: 1,
-    borderRadius: 12,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  pairText: {
-    textAlign: "center",
-  },
+  }
 });

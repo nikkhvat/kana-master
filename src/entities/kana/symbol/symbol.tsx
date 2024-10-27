@@ -39,6 +39,9 @@ const Symbol: React.FC<SymbolProps> = ({
     return getImage(keyString);
   };
 
+  const fillColor = isGray ? colors.BgLightGray : colors.BgAccentPrimary;
+  const strokeColor = isGray ? colors.BgLightGray : colors.BgContrast;
+
   return <View style={{
     height: canvasSize,
     width: canvasSize,
@@ -47,7 +50,7 @@ const Symbol: React.FC<SymbolProps> = ({
     alignItems: "center",
     justifyContent: "center"
   }} >
-    {getImagePath(id)(isGray ? colors.BgLightGray : colors.BgAccentPrimary, isGray ? colors.BgLightGray : colors.BgContrast)}
+    {getImagePath(id)(fillColor, strokeColor)}
   </View>;
 };
 

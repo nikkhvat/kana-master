@@ -5,32 +5,33 @@ import { StackNavigationProp } from "@react-navigation/stack";
 
 import { EducationPracticeContextProvider } from "./lib/context/education-practice-context";
 import { EducationStatisticContextProvider } from "./lib/context/education-statistic-context";
-import EducationPractice from "./ui/education-practice";
+import EducationWordGame from "./ui/education-practice";
 
 import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
+import { RootStackParamList } from "@/app/navigationTypes";
+import { ROUTES } from "@/app/navigationTypes";
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "EducationPractice">;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, "EducationPractice">;
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, typeof ROUTES.PRACTICE_WORD_GAME>;
+type LearnScreenRouteProp = RouteProp<RootStackParamList, typeof ROUTES.PRACTICE_WORD_GAME>;
 
 interface LearnScreenProps {
   route: LearnScreenRouteProp
   navigation: HomeScreenNavigationProp
 }
 
-function TestingPage({ route, navigation }: LearnScreenProps) {
+const EducationWordGamePage = ({ route, navigation }: LearnScreenProps) => {
 
   return (
     <EducationPracticeContextProvider>
       <EducationStatisticContextProvider>
-        <AdaptiveLayout style={{flex: 1}} >
-          <EducationPractice 
-            navigation={navigation} 
-            route={route} />
+        <AdaptiveLayout style={{ flex: 1 }} >
+        <EducationWordGame 
+          navigation={navigation} 
+          route={route} />
         </AdaptiveLayout>
       </EducationStatisticContextProvider>
     </EducationPracticeContextProvider>
   );
-}
+};
 
-export default TestingPage;
+export default EducationWordGamePage;

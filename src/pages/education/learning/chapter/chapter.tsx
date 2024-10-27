@@ -11,6 +11,7 @@ import { AutoLesson, ManuallyLesson } from "@/shared/constants/lessons";
 import getKana from "@/shared/helpers/getKanaKey";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { useAppSelector } from "@/shared/model/hooks";
+import { Typography } from "@/shared/typography";
 
 type ChapterProps = {
   title: string
@@ -64,28 +65,30 @@ const Chapter: React.FC<ChapterProps> = ({
       setActiveLesson(key);
     }
   };
+  
+  const subtitleColor = firstChapterProgress.length === firstChapterIds.length
+    ? colors.TextSuccess
+    : colors.TextPrimary
 
   if (lessonsList.length === 0) return <></>;
-  
+
   return (
     <View>
-      <Text style={[styles.title, { color: colors.TextPrimary }]}>
+      <Text style={[styles.title, Typography.boldH3, { color: subtitleColor }]}>
         {title}
       </Text>
+
       <Text
         style={[
           styles.subtitle,
-          {
-            color:
-              firstChapterProgress.length === firstChapterIds.length
-                ? colors.TextSuccess
-                : colors.TextPrimary,
-          },
+          Typography.boldLabel,
+          { color: subtitleColor },
         ]}
       >
         {firstChapterProgress.length}/{firstChapterIds.length}{" "}
         {t("lessonsList.completed")}
       </Text>
+
       {lessonsList.map((item, index) => {
         if (isAutoLesson(item)) {
           return (
@@ -114,14 +117,14 @@ const Chapter: React.FC<ChapterProps> = ({
           );
         }
 
+        const isPassed = item.category.length === 2
+          ? completedLessons.includes(item.id)
+          : completedLessons.includes(`${key}/${item.id}`)
+
         return (
           <TopicItem
             key={item.title}
-            isPassed={
-              item.category.length === 2
-                ? completedLessons.includes(item.id)
-                : completedLessons.includes(`${key}/${item.id}`)
-            }
+            isPassed={isPassed}
             isOpened={activeLesson === `${item.title}/${activeTab}`}
             isLast={index + 1 === lessonsList.length}
             icon={item.icon}
@@ -136,9 +139,8 @@ const Chapter: React.FC<ChapterProps> = ({
           />
         );
       })}
-      {!isLast && <View style={[styles.line, {
-        backgroundColor: colors.BorderDefault
-      }]} ></View>}
+      
+      {!isLast && <View style={[styles.line, { backgroundColor: colors.BorderDefault}]} />}
     </View>
   );
 };
@@ -153,8 +155,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   subtitle: {
-    fontSize: 13,
-    fontWeight: "600",
     marginTop: 10,
     marginBottom: 22,
     paddingHorizontal: 20,

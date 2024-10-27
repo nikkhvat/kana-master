@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import React, { useRef, useReducer } from "react";
+import { View, StyleSheet, Dimensions } from "react-native";
 import { Svg, Path } from "react-native-svg";
 import {
   GestureHandlerRootView,
@@ -29,76 +29,85 @@ interface DrawProps {
 const screenWidth = Dimensions.get("window").width;
 
 const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
-  const [currentPath, setCurrentPath] = useState<{ x: number; y: number }[]>(
-    [],
-  );
-  const [paths, setPaths] = useState<{ x: number; y: number }[][]>([]);
   const { colors } = useThemeContext();
 
-  const canvasSize =
-    width -
-    40 -
-    (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0);
+  const currentPathRef = useRef<{ x: number; y: number }[]>([]);
+  const pathsRef = useRef<{ x: number; y: number }[][]>([]);
+
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
+
+  const canvasSize = width - 40 - (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0);
 
   const strokeWidth =
     useAppSelector((state) => state.profile?.draw?.lineWidth) || 14;
-  const isShowLetter = useAppSelector(
-    (state) => state.profile?.draw?.isShowLetter,
-  );
-  const isShowBorder = useAppSelector(
-    (state) => state.profile?.draw?.isShowBorder,
-  );
+
+  const isShowLetter = useAppSelector((state) => state.profile?.draw?.isShowLetter);
+  const isShowBorder = useAppSelector((state) => state.profile?.draw?.isShowBorder);
 
   const onGestureEvent = (event: GestureHandlerGestureEvent) => {
-    const { x, y } = event.nativeEvent;
-    if (currentPath.length === 0) {
-      setCurrentPath([{ x, y }] as any);
+    const { x, y } = event.nativeEvent as any;
+
+    if (currentPathRef.current.length === 0) {
+      currentPathRef.current = [{ x, y }];
     } else {
       const newPoint = { x, y };
-      setCurrentPath([...currentPath, newPoint] as any);
+      currentPathRef.current = [...currentPathRef.current, newPoint];
     }
+
+    requestAnimationFrame(() => {
+      forceUpdate();
+    });
   };
 
   const onHandlerStateChange = (event: GestureHandlerGestureEvent) => {
     if (event.nativeEvent.state === 5) {
-      // State.END
-      setPaths((prevPaths) => [...prevPaths, currentPath]);
-      setCurrentPath([]);
+      pathsRef.current = [...pathsRef.current, currentPathRef.current];
+      currentPathRef.current = [];
+      forceUpdate();
     }
   };
 
   const handleClearStepButtonClick = () => {
-    setCurrentPath((prev) => {
-      const newPath = [...prev];
-      newPath.pop();
-      return newPath;
-    });
-    setPaths((prev) => {
-      const newPath = [...prev];
-      newPath.pop();
-      return newPath;
-    });
+    if (currentPathRef.current.length > 0) {
+      currentPathRef.current.pop();
+    } else if (pathsRef.current.length > 0) {
+      pathsRef.current.pop();
+    }
+    forceUpdate();
   };
 
   const handleClearButtonClick = () => {
-    setPaths([]);
-    setCurrentPath([]);
+    pathsRef.current = [];
+    currentPathRef.current = [];
+    forceUpdate();
   };
 
   const generatePathDAttribute = (points: { x: number; y: number }[]) => {
     if (points.length < 2) return "";
-    let d = `M ${points[0].x},${points[0].y}`;
+
+    const moveToStart = (x: number, y: number) => `M ${x},${y}`;
+    
+    const quadraticCurveTo = (x1: number, y1: number, x2: number, y2: number) => ` Q ${x1},${y1} ${x2},${y2}`;
+
+    const smoothCurveTo = (x: number, y: number) => ` T ${x},${y}`;
+    const getMidPoint = (point1: { x: number; y: number }, point2: { x: number; y: number }) => ({
+      x: (point1.x + point2.x) / 2,
+      y: (point1.y + point2.y) / 2,
+    });
+
+    let d = moveToStart(points[0].x, points[0].y);
+
     for (let i = 1; i < points.length; i++) {
-      const midPoint =
-        i > 1
-          ? {
-              x: (points[i - 1].x + points[i].x) / 2,
-              y: (points[i - 1].y + points[i].y) / 2,
-            }
-          : points[i - 1];
-      d += ` Q ${points[i - 1].x},${points[i - 1].y} ${midPoint.x},${midPoint.y}`;
+      const prevPoint = points[i - 1];
+      const currPoint = points[i];
+      const midPoint = i > 1 ? getMidPoint(prevPoint, currPoint) : prevPoint;
+
+      d += quadraticCurveTo(prevPoint.x, prevPoint.y, midPoint.x, midPoint.y);
     }
-    d += ` T ${points[points.length - 1].x},${points[points.length - 1].y}`;
+
+    const lastPoint = points[points.length - 1];
+    d += smoothCurveTo(lastPoint.x, lastPoint.y);
+
     return d;
   };
 
@@ -110,14 +119,14 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
           onHandlerStateChange={onHandlerStateChange}
         >
           <View
-            style={[
-              styles.drawContainer,
-              {
-                height: canvasSize,
-                width: canvasSize,
-                borderColor: colors.BgLightGray,
-              },
-            ]}
+            style={{
+              borderWidth: 1,
+              borderRadius: 24,
+              position: "relative",
+              height: canvasSize,
+              width: canvasSize,
+              borderColor: colors.BgLightGray,
+            }}
           >
             {isShowLetter && (
               <View
@@ -131,7 +140,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
             )}
             <Svg height={canvasSize} width={canvasSize}>
               {isShowBorder && <CanvasBorder canvasSize={canvasSize} />}
-              {paths.map((path, index) => (
+              {pathsRef.current.map((path, index) => (
                 <Path
                   key={`path-${index}`}
                   d={generatePathDAttribute(path)}
@@ -143,7 +152,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
                 />
               ))}
               <Path
-                d={generatePathDAttribute(currentPath)}
+                d={generatePathDAttribute(currentPathRef.current)}
                 stroke={colors.BgContrast}
                 fill="transparent"
                 strokeWidth={strokeWidth}
@@ -173,11 +182,6 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
 };
 
 const styles = StyleSheet.create({
-  drawContainer: {
-    borderWidth: 1,
-    borderRadius: 24,
-    position: "relative",
-  },
   drawContainerImage: {
     position: "absolute",
     flexDirection: "row",

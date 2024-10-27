@@ -25,7 +25,7 @@ interface PickAnswerProps {
 export type ResultInfo = {
   type: "RESULT_PRACTICE",
   alphabets: Kana[]
-  fastesAnswer: { answer: ILetter, time: number, type: CardMode },
+  fastestAnswer: { answer: ILetter, time: number, type: CardMode },
   slowestAnswer: { answer: ILetter, time: number, type: CardMode },
   incorrect: { letter: ILetter, mode: CardMode }[],
   correct: { letter: ILetter, mode: CardMode }[],
@@ -84,7 +84,7 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
     setTime(now);
   };
 
-  const findFastesAnswer = (items: StatsItem[]): StatsItem => {
+  const findFastestAnswer = (items: StatsItem[]): StatsItem => {
     let largest = items[0];
 
     for (let i = 0; i < items.length; i++) {
@@ -109,7 +109,7 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
   };
 
   const getResult = (): ResultInfo => {
-    const fastesAnswer = findFastesAnswer(items);
+    const fastestAnswer = findFastestAnswer(items);
     const slowestAnswer = findSlowestsAnswer(items);
 
     const incorrect = items
@@ -138,15 +138,15 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
     const data: ResultInfo = {
       type: "RESULT_PRACTICE",
       alphabets: [] as Kana[],
-      fastesAnswer: { 
-        answer: fastesAnswer.question, 
-        time: fastesAnswer.time, 
-        type: fastesAnswer.mode
+      fastestAnswer: {
+        answer: fastestAnswer.question, 
+        time: fastestAnswer.time, 
+        type: fastestAnswer.mode
       },
       slowestAnswer: { 
         answer: slowestAnswer.question, 
         time: slowestAnswer.time, 
-        type: fastesAnswer.mode
+        type: fastestAnswer.mode
       },
       incorrect,
       correct,

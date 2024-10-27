@@ -1,23 +1,19 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Dimensions, ScrollView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
-import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
-import { verticalScale } from "@/shared/helpers/metrics";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
+import { RootStackParamList } from "@/app/navigationTypes";
 import PageTitle from "@/shared/ui/page-title/page-title";
 import Switcher from "@/shared/ui/switcher/switcher";
 import EducationPractice from "@/widgets/education/education-welcome/education-welcome-practice/education-practice";
 import EducationWordGame from "@/widgets/education/education-welcome/education-welcome-word-game/education-word-game";
+import { ROUTES } from "@/app/navigationTypes";
 
-const screenWidth = Dimensions.get("window").width;
-const pageWidth = screenWidth - 40 - (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING) : 0);
-
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, typeof ROUTES.PRACTICE_ROOT>;
 
 interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
@@ -33,17 +29,7 @@ const PracticeWelcomePage: React.FC<HomeScreenProps> = ({ navigation }) => {
   
   const [screen, setScreen] = useState(Screen.Testing);
 
-  useEffect(() => {
-    if (screen === Screen.Testing) {
-      scrollViewRef?.current?.scrollTo({ x: 0, animated: false });  
-    } else {
-      scrollViewRef?.current?.scrollTo({ x: 1 * pageWidth, animated: false });  
-    }
-  }, [screen]);
-
   const insets = useSafeAreaInsets();
-
-  const scrollViewRef = useRef<ScrollView>();
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -62,18 +48,9 @@ const PracticeWelcomePage: React.FC<HomeScreenProps> = ({ navigation }) => {
             ]}
             setActiveTab={setScreen} />
         </View>
-        <ScrollView
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          ref={scrollViewRef as never}
-          style={{ flex: 1 }}
-          scrollEnabled={false}
-        >
-          <EducationPractice navigation={navigation} />
-          <EducationWordGame navigation={navigation} />
-        </ScrollView>
+
+        {screen === Screen.Testing && <EducationPractice navigation={navigation} />}
+        {screen === Screen.WordBuilding && <EducationWordGame navigation={navigation} />}
       </AdaptiveLayout>
     </View>
   );

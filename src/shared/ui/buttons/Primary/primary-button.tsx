@@ -4,7 +4,7 @@ import { FC, ReactNode } from "react";
 
 import * as Haptics from "expo-haptics";
 
-import { Text, StyleSheet, Pressable } from "react-native";
+import { Text, StyleSheet, Pressable, StyleProp, ViewStyle, TextStyle } from "react-native";
 import { useAppSelector } from "@/shared/model/hooks";
 
 interface PrimaryButtonProps {
@@ -23,7 +23,8 @@ interface PrimaryButtonProps {
   isHapticFeedback?: boolean;
 
   containerStyles?: Record<string, string | number>;
-  textStyles?: Record<string, string | number>;
+  containerStylesFunc?: (option: { pressed: boolean }) => StyleProp<ViewStyle>;
+  textStyles?: StyleProp<TextStyle>;
 
   onClick?: () => void;
 }
@@ -44,6 +45,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
   isHapticFeedback,
 
   containerStyles,
+  containerStylesFunc,
   textStyles,
 
   onClick,
@@ -93,6 +95,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
 
     styles.button,
     containerStyles,
+    containerStylesFunc?.({pressed}),
   ];
 
   const getTextStyles = () => [

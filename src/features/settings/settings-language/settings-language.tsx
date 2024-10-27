@@ -2,7 +2,6 @@ import React from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
-import { ActionSheetIOS, StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import {

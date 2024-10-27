@@ -24,13 +24,14 @@ import {
   yoonFlatLettersId,
 } from "@/shared/data/lettersTable";
 import { useAppSelector } from "@/shared/model/hooks";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
+import { RootStackParamList } from "@/app/navigationTypes";
 import IconButton from "@/shared/ui/icon-button";
 import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
+import { ROUTES } from "@/app/navigationTypes";
 
 interface KanaInfoProps {
-  route: RouteProp<RootStackParamList, "KanaInfo">;
-  navigation: StackNavigationProp<RootStackParamList, "KanaInfo">;
+  route: RouteProp<RootStackParamList, typeof ROUTES.KANA_INFO>;
+  navigation: StackNavigationProp<RootStackParamList, typeof ROUTES.KANA_INFO>;
 }
 
 enum Screen {

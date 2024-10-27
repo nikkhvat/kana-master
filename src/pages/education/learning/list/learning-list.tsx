@@ -11,17 +11,18 @@ import SafeLayout from "@/app/layouts/safeLayout";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { AutoLesson, ManuallyLesson } from "@/shared/constants/lessons";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
+import { RootStackParamList } from "@/app/navigationTypes";
 import PageTitle from "@/shared/ui/page-title/page-title";
 import Switcher from "@/shared/ui/switcher/switcher";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { updateLessons } from "../model/slice";
 import { Typography } from "@/shared/typography";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { ROUTES } from "@/app/navigationTypes";
 
 type HomeScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "LearningPage"
+  typeof ROUTES.LEARNING_ROOT
 >;
 interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
@@ -44,9 +45,9 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
   const startLesson = (item: AutoLesson | ManuallyLesson) => {
     if (isAutoLesson(item)) {
       const clonedArray = JSON.parse(JSON.stringify(item.letters));
-      navigation.navigate("LessonPage", {lesson: { ...item, letters: clonedArray }});
+      navigation.navigate(ROUTES.LESSON_PAGE, {lesson: { ...item, letters: clonedArray }});
     } else {
-      navigation.navigate("LessonPage", {lesson: item});
+      navigation.navigate(ROUTES.LESSON_PAGE, {lesson: item});
     }
   };
 

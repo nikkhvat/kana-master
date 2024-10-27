@@ -36,12 +36,6 @@ const SymbolHeader: React.FC<SymbolHeaderProps> = ({
 
   const { getRomanji } = useGetRomanji();
 
-  const indicatorColors = {
-    [StatisticLevel.Green]: colors.BgSuccess,
-    [StatisticLevel.Yellow]: colors.BgWarning,
-    [StatisticLevel.Red]: colors.BgDanger,
-  };
-
   const getTypeById = (id: any) => {
     if (yoonFlatLettersId.includes(id)) return t("kana.yoon");
     if (handakuonFlatLettersId.includes(id)) return t("kana.handakuon");
@@ -55,31 +49,30 @@ const SymbolHeader: React.FC<SymbolHeaderProps> = ({
     katakana: t("kana.katakana"),
   };
 
-  const indicator = indicatorColor ? indicatorColors[indicatorColor] : "";
+  const getIndicatorColor = (indicator?: StatisticLevel | null) => {
+    switch (indicator) {
+      case StatisticLevel.Green: return colors.BgSuccess
+      case StatisticLevel.Yellow: return colors.BgWarning
+      case StatisticLevel.Red: return colors.BgDanger
+      default:
+        return "transparent"
+    }
+  }
 
   return (
     <View style={styles.titleContainer}>
-      {indicatorColor && (
-        <View
-          style={{
-            backgroundColor: indicator,
-            width: 6,
-            height: 6,
-            borderRadius: 6,
-            position: "absolute",
-            top: 16,
-            right: -5,
-          }}
-        />
-      )}
+      <View style={[styles.cellIndicator, { backgroundColor: getIndicatorColor(indicatorColor) }]} ></View>
+
       {!hideTitle && !bottomTitle && (
         <Text style={[styles.title, { color: colors.TextPrimary }]}>
           {title[kana]} ({getTypeById(letter?.id)})
         </Text>
       )}
+      
       <Text style={[styles.subTitle, { color: colors.TextPrimary }]}>
         {getRomanji(letter).toUpperCase()}
       </Text>
+
       {!hideTitle && bottomTitle && (
         <Text style={[styles.title, { color: colors.TextPrimary }]}>
           {title[kana]} ({getTypeById(letter?.id)})
@@ -106,5 +99,13 @@ const styles = StyleSheet.create({
     fontSize: 34,
     fontWeight: "700",
     marginTop: 16,
+  },
+  cellIndicator: {
+    position: "absolute",
+    width: 6,
+    height: 6,
+    borderRadius: 6,
+    top: 16,
+    right: -5,
   },
 });

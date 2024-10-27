@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 
 import { useTranslation } from "react-i18next";
 import { Dimensions, View } from "react-native";
@@ -30,43 +30,29 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({
     .map((item) => item.transliterations[0])
     .join(", ");
 
-  const shafledArray = useMemo(() => shuffleArray(sequence), [sequenceTrans]);
-  const shafledArray2 = useMemo(() => shuffleArray(sequence), [sequenceTrans]);
+  const shuffledArray = useMemo(() => shuffleArray(sequence), [sequenceTrans]);
+  const shuffledArray2 = useMemo(() => shuffleArray(sequence), [sequenceTrans]);
 
-  const shafledArrayString = shafledArray
-    .map((item) => getRomanji(item))
-    .join(", ");
-  const shafledArray2String = shafledArray2
+  const shuffledArrayString = shuffledArray
     .map((item) => getRomanji(item))
     .join(", ");
 
-  const btns = useMemo(
-    () => shuffleArray([shafledArrayString, shafledArray2String]),
+  const shuffledArray2String = shuffledArray2
+    .map((item) => getRomanji(item))
+    .join(", ");
+
+  const buttons = useMemo(
+    () => shuffleArray([shuffledArrayString, shuffledArray2String]),
     [sequenceTrans],
   );
 
-  const [states, setStates] = useState<(null | false | true)[]>();
-
   const submit = (answer: string) => {
-    setStates((prev) =>
-      btns.map((item, index) =>
-        item === answer
-          ? shafledArrayString === answer
-            ? true
-            : false
-          : prev?.[index] === false || prev?.[index] === true
-            ? prev?.[index]
-            : null,
-      ),
-    );
-
     setTimeout(() => {
-      setStates([]);
-      next(shafledArrayString !== answer);
+      next(shuffledArrayString !== answer);
     }, TEST_DELAY);
   };
 
-  const rowLength = shafledArrayString.length;
+  const rowLength = shuffledArrayString.length;
 
   return (
     <View
@@ -83,7 +69,7 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({
       </LearningTitle>
 
       <LearningTitle>
-        {shafledArray.map((item) => getKana(item, kana)).join(", ")}
+        {shuffledArray.map((item) => getKana(item, kana)).join(", ")}
       </LearningTitle>
 
       <View
@@ -96,13 +82,13 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({
           flexDirection: rowLength > 18 ? "column" : "row",
         }}
       >
-        {btns.map((item) => (
+        {buttons.map((button) => (
           <PrimaryButton
             isOutline
-            key={item}
+            key={button}
             width={(rowLength > 18 ? "100%" : (screenWidth - 55) / 2) as number}
-            text={item}
-            onClick={() => submit(item)}
+            text={button}
+            onClick={() => submit(button)}
           />
         ))}
       </View>

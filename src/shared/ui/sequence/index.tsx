@@ -12,6 +12,8 @@ import {
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TEST_DELAY } from "@/shared/constants/kana";
 import { shuffleArray } from "@/shared/helpers/letters";
+import PrimaryButton from "../buttons/Primary/primary-button";
+import { Typography } from "@/shared/typography";
 
 type SequenceProps = {
   sequence: string[];
@@ -23,7 +25,7 @@ type SequenceProps = {
 const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
   const { colors } = useThemeContext();
 
-  const shaffledLetters = useMemo(() => shuffleArray(sequence), [JSON.stringify(sequence)]);
+  const shuffledLetters = useMemo(() => shuffleArray(sequence), [JSON.stringify(sequence)]);
 
   const emptyLetters = useMemo(
     () => sequence.map(() => null),
@@ -107,8 +109,6 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
     };
   };
 
-  const isAndroid = Platform.OS === "android";
-
   return (
     <View style={styles.content}>
       <Pressable onPress={reset} style={styles.wordContainer}>
@@ -121,7 +121,7 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
             ]}
           >
             {letter !== null && (
-              letter.letter && <Text style={[styles.letter, { color: colors.TextPrimary }]}>
+              letter.letter && <Text style={[styles.letter, Typography.regularH4, { color: colors.TextPrimary }]}>
                 {letter.letter}
               </Text>
             )}
@@ -130,29 +130,24 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
       </Pressable>
 
       <View style={styles.chooseLettersContainer}>
-        {shaffledLetters.map((letter, index) => {
+        {shuffledLetters.map((letter, index) => {
           const data = { index: index, letter: letter };
           const selected = isSelected(data);
 
+          const key = `letter-list-${letter}-${index}`;
+
+          if (selected) return <View key={key} style={styles.emptyButton} />
+
           return (
-            <TouchableOpacity
-              onPress={() => !selected && onClickLetter(data)}
-              key={`letter-list-${letter}-${index}`}
-              style={[
-                styles.chooseLettersBox,
-                {
-                  borderColor: !selected ? colors.BorderDefault : "transparent",
-                },
-              ]}
-            >
-              <Text style={{
-                color: !selected ? colors.TextPrimary : "transparent",
-                fontSize: 22,
-                fontWeight: "400",
-                marginTop: isAndroid ? -5 : 0
-              }} >{letter}</Text>
-            </TouchableOpacity>
-          );
+            <PrimaryButton
+              key={key}
+              width={50}
+              isHapticFeedback
+              isOutline
+              onClick={() => !selected && onClickLetter(data)}
+              text={letter}
+            />
+          )
         })}
       </View>
     </View>
@@ -182,7 +177,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   letter: {
-    fontSize: 22,
     textTransform: "uppercase",
   },
   chooseLettersContainer: {
@@ -193,17 +187,7 @@ const styles = StyleSheet.create({
     gap: 9,
     marginTop: 30,
   },
-  chooseLettersBox: {
-    borderRadius: 12,
-    borderWidth: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    minWidth: 50,
-    height: 50,
-  },
-  chooseLettersText: {
-    fontSize: 22,
-    textTransform: "uppercase",
-  },
+  emptyButton: {
+    width: 50
+  }
 });

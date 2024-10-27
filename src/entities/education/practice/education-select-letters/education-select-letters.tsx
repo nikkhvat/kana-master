@@ -85,9 +85,7 @@ const EducationKanaSelectedCard: React.FC<EducationKanaSelectedCardProps> = ({
             {label}
             {" / "}
             {selectedLettersHiragana ? t("kana.hiragana") : " "}
-            {selectedLettersHiragana !== 0 && selectedLettersKatakana !== 0
-              ? " & "
-              : ""}
+            {selectedLettersHiragana !== 0 && selectedLettersKatakana !== 0 ? " & " : ""}
             {selectedLettersKatakana ? t("kana.katakana") : " "}
           </Text>
         )}

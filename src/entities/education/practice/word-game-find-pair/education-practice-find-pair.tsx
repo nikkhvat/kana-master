@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { View, Text, StyleSheet } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { RegistErrorProps } from "@/pages/education/practice/education-word-game/ui/education-practice";
+import { RegistErrorProps } from "@/pages/education/practice/education-quiz-word-game/ui/education-practice";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { QuestionFindPair } from "@/shared/types/questions";
 import MatchPairs from "../match-pairs/match-pairs";

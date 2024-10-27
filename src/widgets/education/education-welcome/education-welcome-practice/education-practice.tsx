@@ -15,9 +15,10 @@ import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
 import { CardMode, DifficultyLevelType } from "@/shared/constants/kana";
 import { verticalScale } from "@/shared/helpers/metrics";
 import { useAppSelector } from "@/shared/model/hooks";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
+import { RootStackParamList } from "@/app/navigationTypes";
+import { ROUTES } from "@/app/navigationTypes";
 
-type PracticeNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
+type PracticeNavigationProp = StackNavigationProp<RootStackParamList, typeof ROUTES.PRACTICE_ROOT>;
 
 interface PracticeProps {
   navigation: PracticeNavigationProp;
@@ -55,10 +56,10 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
   const isKatakana = katakanaLength >= 5;
 
   const toChooseAlphabet = () =>
-    navigation.navigate("KanaSelect", { title: "" });
+    navigation.navigate(ROUTES.KANA_SELECT, { title: "" });
 
   const toPractice = () => {
-    navigation.navigate("EducationPractice", {
+    navigation.navigate(ROUTES.PRACTICE_TESTING, {
       keysCardModeState: cardsMode,
       keysDifficultyLevelState: testMode,
       timerDeration: timerDeration,
@@ -86,8 +87,8 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
         />
 
         <CardModeSelect
-          hiraAvailable={isHiragana}
-          kanaAvailable={isKatakana}
+          isHiraganaAvailable={isHiragana}
+          isKatakanaAvailable={isKatakana}
           setCards={setCardMode}
         />
 

@@ -11,15 +11,15 @@ import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
 import { Typography } from "@/shared/typography";
 
 export type CardModeSelectProps = {
-  hiraAvailable: boolean;
-  kanaAvailable: boolean;
+  isHiraganaAvailable: boolean;
+  isKatakanaAvailable: boolean;
 
   setCards: React.Dispatch<React.SetStateAction<CardMode[]>>;
 };
 
 const CardModeSelect: React.FC<CardModeSelectProps> = ({
-  hiraAvailable,
-  kanaAvailable,
+  isHiraganaAvailable,
+  isKatakanaAvailable,
   setCards,
 }) => {
   const { colors } = useThemeContext();
@@ -30,14 +30,14 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
   useEffect(() => {
     const initial = [];
 
-    hiraAvailable && initial.push(CardMode.hiraganaToRomaji);
-    hiraAvailable && initial.push(CardMode.romajiToHiragana);
-    kanaAvailable && initial.push(CardMode.katakanaToRomaji);
-    kanaAvailable && initial.push(CardMode.romajiToKatakana);
+    isHiraganaAvailable && initial.push(CardMode.hiraganaToRomaji);
+    isHiraganaAvailable && initial.push(CardMode.romajiToHiragana);
+    isKatakanaAvailable && initial.push(CardMode.katakanaToRomaji);
+    isKatakanaAvailable && initial.push(CardMode.romajiToKatakana);
 
     setSelectedCardMode(initial);
     setCards(initial);
-  }, [hiraAvailable, kanaAvailable, setCards]);
+  }, [isHiraganaAvailable, isKatakanaAvailable, setCards]);
 
   enum CardType {
     Active,
@@ -83,7 +83,7 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
           </View>
         ),
         key: CardMode.hiraganaToRomaji,
-        condition: hiraAvailable,
+        condition: isHiraganaAvailable,
       },
       {
         title: (type: CardType) => (
@@ -94,7 +94,7 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
           </View>
         ),
         key: CardMode.romajiToHiragana,
-        condition: hiraAvailable,
+        condition: isHiraganaAvailable,
       },
       {
         title: (type: CardType) => (
@@ -105,7 +105,7 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
           </View>
         ),
         key: CardMode.hiraganaToKatakana,
-        condition: hiraAvailable && kanaAvailable,
+        condition: isHiraganaAvailable && isKatakanaAvailable,
       },
     ],
     [
@@ -118,7 +118,7 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
           </View>
         ),
         key: CardMode.katakanaToRomaji,
-        condition: kanaAvailable,
+        condition: isKatakanaAvailable,
       },
       {
         title: (type: CardType) => (
@@ -129,7 +129,7 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
           </View>
         ),
         key: CardMode.romajiToKatakana,
-        condition: kanaAvailable,
+        condition: isKatakanaAvailable,
       },
       {
         title: (type: CardType) => (
@@ -140,7 +140,7 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
           </View>
         ),
         key: CardMode.katakanaToHiragana,
-        condition: hiraAvailable && kanaAvailable,
+        condition: isHiraganaAvailable && isKatakanaAvailable,
       },
     ],
   ];

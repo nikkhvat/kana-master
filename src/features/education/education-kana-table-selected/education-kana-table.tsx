@@ -146,25 +146,25 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
   }
   
   const isKanaSelected = () => {
-    const IS_BASIC_HIRA = selected.base.hiragana.length === LETTERS_COUNT.basic;
-    const IS_DAKUON_HIRA = selected.dakuon.hiragana.length === LETTERS_COUNT.dakuon;
-    const IS_HANDAKUON_HIRA = selected.handakuon.hiragana.length === LETTERS_COUNT.handakuon;
-    const IS_YOON_HIRA = selected.yoon.hiragana.length === LETTERS_COUNT.yoon;
+    const IS_BASIC_HIRAGANA = selected.base.hiragana.length === LETTERS_COUNT.basic;
+    const IS_DAKUON_HIRAGANA = selected.dakuon.hiragana.length === LETTERS_COUNT.dakuon;
+    const IS_HANDAKUON_HIRAGANA = selected.handakuon.hiragana.length === LETTERS_COUNT.handakuon;
+    const IS_YOON_HIRAGANA = selected.yoon.hiragana.length === LETTERS_COUNT.yoon;
 
-    const IS_BASIC_KATA = selected.base.katakana.length === LETTERS_COUNT.basic;
-    const IS_DAKUON_KATA = selected.dakuon.katakana.length === LETTERS_COUNT.dakuon;
-    const IS_HANDAKUON_KATA = selected.handakuon.katakana.length === LETTERS_COUNT.handakuon;
-    const IS_YOON_KATA = selected.yoon.katakana.length === LETTERS_COUNT.yoon;
+    const IS_BASIC_KATAKANA = selected.base.katakana.length === LETTERS_COUNT.basic;
+    const IS_DAKUON_KATAKANA = selected.dakuon.katakana.length === LETTERS_COUNT.dakuon;
+    const IS_HANDAKUON_KATAKANA = selected.handakuon.katakana.length === LETTERS_COUNT.handakuon;
+    const IS_YOON_KATAKANA = selected.yoon.katakana.length === LETTERS_COUNT.yoon;
 
 
-    if (type === "base" && kana === KanaAlphabet.Hiragana) return IS_BASIC_HIRA
-    if (type === "base" && kana === KanaAlphabet.Hiragana) return IS_BASIC_KATA
-    if (type === "dakuon" && kana === KanaAlphabet.Hiragana) return IS_DAKUON_HIRA
-    if (type === "dakuon" && kana === KanaAlphabet.Hiragana) return IS_DAKUON_KATA
-    if (type === "handakuon" && kana === KanaAlphabet.Hiragana) return IS_HANDAKUON_HIRA
-    if (type === "handakuon" && kana === KanaAlphabet.Hiragana) return IS_HANDAKUON_KATA
-    if (type === "yoon" && kana === KanaAlphabet.Hiragana) return IS_YOON_HIRA
-    if (type === "yoon" && kana === KanaAlphabet.Hiragana) return IS_YOON_KATA
+    if (type === "base" && kana === KanaAlphabet.Hiragana) return IS_BASIC_HIRAGANA;
+    if (type === "base" && kana === KanaAlphabet.Hiragana) return IS_BASIC_KATAKANA;
+    if (type === "dakuon" && kana === KanaAlphabet.Hiragana) return IS_DAKUON_HIRAGANA;
+    if (type === "dakuon" && kana === KanaAlphabet.Hiragana) return IS_DAKUON_KATAKANA;
+    if (type === "handakuon" && kana === KanaAlphabet.Hiragana) return IS_HANDAKUON_HIRAGANA;
+    if (type === "handakuon" && kana === KanaAlphabet.Hiragana) return IS_HANDAKUON_KATAKANA;
+    if (type === "yoon" && kana === KanaAlphabet.Hiragana) return IS_YOON_HIRAGANA;
+    if (type === "yoon" && kana === KanaAlphabet.Hiragana) return IS_YOON_KATAKANA;
   }
 
   return (

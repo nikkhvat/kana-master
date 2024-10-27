@@ -19,7 +19,7 @@ import {
   ManuallyLesson,
 } from "@/shared/constants/lessons";
 import { useAppDispatch } from "@/shared/model/hooks";
-import { RootStackParamList } from "@/shared/types/navigationTypes";
+import { RootStackParamList } from "@/app/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
 import BuildWordScreen from "@/widgets/learning/lesson/build-word-screen/build-word-screen";
 import LessonDrawScreen from "@/widgets/learning/lesson/draw/draw";
@@ -29,12 +29,13 @@ import MatchLettersScreen from "@/widgets/learning/lesson/match-letters/match-le
 import SelectLettersScreen from "@/widgets/learning/lesson/select-letters/select-letters";
 import SelectSequenceLettersScreen from "@/widgets/learning/lesson/select-sequence-letters/select-sequence-letters";
 import LessonSymbolScreen from "@/widgets/learning/lesson/symbol/symbol";
+import { ROUTES } from "@/app/navigationTypes";
 
 type HomeScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "LessonPage"
+  typeof ROUTES.LESSON_PAGE
 >;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, "LessonPage">;
+type LearnScreenRouteProp = RouteProp<RootStackParamList, typeof ROUTES.LESSON_PAGE>;
 
 interface LearnScreenProps {
   route: LearnScreenRouteProp;
@@ -48,7 +49,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
     item: AutoLesson | ManuallyLesson,
   ): item is AutoLesson => "letters" in item;
 
-  const isManualyLesson = (
+  const isManuallyLesson = (
     item: AutoLesson | ManuallyLesson,
   ): item is ManuallyLesson => "screens" in item;
 
@@ -79,7 +80,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
       dispatch(completeLesson(`${key}/${id}`));
     }
 
-    if (isManualyLesson(lesson)) {
+    if (isManuallyLesson(lesson)) {
       const category = lesson.category;
 
       if (category?.length === 2) {
@@ -108,7 +109,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
       init(lesson.letters, "auto", []);
     }
 
-    if (isManualyLesson(lesson)) {
+    if (isManuallyLesson(lesson)) {
       init([], "manually", lesson.screens as InfoLessonScreen[]);
     }
 
@@ -120,7 +121,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
       init(lesson.letters, "auto", []);
     }
 
-    if (isManualyLesson(lesson)) {
+    if (isManuallyLesson(lesson)) {
       init([], "manually", lesson.screens as InfoLessonScreen[]);
     }
   }, []);
@@ -146,7 +147,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
           paddingRight: insets.right + 20,
         }}
       >
-        {(isManualyLesson(lesson)
+        {(isManuallyLesson(lesson)
           ? true
           : screen + 1 !== lessonScreens.length) && (
           <LinearProgressBar
@@ -233,7 +234,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
           </View>
         )}
 
-      {(isAutoLesson(lesson) || isManualyLesson(lesson)) &&
+      {(isAutoLesson(lesson) || isManuallyLesson(lesson)) &&
         currentScreen !== null &&
         isAnyLessonScreen(currentScreen) &&
         currentScreen?.name === LessonScreen.Finish && (
@@ -254,7 +255,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
           </View>
         )}
 
-      {isManualyLesson(lesson) && !isAnyLessonScreen(currentScreen) && (
+      {isManuallyLesson(lesson) && !isAnyLessonScreen(currentScreen) && (
         <View style={styles.container}>
           {currentScreen !== null && isInfoLessonScreen(currentScreen) && (
             <InfoScreen
