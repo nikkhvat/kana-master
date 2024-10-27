@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
-import { toggleShowBorder } from "@/pages/profile/model/slice";
+import { toggleShowBorder } from "@/pages/settings/model/slice";
 
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";

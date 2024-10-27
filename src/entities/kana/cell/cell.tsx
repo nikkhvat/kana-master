@@ -3,12 +3,16 @@ import React, { ReactNode } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { StatisticLevel } from "@/pages/kana/kana-list/model/types";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import getKana from "@/shared/helpers/getKanaKey";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { Typography } from "@/shared/typography";
+import { StatisticLevel } from "@/pages/kana/kana-table-list-page/model/types";
+import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
+import { useAppSelector } from "@/shared/model/hooks";
+
+import * as Haptics from "expo-haptics";
 
 interface CellProps {
   isLong: boolean;
@@ -45,6 +49,10 @@ const Cell: React.FC<CellProps> = ({
   const { colors } = useThemeContext();
   const { getRomanji } = useGetRomanji();
 
+  const isEnabledHaptic = useAppSelector(
+    (state) => state.profile.isEnabledHaptic,
+  );
+
   const getIndicatorColor = (indicator?: StatisticLevel) => {
     switch (indicator) {
       case StatisticLevel.Green: return colors.BgSuccess
@@ -57,9 +65,10 @@ const Cell: React.FC<CellProps> = ({
 
   if (isPlus) {
     return (
-      <Pressable
-        onPress={() => onPress?.("")}
-        style={({ pressed }) => [
+      <PrimaryButton
+        onClick={() => onPress?.("")}
+        isHapticFeedback
+        containerStylesFunc={({ pressed }) => [
           styles.cell,
           {
             width: isLong ? widthLong : widthDefault,
@@ -68,19 +77,24 @@ const Cell: React.FC<CellProps> = ({
             borderColor: colors.BorderDefault,
           },
         ]}
-      >
-        {typeof isStartOfLine === 'string' && <Text style={[Typography.regularH3, { color: colors.TextPrimary }]}>
-          {isStartOfLine}
-        </Text>}
-        
-        {!(typeof isStartOfLine === 'string') && isStartOfLine}
-      </Pressable>
+        icon={isStartOfLine as React.ReactElement}
+      />
     )
   }
 
   return (
     <Pressable
-      onPress={() => (cell ? onPress?.(cell.id) : onPress?.(""))}
+      onPress={() => {
+        if (cell) {
+          if (isEnabledHaptic) {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          }
+
+          onPress?.(cell.id)
+        } else {
+          onPress?.("")
+        }
+      }}
       style={[
         styles.cell,
         {

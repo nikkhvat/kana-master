@@ -34,9 +34,7 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
   const [cardsMode, setCardMode] = useState<CardMode[]>([]);
   const [testMode, setTestMode] = useState<DifficultyLevelType[]>([]);
 
-  const [timerDeration, setTimerDeration] = useState<
-    "fast" | "medium" | "slow"
-  >("medium");
+  const [timerDeration, setTimerDeration] = useState<"fast" | "medium" | "slow">("medium");
 
   const hiraganaLength =
     letters.base.hiragana.length +
@@ -66,18 +64,13 @@ const EducationPractice: React.FC<PracticeProps> = ({ navigation }) => {
     });
   };
 
+  const widthContainer = screenWidth - 40 - (screenWidth > TABLET_WIDTH ? verticalScale(TABLET_PADDING * 2) : 0);
+
   return (
     <View
       style={[
         styles.container,
-        {
-          width:
-            screenWidth -
-            40 -
-            (screenWidth > TABLET_WIDTH
-              ? verticalScale(TABLET_PADDING * 2)
-              : 0),
-        },
+        { width: widthContainer },
       ]}
     >
       <ScrollView showsVerticalScrollIndicator={false}>

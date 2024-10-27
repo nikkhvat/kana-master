@@ -40,25 +40,25 @@ export const kanaSlice = createSlice({
   initialState,
   reducers: {
     countAvailableWords: (state) => {
-      const kanaLetters = [
+      const katakanaLetters = [
         ...state.selected.base.katakana,
         ...state.selected.dakuon.katakana,
         ...state.selected.handakuon.katakana,
         ...state.selected.yoon.katakana,
       ].map(item => lettersTableById[item as LettersKeys]?.ka);
 
-      const hiraLetters = [
+      const hiraganaLetters = [
         ...state.selected.base.hiragana,
         ...state.selected.dakuon.hiragana,
         ...state.selected.handakuon.hiragana,
         ...state.selected.yoon.hiragana,
       ].map(item => lettersTableById[item as LettersKeys]?.hi);
 
-      const kanaMatchingWords = findWordsFromArray(words, kanaLetters);
-      const hiraMatchingWords = findWordsFromArray(words, hiraLetters);
+      const katakanaMatchingWords = findWordsFromArray(words, katakanaLetters);
+      const hiraganaMatchingWords = findWordsFromArray(words, hiraganaLetters);
 
-      state.selectedWords.hiragana = hiraMatchingWords;
-      state.selectedWords.katakana = kanaMatchingWords;
+      state.selectedWords.hiragana = hiraganaMatchingWords;
+      state.selectedWords.katakana = katakanaMatchingWords;
     },
     resetKanaSelected: (state) => {
       state.selected = {

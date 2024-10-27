@@ -6,7 +6,6 @@ import {
   ImageBackground,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -17,6 +16,7 @@ import { useAppSelector } from "@/shared/model/hooks";
 import practiceImage from "@/shared/resources/preview/practice.jpg";
 import wordGame from "@/shared/resources/preview/wordgame.jpg";
 import { Typography } from "@/shared/typography";
+import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
 
 export enum CardType {
   Practice = "practice",
@@ -89,9 +89,13 @@ const EducationKanaSelectedCard: React.FC<EducationKanaSelectedCardProps> = ({
             {selectedLettersKatakana ? t("kana.katakana") : " "}
           </Text>
         )}
-        <TouchableOpacity style={styles.button} onPress={onEdit}>
-          <Icon name="filter-outline" size={29} color={colors.IconPrimary} />
-        </TouchableOpacity>
+        <PrimaryButton
+          isHapticFeedback
+          isOutline
+          containerStyles={styles.button}
+          onClick={onEdit}
+          icon={<Icon name="filter-outline" size={29} color={colors.IconPrimary} />}
+        />
       </View>
     </ImageBackground>
   );
@@ -132,5 +136,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 16,
     top: 16,
+    borderWidth: 0,
+    width: 50
   },
 });

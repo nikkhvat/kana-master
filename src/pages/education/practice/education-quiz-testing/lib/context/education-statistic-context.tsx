@@ -96,7 +96,7 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
     return largest;
   };
   
-  const findSlowestsAnswer = (items: StatsItem[]): StatsItem => {
+  const findSlowestAnswer = (items: StatsItem[]): StatsItem => {
     let largest = items[0];
 
     for (let i = 0; i < items.length; i++) {
@@ -110,7 +110,7 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
 
   const getResult = (): ResultInfo => {
     const fastestAnswer = findFastestAnswer(items);
-    const slowestAnswer = findSlowestsAnswer(items);
+    const slowestAnswer = findSlowestAnswer(items);
 
     const incorrect = items
       .filter(item => (!item.correctAnswer && item.pickedAnswer !== undefined))

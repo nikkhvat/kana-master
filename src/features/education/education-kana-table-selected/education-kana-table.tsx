@@ -9,7 +9,7 @@ import {
   setKanaSelected,
   toggleLetter,
   toggleSome,
-} from "@/pages/kana/kana-quick-selection/model/slice";
+} from "@/pages/kana/kana-table-choice-letters-page/model/slice";
 import { Alphabet, KanaAlphabet, KanaSection, LETTERS_COUNT } from "@/shared/constants/kana";
 import {
   ILetter,
@@ -136,13 +136,13 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
 
   const getKanaSelected = () => {
     if (type === "base" && kana === KanaAlphabet.Hiragana) return KanaSection.BasicHiragana
-    if (type === "base" && kana === KanaAlphabet.Hiragana) return KanaSection.BasicKatakana
+    if (type === "base" && kana === KanaAlphabet.Katakana) return KanaSection.BasicKatakana
     if (type === "dakuon" && kana === KanaAlphabet.Hiragana) return KanaSection.DakuonHiragana
-    if (type === "dakuon" && kana === KanaAlphabet.Hiragana) return KanaSection.DakuonKatakana
+    if (type === "dakuon" && kana === KanaAlphabet.Katakana) return KanaSection.DakuonKatakana
     if (type === "handakuon" && kana === KanaAlphabet.Hiragana) return KanaSection.HandakuonHiragana
-    if (type === "handakuon" && kana === KanaAlphabet.Hiragana) return KanaSection.HandakuonKatakana
+    if (type === "handakuon" && kana === KanaAlphabet.Katakana) return KanaSection.HandakuonKatakana
     if (type === "yoon" && kana === KanaAlphabet.Hiragana) return KanaSection.YoonHiragana
-    if (type === "yoon" && kana === KanaAlphabet.Hiragana) return KanaSection.YoonKatakana
+    if (type === "yoon" && kana === KanaAlphabet.Katakana) return KanaSection.YoonKatakana
   }
   
   const isKanaSelected = () => {
@@ -158,13 +158,13 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
 
 
     if (type === "base" && kana === KanaAlphabet.Hiragana) return IS_BASIC_HIRAGANA;
-    if (type === "base" && kana === KanaAlphabet.Hiragana) return IS_BASIC_KATAKANA;
+    if (type === "base" && kana === KanaAlphabet.Katakana) return IS_BASIC_KATAKANA;
     if (type === "dakuon" && kana === KanaAlphabet.Hiragana) return IS_DAKUON_HIRAGANA;
-    if (type === "dakuon" && kana === KanaAlphabet.Hiragana) return IS_DAKUON_KATAKANA;
+    if (type === "dakuon" && kana === KanaAlphabet.Katakana) return IS_DAKUON_KATAKANA;
     if (type === "handakuon" && kana === KanaAlphabet.Hiragana) return IS_HANDAKUON_HIRAGANA;
-    if (type === "handakuon" && kana === KanaAlphabet.Hiragana) return IS_HANDAKUON_KATAKANA;
+    if (type === "handakuon" && kana === KanaAlphabet.Katakana) return IS_HANDAKUON_KATAKANA;
     if (type === "yoon" && kana === KanaAlphabet.Hiragana) return IS_YOON_HIRAGANA;
-    if (type === "yoon" && kana === KanaAlphabet.Hiragana) return IS_YOON_KATAKANA;
+    if (type === "yoon" && kana === KanaAlphabet.Katakana) return IS_YOON_KATAKANA;
   }
 
   return (

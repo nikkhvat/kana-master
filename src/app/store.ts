@@ -3,9 +3,9 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 
 import lessonsSlice from "@/pages/education/learning/model/slice";
-import profileSlice from "@/pages/profile/model/slice";
-import statisticsSlice from "@/pages/kana/kana-list/model/slice";
-import kanaSlice from "@/pages/kana/kana-quick-selection/model/slice";
+import profileSlice from "@/pages/settings/model/slice";
+import statisticsSlice from "@/pages/kana/kana-table-list-page/model/slice";
+import kanaSlice from "@/pages/kana/kana-table-choice-letters-page/model/slice";
 
 const rootReducer = combineReducers({
   kana: kanaSlice,
@@ -28,6 +28,7 @@ export const makeStore = () => {
       getDefaultMiddleware({
         serializableCheck: {
           ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+          warnAfter: 128
         },
         immutableCheck: { warnAfter: 128 },
       }),

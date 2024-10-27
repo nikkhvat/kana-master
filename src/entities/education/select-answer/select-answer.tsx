@@ -5,7 +5,7 @@ import { StyleSheet, View } from "react-native";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TEST_DELAY } from "@/shared/constants/kana";
 import { shuffleArray } from "@/shared/helpers/letters";
-import PrimaryButton from "../buttons/Primary/primary-button";
+import PrimaryButton from "../../../shared/ui/buttons/Primary/primary-button";
 
 type SelectAnswerProps = {
   answers: { title: string; isTrue: boolean }[];

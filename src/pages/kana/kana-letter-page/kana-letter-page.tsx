@@ -39,7 +39,7 @@ enum Screen {
   Draw,
 }
 
-const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
+const KanaLetterPage = ({ route, navigation }: KanaInfoProps) => {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
@@ -199,7 +199,7 @@ const KanaInfo = ({ route, navigation }: KanaInfoProps) => {
   );
 };
 
-export default KanaInfo;
+export default KanaLetterPage;
 
 const styles = StyleSheet.create({
   container: {

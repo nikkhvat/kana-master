@@ -13,8 +13,8 @@ import { RootState } from "@/app/store";
 import EducationPracticeSelectAnswers from "@/entities/education/practice/practice-pick-answers/practice-pick-answers";
 import EducationPracticeTimer from "@/entities/education/practice/practice-timer/practice-timer";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { recalculate } from "@/pages/kana/kana-list/model/slice";
-import { countAvailableWords } from "@/pages/kana/kana-quick-selection/model/slice";
+import { recalculate } from "@/pages/kana/kana-table-list-page/model/slice";
+import { countAvailableWords } from "@/pages/kana/kana-table-choice-letters-page/model/slice";
 import {
   CardMode,
   DifficultyLevelType,

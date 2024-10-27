@@ -37,7 +37,7 @@ const getTypeById = (id: LettersKeys) => {
 const isIos = Platform.OS === "ios";
 const isAndroid = Platform.OS === "android";
 
-export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
+export const KanaTableListPage: React.FC<HomeScreenProps> = ({ navigation }) => {
   const { t } = useTranslation();
 
   const insets = useSafeAreaInsets();
@@ -115,7 +115,7 @@ export const Kana: React.FC<HomeScreenProps> = ({ navigation }) => {
   );
 };
 
-export default Kana;
+export default KanaTableListPage;
 
 
 const styles = StyleSheet.create({

@@ -7,19 +7,20 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import EducationKanaTableSelected from "@/features/education/education-kana-table-selected/education-kana-table";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { resetKanaSelected } from "@/pages/kana/kana-quick-selection/model/slice";
+import { resetKanaSelected } from "@/pages/kana/kana-table-choice-letters-page/model/slice";
 import { Alphabet, KanaAlphabet } from "@/shared/constants/kana";
 import { useAppDispatch } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/app/navigationTypes";
 import Switcher from "@/shared/ui/switcher/switcher";
 import { Typography } from "@/shared/typography";
 import { ROUTES } from "@/app/navigationTypes";
+import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
 
 interface KanaInfoProps {
   navigation: StackNavigationProp<RootStackParamList, typeof ROUTES.KANA_SELECT>;
 }
 
-const EducationKanaSelection: React.FC<KanaInfoProps> = ({ navigation }) => {
+const KanaTableChoiceLettersPage: React.FC<KanaInfoProps> = ({ navigation }) => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const { colors } = useThemeContext();
@@ -41,14 +42,32 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ navigation }) => {
       headerTitleAlign: "center",
       title: activeTab === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana"),
       headerLeft: () => (
-          <TouchableOpacity onPress={navigation.goBack}>
-            <Text style={[Typography.regularH4, { color: colors.TextSecondary }]}>{t("common.close")}</Text>
-          </TouchableOpacity>
+        <PrimaryButton
+          isOutline
+          containerStyles={{ borderWidth: 0 }}
+          textStyles={{
+            ...Typography.regularH4,
+            color: colors.TextSecondary
+          }}
+          isHapticFeedback
+          onClick={navigation.goBack}
+          text={t("common.close")}
+          width={100}
+        />
       ),
       headerRight: () => (
-        <TouchableOpacity onPress={() => dispatch(resetKanaSelected())}>
-          <Text style={[Typography.regularH4, { color: colors.TextPrimary }]}>{t("common.reset")}</Text>
-        </TouchableOpacity>
+        <PrimaryButton
+          isOutline
+          containerStyles={{ borderWidth: 0 }}
+          textStyles={{
+            ...Typography.regularH4,
+            color: colors.TextPrimary
+          }}
+          isHapticFeedback
+          onClick={() => dispatch(resetKanaSelected())}
+          text={t("common.reset")}
+          width={100}
+        />
       ),
       headerShadowVisible: false,
     });
@@ -102,7 +121,7 @@ const EducationKanaSelection: React.FC<KanaInfoProps> = ({ navigation }) => {
   );
 };
 
-export default EducationKanaSelection;
+export default KanaTableChoiceLettersPage;
 
 
 const styles = StyleSheet.create({

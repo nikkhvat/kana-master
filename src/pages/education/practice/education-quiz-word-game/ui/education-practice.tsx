@@ -14,7 +14,7 @@ import EducationPracticeChooseLetters from "@/entities/education/practice/word-g
 import EducationPracticeChooseValue from "@/entities/education/practice/word-game-choose-value/word-game-choose-value";
 import EducationPracticeFindPair from "@/entities/education/practice/word-game-find-pair/education-practice-find-pair";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { countAvailableWords } from "@/pages/kana/kana-quick-selection/model/slice";
+import { countAvailableWords } from "@/pages/kana/kana-table-choice-letters-page/model/slice";
 import { QuestionTypeBuildingWord, QuestionTypeChooseWord, QuestionTypeFindPairWord, TEST_DELAY } from "@/shared/constants/kana";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";

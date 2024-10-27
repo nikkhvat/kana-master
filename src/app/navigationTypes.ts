@@ -33,33 +33,22 @@ export const ROUTES = {
 
 export type RootStackParamList = {
   [ROUTES.ROOT]: undefined;
-  
+
   // Info kana and draw kana
-  [ROUTES.KANA_INFO]: {
-    id: string,
-    kana: KanaAlphabet,
-    title: string
-  }
+  [ROUTES.KANA_INFO]: KanaInfoPageProps;
 
   // Select alphabet
-  [ROUTES.KANA_SELECT]: {
-    title: string
-  },
+  [ROUTES.KANA_SELECT]: KanaTableChoiceLettersPage;
 
   // Lesson page
-  [ROUTES.LESSON_PAGE]: { lesson: AutoLesson | ManuallyLesson }
+  [ROUTES.LESSON_PAGE]: LessonPage
+
   // practice (2 variants)
-  [ROUTES.PRACTICE_WORD_GAME]: {
-    keysModeState: TestMode[],
-  };
-  [ROUTES.PRACTICE_TESTING]: { 
-    keysCardModeState: CardMode[], 
-    keysDifficultyLevelState: DifficultyLevelType[]
-    timerDeration?: "fast" | "medium" | "slow"
-  };
+  [ROUTES.PRACTICE_WORD_GAME]: PracticeWordGame;
+  [ROUTES.PRACTICE_TESTING]: PracticeTesting;
 
   // results of practice
-  [ROUTES.RESULTS]: { result: ResultInfo | ResultInfoWordGame }
+  [ROUTES.RESULTS]: PracticeResultPage;
 
   // bottom tab navigator
   [ROUTES.PRACTICE_ROOT]: undefined,
@@ -67,3 +56,31 @@ export type RootStackParamList = {
   [ROUTES.SETTINGS_ROOT]: undefined;
   [ROUTES.KANA_TABLE_ROOT]: undefined;
 };
+
+interface KanaInfoPageProps {
+  id: string,
+  kana: KanaAlphabet,
+  title: string
+}
+
+interface KanaTableChoiceLettersPage {
+  title: string
+}
+
+interface LessonPage {
+  lesson: AutoLesson | ManuallyLesson
+}
+
+interface PracticeWordGame {
+  keysModeState: TestMode[],
+}
+
+interface PracticeTesting {
+  keysCardModeState: CardMode[],
+  keysDifficultyLevelState: DifficultyLevelType[]
+  timerDeration ?: "fast" | "medium" | "slow"
+}
+
+interface PracticeResultPage {
+  result: ResultInfo | ResultInfoWordGame
+}

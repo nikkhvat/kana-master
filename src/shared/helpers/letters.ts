@@ -37,12 +37,12 @@ export const isInclude = (
 
 export const isCorrectPair = (
   leftPair: string,
-  rigthPair: string,
+  rightPair: string,
   pairs: string[][],
 ) => {
   const cond = pairs.some((pair) => {
     const condLeft = pair[0] === leftPair || pair[1] === leftPair;
-    const condRight = pair[0] === rigthPair || pair[1] === rigthPair;
+    const condRight = pair[0] === rightPair || pair[1] === rightPair;
     return condLeft && condRight;
   });
   return cond;

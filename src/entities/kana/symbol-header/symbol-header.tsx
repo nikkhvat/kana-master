@@ -12,7 +12,8 @@ import {
   yoonFlatLettersId,
 } from "@/shared/data/lettersTable";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
-import { StatisticLevel } from "@/pages/kana/kana-list/model/types";
+import { StatisticLevel } from "@/pages/kana/kana-table-list-page/model/types";
+
 
 interface SymbolHeaderProps {
   kana: KanaAlphabet;

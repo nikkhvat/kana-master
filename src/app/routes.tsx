@@ -1,22 +1,22 @@
-import Kana from "@/pages/kana/kana-list/ui/kana-list";
-import LearningList from "@/pages/education/learning/list/learning-list";
+import LearningList from "@/pages/education/learning/learning-list-page/learning-list-page";
 import PracticeWelcomePage from "@/pages/education/practice/practice-welcome/practice-welcome";
-import ProfilePage from "@/pages/profile/profile";
 
-import LessonPage from "@/pages/education/learning/lesson";
-import EducationResultPage from "@/pages/education/practice/education-result/education-result";
+import LessonPage from "@/pages/education/learning/lesson-page/lesson-page";
+import EducationResultPage from "@/pages/education/practice/education-result-page/education-result-page";
 import EducationWordGamePage from "@/pages/education/practice/education-quiz-word-game/index";
 import TestingPage from "@/pages/education/practice/education-quiz-testing";
-import KanaInfo from "@/pages/kana/kana-info/ui";
-import EducationKanaSelection from "@/pages/kana/kana-select/ui";
+import KanaTableChoiceLettersPage from "@/pages/kana/kana-table-choice-letters-page/kana-table-choice-letters-page";
 
 import { ScreenOptions } from "./types";
 import { ROUTES } from "./navigationTypes";
+import SettingsPage from "@/pages/settings/settings-page";
+import KanaLetterPage from "@/pages/kana/kana-letter-page/kana-letter-page";
+import KanaTableListPage from "@/pages/kana/kana-table-list-page/kana-table-list-page";
 
 export const bottomScreens = [
   {
     name: ROUTES.KANA_TABLE_ROOT,
-    component: Kana,
+    component: KanaTableListPage,
     title: "tabs.kana",
   },
   {
@@ -31,7 +31,7 @@ export const bottomScreens = [
   },
   {
     name: ROUTES.SETTINGS_ROOT,
-    component: ProfilePage,
+    component: SettingsPage,
     title: "tabs.profile",
   }
 ] as const
@@ -85,7 +85,7 @@ export const screens = [
     children: [
       {
         name: ROUTES.KANA_INFO,
-        component: KanaInfo,
+        component: KanaLetterPage,
         options: ({ route }: ScreenOptions) => ({
           title: route?.params?.title,
           contentStyle: {
@@ -95,7 +95,7 @@ export const screens = [
       },
       {
         name: ROUTES.KANA_SELECT,
-        component: EducationKanaSelection,
+        component: KanaTableChoiceLettersPage,
         options: ({ route }: ScreenOptions) => ({
           title: route?.params?.title,
           contentStyle: {
@@ -106,7 +106,7 @@ export const screens = [
     ],
     options: {
       presentation: "modal",
-      orientation: "portrait",
+      orientation: "portrait_up",
     }
   }
 ] as const

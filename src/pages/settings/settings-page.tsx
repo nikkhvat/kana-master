@@ -17,10 +17,9 @@ import SettingsHaptic from "@/features/settings/settings-haptic/settings-haptic"
 import PrivacyPolicy from "@/features/settings/privacy-policy/privacy-policy";
 import ContactSupport from "@/features/settings/contact-support/contact-support";
 
-const ProfilePage: React.FC = () => {
+const SettingsPage: React.FC = () => {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
-  const { colors } = useThemeContext();
 
   const isJoinCommunity = false;
 
@@ -57,7 +56,7 @@ const ProfilePage: React.FC = () => {
   );
 };
 
-export default ProfilePage;
+export default SettingsPage;
 
 const styles = StyleSheet.create({
   scroll: {

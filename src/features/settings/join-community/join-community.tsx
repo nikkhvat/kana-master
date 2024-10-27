@@ -4,8 +4,7 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "../settings-theme/theme-context";
-
-import LinkButton from "@/entities/profile/Link-button/Link-button";
+import SocialLink from "@/entities/profile/social-link/social-link";
 
 const JoinCommunity: React.FC = () => {
   const { colors } = useThemeContext();
@@ -22,15 +21,15 @@ const JoinCommunity: React.FC = () => {
 
       <View style={styles.sectionButtonsColumn}>
         {language !== "ru" && (
-          <LinkButton link="https://t.me/kanamaster_learn_japanese">
+          <SocialLink link="https://t.me/kanamaster_learn_japanese">
             Telegram channel
-          </LinkButton>
+          </SocialLink>
         )}
 
         {language === "ru" && (
-          <LinkButton link="https://t.me/kanamaster_learn_japanese_rus">
+          <SocialLink link="https://t.me/kanamaster_learn_japanese_rus">
             Телеграм канал
-          </LinkButton>
+          </SocialLink>
         )}
       </View>
     </>

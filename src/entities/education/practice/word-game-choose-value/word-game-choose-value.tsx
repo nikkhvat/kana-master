@@ -7,7 +7,7 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import { RegistErrorProps } from "@/pages/education/practice/education-quiz-word-game/ui/education-practice";
 import { TEST_DELAY } from "@/shared/constants/kana";
 import { Word } from "@/shared/data/words";
-import SelectAnswer from "@/shared/ui/select-answer/select-answer";
+import SelectAnswer from "@/entities/education/select-answer/select-answer";
 import { Typography } from "@/shared/typography";
 
 

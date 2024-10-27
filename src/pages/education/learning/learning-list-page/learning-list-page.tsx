@@ -4,8 +4,6 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, View, Text } from "react-native";
 
-import Chapter from "../chapter/chapter";
-
 import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
 import SafeLayout from "@/app/layouts/safeLayout";
 import { KanaAlphabet } from "@/shared/constants/kana";
@@ -19,6 +17,7 @@ import { updateLessons } from "../model/slice";
 import { Typography } from "@/shared/typography";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { ROUTES } from "@/app/navigationTypes";
+import Chapter from "@/widgets/learning/lesson/chapter/chapter";
 
 type HomeScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -28,7 +27,7 @@ interface HomeScreenProps {
   navigation: HomeScreenNavigationProp;
 }
 
-const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
+const LearningListPage: React.FC<HomeScreenProps> = ({ navigation }) => {
   const dispatch = useAppDispatch();
 
   const { t } = useTranslation();
@@ -108,7 +107,7 @@ const LearningList: React.FC<HomeScreenProps> = ({ navigation }) => {
   );
 };
 
-export default LearningList;
+export default LearningListPage;
 
 const styles = StyleSheet.create({
   scroll: {

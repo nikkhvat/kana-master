@@ -12,7 +12,7 @@ import {
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TEST_DELAY } from "@/shared/constants/kana";
 import { shuffleArray } from "@/shared/helpers/letters";
-import PrimaryButton from "../buttons/Primary/primary-button";
+import PrimaryButton from "../../../shared/ui/buttons/Primary/primary-button";
 import { Typography } from "@/shared/typography";
 
 type SequenceProps = {

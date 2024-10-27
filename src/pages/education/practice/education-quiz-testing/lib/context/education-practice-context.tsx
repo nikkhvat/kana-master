@@ -101,14 +101,14 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
     selectedLetters,
     keysCardModeState,
   }: generateQuestionsProps): Question[] => {
-    const kanaLetters = [
+    const katakanaLetters = [
       ...selectedLetters.base.katakana,
       ...selectedLetters.dakuon.katakana,
       ...selectedLetters.handakuon.katakana,
       ...selectedLetters.yoon.katakana,
     ].map((item) => lettersTableById[item as LettersKeys]);
 
-    const hiraLetters = [
+    const hiraganaLetters = [
       ...selectedLetters.base.hiragana,
       ...selectedLetters.dakuon.hiragana,
       ...selectedLetters.handakuon.hiragana,
@@ -128,8 +128,8 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
         questionTypes.push(CardMode.katakanaToHiragana);
 
       if (questionTypes.length > 0) {
-        for (let i = 0; i < kanaLetters.length; i++) {
-          const letter = kanaLetters[i] as ILetter;
+        for (let i = 0; i < katakanaLetters.length; i++) {
+          const letter = katakanaLetters[i] as ILetter;
           if (letter !== undefined) {
             const type =
               questionTypes[Math.floor(Math.random() * questionTypes.length)];
@@ -141,7 +141,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
               symbol: letter,
               kana: kanaType,
               answers: getAnswersWithRandom(
-                [kanaLetters] as ILetter[][],
+                [katakanaLetters] as ILetter[][],
                 letter,
               ),
               trueAnswer: letter.id,
@@ -163,8 +163,8 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
         questionTypes.push(CardMode.romajiToHiragana);
 
       if (questionTypes.length > 0) {
-        for (let i = 0; i < hiraLetters.length; i++) {
-          const letter = hiraLetters[i] as ILetter;
+        for (let i = 0; i < hiraganaLetters.length; i++) {
+          const letter = hiraganaLetters[i] as ILetter;
           if (letter !== undefined) {
             const type =
               questionTypes[Math.floor(Math.random() * questionTypes.length)];
@@ -176,7 +176,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
               symbol: letter,
               kana: kanaType,
               answers: getAnswersWithRandom(
-                [hiraLetters] as ILetter[][],
+                [hiraganaLetters] as ILetter[][],
                 letter,
               ),
               trueAnswer: letter.id,

@@ -7,7 +7,7 @@ import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonBuildWord } from "@/shared/constants/lessons";
 import getKana from "@/shared/helpers/getKanaKey";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
-import Sequence from "@/shared/ui/sequence";
+import Sequence from "@/entities/education/sequence";
 import { shuffleArray } from "@/shared/helpers/letters";
 import { LearningTitle } from "../ui/title";
 

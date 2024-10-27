@@ -15,12 +15,12 @@ import {
   TableBlock,
   TextBlock,
 } from "@/shared/constants/lessons";
-import BorderLetter from "@/shared/ui/letter/borderLetter/borderLetter";
-import Rules from "@/shared/ui/rules/rules";
-import SelectAnswer from "@/shared/ui/select-answer/select-answer";
-import Sequence from "@/shared/ui/sequence";
+import BorderLetter from "@/entities/education/letter/borderLetter/borderLetter";
+import Rules from "@/entities/education/rules/rules";
+import SelectAnswer from "@/entities/education/select-answer/select-answer";
+import Sequence from "@/entities/education/sequence";
 import Table from "@/shared/ui/table/table";
-import BlockText from "@/shared/ui/text/text";
+import BlockText from "@/entities/education/text/text";
 import { KanaAlphabet } from "@/shared/constants/kana";
 import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
 import MatchPairs from "@/entities/education/practice/match-pairs/match-pairs";

@@ -7,7 +7,7 @@ import { KanaAlphabet } from "@/shared/constants/kana";
 import { LessonSelectSymbol } from "@/shared/constants/lessons";
 import getKana from "@/shared/helpers/getKanaKey";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
-import SelectAnswer from "@/shared/ui/select-answer/select-answer";
+import SelectAnswer from "@/entities/education/select-answer/select-answer";
 import { LearningTitle } from "../ui/title";
 
 type SelectLettersScreenProps = LessonSelectSymbol & {
