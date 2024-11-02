@@ -37,6 +37,7 @@ const SoundLetter: React.FC<SoundLetterProps> = ({ id, width }) => {
 
   return (
     <SecondaryButton
+      isHapticFeedback
       icon={soundIcon}
       width={width}
       isOutline

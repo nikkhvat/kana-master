@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react";
 
+import { Vibration } from 'react-native';
+
 import {
   View,
   Text,
@@ -16,6 +18,7 @@ import { verticalScale } from "@/shared/helpers/metrics";
 import * as Haptics from "expo-haptics";
 import { Typography } from "@/shared/typography";
 import { useAppSelector } from "@/shared/model/hooks";
+import { isIOS } from "@/shared/constants/platformUtil";
 
 interface SwitcherProps<T extends string> {
   activeTab: T;
@@ -47,7 +50,11 @@ function Switcher<T extends string>(props: SwitcherProps<T>) {
     setActiveTab(options[index]);
 
     if (isEnabledHaptic) {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      if (isIOS()) {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      } else {
+        Vibration.vibrate(1);
+      }
     }
   };
 

@@ -142,7 +142,6 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
             <PrimaryButton
               key={key}
               width={50}
-              isHapticFeedback
               isOutline
               onClick={() => !selected && onClickLetter(data)}
               text={letter}

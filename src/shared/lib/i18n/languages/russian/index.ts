@@ -16,13 +16,7 @@ const Russian = {
 		profile: "Настройки",
 	},
 
-	profile: {
-		theme: "Темы",
-		language: "Языки",
-	},
-
 	learning: {
-		practice: "Практика",
 		testing: "Тестирование",
 		wordGame: "Игра слов"
 	},
@@ -47,8 +41,6 @@ const Russian = {
 	testing: {
 		cardMode: "Карточки",
 		testMode: "Режим",
-		difficultyLevel: "Режим",
-		start: "Начать тестирование"
 	},
 
 	difficultyLevel: {
@@ -83,18 +75,22 @@ const Russian = {
 		nothingSelected: "Ничего не выбрано"
 	},
 
-	quickSelectKana: {
-		title: "Быстрый выбор",
-		confirm: "Подтвердить",
+	settings: {
+		displayStatistics: 'Отображать статистику',
+		hapticFeedback: 'Виброотклик',
+		theme: {
+			title: "Тема",
+			light: "Светлая",
+			dark: "Тёмная",
+			auto: "Автоматически"
+		},
+		language: "Язык",
+		privacyPolicy: 'Политика конфиденциальности',
+		contactSupport: 'Связаться с поддержкой',
 
-		entriesInScope: "Доступно слогов",
-		availableWords: "Доступно слов",
-	},
-
-	displayStatistics: {
-		title: "Отображать статистику",
-		turnOn: "Включить",
-		turnOff: "Выключить",
+		joinOurCommunity: {
+			title: "Вступайте в наше сообщество",
+		},
 	},
 
 	result: {
@@ -167,8 +163,14 @@ const Russian = {
 		nihonShiki: "Nihon-shiki (Нихон-сики)",
 	},
 
-	joinOurCommunity: {
-		title: "Вступайте в наше сообщество",
+	alert: {
+		exitConformation: {
+			title: "Вы уверены, что хотите выйти?",
+			subtitle: "Ваш прогресс не будет сохранён, если вы выйдете сейчас."
+		},
+
+		cancel: "Отмена",
+		ok: "Ок",
 	}
 };
 

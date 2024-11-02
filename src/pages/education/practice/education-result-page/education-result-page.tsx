@@ -223,7 +223,7 @@ const EducationResultPage: React.FC<EducationResultProps> = ({
         <View
           style={{ marginBottom: insets.bottom, paddingHorizontal: 20 }}
         >
-          <PrimaryButton text={t("result.done")} onClick={home} />
+          <PrimaryButton isHapticFeedback text={t("result.done")} onClick={home} />
         </View>
       </View>
     </AdaptiveLayout>

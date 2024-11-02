@@ -3,9 +3,11 @@ import { Typography } from "@/shared/typography";
 import { FC, ReactNode } from "react";
 
 import * as Haptics from "expo-haptics";
+import { Vibration } from 'react-native';
 
 import { Text, StyleSheet, Pressable, StyleProp, ViewStyle, TextStyle } from "react-native";
 import { useAppSelector } from "@/shared/model/hooks";
+import { isIOS } from "@/shared/constants/platformUtil";
 
 interface PrimaryButtonProps {
   content?: ReactNode;
@@ -60,7 +62,11 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
     if (isDisabled) return;
 
     if (isHapticFeedback && isEnabledHaptic) {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      if (isIOS()) {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      } else {
+        Vibration.vibrate(1);
+      }
     }
 
     if (!isDisabled) {
@@ -72,7 +78,7 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
     isFullWidth ? { flex: 1 } : { width },
 
     isDisabled
-      ? { backgroundColor: colors.BgLightGray }
+      ? { backgroundColor: colors.BgLightGray, borderColor: colors.BorderDefault }
       : {
         backgroundColor: pressed
           ? colors.BgContrastPressed

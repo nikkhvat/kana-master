@@ -163,6 +163,7 @@ const KanaLetterPage = ({ route, navigation }: KanaInfoProps) => {
               <SoundLetter id={letter.id} />
 
               <SecondaryButton
+                isHapticFeedback
                 icon={pencilIcon}
                 isOutline
                 isFullWidth
@@ -174,6 +175,7 @@ const KanaLetterPage = ({ route, navigation }: KanaInfoProps) => {
 
         <View style={[styles.buttons, { paddingBottom: insets.bottom }]}>
           <SecondaryButton
+            isHapticFeedback
             icon={leftIcon}
             isOutline
             width={50}
@@ -181,6 +183,7 @@ const KanaLetterPage = ({ route, navigation }: KanaInfoProps) => {
           />
 
           <SecondaryButton
+            isHapticFeedback
             text={switchButtonText}
             isOutline
             isFullWidth
@@ -188,6 +191,7 @@ const KanaLetterPage = ({ route, navigation }: KanaInfoProps) => {
           />
 
           <SecondaryButton
+            isHapticFeedback
             icon={rightIcon}
             isOutline
             width={50}

@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, Vibration, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
@@ -13,6 +13,7 @@ import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
 import { useAppSelector } from "@/shared/model/hooks";
 
 import * as Haptics from "expo-haptics";
+import { isIOS } from "@/shared/constants/platformUtil";
 
 interface CellProps {
   isLong: boolean;
@@ -87,7 +88,11 @@ const Cell: React.FC<CellProps> = ({
       onPress={() => {
         if (cell) {
           if (isEnabledHaptic) {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            if (isIOS()) {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            } else {
+              Vibration.vibrate(1);
+            }
           }
 
           onPress?.(cell.id)

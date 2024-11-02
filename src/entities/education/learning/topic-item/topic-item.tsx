@@ -102,6 +102,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
               </View>
 
               <PrimaryButton
+                isHapticFeedback
                 width={108}
                 text={isPassed ? t("common.retry") : t("common.start")}
                 onClick={onStartLesson}

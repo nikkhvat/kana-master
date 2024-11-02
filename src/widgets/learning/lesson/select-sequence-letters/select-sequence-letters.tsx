@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 
 import { useTranslation } from "react-i18next";
 import { Dimensions, View } from "react-native";
@@ -10,6 +10,7 @@ import { shuffleArray } from "@/shared/helpers/letters";
 import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
 import { LearningTitle } from "../ui/title";
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 
 type SelectSequenceLettersProps = LessonSelectSequenceLetters & {
   next: (hasError: boolean) => void;
@@ -23,6 +24,9 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({
   kana,
   next,
 }) => {
+  const { colors } = useThemeContext();
+  const [states, setStates] = useState<(null | false | true)[]>();
+
   const { getRomanji } = useGetRomanji();
   const { t } = useTranslation();
 
@@ -32,6 +36,8 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({
 
   const shuffledArray = useMemo(() => shuffleArray(sequence), [sequenceTrans]);
   const shuffledArray2 = useMemo(() => shuffleArray(sequence), [sequenceTrans]);
+
+  const shuffleArrayString = shuffledArray.map(item => getRomanji(item)).join(", ");
 
   const shuffledArrayString = shuffledArray
     .map((item) => getRomanji(item))
@@ -47,6 +53,10 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({
   );
 
   const submit = (answer: string) => {
+    setStates(prev => buttons.map((item, index) => item === answer
+      ? shuffleArrayString === answer
+        ? true : false : (prev?.[index] === false || prev?.[index] === true) ? prev?.[index] : null))
+
     setTimeout(() => {
       next(shuffledArrayString !== answer);
     }, TEST_DELAY);
@@ -82,8 +92,18 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({
           flexDirection: rowLength > 18 ? "column" : "row",
         }}
       >
-        {buttons.map((button) => (
+        {buttons.map((button, index) => (
           <PrimaryButton
+            isHapticFeedback
+            containerStyles={{
+              width: rowLength > 18 ? "100%" : (screenWidth - 55) / 2,
+              height: 50,
+              fontSize: 17,
+              backgroundColor: states?.[index] === true
+                ? colors.BgSuccess : states?.[index] === false
+                  ? colors.BgDanger
+                  : colors.BgPrimary
+            }}
             isOutline
             key={button}
             width={(rowLength > 18 ? "100%" : (screenWidth - 55) / 2) as number}

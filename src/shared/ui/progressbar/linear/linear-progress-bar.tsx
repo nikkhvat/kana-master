@@ -1,21 +1,62 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { View, Text, StyleSheet, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Pressable, TouchableOpacity, Alert, Vibration } from "react-native";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { useAppSelector } from "@/shared/model/hooks";
+import { isIOS } from "@/shared/constants/platformUtil";
+
+import * as Haptics from "expo-haptics";
 
 interface ProgressBarProp {
   close?: () => void;
+  requireConfirmation?: boolean,
+  confirmationTitle?: string,
+  confirmationSubtitle?: string,
   current: number;
   all: number;
   title?: string
 }
 
-const LinearProgressBar: React.FC<ProgressBarProp> = ({ close, current, all, title }) => {
+const LinearProgressBar: React.FC<ProgressBarProp> = ({
+  close,
+  requireConfirmation = true,
+  confirmationTitle,
+  confirmationSubtitle,
+  current,
+  all,
+  title
+}) => {
   const { t } = useTranslation();
   const { colors } = useThemeContext();
+
+  const isEnabledHaptic = useAppSelector(
+    (state) => state.profile.isEnabledHaptic,
+  );
+
+  const localizedConfirmationTitle = confirmationTitle ? confirmationTitle : t('alert.exitConformation.title');
+  const localizedConfirmationSubtitle = confirmationSubtitle ? confirmationSubtitle : t('alert.exitConformation.subtitle');
+
+  const confirmationCloseAlert = () =>
+    Alert.alert(localizedConfirmationTitle, localizedConfirmationSubtitle, [
+      { text: t('alert.cancel'), style: 'cancel' },
+      { text: t('alert.ok'), onPress: () => {
+        haptic();
+        close?.();
+      } },
+    ]);
+
+  const haptic = () => { 
+    if (isEnabledHaptic) {
+      if (isIOS()) {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      } else {
+        Vibration.vibrate(1);
+      }
+    }
+  }
 
   return (
     <View style={styles.progressBarContainer}>
@@ -29,7 +70,13 @@ const LinearProgressBar: React.FC<ProgressBarProp> = ({ close, current, all, tit
         ]} />
       </View>
       <View style={styles.progressBarBottom}>
-        <TouchableOpacity style={styles.progressBarPressble} onPress={() => close?.()}>
+        <TouchableOpacity style={styles.progressBarPressble} onPress={() => {
+          if (requireConfirmation) {
+            confirmationCloseAlert();
+          } else {
+            close?.()
+          }
+        }}>
           <Icon name="close" size={24} color={colors.IconPrimary} />
         </TouchableOpacity>
         <Text style={[styles.progressBarText, { color: colors.TextSecondary }]}>

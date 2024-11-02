@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useTranslation } from "react-i18next";
 import { toggleStatistics } from "@/pages/kana/kana-table-list-page/model/slice";
@@ -15,9 +15,15 @@ const SettingsStatistics: React.FC = () => {
     (state) => state.profile.isEnabledHaptic,
   );
 
+  useEffect(() => {
+    if (isEnabledHaptic === undefined) {
+      dispatch(toggleHaptic())
+    }
+  })
+
   return (
     <SettingItem
-      text={"Haptic feedback"}
+      text={t("settings.hapticFeedback")}
       isEnable={isEnabledHaptic}
       onValueChange={() => dispatch(toggleHaptic())}
     />

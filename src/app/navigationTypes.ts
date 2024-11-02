@@ -16,7 +16,7 @@ export const ROUTES = {
   // Lesson page
   LESSON_PAGE: 'LessonPage',
   
-  // practice (2 variants)
+  // practice
   PRACTICE_WORD_GAME: 'EducationWordGame',
   PRACTICE_TESTING: 'EducationPractice',
   

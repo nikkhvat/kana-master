@@ -29,6 +29,8 @@ import { shuffleArray } from "@/shared/helpers/letters";
 import { getRandomWords } from "@/shared/helpers/words";
 import { AnyWordGameQuestion, Maybe } from "@/shared/types/questions";
 import { useAppSelector } from "@/shared/model/hooks";
+import { isAndroid, isIOS } from "@/shared/constants/platformUtil";
+import { Vibration } from "react-native";
 
 interface generateQuestionsProps {
   selectedLetters: RootState["kana"]["selected"];
@@ -74,7 +76,25 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
     callback?: (onFinishPractice: boolean, trueAnswer: boolean) => void,
   ) => {
     if (isEnabledHaptic) {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      if (isIOS()) {
+        if (trueSelected) {
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+        } else {
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        }
+      }
+
+      if (isAndroid()) {
+        const successPattern = [0, 1];
+        const errorPattern = [0, 1, 100, 1];
+
+
+        if (trueSelected) {
+          Vibration.vibrate(successPattern);
+        } else {
+          Vibration.vibrate(errorPattern);
+        }
+      }
     }
 
     if (currentIndex > questions.length - 1) return;

@@ -16,7 +16,7 @@ const JoinCommunity: React.FC = () => {
   return (
     <>
       <Text style={[styles.title, { color: colors.TextPrimary }]}>
-        {t("joinOurCommunity.title")}
+        {t("settings.joinOurCommunity.title")}
       </Text>
 
       <View style={styles.sectionButtonsColumn}>

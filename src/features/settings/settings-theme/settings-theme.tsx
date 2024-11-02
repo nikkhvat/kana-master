@@ -10,15 +10,19 @@ import { useActionSheet } from '@expo/react-native-action-sheet';
 
 
 const SettingsTheme: React.FC = () => {
-  
   const { t } = useTranslation();
   
-  const { updateTheme, themeString } = useThemeContext();
+  const { updateTheme, themeLocalized } = useThemeContext();
   
   const { showActionSheetWithOptions } = useActionSheet();
   
   const onPress = () => {
-    const options = ["Cancel", "Light", "Dark", "Auto"];
+    const options = [
+      t('alert.cancel'),
+      t('settings.theme.light'),
+      t('settings.theme.dark'),
+      t('settings.theme.auto')
+    ];
     const cancelButtonIndex = 0;
 
     showActionSheetWithOptions({
@@ -40,8 +44,8 @@ const SettingsTheme: React.FC = () => {
 
   return (
     <SettingItem
-      text={t("profile.theme")}
-      subText={themeString}
+      text={t("settings.theme.title")}
+      subText={themeLocalized}
       isLast
       onClick={onPress}
     />

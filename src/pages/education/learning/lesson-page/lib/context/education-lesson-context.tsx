@@ -15,6 +15,8 @@ import { ILetter } from "@/shared/data/lettersTable";
 
 import * as Haptics from "expo-haptics";
 import { useAppSelector } from "@/shared/model/hooks";
+import { isIOS } from "@/shared/constants/platformUtil";
+import { Vibration } from "react-native";
 
 interface EducationLessonContextValue {
   init: (
@@ -159,7 +161,11 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
     }
 
     if (isEnabledHaptic) {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      if (isIOS()) {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      } else {
+        Vibration.vibrate(1);
+      }
     }
   };
 

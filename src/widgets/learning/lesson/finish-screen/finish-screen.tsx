@@ -45,9 +45,10 @@ const FinishScreen: React.FC<FinishScreenProps> = ({ next, retry }) => {
         </LearningTitle>
       </View>
 
-      <View style={styles.btnsContainer}>
-        <PrimaryButton isFullWidth text={t("common.retry")} onClick={retry} />
+      <View style={styles.buttonsContainer}>
+        <PrimaryButton isHapticFeedback isFullWidth text={t("common.retry")} onClick={retry} />
         <PrimaryButton
+          isHapticFeedback
           isOutline
           isFullWidth
           text={t("common.complete")}
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  btnsContainer: {
+  buttonsContainer: {
     width: "100%",
     gap: 16,
 

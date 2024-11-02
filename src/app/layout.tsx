@@ -13,14 +13,11 @@ import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
 import { RootStackParamList, ROUTES } from "@/app/navigationTypes";
 
-import * as Font from 'expo-font';
-import * as Icon from '@expo/vector-icons';
-
 import * as SplashScreen from 'expo-splash-screen';
-import { isAndroid } from "@/shared/constants/platformUtil";
 import BottomTabNavigator from "./BottomTabNavigator";
 import { screens } from "./routes";
 import { ScreenItem, ScreensArray } from "./types";
+import { loadFonts } from "@/shared/fonts/load-fonts";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -33,31 +30,18 @@ const Layout = () => {
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    async function prepare() {
-      try {
-        await Font.loadAsync({
-          ...(isAndroid() ? {
-            'ZenKaku-Black': require('../shared/fonts/ZenKakuGothicNewBlack.ttf'),
-            'ZenKaku-Bold': require('../shared/fonts/ZenKakuGothicNewBold.ttf'),
-            'ZenKaku-Light': require('../shared/fonts/ZenKakuGothicNewLight.ttf'),
-            'ZenKaku-Medium': require('../shared/fonts/ZenKakuGothicNewMedium.ttf'),
-            'ZenKaku-Regular': require('../shared/fonts/ZenKakuGothicNewRegular.ttf'),
-          } : {}),
-          ...Icon.Ionicons.font,
-          ...Icon.MaterialCommunityIcons.font,
-        })
-
-        await new Promise(resolve => setTimeout(resolve, 300));
-      } catch (e) {
-        console.warn(e);
-      } finally {
-
+    loadFonts({
+      successful: async () => {
+        await new Promise(resolve => setTimeout(resolve, 100))
+      },
+      error: (e) => {
+        console.warn(e)
+      },
+      finallyCallback: async () => {
         setAppIsReady(true);
         await SplashScreen.hideAsync();
-      }
-    }
-
-    prepare();
+      },
+    });
   }, []);
 
   useEffect(() => {
@@ -91,7 +75,6 @@ const Layout = () => {
   if (!appIsReady) {
     return null;
   }
-  
 
   return (
     <>

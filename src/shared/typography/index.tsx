@@ -1,12 +1,12 @@
 import { TextStyle, StyleSheet } from "react-native";
 import { isAndroid } from "../constants/platformUtil";
 
-const fontTitleFamilyBold = isAndroid() ? "ZenKaku-Bold" : "SFProDisplay-Bold";
-const fontTitleFamilyRegular = isAndroid() ? "ZenKaku-Medium" : "SFProDisplay-Regular";
+const fontTitleFamilyBold = isAndroid() ? "NotoSansJP-Bold" : "SFProDisplay-Bold";
+const fontTitleFamilyRegular = isAndroid() ? "NotoSansJP-Medium" : "SFProDisplay-Regular";
 
-const fontTextFamilyRegular = isAndroid() ? "ZenKaku-Medium" : "SFProText-Regular";
-const fontTextFamilySemibold = isAndroid() ? "ZenKaku-Black" : "SFProDisplay-Semibold";
-const fontTextFamilyBold = isAndroid() ? "ZenKaku-Bold" : "SFProText-Bold";
+const fontTextFamilyRegular = isAndroid() ? "NotoSansJP-Medium" : "SFProText-Regular";
+const fontTextFamilySemibold = isAndroid() ? "NotoSansJP-SemiBold" : "SFProDisplay-Semibold";
+const fontTextFamilyBold = isAndroid() ? "NotoSansJP-SemiBold" : "SFProText-Bold";
 
 // Regular Large
 export const TypographyRegularLarge: TextStyle = {

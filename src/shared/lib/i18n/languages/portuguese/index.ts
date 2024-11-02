@@ -16,13 +16,7 @@ const Portuguese = {
     profile: "Configurações",
   },
 
-  profile: {
-    theme: "Temas",
-    language: "Idiomas",
-  },
-
   learning: {
-    practice: "Prática",
     testing: "Testes",
     wordGame: "Jogo de palavras"
   },
@@ -47,8 +41,6 @@ const Portuguese = {
   testing: {
     cardMode: "Cartões",
     testMode: "Modo",
-    difficultyLevel: "Modo",
-    start: "Iniciar teste"
   },
 
   difficultyLevel: {
@@ -83,18 +75,22 @@ const Portuguese = {
     nothingSelected: "Nada selecionado"
   },
 
-  quickSelectKana: {
-    title: "Seleção rápida",
-    confirm: "Confirmar",
+  settings: {
+    displayStatistics: "Exibir estatísticas",
+    hapticFeedback: "Feedback háptico",
+    theme: {
+      title: "Tema",
+      light: "Claro",
+      dark: "Escuro",
+      auto: "Automático"
+    },
+    language: "Idioma",
+    privacyPolicy: "Política de Privacidade",
+    contactSupport: "Contatar suporte",
 
-    entriesInScope: "Sílabas disponíveis",
-    availableWords: "Palavras disponíveis",
-  },
-
-  displayStatistics: {
-    title: "Mostrar estatísticas",
-    turnOn: "Ativar",
-    turnOff: "Desativar",
+    joinOurCommunity: {
+      title: "Junte-se à nossa comunidade",
+    }
   },
 
   result: {
@@ -167,8 +163,14 @@ const Portuguese = {
     nihonShiki: "Nihon-shiki",
   },
 
-  joinOurCommunity: {
-    title: "Junte-se à nossa comunidade",
+  alert: {
+    exitConformation: {
+      title: "Tem certeza de que deseja sair?",
+      subtitle: "Seu progresso não será salvo se você sair agora."
+    },
+
+    cancel: "Cancelar",
+    ok: "Ok",
   }
 };
 

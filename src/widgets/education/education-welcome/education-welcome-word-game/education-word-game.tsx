@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
@@ -13,9 +13,10 @@ import StartPracticeButton from "@/entities/education/start-practice-button/star
 import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
 import { TestMode } from "@/shared/constants/kana";
 import { verticalScale } from "@/shared/helpers/metrics";
-import { useAppSelector } from "@/shared/model/hooks";
+import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/app/navigationTypes";
 import { ROUTES } from "@/app/navigationTypes";
+import { countAvailableWords } from "@/pages/kana/kana-table-choice-letters-page/model/slice";
 
 type WordBuildingNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -33,9 +34,19 @@ const EducationWordGame: React.FC<WordBuildingProps> = ({ navigation }) => {
   const { t } = useTranslation();
   const [mode, setMode] = useState<TestMode[]>([]);
 
-  const selectedWords = useAppSelector(
-    (state: RootState) => state.kana.selectedWords,
+  const dispatch = useAppDispatch();
+
+  const [selectedWords, selectedLetters] = useAppSelector(
+    (state: RootState) => [
+      state.kana.selectedWords,
+      state.kana.selectedLetters,
+    ],
   );
+
+  useEffect(() => {
+    dispatch(countAvailableWords());
+  }, [selectedLetters])
+
 
   const isHiragana = selectedWords.hiragana.length >= 10;
   const isKatakana = selectedWords.katakana.length >= 10;

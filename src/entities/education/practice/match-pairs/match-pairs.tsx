@@ -190,7 +190,6 @@ const MatchPairs: React.FC<MatchPairsProps> = ({
         <View key={pair[0] + pair[1]} style={styles.pair}>
           {pair.map((item, idx) => (
             <PrimaryButton
-              isHapticFeedback
               containerStylesFunc={() => [
                 pairItemColors,
                 status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "selected" && stylesColor.selectedPair,

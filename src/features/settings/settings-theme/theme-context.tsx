@@ -13,6 +13,7 @@ import { Appearance } from "react-native";
 import { Theme } from "@/shared/constants/theme";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
+import { useTranslation } from "react-i18next";
 
 type Colors = typeof darkTheme;
 
@@ -25,6 +26,7 @@ interface ThemeContextType {
   colors: Colors;
   theme: Theme;
   themeString: string;
+  themeLocalized: string;
   updateTheme: (theme: Theme) => void;
 }
 
@@ -32,6 +34,7 @@ const ThemeContext = createContext<ThemeContextType>({
   colors: colors.light,
   theme: Theme.Light,
   themeString: "light",
+  themeLocalized: "light",
   updateTheme: () => {},
 });
 
@@ -57,6 +60,8 @@ const getColors = (theme: Theme) => {
 export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({
   children,
 }) => {
+  const { t } = useTranslation();
+
   const [theme, setTheme] = useState<Theme>(Theme.Light);
 
   useEffect(() => {
@@ -111,9 +116,12 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({
   const themeString =
     theme === Theme.Auto ? "auto" : theme === Theme.Dark ? "dark" : "light";
 
+  const themeLocalized =
+    theme === Theme.Auto ? t('settings.theme.auto') : theme === Theme.Dark ? t('settings.theme.dark') : t('settings.theme.Light');
+
   return (
     <ThemeContext.Provider
-      value={{ updateTheme, colors, theme, themeString: themeString }}
+      value={{ updateTheme, colors, theme, themeString, themeLocalized }}
     >
       {children}
     </ThemeContext.Provider>

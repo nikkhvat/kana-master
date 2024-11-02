@@ -33,7 +33,6 @@ const AnswerCard: React.FC<AnswerCardProps> = ({
 
   return (
     <PrimaryButton
-      isHapticFeedback
       onClick={() => onClick?.(value)}
       containerStylesFunc={({ pressed }) => ({
         width: width,

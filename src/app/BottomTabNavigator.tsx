@@ -3,13 +3,14 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import MaterialCommunityIcon from "@expo/vector-icons/MaterialCommunityIcons";
-import { Pressable } from "react-native";
+import { Pressable, Vibration } from "react-native";
 
 import { bottomScreens } from "./routes";
 import { ROUTES } from "./navigationTypes";
 import { useAppSelector } from "@/shared/model/hooks";
 
 import * as Haptics from "expo-haptics";
+import { isIOS } from "@/shared/constants/platformUtil";
 
 const Tab = createBottomTabNavigator();
 
@@ -48,7 +49,11 @@ function BottomTabNavigator() {
             {...props}
             onPress={(e) => {
               if (isEnabledHaptic) {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                if (isIOS()) {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                } else {
+                  Vibration.vibrate(1);
+                }
               }
 
               props?.onPress?.(e);

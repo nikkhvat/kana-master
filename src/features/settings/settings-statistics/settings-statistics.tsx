@@ -14,7 +14,7 @@ const SettingsStatistics: React.FC = () => {
 
   return (
     <SettingItem
-      text={t("displayStatistics.title")}
+      text={t("settings.displayStatistics")}
       isEnable={isEnabledStats}
       onValueChange={() => dispatch(toggleStatistics())}
     />

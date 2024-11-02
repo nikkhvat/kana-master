@@ -8,7 +8,6 @@ import {
   LanguageKeys,
   LanguageName,
   ShortLanguage,
-  languageList,
 } from "@/shared/constants/language";
 import { useAppDispatch } from "@/shared/model/hooks";
 import { updateLessons } from "@/pages/education/learning/model/slice";
@@ -83,7 +82,7 @@ const SettingsLanguage: React.FC = () => {
 
   return (
     <SettingItem
-      text={t("profile.language")}
+      text={t("settings.language")}
       subText={LanguageName[i18n.language as LanguageKeys]}
       onClick={onPress}
     />

@@ -52,7 +52,6 @@ const SelectAnswer: React.FC<SelectAnswerProps> = ({
       {shuffleAnswers.map((answer) => (
         <PrimaryButton
           key={answer.title}
-          isHapticFeedback
           isOutline
           onClick={() => onAnswer(answer)}
           text={answer.title}
