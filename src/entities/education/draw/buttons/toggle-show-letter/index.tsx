@@ -22,6 +22,7 @@ const ToggleShowLetter: React.FC = () => {
 
   return (
     <SecondaryButton
+      isHapticFeedback
       icon={
         <Icon
           name={isShowLetter ? "eye-outline" : "eye-off-outline"}

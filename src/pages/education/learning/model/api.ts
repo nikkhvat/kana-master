@@ -1,7 +1,7 @@
 
 
 export const getChapters = async (lang: string) => {
-  const data = await fetch(`https://kana-master.khvat.pro/api/chapters/${lang}`);
+  const data = await fetch(`${process.env.API_URL}/api/chapters/${lang}`);
   const json = await data.json()
 
   return {
@@ -11,7 +11,7 @@ export const getChapters = async (lang: string) => {
 }
 
 export const ping = async () => {
-  const data = await fetch(`https://kana-master.khvat.pro/api/ping`);
+  const data = await fetch(`${process.env.API_URL}/api/ping`);
 
   if (data.status === 200) {
     return true

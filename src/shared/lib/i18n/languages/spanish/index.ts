@@ -97,7 +97,13 @@ const Spanish = {
       dataTakesUp: "Los datos ocupan",
       title: "¿Estás seguro de que deseas borrar los datos?",
       subtitle: "Todos los datos guardados, incluyendo configuraciones y progreso, serán eliminados. Esta acción es irreversible."
-    }
+    },
+
+    sourceCode: {
+      title: "Código fuente",
+      githubRepository: "Repositorio de GitHub",
+    },
+    version: "Versión",
   },
 
   result: {

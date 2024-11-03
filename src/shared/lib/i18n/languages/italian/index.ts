@@ -97,7 +97,12 @@ const Italian = {
       dataTakesUp: "I dati occupano",
       title: "Sei sicuro di voler cancellare i dati?",
       subtitle: "Tutti i dati salvati, comprese impostazioni e progressi, saranno eliminati. Questa azione è irreversibile."
-    }
+    },
+    sourceCode: {
+      title: "Codice sorgente",
+      githubRepository: "Repository GitHub",
+    },
+    version: "Versione",
   },
 
   result: {

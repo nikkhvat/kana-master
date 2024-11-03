@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
@@ -16,6 +16,7 @@ import SettingsHaptic from "@/features/settings/settings-haptic/settings-haptic"
 import PrivacyPolicy from "@/features/settings/privacy-policy/privacy-policy";
 import ContactSupport from "@/features/settings/contact-support/contact-support";
 import RemoveData from "@/features/settings/remove-data/remove-data";
+import SettingItem from "@/entities/profile/setting-item/setting-item";
 
 const SettingsPage: React.FC = () => {
   const insets = useSafeAreaInsets();
@@ -53,6 +54,16 @@ const SettingsPage: React.FC = () => {
 
           <SettingsSection>
             <RemoveData />
+            <SettingItem
+              text={t('settings.sourceCode.title')}
+              subText={t('settings.sourceCode.githubRepository')}
+              link={process.env.GITHUB_REPOSITORY}
+            />
+            <SettingItem
+              isLast
+              text={t('settings.version')}
+              subText={`${process.env.VERSION} (${Platform.OS})`}
+            />
           </SettingsSection>
         </ScrollView>
       </AdaptiveLayout>

@@ -45,6 +45,7 @@ const ToggleStrokeWidth: React.FC = () => {
 
   return (
     <PrimaryButton
+      isHapticFeedback
       isIcon
       width={50}
       onClick={onClick}

@@ -21,6 +21,7 @@ const ClearButtons: React.FC<ClearButtonsProps> = ({
     <View style={styles.buttonsContainer}>
       <View style={{ flex: 1 }}>
         <SecondaryButton
+          isHapticFeedback
           icon={
             <Icon
               name={"keyboard-backspace"}
@@ -34,6 +35,7 @@ const ClearButtons: React.FC<ClearButtonsProps> = ({
       </View>
       <View style={{ flex: 1 }}>
         <SecondaryButton
+          isHapticFeedback
           icon={<Icon name={"replay"} size={24} color={colors.IconPrimary} />}
           onClick={clearFull}
           isOutline

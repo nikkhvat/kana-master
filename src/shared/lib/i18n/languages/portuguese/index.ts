@@ -97,7 +97,13 @@ const Portuguese = {
       dataTakesUp: "Os dados ocupam",
       title: "Tem certeza de que deseja apagar os dados?",
       subtitle: "Todos os dados salvos, incluindo configurações e progresso, serão excluídos. Esta ação é irreversível."
-    }
+    },
+
+    sourceCode: {
+      title: "Código-fonte",
+      githubRepository: "Repositório do GitHub",
+    },
+    version: "Versão",
   },
 
   result: {

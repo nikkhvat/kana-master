@@ -97,7 +97,12 @@ const German = {
       dataTakesUp: "Daten belegen",
       title: "Sind Sie sicher, dass Sie die Daten löschen möchten?",
       subtitle: "Alle gespeicherten Daten, einschließlich Einstellungen und Fortschritt, werden gelöscht. Diese Aktion ist irreversibel."
-    }
+    },
+    sourceCode: {
+      title: "Quellcode",
+      githubRepository: "GitHub-Repository",
+    },
+    version: "Version",
   },
 
   result: {

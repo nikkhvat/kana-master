@@ -97,7 +97,13 @@ const English = {
       dataTakesUp: "Data takes up",
       title: "Are you sure you want to erase data?",
       subtitle: "All saved data, including settings and progress, will be deleted. This action is irreversible."
-    }
+    },
+
+    sourceCode: {
+      title: "Исходный код",
+      githubRepository: "Репозиторий GitHub",
+    },
+    version: "Версия",
   },
 
   result: {

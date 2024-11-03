@@ -97,7 +97,12 @@ const French = {
       dataTakesUp: "Les données occupent",
       title: "Êtes-vous sûr de vouloir effacer les données ?",
       subtitle: "Toutes les données enregistrées, y compris les paramètres et le progrès, seront supprimées. Cette action est irréversible."
-    }
+    },
+    sourceCode: {
+      title: "Code source",
+      githubRepository: "Répertoire GitHub",
+    },
+    version: "Version",
   },
 
   result: {

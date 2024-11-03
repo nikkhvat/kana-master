@@ -85,7 +85,6 @@ const RemoveData: React.FC = () => {
 
   return (
     <SettingItem
-      isLast
       text={t('settings.eraseData.button')}
       subText={dataTakesUp}
       onClick={confirmationCloseAlert}

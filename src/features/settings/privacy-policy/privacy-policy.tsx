@@ -9,7 +9,7 @@ const PrivacyPolicy: React.FC = () => {
   return (
     <SettingItem
       text={t('settings.privacyPolicy')}
-      link={`https://kana-master.khvat.pro/${language}/privacy_policy`}
+      link={`${process.env.API_URL}/${language}/privacy_policy`}
     />
   );
 };

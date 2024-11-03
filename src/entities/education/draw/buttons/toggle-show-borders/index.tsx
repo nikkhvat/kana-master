@@ -22,6 +22,7 @@ const ToggleShowBorders: React.FC = () => {
 
   return (
     <SecondaryButton
+      isHapticFeedback
       icon={
         <Icon
           name={isShowBorder ? "border-outside" : "border-all-variant"}

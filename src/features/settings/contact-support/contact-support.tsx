@@ -5,13 +5,13 @@ import { useTranslation } from "react-i18next";
 const ContactSupport: React.FC = () => {
   const { t, i18n: { language } } = useTranslation();
 
-  const url = `https://kana-master.khvat.pro/${language}/contact_support`;
+  const url = `${process.env.API_URL}/${language}/contact_support`;
 
   return (
     <SettingItem
       isLast
       text={t('settings.contactSupport')}
-      link={`https://kana-master.khvat.pro/${language}/contact_support`}
+      link={`${process.env.API_URL}/${language}/contact_support`}
     />
   );
 };
