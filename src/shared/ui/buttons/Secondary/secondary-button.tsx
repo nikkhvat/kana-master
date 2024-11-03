@@ -133,6 +133,8 @@ const SecondaryButton: FC<SecondaryButtonProps> = ({
 
 const styles = StyleSheet.create({
   button: {
+    flexDirection: "row",
+    gap: 6,
     justifyContent: "center",
     alignItems: "center",
     height: 50,

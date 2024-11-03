@@ -24,6 +24,7 @@ const KanaTableChoiceLettersPage: React.FC<KanaInfoProps> = ({ navigation }) => 
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const { colors } = useThemeContext();
+  const insets = useSafeAreaInsets();
 
   const [activeTab, setActiveTab] = useState<KanaAlphabet>(KanaAlphabet.Hiragana);
 
@@ -39,9 +40,15 @@ const KanaTableChoiceLettersPage: React.FC<KanaInfoProps> = ({ navigation }) => 
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitleAlign: "center",
-      title: activeTab === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana"),
-      headerLeft: () => (
+      header: () => <View style={{
+        width: "100%",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingLeft: insets.left + 20,
+        paddingRight: insets.right + 20,
+        backgroundColor: colors.BgPrimary,
+      }} >
         <PrimaryButton
           isOutline
           containerStyles={{ borderWidth: 0 }}
@@ -49,13 +56,16 @@ const KanaTableChoiceLettersPage: React.FC<KanaInfoProps> = ({ navigation }) => 
             ...Typography.regularH4,
             color: colors.TextSecondary
           }}
+          containerStylesFunc={({ pressed }) => ({
+            backgroundColor: colors.BgPrimary,
+          })}
           isHapticFeedback
           onClick={navigation.goBack}
           text={t("common.close")}
-          width={100}
         />
-      ),
-      headerRight: () => (
+        <Text style={[Typography.semiBoldH4, { color: colors.TextPrimary }]} >
+          {activeTab === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")}
+        </Text>
         <PrimaryButton
           isOutline
           containerStyles={{ borderWidth: 0 }}
@@ -63,17 +73,16 @@ const KanaTableChoiceLettersPage: React.FC<KanaInfoProps> = ({ navigation }) => 
             ...Typography.regularH4,
             color: colors.TextPrimary
           }}
+          containerStylesFunc={({ pressed }) => ({
+            backgroundColor: colors.BgPrimary,
+          })}
           isHapticFeedback
           onClick={() => dispatch(resetKanaSelected())}
           text={t("common.reset")}
-          width={100}
         />
-      ),
-      headerShadowVisible: false,
+      </View>,
     });
   }, [activeTab, dispatch, navigation, t]);
-
-  const insets = useSafeAreaInsets();
 
   return (
     <>
@@ -93,7 +102,7 @@ const KanaTableChoiceLettersPage: React.FC<KanaInfoProps> = ({ navigation }) => 
           )}
           renderSectionHeader={({ section: { title } }) => (
             <View style={[styles.nameContainer, { backgroundColor: colors.BgPrimary }]}>
-              <Text style={[styles.name, { color: colors.TextPrimary }]}>{title}</Text>
+              <Text style={[Typography.boldH3, { color: colors.TextPrimary }]}>{title}</Text>
             </View>
           )}
         />
@@ -138,10 +147,6 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingTop: 10,
     paddingBottom: 10,
-  },
-  name: {
-    fontSize: 17,
-    fontWeight: "700",
   },
   lineContainer: {
     width: "100%",

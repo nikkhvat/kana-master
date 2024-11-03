@@ -195,6 +195,11 @@ const MatchPairs: React.FC<MatchPairsProps> = ({
                 status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "selected" && stylesColor.selectedPair,
                 status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "complete" && stylesColor.complete,
                 status[`${index}/${idx === 0 ? "left" : "right"}`]?.status === "error" && stylesColor.error,
+                {
+                  minHeight: 50,
+                  height: "auto",
+                  padding: 14,
+                }
               ]}
               textStyles={{
                 ...Typography.regularH4,

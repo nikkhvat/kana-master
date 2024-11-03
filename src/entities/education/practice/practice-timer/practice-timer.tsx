@@ -33,7 +33,7 @@ const EducationPracticeTimer: React.FC<EducationPracticeTimerProps> = ({
 
   const set = (val: number) => {
     Animated.timing(animatedValue, {
-      toValue: val * progressBarWidthItem,
+      toValue: (val) * progressBarWidthItem,
       duration: 500,
       useNativeDriver: false,
       delay: 0,

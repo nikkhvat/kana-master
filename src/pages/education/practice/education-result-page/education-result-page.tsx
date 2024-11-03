@@ -19,6 +19,7 @@ import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
 import { Typography } from "@/shared/typography";
 import ResultItem from "@/entities/education/result-item/result-item";
 import { ROUTES } from "@/app/navigationTypes";
+import PageTitle from "@/shared/ui/page-title/page-title";
 
 type LearnResultsNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -45,9 +46,10 @@ const EducationResultPage: React.FC<EducationResultProps> = ({
 
   const home = () => {
     navigation.navigate(ROUTES.ROOT);
+    const chance = Math.random();
 
     try {
-      if (Platform.OS === "ios") {
+      if (Platform.OS === "ios" && chance <= 0.1) {
         StoreReview.requestReview();
       }
     } catch (error) {
@@ -102,9 +104,9 @@ const EducationResultPage: React.FC<EducationResultProps> = ({
           backgroundColor: colors.BgPrimary,
         }}
       >
-        <Text style={[containerStyles.title, Typography.boldH3, { color: colors.TextPrimary }]}>
+        <PageTitle style={containerStyles.title} >
           {t("result.title")}
-        </Text>
+        </PageTitle>
 
         <View
           style={[containerStyles.statsCard, Typography.boldH4, { borderColor: colors.BorderDefault }]}
@@ -131,7 +133,7 @@ const EducationResultPage: React.FC<EducationResultProps> = ({
               </Text>
             </View>
             <Text
-              style={[Typography.regularLabel, { color: colors.TextSecondary }]}
+              style={[Typography.regularLabel, { color: colors.TextSecondary, marginTop: 32 }]}
             >
               {millisecondsToSeconds(result.totalTime)} (
               {millisecondsToSeconds(result.avgTime)} /{" "}
@@ -180,25 +182,25 @@ const EducationResultPage: React.FC<EducationResultProps> = ({
             <ResultItem title={t("result.slowestAnswer")} body={`${getKeyByKana(result.slowestAnswer.answer, result.slowestAnswer.type)} : ${millisecondsToSeconds(result.slowestAnswer.time)}`} />
           )}
           
-          {result.type === "RESULT_PRACTICE" && (
+          {result.type === "RESULT_PRACTICE" && result.incorrect.length > 0 && (
             <ResultItem title={t("result.incorrectAnswers")} body={result.incorrect
               .map((item) => `${getKeyAnswer(item.letter, item.mode)}`)
               .join(", ")} />
           )}
           
-          {result.type === "RESULT_WORD_GAME" && (
+          {result.type === "RESULT_WORD_GAME" && result.incorrectWordBuilding.length > 0 && (
             <ResultItem title={t("result.incorrectWordBuilding")} body={result.incorrectWordBuilding
               .map((item) => `${item[0]} (${item[1]})`)
               .join(", ")} />
           )}
           
-          {result.type === "RESULT_WORD_GAME" && (
+          {result.type === "RESULT_WORD_GAME" && result.incorrectFindThePair.length > 0 && (
             <ResultItem title={t("result.incorrectFindPair")} body={result.incorrectFindThePair
               .map((item) => `${item[0]} (${item[1]})`)
               .join(", ")} />
           )}
           
-          {result.type === "RESULT_WORD_GAME" && (
+          {result.type === "RESULT_WORD_GAME" && result.incorrectChoice.length > 0 && (
             <ResultItem title={t("result.incorrectChoice")} body={result.incorrectChoice
               .map((item) => `${item[0]} (${item[1]})`)
               .join(", ")} />

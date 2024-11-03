@@ -39,6 +39,7 @@ const AnswerCard: React.FC<AnswerCardProps> = ({
         height: width,
         borderColor: pressed ? colors.BorderDefault : borderColor,
         backgroundColor: pressed ? colors.BgPrimaryPressed : cardColor,
+        borderRadius: 24,
       })}
       isOutline
       text={children}

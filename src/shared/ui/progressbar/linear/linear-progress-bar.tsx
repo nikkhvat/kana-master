@@ -64,7 +64,7 @@ const LinearProgressBar: React.FC<ProgressBarProp> = ({
         <View style={[
           styles.progressBarLineActive, 
           { 
-            width: `${(current / all) * 100}%`,
+            width: `${((current + 1) / all) * 100}%`,
             backgroundColor: colors.BgContrast,
           },
         ]} />

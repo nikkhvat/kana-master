@@ -82,7 +82,7 @@ const KanaLetterPage = ({ route, navigation }: KanaInfoProps) => {
       ? t("kana.hiragana")
       : t("kana.katakana");
 
-  const switchButtonText = `${letterKana === KanaAlphabet.Hiragana ? t("kana.katakana") : t("kana.hiragana")} →`;
+  const switchButtonText = `${letterKana === KanaAlphabet.Hiragana ? t("kana.katakana") : t("kana.hiragana")}`;
 
   useEffect(() => {
     navigation.setOptions({
@@ -185,6 +185,7 @@ const KanaLetterPage = ({ route, navigation }: KanaInfoProps) => {
           <SecondaryButton
             isHapticFeedback
             text={switchButtonText}
+            icon={<Icon name={"chevron-right"} size={24} color={colors.IconPrimary} />}
             isOutline
             isFullWidth
             onClick={switchKana}

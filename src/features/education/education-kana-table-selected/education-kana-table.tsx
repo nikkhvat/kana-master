@@ -187,8 +187,8 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
             isPlus
             onPress={() => dispatch(setKanaSelected(getKanaSelected()))}
             isStartOfLine={!isKanaSelected() ? 
-              <Icon name={"check-all"} size={18} color={colors.IconContrast} /> :
-              <Icon name={"close"} size={18} color={colors.IconContrast} />
+              <Icon name={"check-all"} size={18} color={isKanaSelected() ? colors.IconContrast : colors.IconPrimary} /> :
+              <Icon name={"close"} size={18} color={isKanaSelected() ? colors.IconContrast : colors.IconPrimary} />
             }
           />
 
@@ -205,8 +205,8 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
                 isPlus
                 onPress={() => onPlus?.("cell", cellIndex, type)}
                 isStartOfLine={!cell.column ?
-                  <Icon name={"plus"} size={18} color={colors.IconContrast} /> :
-                  <Icon name={"minus"} size={18} color={colors.IconContrast} />
+                  <Icon name={"plus"} size={18} color={cell.column ? colors.IconContrast : colors.IconPrimary} /> :
+                  <Icon name={"minus"} size={18} color={cell.column ? colors.IconContrast : colors.IconPrimary} />
                 }
               />
             );
@@ -229,8 +229,8 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
                 onPress={() => onPlus?.("row", rowIndex, type)}
                 active={row.activeInRow}
                 isStartOfLine={!row.activeInRow ?
-                  <Icon name={"plus"} size={18} color={colors.IconContrast} /> :
-                  <Icon name={"minus"} size={18} color={colors.IconContrast} />
+                  <Icon name={"plus"} size={18} color={row.activeInRow ? colors.IconContrast : colors.IconPrimary} /> :
+                  <Icon name={"minus"} size={18} color={row.activeInRow ? colors.IconContrast : colors.IconPrimary} />
                 }
               />
             </View>

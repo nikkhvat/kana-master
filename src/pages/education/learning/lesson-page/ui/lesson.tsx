@@ -129,6 +129,8 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
   const isAnyScreen =
     currentScreen !== null && isAnyLessonScreen(currentScreen);
 
+  const ifContainsFinishScreen = lessonScreens.some(screen => isAnyLessonScreen(screen) && screen?.name === LessonScreen.Finish)
+
   return (
     <SafeLayout
       additionalPaddingTop={20}
@@ -149,11 +151,12 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
       >
         {(isManuallyLesson(lesson)
           ? true
-          : screen + 1 !== lessonScreens.length) && (
+          : screen + 1 !== lessonScreens.length) &&
+          !(isAnyLessonScreen(currentScreen) && currentScreen?.name === LessonScreen.Finish) &&  (
           <LinearProgressBar
             close={navigation.goBack}
             current={screen}
-            all={lessonScreens.length}
+            all={ifContainsFinishScreen ? lessonScreens.length - 1 : lessonScreens.length}
           />
         )}
       </View>

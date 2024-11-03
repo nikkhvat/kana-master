@@ -22,9 +22,10 @@ const FinishScreen: React.FC<FinishScreenProps> = ({ next, retry }) => {
 
   const onNext = () => {
     next();
+    const chance = Math.random();
 
     try {
-      if (Platform.OS === "ios") {
+      if (Platform.OS === "ios" && chance <= 0.1) {
         StoreReview.requestReview();
       }
     } catch (error) {
@@ -46,10 +47,9 @@ const FinishScreen: React.FC<FinishScreenProps> = ({ next, retry }) => {
       </View>
 
       <View style={styles.buttonsContainer}>
-        <PrimaryButton isHapticFeedback isFullWidth text={t("common.retry")} onClick={retry} />
+        <PrimaryButton isHapticFeedback isOutline isFullWidth text={t("common.retry")} onClick={retry} />
         <PrimaryButton
           isHapticFeedback
-          isOutline
           isFullWidth
           text={t("common.complete")}
           onClick={onNext}

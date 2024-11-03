@@ -15,6 +15,7 @@ import { RootStackParamList } from "@/app/navigationTypes";
 import PageTitle from "@/shared/ui/page-title/page-title";
 import Switcher from "@/shared/ui/switcher/switcher";
 import { ROUTES } from "@/app/navigationTypes";
+import { Typography } from "@/shared/typography";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, typeof ROUTES.KANA_TABLE_ROOT>;
 
@@ -105,7 +106,7 @@ export const KanaTableListPage: React.FC<HomeScreenProps> = ({ navigation }) => 
             )}
             renderSectionHeader={({ section: { title } }) => (
               <View style={[styles.nameContainer, { backgroundColor: colors.BgPrimary }]}>
-                <Text style={[styles.name, { color: colors.TextPrimary }]}>{title}</Text>
+                <Text style={[Typography.boldH3, { color: colors.TextPrimary }]}>{title}</Text>
               </View>
             )}
           />
@@ -127,10 +128,6 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingTop: 10,
     paddingBottom: 10,
-  },
-  name: {
-    fontSize: 17,
-    fontWeight: "700",
   },
   lineContainer: {
     width: "100%",

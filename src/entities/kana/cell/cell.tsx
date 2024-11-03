@@ -75,7 +75,7 @@ const Cell: React.FC<CellProps> = ({
             width: isLong ? widthLong : widthDefault,
             height: widthDefault,
             backgroundColor: active ? pressed ? colors.BgAccentPrimaryPressed : colors.BgAccentPrimary : pressed ? colors.BgPrimaryPressed : "transparent",
-            borderColor: colors.BorderDefault,
+            borderColor: active ? "transparent" : colors.BorderDefault,
           },
         ]}
         icon={isStartOfLine as React.ReactElement}
