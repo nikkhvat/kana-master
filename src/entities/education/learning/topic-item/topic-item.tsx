@@ -46,7 +46,7 @@ const TopicItem: React.FC<TopicItemProps> = ({
   };
 
   const indicatorCheckColors = {
-    borderColor: colors.BgSuccess,
+    borderColor: colors.BgPrimary,
     backgroundColor: colors.BgSuccess,
   };
 
@@ -56,14 +56,14 @@ const TopicItem: React.FC<TopicItemProps> = ({
 
   const lineStyle = {
     backgroundColor: isPassed ? colors.BgSuccess : colors.BgAccentSecondary,
-    height: (isOpened ? "65%" : 24) as number,
+    height: (isOpened ? "65%" : 16) as number,
   };
 
   return (
     <Pressable
       style={[
         styles.container,
-        { paddingBottom: isOpened && !isLast ? 8 : 35 },
+        { paddingBottom: isOpened && !isLast ? 8 : 26 },
       ]}
       onPress={() => onClick?.()}
     >
@@ -148,9 +148,9 @@ const styles = StyleSheet.create({
     height: 1,
   },
   indicatorRound: {
-    borderRadius: 72,
-    width: 72,
-    height: 72,
+    borderRadius: 70,
+    width: 70,
+    height: 70,
     borderWidth: 4,
   },
   indicatorIcon: {
@@ -158,8 +158,8 @@ const styles = StyleSheet.create({
     height: 54,
     position: "absolute",
     borderRadius: 54,
-    left: 9,
-    top: 9,
+    left: 8,
+    top: 8,
 
     justifyContent: 'center',
     alignItems: 'center',
