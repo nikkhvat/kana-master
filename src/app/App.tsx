@@ -18,13 +18,13 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SafeAreaProvider>
-          <ThemeProvider>
-            <TransliterationsProvider>
-              <ActionSheetProvider> 
-                <Layout />
-              </ActionSheetProvider>
-            </TransliterationsProvider>
-          </ThemeProvider>
+          <ActionSheetProvider> 
+            <ThemeProvider>
+              <TransliterationsProvider>
+                  <Layout />
+              </TransliterationsProvider>
+            </ThemeProvider>
+          </ActionSheetProvider>
         </SafeAreaProvider>
       </PersistGate>
     </Provider>

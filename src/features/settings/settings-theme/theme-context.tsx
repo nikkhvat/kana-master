@@ -2,14 +2,13 @@ import React, {
   createContext,
   useContext,
   ReactNode,
-  useState,
   useEffect,
   FunctionComponent,
+  useState,
 } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Appearance } from "react-native";
-
+import { Appearance, useColorScheme } from "react-native";
 import { Theme } from "@/shared/constants/theme";
 import { darkTheme } from "@/shared/themes/dark";
 import { lightTheme } from "@/shared/themes/light";
@@ -35,7 +34,7 @@ const ThemeContext = createContext<ThemeContextType>({
   theme: Theme.Light,
   themeString: "light",
   themeLocalized: "light",
-  updateTheme: () => {},
+  updateTheme: () => { },
 });
 
 interface ThemeProviderProps {
@@ -43,43 +42,30 @@ interface ThemeProviderProps {
 }
 
 const getColors = (theme: Theme) => {
-  if (theme === Theme.Dark) return colors["dark"];
-  if (theme === Theme.Light) return colors["light"];
+  if (theme === Theme.Dark) return colors.dark;
+  if (theme === Theme.Light) return colors.light;
 
-  if (theme === Theme.Auto) {
-    const themeDetected = Appearance.getColorScheme();
-    if (themeDetected === null || themeDetected === undefined)
-      return colors["light"];
-    if (themeDetected === "dark") return colors["dark"];
-    if (themeDetected === "light") return colors["light"];
-  }
-
-  return colors["light"];
+  const themeDetected = Appearance.getColorScheme();
+  return themeDetected === "dark" ? colors.dark : colors.light;
 };
 
 export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({
   children,
 }) => {
   const { t } = useTranslation();
-
-  const [theme, setTheme] = useState<Theme>(Theme.Light);
+  const [isAuto, setIsAuto] = useState(false);
+  let theme = useColorScheme() as Theme;
 
   useEffect(() => {
     const loadThemeFromStorage = async () => {
       try {
         const storedTheme = await AsyncStorage.getItem("app_theme");
         if (storedTheme) {
-          setTheme(JSON.parse(storedTheme));
-          Appearance.setColorScheme(
-            storedTheme === Theme.Auto
-              ? null
-              : storedTheme === Theme.Dark
-                ? "dark"
-                : "light",
-          );
+          const parsedTheme = JSON.parse(storedTheme) as Theme;
+          updateTheme(parsedTheme);
         }
       } catch (error) {
-        return error;
+        console.error("Failed to load theme from storage:", error);
       }
     };
 
@@ -87,37 +73,24 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({
   }, []);
 
   const updateTheme = (newTheme: Theme) => {
-    let activeTheme: "dark" | "light" =
-      newTheme === Theme.Dark ? "dark" : "light";
-
-    if (theme === Theme.Auto) {
-      const themeDetected = Appearance.getColorScheme();
-      if (themeDetected === "dark") {
-        activeTheme = "dark";
-      }
-
-      if (
-        themeDetected === "light" ||
-        themeDetected === null ||
-        themeDetected === undefined
-      ) {
-        activeTheme = "light";
-      }
-    }
-
-    Appearance.setColorScheme(activeTheme);
     AsyncStorage.setItem("app_theme", JSON.stringify(newTheme));
 
-    setTheme(newTheme);
+    if (newTheme !== Theme.Auto) {
+      Appearance.setColorScheme(newTheme === Theme.Light ? "light" : "dark");
+      setIsAuto(false);
+    } else {
+      setIsAuto(true);
+      Appearance.setColorScheme(null)
+    }
   };
 
   const colors = getColors(theme);
 
   const themeString =
-    theme === Theme.Auto ? "auto" : theme === Theme.Dark ? "dark" : "light";
+    (theme === Theme.Auto || !theme || isAuto === true) ? "auto" : theme === Theme.Dark ? "dark" : "light";
 
   const themeLocalized =
-    theme === Theme.Auto ? t('settings.theme.auto') : theme === Theme.Dark ? t('settings.theme.dark') : t('settings.theme.light');
+    (theme === Theme.Auto || !theme || isAuto === true) ? t('settings.theme.auto') : theme === Theme.Dark ? t('settings.theme.dark') : t('settings.theme.light');
 
   return (
     <ThemeContext.Provider
@@ -128,8 +101,4 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({
   );
 };
 
-export const useThemeContext = () => {
-  const context = useContext(ThemeContext);
-
-  return context;
-};
+export const useThemeContext = () => useContext(ThemeContext);

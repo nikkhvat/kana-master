@@ -31,12 +31,9 @@ const SettingsTheme: React.FC = () => {
     }, (buttonIndex?: number) => {
       if (buttonIndex === 1) {
         updateTheme(Theme.Light);
-        updateTheme(Theme.Light);
       } else if (buttonIndex === 2) {
         updateTheme(Theme.Dark);
-        updateTheme(Theme.Dark);
       } else if (buttonIndex === 3) {
-        updateTheme(Theme.Auto);
         updateTheme(Theme.Auto);
       }
     });

@@ -11,12 +11,8 @@
       "distribution": "internal"
     },
     "production": {
-      "distribution": "internal",
       "android": {
-        "image": "latest"
-      },
-      "ios": {
-        "image": "latest"
+        "buildType": "apk"
       }
     }
   },
