@@ -117,7 +117,7 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({
     theme === Theme.Auto ? "auto" : theme === Theme.Dark ? "dark" : "light";
 
   const themeLocalized =
-    theme === Theme.Auto ? t('settings.theme.auto') : theme === Theme.Dark ? t('settings.theme.dark') : t('settings.theme.Light');
+    theme === Theme.Auto ? t('settings.theme.auto') : theme === Theme.Dark ? t('settings.theme.dark') : t('settings.theme.light');
 
   return (
     <ThemeContext.Provider

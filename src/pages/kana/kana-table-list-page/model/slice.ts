@@ -50,10 +50,11 @@ export const statisticsSlice = createSlice({
     },
     toggleStatistics: (state) => {
       state.isEnabled = !state.isEnabled;
-    }
+    },
+    clearStateStatistics: () => initialState,
   },
 });
 
-export const { recalculate, toggleStatistics } = statisticsSlice.actions;
+export const { recalculate, toggleStatistics, clearStateStatistics } = statisticsSlice.actions;
 
 export default statisticsSlice.reducer;

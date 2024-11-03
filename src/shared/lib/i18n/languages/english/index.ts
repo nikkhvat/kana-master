@@ -91,6 +91,13 @@ const English = {
     joinOurCommunity: {
       title: "Join our community",
     },
+
+    eraseData: {
+      button: "Clear App Data",
+      dataTakesUp: "Data takes up",
+      title: "Are you sure you want to erase data?",
+      subtitle: "All saved data, including settings and progress, will be deleted. This action is irreversible."
+    }
   },
 
   result: {
@@ -175,6 +182,7 @@ const English = {
 
     cancel: "Cancel",
     ok: "Ok",
+    confirm: "Confirm",
   }
 };
 

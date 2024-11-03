@@ -56,6 +56,8 @@ export const profileSlice = createSlice({
         state.isEnabledHaptic = false;
       }
     },
+
+    clearStateProfile: () => initialState,
   },
 });
 
@@ -64,6 +66,7 @@ export const {
   toggleShowBorder,
   toggleShowLetter,
   toggleHaptic,
+  clearStateProfile
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

@@ -91,6 +91,13 @@ const French = {
     joinOurCommunity: {
       title: "Rejoignez notre communauté",
     },
+
+    eraseData: {
+      button: "Effacer les données de l'application",
+      dataTakesUp: "Les données occupent",
+      title: "Êtes-vous sûr de vouloir effacer les données ?",
+      subtitle: "Toutes les données enregistrées, y compris les paramètres et le progrès, seront supprimées. Cette action est irréversible."
+    }
   },
 
   result: {
@@ -171,6 +178,7 @@ const French = {
     
     cancel: "Annuler",
     ok: "Ok",
+    confirm: "Confirmer",
   }
 };
 

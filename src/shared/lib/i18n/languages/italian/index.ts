@@ -91,6 +91,13 @@ const Italian = {
     joinOurCommunity: {
       title: "Unisciti alla nostra comunità",
     },
+
+    eraseData: {
+      button: "Cancella dati dell'app",
+      dataTakesUp: "I dati occupano",
+      title: "Sei sicuro di voler cancellare i dati?",
+      subtitle: "Tutti i dati salvati, comprese impostazioni e progressi, saranno eliminati. Questa azione è irreversibile."
+    }
   },
 
   result: {
@@ -171,6 +178,7 @@ const Italian = {
 
     cancel: "Annulla",
     ok: "Ok",
+    confirm: "Conferma",
   }
 };
 

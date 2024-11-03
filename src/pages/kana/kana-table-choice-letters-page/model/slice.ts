@@ -39,6 +39,7 @@ export const kanaSlice = createSlice({
   name: "kana",
   initialState,
   reducers: {
+    clearStateKana: () => initialState,
     countAvailableWords: (state) => {
       const katakanaLetters = [
         ...state.selected.base.katakana,
@@ -206,6 +207,6 @@ export const kanaSlice = createSlice({
   },
 });
 
-export const { setKanaSelected, resetKanaSelected, toggleLetter, toggleSome, countAvailableWords } = kanaSlice.actions;
+export const { setKanaSelected, resetKanaSelected, toggleLetter, toggleSome, countAvailableWords, clearStateKana } = kanaSlice.actions;
 
 export default kanaSlice.reducer;

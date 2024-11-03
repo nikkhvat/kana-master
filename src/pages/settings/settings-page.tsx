@@ -15,6 +15,7 @@ import SettingsSection from "@/entities/profile/setting-sectoin/settings-section
 import SettingsHaptic from "@/features/settings/settings-haptic/settings-haptic";
 import PrivacyPolicy from "@/features/settings/privacy-policy/privacy-policy";
 import ContactSupport from "@/features/settings/contact-support/contact-support";
+import RemoveData from "@/features/settings/remove-data/remove-data";
 
 const SettingsPage: React.FC = () => {
   const insets = useSafeAreaInsets();
@@ -49,6 +50,10 @@ const SettingsPage: React.FC = () => {
               <JoinCommunity />
             </SettingsSection>
           )}
+
+          <SettingsSection>
+            <RemoveData />
+          </SettingsSection>
         </ScrollView>
       </AdaptiveLayout>
     </View>

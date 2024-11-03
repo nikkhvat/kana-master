@@ -74,7 +74,7 @@ const SettingsTransliterations: React.FC = () => {
   ];
 
   const onPress = () => {
-    const options = ["Cancel", ...transliterationSystems];
+    const options = [t('alert.cancel'), ...transliterationSystems];
     const cancelButtonIndex = 0;
 
     showActionSheetWithOptions({

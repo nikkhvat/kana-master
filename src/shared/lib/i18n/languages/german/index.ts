@@ -90,6 +90,13 @@ const German = {
 
     joinOurCommunity: {
       title: "Treten Sie unserer Community bei",
+    },
+
+    eraseData: {
+      button: "App-Daten löschen",
+      dataTakesUp: "Daten belegen",
+      title: "Sind Sie sicher, dass Sie die Daten löschen möchten?",
+      subtitle: "Alle gespeicherten Daten, einschließlich Einstellungen und Fortschritt, werden gelöscht. Diese Aktion ist irreversibel."
     }
   },
 
@@ -171,6 +178,7 @@ const German = {
 
     cancel: "Abbrechen",
     ok: "Ok",
+    confirm: "Bestätigen",
   }
 };
 

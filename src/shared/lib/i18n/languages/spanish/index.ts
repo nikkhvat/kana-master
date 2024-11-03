@@ -90,6 +90,13 @@ const Spanish = {
 
     joinOurCommunity: {
       title: "Únase a nuestra comunidad",
+    },
+
+    eraseData: {
+      button: "Borrar datos de la aplicación",
+      dataTakesUp: "Los datos ocupan",
+      title: "¿Estás seguro de que deseas borrar los datos?",
+      subtitle: "Todos los datos guardados, incluyendo configuraciones y progreso, serán eliminados. Esta acción es irreversible."
     }
   },
 
@@ -172,6 +179,7 @@ const Spanish = {
 
   cancel: "Cancelar",
   ok: "Aceptar",
+  confirm: "Confirmar",
 };
 
 export default Spanish;

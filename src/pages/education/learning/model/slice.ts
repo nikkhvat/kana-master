@@ -36,6 +36,7 @@ export const lessonsSlice = createSlice({
   name: "lessons",
   initialState,
   reducers: {
+    clearStateLessons: () => initialState,
     completeLesson: (state, action) => {
       state.completedLesson = [...state.completedLesson, action.payload];
     },
@@ -53,9 +54,9 @@ export const lessonsSlice = createSlice({
         state.lang = action.payload.lang as "en"
       }
     })
-  },
+  }
 });
 
-export const { completeLesson, setChapters } = lessonsSlice.actions;
+export const { completeLesson, setChapters, clearStateLessons } = lessonsSlice.actions;
 
 export default lessonsSlice.reducer;

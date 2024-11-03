@@ -90,6 +90,13 @@ const Portuguese = {
 
     joinOurCommunity: {
       title: "Junte-se à nossa comunidade",
+    },
+
+    eraseData: {
+      button: "Apagar dados do aplicativo",
+      dataTakesUp: "Os dados ocupam",
+      title: "Tem certeza de que deseja apagar os dados?",
+      subtitle: "Todos os dados salvos, incluindo configurações e progresso, serão excluídos. Esta ação é irreversível."
     }
   },
 
@@ -171,6 +178,7 @@ const Portuguese = {
 
     cancel: "Cancelar",
     ok: "Ok",
+    confirm: "Confirmar",
   }
 };
 
