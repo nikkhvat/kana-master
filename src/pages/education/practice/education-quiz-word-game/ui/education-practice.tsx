@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useKeepAwake } from "expo-keep-awake";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { useEducationPracticeContext } from "../lib/context/education-practice-context";
 import { useEducationStatisticContext } from "../lib/context/education-statistic-context";
@@ -20,21 +20,29 @@ import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/app/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
 import { ROUTES } from "@/app/navigationTypes";
+import { useNavigation } from '@react-navigation/native';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, typeof ROUTES.PRACTICE_WORD_GAME>;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, typeof ROUTES.PRACTICE_WORD_GAME>;
 
 interface LearnScreenProps {
   route: LearnScreenRouteProp
-  navigation: HomeScreenNavigationProp
 }
-
-export interface RegistErrorProps {
+export interface RegistrationErrorProps {
   type: typeof QuestionTypeFindPairWord | typeof QuestionTypeBuildingWord | typeof QuestionTypeChooseWord,
   pair: string[];
 }
 
-function EducationWordGame({ route, navigation }: LearnScreenProps) {
+function EducationWordGame({ route }: LearnScreenProps) {
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+      gestureEnabled: false,
+    })
+  }, [navigation])
+
   useKeepAwake();
 
   const dispatch = useAppDispatch();

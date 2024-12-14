@@ -67,7 +67,7 @@ const lettersTableBase = {
     // "92f412f6-6c79-47ca-8be5-bf3f75500f25": { id: "92f412f6-6c79-47ca-8be5-bf3f75500f25", ka: "ヱ", hi: "ゑ", transliterations: ["WE", "WE", "WE", "ВЕ"] },
     "858b53e1-af17-45d5-8fc2-330121eab5c4": { id: "858b53e1-af17-45d5-8fc2-330121eab5c4", ka: "ヲ", hi: "を", transliterations: ["WO", "WO", "WO", "ВО"] },
     "2a481d17-0d7c-492a-85fc-cab60e9fb6df": { id: "2a481d17-0d7c-492a-85fc-cab60e9fb6df", ka: "ン", hi: "ん", transliterations: ["N", "N", "N", "Н"] }
-};
+} as const;
 
 const lettersTableDakuon = {
     "2dc3667e-c4cb-4d04-adc8-f3c5603d6b3d": { id: "2dc3667e-c4cb-4d04-adc8-f3c5603d6b3d", ka: "ガ", hi: "が", transliterations: ["GA", "GA", "GA", "ГА"] },
@@ -90,7 +90,7 @@ const lettersTableDakuon = {
     "ad5fe49a-65dd-4016-ad02-ca824b6ac476": { id: "ad5fe49a-65dd-4016-ad02-ca824b6ac476", ka: "ブ", hi: "ぶ", transliterations: ["BU", "BU", "BU", "БУ"] },
     "f8f32a3f-a6cf-443c-a7d5-9201f1d50b6f": { id: "f8f32a3f-a6cf-443c-a7d5-9201f1d50b6f", ka: "ベ", hi: "べ", transliterations: ["BE", "BE", "BE", "БЭ"] },
     "b1ee6b66-8c09-4cf7-a7ee-12ed24d4fb9b": { id: "b1ee6b66-8c09-4cf7-a7ee-12ed24d4fb9b", ka: "ボ", hi: "ぼ", transliterations: ["BO", "BO", "BO", "БО"] }
-};
+} as const;
 
 const lettersTableHandakuon = {
   "29586e2f-2cdf-4f5a-ab03-43cdc7de5bee": { id: "29586e2f-2cdf-4f5a-ab03-43cdc7de5bee", ka: "パ", hi: "ぱ", transliterations: ["PA", "PA", "PA", "ПА"] },
@@ -98,7 +98,7 @@ const lettersTableHandakuon = {
   "70bd9d94-d6d5-4572-9b4e-290c2effbec4": { id: "70bd9d94-d6d5-4572-9b4e-290c2effbec4", ka: "プ", hi: "ぷ", transliterations: ["PU", "PU", "PU", "ПУ"] },
   "cb95fb95-60c8-4324-a716-a9a1013f9214": { id: "cb95fb95-60c8-4324-a716-a9a1013f9214", ka: "ペ", hi: "ぺ", transliterations: ["PE", "PE", "PE", "ПЭ"] },
   "dded7c42-3b0c-4e89-9b03-1ad95d40fa9d": { id: "dded7c42-3b0c-4e89-9b03-1ad95d40fa9d", ka: "ポ", hi: "ぽ", transliterations: ["PO", "PO", "PO", "ПО"] },
-};
+} as const;
 
 const lettersTableYoon = {
   "d1a354dd-03db-4143-8883-bfd21f0c63bf": { id: "d1a354dd-03db-4143-8883-bfd21f0c63bf", ka: "キャ", hi: "きゃ", transliterations: ["KYA", "KYA", "KYA", "КЯ"] },
@@ -139,7 +139,7 @@ const lettersTableYoon = {
   "8be1debc-5346-4979-bfde-913a90ab0122": { id: "8be1debc-5346-4979-bfde-913a90ab0122", ka: "ピャ", hi: "ぴゃ", transliterations: ["PYA", "PYA", "PYA", "ПЯ"] },
   "ce908138-f0b0-4fee-9cfa-78a6f2a6cb3a": { id: "ce908138-f0b0-4fee-9cfa-78a6f2a6cb3a", ka: "ピュ", hi: "ぴゅ", transliterations: ["PYU", "PYU", "PYU", "ПЮ"] },
   "45435756-de47-4f76-89b7-17d27aee49c7": { id: "45435756-de47-4f76-89b7-17d27aee49c7", ka: "ピョ", hi: "ぴょ", transliterations: ["PYO", "PYO", "PYO", "ПЁ"] }
-};
+} as const;
 
 export const lettersTableById = {
   ...lettersTableBase,

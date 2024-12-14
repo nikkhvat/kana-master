@@ -29,7 +29,7 @@ const StartPracticeButton: React.FC<StartPracticeButtonProps> = ({
 
   return (
     <View
-      style={[{ marginTop: someError ? 42 : 64 }, absolute && styles.absolute]}
+      style={[{ marginTop: 32 }, absolute && styles.absolute]}
     >
       {someError && (
         <Text
@@ -44,7 +44,7 @@ const StartPracticeButton: React.FC<StartPracticeButtonProps> = ({
       )}
 
       <PrimaryButton
-        containerStyles={{ marginTop: 0, marginBottom: 16 }}
+        containerStyles={{ marginTop: 0, marginBottom: 32 }}
         text={t("common.start")}
         isDisabled={someError}
         onClick={onPress}

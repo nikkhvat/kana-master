@@ -56,8 +56,8 @@ const TopicItem: React.FC<TopicItemProps> = ({
 
   const lineStyle = {
     backgroundColor: isPassed ? colors.BgSuccess : colors.BgAccentSecondary,
-    height: (isOpened ? "65%" : 16) as number,
-  };
+    height: isOpened ? "65%" : 16,
+  } as const;
 
   return (
     <Pressable

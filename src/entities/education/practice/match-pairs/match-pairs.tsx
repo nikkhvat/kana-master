@@ -68,9 +68,6 @@ const MatchPairs: React.FC<MatchPairsProps> = ({
   const pairItemColors = {
     borderColor: colors.BorderDefault,
   };
-  const textColors = {
-    color: colors.TextPrimary,
-  };
 
   const mixedPairs: string[][] = useMemo(() => toShuffledPairs(pairs), [pairs]);
 

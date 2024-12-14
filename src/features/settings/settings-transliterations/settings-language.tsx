@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { useTranslation } from "react-i18next";
-import { ActionSheetIOS, StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "../settings-theme/theme-context";
 
@@ -15,37 +14,11 @@ import SettingItem from "@/entities/profile/setting-item/setting-item";
 import { useActionSheet } from '@expo/react-native-action-sheet';
 
 const SettingsTransliterations: React.FC = () => {
-  const { colors, themeString } = useThemeContext();
+  const { themeString } = useThemeContext();
 
   const { showActionSheetWithOptions } = useActionSheet();
 
-  const { t, i18n } = useTranslation();
-
-  const romaji = [
-    {
-      key: Transliterations.HEP,
-      short: "HEP",
-      label: t("transliterationSystems.hepburn"),
-    },
-    {
-      key: Transliterations.KUN,
-      short: "KUN",
-      label: t("transliterationSystems.kunreiShiki"),
-    },
-    {
-      key: Transliterations.NIH,
-      short: "NIH",
-      label: t("transliterationSystems.nihonShiki"),
-    },
-  ];
-
-  const russian = [
-    {
-      key: Transliterations.RUS,
-      short: "RUS",
-      label: t("transliterationSystems.russianPhoneticTransliteration"),
-    },
-  ];
+  const { t } = useTranslation();
 
   const { transliterations, updateTransliterations } =
     useTransliterationsContext();
@@ -57,14 +30,6 @@ const SettingsTransliterations: React.FC = () => {
     setTransliterationsTab(transliteration);
     updateTransliterations(transliteration);
   };
-
-  useEffect(() => {
-    if (i18n.language === "ru") {
-      onUpdateTransliterations(russian[0].key);
-    } else {
-      onUpdateTransliterations(romaji[0].key);
-    }
-  }, [i18n.language]);
 
   const transliterationSystems = [
     t("transliterationSystems.hepburn"),

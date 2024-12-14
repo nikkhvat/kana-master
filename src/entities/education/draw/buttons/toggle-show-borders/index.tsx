@@ -15,7 +15,7 @@ const ToggleShowBorders: React.FC = () => {
   );
 
   const toggle = () => {
-    dispatch(toggleShowBorder(null));
+    dispatch(toggleShowBorder());
   };
 
   const { colors } = useThemeContext();

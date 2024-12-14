@@ -7,8 +7,8 @@ import { QuestionWordBuilding } from "@/shared/types/questions";
 
 interface GenerateWordBuildingProps {
   word: Word,
-  kanaLetters: ILetter[],
-  hiraLetters: ILetter[],
+  katakanaLetters: ILetter[],
+  hiraganaLetters: ILetter[],
 
   lang: string
   
@@ -17,8 +17,8 @@ interface GenerateWordBuildingProps {
 
 const generateWordBuilding = ({ 
   word, 
-  kanaLetters, 
-  hiraLetters,
+  katakanaLetters, 
+  hiraganaLetters,
   selectKanaType,
   lang
 }: GenerateWordBuildingProps): QuestionWordBuilding => {
@@ -32,7 +32,7 @@ const generateWordBuilding = ({
   for (let i = 0; i < needToAddLength; i++) {
     const key = selectKanaType === KanaAlphabet.Hiragana ? "hi" : "ka";
 
-    const randomLetter = getRandomLetter(key === "hi" ? [hiraLetters] : [kanaLetters]);
+    const randomLetter = getRandomLetter(key === "hi" ? [hiraganaLetters] : [katakanaLetters]);
 
     if (randomLetter !== null) {
       shaffledLetters.push(getKana(randomLetter, selectKanaType));

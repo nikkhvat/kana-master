@@ -24,7 +24,7 @@ export type ResultInfoWordGame = {
 }
 
 
-export interface RegistErrorProps {
+export interface RegistrationErrorProps {
   type: typeof QuestionTypeFindPairWord | typeof QuestionTypeBuildingWord | typeof QuestionTypeChooseWord,
   pair: string[];
 }
@@ -34,7 +34,7 @@ interface EducationStatisticContextValue {
   init: () => void;
   pickAnswer: (data: PickAnswerProps) => void;
   getResult: () => ResultInfoWordGame;
-  registrError: (data: RegistErrorProps) => void;
+  registrError: (data: RegistrationErrorProps) => void;
 }
 
 export const EducationStatisticContext = createContext<EducationStatisticContextValue>({
@@ -51,7 +51,7 @@ export const useEducationStatisticContext = () => useContext(EducationStatisticC
 let items: StatsItem[] = [];
 
 export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [errors, setErrors] = useState<RegistErrorProps[]>([]);
+  const [errors, setErrors] = useState<RegistrationErrorProps[]>([]);
   const [time, setTime] = useState<number>(0);
 
 
@@ -72,7 +72,7 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
     setTime(now);
   };
 
-  const registrError = (data: RegistErrorProps) => {
+  const registrError = (data: RegistrationErrorProps) => {
     setErrors(prev => [...prev, data]);
   };
 
@@ -97,8 +97,6 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
 
     const totalQuestions = items.length;
     let correctQuestions = 0;
-
-    items.filter(item => item.correctAnswer).length;
 
     for (let i = 0; i < items.length; i++) {
       const item = items[i];

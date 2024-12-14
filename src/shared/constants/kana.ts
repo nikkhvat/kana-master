@@ -8,7 +8,14 @@ export enum CardMode {
   romajiToKatakana = "romaji_to_katakana"
 }
 
-export enum TestMode {
+export enum QuestionMode {
+  Choose = "choose",
+  Brash = "brash",
+  Type = "type",
+  Word = "word",
+}
+
+export enum PracticeWordMode {
   Choice = "choice",
   WordBuilding = "word_building",
   FindPair = "find_pair",

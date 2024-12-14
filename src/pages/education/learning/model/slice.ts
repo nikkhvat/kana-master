@@ -11,7 +11,7 @@ const initialState: InitialState = {
 };
 
 export const updateLessons = createAsyncThunk("LESSONS/UPDATE_LESSONS",
-  async ({ lang }: { lang: string }, { dispatch }) => {
+  async ({ lang }: { lang: string }) => {
     try {
       const { data, status } = await getChapters(lang);
 
@@ -22,7 +22,9 @@ export const updateLessons = createAsyncThunk("LESSONS/UPDATE_LESSONS",
           lang: lang
         }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error(error)
+    }
 
     return {
       ok: false,

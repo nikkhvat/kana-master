@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import { RouteProp } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { StackNavigationProp, TransitionPresets } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import Draw from "@/entities/education/draw/draw";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
@@ -29,6 +29,10 @@ import IconButton from "@/shared/ui/icon-button";
 import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
 import { ROUTES } from "@/app/navigationTypes";
 
+import { useNavigation } from '@react-navigation/native';
+import { isAndroid } from "@/shared/constants/platformUtil";
+import { Typography } from "@/shared/typography";
+
 interface KanaInfoProps {
   route: RouteProp<RootStackParamList, typeof ROUTES.KANA_INFO>;
   navigation: StackNavigationProp<RootStackParamList, typeof ROUTES.KANA_INFO>;
@@ -39,7 +43,9 @@ enum Screen {
   Draw,
 }
 
-const KanaLetterPage = ({ route, navigation }: KanaInfoProps) => {
+const KanaLetterPage: React.FC<KanaInfoProps> = ({ route }) => {
+  const navigation = useNavigation();
+
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
@@ -85,7 +91,11 @@ const KanaLetterPage = ({ route, navigation }: KanaInfoProps) => {
   const switchButtonText = `${letterKana === KanaAlphabet.Hiragana ? t("kana.katakana") : t("kana.hiragana")}`;
 
   useEffect(() => {
-    navigation.setOptions({
+    navigation.setOptions(isAndroid() ? {
+      title: headerTitle,
+      headerTitleStyle: [Typography.semiBoldH4, { color: colors.TextPrimary }],
+      headerShadowVisible: false,
+    } : {
       headerTitleAlign: "center",
       headerLeft: () => (
         <IconButton onPress={switchScreen}>
@@ -98,6 +108,7 @@ const KanaLetterPage = ({ route, navigation }: KanaInfoProps) => {
       ),
       title: headerTitle,
       headerShadowVisible: false,
+      presentation: 'modal'
     });
   }, [navigation, currentScreen, letterKana]);
 
@@ -141,20 +152,20 @@ const KanaLetterPage = ({ route, navigation }: KanaInfoProps) => {
             indicatorColor={isEnabledStats ? letterStat?.level : null}
             hideTitle
             kana={letterKana}
-            letter={letter as ILetter}
+            letter={letter as unknown as ILetter}
           />
 
-          {currentScreen === Screen.Symbol && (
-            <View style={{ marginTop: 16 + 1 }}>
-              <Symbol id={letter.id} kana={letterKana} />
-            </View>
-          )}
-
-          {currentScreen === Screen.Draw && (
             <View style={{ marginTop: 16 }}>
-              <Draw kana={letterKana} letter={letter as ILetter} />
+            {currentScreen === Screen.Symbol && <Symbol id={letter.id} kana={letterKana} />}
+
+            {currentScreen === Screen.Draw && (
+              <Draw
+                kana={letterKana}
+                letter={letter as unknown as ILetter}
+                isTextRecognition
+              />
+            )}
             </View>
-          )}
         </View>
 
         <View style={styles.buttonContainer}>

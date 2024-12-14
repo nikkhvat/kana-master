@@ -1,11 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 
 import {
-  Platform,
   Pressable,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -84,7 +82,7 @@ const Sequence: React.FC<SequenceProps> = ({ sequence, onFinish, onError }) => {
         }
         onFinish?.(hasError);
         reset();
-        setTrueAnswers(prev => prev.map(item => null));
+        setTrueAnswers(prev => prev.map(() => null));
       }, TEST_DELAY);
     }
   }, [selectedLetters]);

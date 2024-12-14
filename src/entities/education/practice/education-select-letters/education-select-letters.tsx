@@ -13,8 +13,7 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TABLET_WIDTH } from "@/shared/constants/app";
 import { useAppSelector } from "@/shared/model/hooks";
-import practiceImage from "@/shared/resources/preview/practice.jpg";
-import wordGame from "@/shared/resources/preview/wordgame.jpg";
+import wordGame from "@/shared/resources/preview/cover.jpg";
 import { Typography } from "@/shared/typography";
 import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
 
@@ -47,7 +46,7 @@ const EducationKanaSelectedCard: React.FC<EducationKanaSelectedCardProps> = ({
 
   const selectedWords = useAppSelector((state) => state.kana.selectedWords);
 
-  const preview = imageSource === CardType.Practice ? practiceImage : wordGame;
+  const preview = wordGame;
 
   const value =
     imageSource === CardType.WordGame

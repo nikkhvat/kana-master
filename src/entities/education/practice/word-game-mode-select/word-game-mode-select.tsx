@@ -4,10 +4,11 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { TestMode } from "@/shared/constants/kana";
+import { PracticeWordMode } from "@/shared/constants/kana";
 
 import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
 import { Typography } from "@/shared/typography";
+import ButtonCard from "../button-card/button-card";
 
 export type CardModeSelectProps = {
   isHiraganaAvailable: boolean;
@@ -15,7 +16,7 @@ export type CardModeSelectProps = {
 
   modeAvailable: boolean;
 
-  setMode: React.Dispatch<React.SetStateAction<TestMode[]>>;
+  setMode: React.Dispatch<React.SetStateAction<PracticeWordMode[]>>;
 };
 
 const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
@@ -29,14 +30,14 @@ const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
   const { colors } = useThemeContext();
   const { t } = useTranslation();
 
-  const [selectedCardMode, setSelectedCardMode] = useState<TestMode[]>([]);
+  const [selectedCardMode, setSelectedCardMode] = useState<PracticeWordMode[]>([]);
 
   useEffect(() => {
     const initial = [];
 
-    modeAvailable && initial.push(TestMode.Choice);
-    modeAvailable && initial.push(TestMode.FindPair);
-    modeAvailable && initial.push(TestMode.WordBuilding);
+    if (modeAvailable) initial.push(PracticeWordMode.Choice);
+    if (modeAvailable) initial.push(PracticeWordMode.FindPair);
+    if (modeAvailable) initial.push(PracticeWordMode.WordBuilding);
 
     setSelectedCardMode(initial);
     setMode(initial);
@@ -46,25 +47,25 @@ const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
     [
       {
         title: t("wordGame.choice"),
-        key: TestMode.Choice,
+        key: PracticeWordMode.Choice,
         condition: modeAvailable,
       },
       {
         title: t("wordGame.wordBuilding"),
-        key: TestMode.WordBuilding,
+        key: PracticeWordMode.WordBuilding,
         condition: modeAvailable,
       },
     ],
     [
       {
         title: t("wordGame.findThePair"),
-        key: TestMode.FindPair,
+        key: PracticeWordMode.FindPair,
         condition: modeAvailable,
       },
     ],
   ];
 
-  const toggle = (key: TestMode) => {
+  const toggle = (key: PracticeWordMode) => {
     if (selectedCardMode.includes(key)) {
       setSelectedCardMode((prev) => prev.filter((item) => item !== key));
       setMode((prev) => prev.filter((item) => item !== key));
@@ -80,20 +81,32 @@ const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
         {t("wordGame.mode")}
       </Text>
       <View style={styles.buttonsContainer}>
-        {cards.map((column, columnIndex) => (
-          <View key={`column-${columnIndex}`} style={styles.column}>
-            {column.map((btn) => (
-              <SecondaryButton
-                isHapticFeedback
-                key={btn.key}
-                text={btn.title}
-                isDisabled={!btn.condition}
-                isOutline={!selectedCardMode.includes(btn.key)}
-                onClick={() => toggle(btn.key)}
-              />
-            ))}
-          </View>
-        ))}
+        <ButtonCard<PracticeWordMode>
+          isGray
+          setValue={toggle}
+          currentValue={selectedCardMode.includes(PracticeWordMode.Choice) ? PracticeWordMode.Choice : false}
+          value={PracticeWordMode.Choice}
+          text={t("wordGame.choice")}
+          icon={"format-line-spacing"}
+        />
+        <ButtonCard<PracticeWordMode>
+          isGray
+          setValue={toggle}
+          currentValue={selectedCardMode.includes(PracticeWordMode.FindPair) ? PracticeWordMode.FindPair : false}
+          value={PracticeWordMode.FindPair}
+          text={t("wordGame.wordBuilding")}
+          icon={"check-circle-outline"}
+        />
+      </View>
+      <View style={styles.buttonsContainer}>
+        <ButtonCard<PracticeWordMode>
+          isGray
+          setValue={toggle}
+          currentValue={selectedCardMode.includes(PracticeWordMode.WordBuilding) ? PracticeWordMode.WordBuilding : false}
+          value={PracticeWordMode.WordBuilding}
+          text={t("wordGame.wordBuilding")}
+          icon={"puzzle-outline"}
+        />
       </View>
     </View>
   );
@@ -107,7 +120,8 @@ const styles = StyleSheet.create({
   },
   buttonsContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
+    flexWrap: "wrap",
     gap: 16,
     marginTop: 16,
   },

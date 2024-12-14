@@ -1,18 +1,18 @@
+import React from "react";
+
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {  BottomTabBarProps } from "@react-navigation/bottom-tabs";
+
+import { Pressable, View } from "react-native";
+import { useHaptic } from "@/shared/helpers/haptic";
 
 import MaterialCommunityIcon from "@expo/vector-icons/MaterialCommunityIcons";
-import { Pressable, Vibration } from "react-native";
-
-import { bottomScreens } from "./routes";
+import { Text } from '@react-navigation/elements';
+import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
+import { Typography } from "@/shared/typography";
 import { ROUTES } from "./navigationTypes";
-import { useAppSelector } from "@/shared/model/hooks";
-
-import * as Haptics from "expo-haptics";
 import { isIOS } from "@/shared/constants/platformUtil";
-
-const Tab = createBottomTabNavigator();
 
 const icons = {
   [ROUTES.LEARNING_ROOT]: "school-outline",
@@ -26,62 +26,75 @@ type IconType = typeof ROUTES.LEARNING_ROOT
   | typeof ROUTES.SETTINGS_ROOT
   | typeof ROUTES.KANA_TABLE_ROOT
 
-function BottomTabNavigator() {
+export const TabBarButton = ({ state, navigation }: BottomTabBarProps) => {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
-  const isEnabledHaptic = useAppSelector(
-    (state) => state.profile.isEnabledHaptic,
-  );
+  const { triggerHaptic } = useHaptic()  
+
+  const { colors } = useThemeContext();
+
+  const titles = {
+    [ROUTES.LEARNING_ROOT]: t('tabs.learning'),
+    [ROUTES.PRACTICE_ROOT]: t('tabs.practice'),
+    [ROUTES.SETTINGS_ROOT]: t('tabs.profile'),
+    [ROUTES.KANA_TABLE_ROOT]: t('tabs.kana'),
+  }
 
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => (
-          <MaterialCommunityIcon
-            name={icons[route.name as IconType]}
-            size={size}
-            color={color}
-          />
-        ),
-        tabBarButton: (props) => (
-          <Pressable
-            {...props}
-            onPress={(e) => {
-              if (isEnabledHaptic) {
-                if (isIOS()) {
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                } else {
-                  Vibration.vibrate(1);
-                }
-              }
+    <View style={{ 
+      flexDirection: 'row',
+      paddingLeft: insets.left,
+      paddingRight: insets.right,
+      paddingBottom: insets.bottom,
+      height: insets.bottom + (isIOS() ? 52 : 62),
+      alignItems: "center",
+      borderTopColor: colors.BorderDefault,
+      borderTopWidth: 1,
+    }}>
+      {state.routes.map((route, index) => {
+        const isFocused = state.index === index;
 
-              props?.onPress?.(e);
-            }}
-            style={[props.style, { height: 45, marginTop: 5 }]}
-          />
-        ),
-        tabBarStyle: {
-          height: 60 + insets.bottom,
-          flexDirection: "column",
-          alignItems: "center",
-        },
+        const onPress = () => {
+          triggerHaptic();
+
+          const event = navigation.emit({
+            type: 'tabPress',
+            target: route.key,
+            canPreventDefault: true,
+          });
+
+          if (!isFocused && !event.defaultPrevented) {
+            navigation.navigate(route.name, route.params);
+          }
+        };
+
+        return (
+            <Pressable
+              key={route.name}
+              onPress={onPress}
+              
+              style={{
+                flex: 1,
+                paddingTop: 3,
+                alignItems: "center",
+                gap: '0'
+              }}
+            >
+              <MaterialCommunityIcon
+                name={icons[route.name as IconType]}
+                size={24}
+                color={isFocused ? colors.IconAccent : colors.IconSecondary}
+              />
+              <Text style={[
+                Typography.regularCaption,
+                {
+                  color: isFocused ? colors.TextTabBar : colors.TextSecondary
+                }]}
+                >{titles[route.name as IconType]}</Text>
+            </Pressable>
+          )
       })}
-    >
-      {bottomScreens.map(tab => (
-        <Tab.Screen
-          key={tab.name}
-          name={tab.name}
-          component={tab.component}
-          options={{
-            title: t(tab.title),
-            headerTransparent: true,
-            headerTitle: "",
-          }}
-        />
-      ))} 
-    </Tab.Navigator>
+    </View>
   );
-}
-
-export default BottomTabNavigator;
+};

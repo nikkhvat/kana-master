@@ -16,14 +16,12 @@ import { Typography } from "@/shared/typography";
 type ChapterProps = {
   title: string
   lessons: (AutoLesson | ManuallyLesson)[]
-  activeTab: KanaAlphabet
   startLesson: (item: AutoLesson | ManuallyLesson) => void
   isLast: boolean
 }
 
 const Chapter: React.FC<ChapterProps> = ({
   lessons,
-  activeTab,
   title,
   isLast,
   startLesson,
@@ -35,7 +33,6 @@ const Chapter: React.FC<ChapterProps> = ({
 
   const [activeLesson, setActiveLesson] = useState<string | null>(null);
 
-  const key = activeTab === KanaAlphabet.Hiragana ? "hi" : "ka";
 
   const isAutoLesson = (item: AutoLesson | ManuallyLesson): item is AutoLesson => "letters" in item;
 
@@ -43,20 +40,10 @@ const Chapter: React.FC<ChapterProps> = ({
     (state) => state.lessons.completedLesson,
   );
 
-  const lessonsList = lessons.filter((item) =>
-    isAutoLesson(item) ? true : item.category.includes(activeTab)
-  );
-
-  const firstChapterIds = lessonsList.map((item) => item.id);
+  const firstChapterIds = lessons.map((item) => item.id);
   const firstChapterProgress = firstChapterIds.filter((item) =>
-    completedLessons.includes(`${key}/${item}`) || completedLessons.includes(item),
+    completedLessons.includes(item) || completedLessons.includes(item),
   );
-
-
-  const kanaTitle =
-    activeTab === KanaAlphabet.Hiragana
-      ? t("kana.hiragana")
-      : t("kana.katakana");
 
   const toggleActiveLesson = (key: string) => {
     if (activeLesson === key) {
@@ -70,11 +57,11 @@ const Chapter: React.FC<ChapterProps> = ({
     ? colors.TextSuccess
     : colors.TextPrimary
 
-  if (lessonsList.length === 0) return <></>;
+  if (lessons.length === 0) return <></>;
 
   return (
     <View>
-      <Text style={[styles.title, Typography.boldH3, { color: subtitleColor }]}>
+      <Text style={[styles.title, Typography.boldH3, { color: colors.TextPrimary }]}>
         {title}
       </Text>
 
@@ -89,14 +76,22 @@ const Chapter: React.FC<ChapterProps> = ({
         {t("lessonsList.completed")}
       </Text>
 
-      {lessonsList.map((item, index) => {
+      {lessons.map((item, index) => {
         if (isAutoLesson(item)) {
+          const activeTab = (item as any).type === "hiragana" ?
+            KanaAlphabet.Hiragana :
+            KanaAlphabet.Katakana;
+  
+          const kanaTitle = activeTab === KanaAlphabet.Hiragana
+              ? t("kana.hiragana")
+              : t("kana.katakana");
+
           return (
             <TopicItem
               key={getKana(item.title, activeTab)}
-              isPassed={completedLessons.includes(`${key}/${item.id}`)}
+              isPassed={completedLessons.includes(item.id)}
               isOpened={activeLesson === getKana(item.title, activeTab)}
-              isLast={index + 1 === lessonsList.length}
+              isLast={index + 1 === lessons.length}
               icon={getKana(item.title, activeTab)}
               title={`${t("lessonsList.lesson")} ${index}`}
               subtitle={item.letters
@@ -106,7 +101,7 @@ const Chapter: React.FC<ChapterProps> = ({
                 .map((item) => getRomanji(item))
                 .join(", ")
                 .toLocaleLowerCase()}`}
-              infoSubTitle={t(item.msg, { count: item.letters.length })}
+              infoSubTitle={`${t(item.msg).replace('{{count}}', item.letters.length.toString())}`}
               onClick={() =>
                 toggleActiveLesson(getKana(item.title, activeTab))
               }
@@ -117,23 +112,21 @@ const Chapter: React.FC<ChapterProps> = ({
           );
         }
 
-        const isPassed = item.category.length === 2
-          ? completedLessons.includes(item.id)
-          : completedLessons.includes(`${key}/${item.id}`)
+        const isPassed = completedLessons.includes(item.id);
 
         return (
           <TopicItem
             key={item.title}
             isPassed={isPassed}
-            isOpened={activeLesson === `${item.title}/${activeTab}`}
-            isLast={index + 1 === lessonsList.length}
+            isOpened={activeLesson === `${item.title}`}
+            isLast={index + 1 === lessons.length}
             icon={item.icon}
             title={item.title}
             subtitle={item.subTitle}
             infoTitle={item.infoTitle}
             infoSubTitle={item.infoSubTitle}
             onClick={() =>
-              toggleActiveLesson(`${item.title}/${activeTab}`)
+              toggleActiveLesson(`${item.title}`)
             }
             onStartLesson={() => startLesson({ ...item })}
           />

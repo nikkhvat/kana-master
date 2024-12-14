@@ -1,18 +1,17 @@
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { Typography } from "@/shared/typography";
-import { FC, ReactNode } from "react";
+import React, { ReactNode } from "react";
 
-import * as Haptics from "expo-haptics";
-
-import { Text, StyleSheet, Pressable, DimensionValue, Vibration } from "react-native";
-import { useAppSelector } from "@/shared/model/hooks";
-import { isIOS } from "@/shared/constants/platformUtil";
+import { Text, StyleSheet, Pressable, DimensionValue, StyleProp, TextStyle, ViewStyle } from "react-native";
+import { useHaptic } from "@/shared/helpers/haptic";
 
 interface SecondaryButtonProps {
   content?: ReactNode;
 
   text?: string;
   icon?: React.ReactElement;
+
+  isGray?: boolean;
 
   isDisabled?: boolean;
   isOutline?: boolean;
@@ -22,17 +21,21 @@ interface SecondaryButtonProps {
 
   isHapticFeedback?: boolean;
 
-  containerStyles?: Record<string, string | number>;
-  textStyles?: Record<string, string | number>;
+  containerStyles?: StyleProp<ViewStyle>;
+  textStyles?: StyleProp<TextStyle>;
+
+  children?: React.ReactElement;
 
   onClick?: () => void;
 }
 
-const SecondaryButton: FC<SecondaryButtonProps> = ({
+const SecondaryButton: React.FC<SecondaryButtonProps> = ({
   content,
+  
   text,
-
   icon,
+
+  isGray,
 
   isDisabled,
   isOutline,
@@ -45,24 +48,18 @@ const SecondaryButton: FC<SecondaryButtonProps> = ({
   containerStyles,
   textStyles,
 
+  children,
+
   onClick,
 }) => {
   const { colors } = useThemeContext();
 
-  const isEnabledHaptic = useAppSelector(
-    (state) => state.profile.isEnabledHaptic,
-  );
+  const { triggerHaptic } = useHaptic();
 
   const onPress = () => {
     if (isDisabled) return;
 
-    if (isHapticFeedback && isEnabledHaptic) {
-      if (isIOS()) {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-      } else {
-        Vibration.vibrate(1);
-      }
-    }
+    triggerHaptic(isHapticFeedback);
 
     if (!isDisabled) {
       onClick?.();
@@ -81,6 +78,14 @@ const SecondaryButton: FC<SecondaryButtonProps> = ({
     !isOutline && {
       backgroundColor: colors.BgAccentPrimaryPressed,
       borderColor: colors.BgAccentPrimaryPressed,
+    },
+
+    isGray && {
+      backgroundColor: colors.BgAccentSecondary,
+    },
+
+    pressed && isGray && {
+      backgroundColor: colors.BgAccentSecondaryPressed,
     },
 
     isOutline && {
@@ -127,6 +132,8 @@ const SecondaryButton: FC<SecondaryButtonProps> = ({
 
       {content && !text && content}
       {icon && icon}
+
+      {children && children}
     </Pressable>
   );
 };

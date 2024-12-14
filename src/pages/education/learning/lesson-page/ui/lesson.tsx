@@ -1,25 +1,15 @@
 import React, { useEffect } from "react";
 
-import { RouteProp } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { completeLesson } from "../../model/slice";
 import { useEducationLessonContext } from "../lib/context/education-lesson-context";
 
 import SafeLayout from "@/app/layouts/safeLayout";
-import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
-import {
-  AnyLesson,
-  AutoLesson,
-  InfoLessonScreen,
-  LessonScreen,
-  ManuallyLesson,
-} from "@/shared/constants/lessons";
+import { AutoLesson, InfoLessonScreen, LessonScreen, ManuallyLesson } from "@/shared/constants/lessons";
 import { useAppDispatch } from "@/shared/model/hooks";
-import { RootStackParamList } from "@/app/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
 import BuildWordScreen from "@/widgets/learning/lesson/build-word-screen/build-word-screen";
 import LessonDrawScreen from "@/widgets/learning/lesson/draw/draw";
@@ -29,73 +19,32 @@ import MatchLettersScreen from "@/widgets/learning/lesson/match-letters/match-le
 import SelectLettersScreen from "@/widgets/learning/lesson/select-letters/select-letters";
 import SelectSequenceLettersScreen from "@/widgets/learning/lesson/select-sequence-letters/select-sequence-letters";
 import LessonSymbolScreen from "@/widgets/learning/lesson/symbol/symbol";
-import { ROUTES } from "@/app/navigationTypes";
+import { isAnyLessonScreen, isAutoLesson, isInfoLessonScreen, isManuallyLesson } from "../lib/helpers/lesson";
+import { useNavigation } from '@react-navigation/native';
 
-type HomeScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  typeof ROUTES.LESSON_PAGE
->;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, typeof ROUTES.LESSON_PAGE>;
-
-interface LearnScreenProps {
-  route: LearnScreenRouteProp;
-  navigation: HomeScreenNavigationProp;
+interface LessonProps {
+  lesson: AutoLesson | ManuallyLesson
 }
 
-const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
-  const insets = useSafeAreaInsets();
-
-  const isAutoLesson = (
-    item: AutoLesson | ManuallyLesson,
-  ): item is AutoLesson => "letters" in item;
-
-  const isManuallyLesson = (
-    item: AutoLesson | ManuallyLesson,
-  ): item is ManuallyLesson => "screens" in item;
-
-  const isInfoLessonScreen = (
-    item: AnyLesson | InfoLessonScreen | null | undefined,
-  ): item is InfoLessonScreen =>
-    item !== null && typeof item === "object" && !("name" in item);
-
-  const isAnyLessonScreen = (
-    item: AnyLesson | InfoLessonScreen | null | undefined,
-  ): item is AnyLesson =>
-    item !== null && typeof item === "object" && "name" in item;
-
-  const { lesson } = route.params;
-
-  const id = lesson.id;
-
+const Lesson: React.FC<LessonProps> = ({ lesson }) => {
   const dispatch = useAppDispatch();
-
-  const { colors } = useThemeContext();
-
+  const insets = useSafeAreaInsets();
   const { init, currentScreen, screen, lessonScreens, next, retry } =
     useEducationLessonContext();
 
-  const addMarkCompleteLessonInStore = () => {
-    if (isAutoLesson(lesson)) {
-      const key = lesson.kana === KanaAlphabet.Hiragana ? "hi" : "ka";
-      dispatch(completeLesson(`${key}/${id}`));
-    }
+  const navigation = useNavigation();
 
-    if (isManuallyLesson(lesson)) {
-      const category = lesson.category;
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+      gestureEnabled: false,
+      headerBackVisible: false
+    })
+  }, [navigation])
 
-      if (category?.length === 2) {
-        dispatch(completeLesson(id));
-      } else {
-        if (category.includes(KanaAlphabet.Hiragana)) {
-          dispatch(completeLesson(`hi/${id}`));
-        }
+  const id = lesson.id;
 
-        if (category.includes(KanaAlphabet.Katakana)) {
-          dispatch(completeLesson(`ka/${id}`));
-        }
-      }
-    }
-  };
+  const addMarkCompleteLessonInStore = () => dispatch(completeLesson(id));
 
   const onComplete = () => {
     addMarkCompleteLessonInStore();
@@ -136,12 +85,7 @@ const Lesson: React.FC<LearnScreenProps> = ({ route, navigation }) => {
       additionalPaddingTop={20}
       disableLeft
       disableRight
-      style={[
-        styles.container,
-        {
-          flex: 1,
-        },
-      ]}
+      style={styles.container}
     >
       <View
         style={{

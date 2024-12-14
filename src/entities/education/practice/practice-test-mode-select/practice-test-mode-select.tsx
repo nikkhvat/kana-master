@@ -9,9 +9,13 @@ import Switcher from "@/shared/ui/switcher/switcher";
 
 import { Typography } from "@/shared/typography";
 import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
+import ButtonCard from "../button-card/button-card";
 
 export type CardModeSelectProps = {
   available: boolean;
+
+  timerDeration: "medium" | "fast" | "slow"
+  cards: DifficultyLevelType[]
 
   setCards: React.Dispatch<React.SetStateAction<DifficultyLevelType[]>>;
   setTimerDeration: React.Dispatch<
@@ -20,6 +24,8 @@ export type CardModeSelectProps = {
 };
 
 const TestModeSelect: React.FC<CardModeSelectProps> = ({
+  timerDeration,
+  cards,
   available,
   setCards,
   setTimerDeration,
@@ -27,15 +33,7 @@ const TestModeSelect: React.FC<CardModeSelectProps> = ({
   const { colors } = useThemeContext();
   const { t } = useTranslation();
 
-  const [selectedCardMode, setSelectedCardMode] = useState<
-    DifficultyLevelType[]
-  >([]);
-  const [timerDeration, setTimer] = useState<"fast" | "medium" | "slow">(
-    "medium",
-  );
-
   useEffect(() => {
-    setSelectedCardMode([]);
     setCards([]);
   }, [available, setCards]);
 
@@ -43,70 +41,64 @@ const TestModeSelect: React.FC<CardModeSelectProps> = ({
     setTimerDeration(timerDeration);
   }, [setTimerDeration, timerDeration]);
 
-  const cards = [
-    [
-      {
-        title: t("difficultyLevel.timeTest"),
-        key: DifficultyLevelType.TimeTest,
-        condition: available,
-      },
-    ],
-    [
-      {
-        title: t("difficultyLevel.oneAttempt"),
-        key: DifficultyLevelType.OneAttempt,
-        condition: available,
-      },
-    ],
-  ];
-
   const toggle = (key: DifficultyLevelType) => {
-    if (selectedCardMode.includes(key)) {
-      setSelectedCardMode((prev) => prev.filter((item) => item !== key));
+    if (cards.includes(key)) {
       setCards((prev) => prev.filter((item) => item !== key));
     } else {
-      setSelectedCardMode((prev) => [...prev, key]);
       setCards((prev) => [...prev, key]);
     }
   };
+
+  const toggleTimer = () => {
+    if (cards.includes(DifficultyLevelType.TimeTest)) {
+      if (timerDeration === "fast") setTimerDeration("medium")
+      if (timerDeration === "medium") setTimerDeration("slow")
+      if (timerDeration === "slow") {
+        setTimerDeration("fast")
+        setCards((prev) => prev.filter((item) => item !== DifficultyLevelType.TimeTest));
+      }
+    } else {
+      setCards((prev) => [...prev, DifficultyLevelType.TimeTest]);
+    }
+  }
+
+  const getTimerSpeed = () => timerDeration === "fast" ? "3s" : timerDeration === "medium" ? "5s" : "7s"
 
   return (
     <>
       <View style={styles.container}>
         <Text style={[Typography.boldH3, { color: colors.TextPrimary }]}>
-          {t("testing.testMode")}
+          {t("practice.additionally")}
         </Text>
 
         <View style={styles.buttonsContainer}>
-          {cards.map((column, columnIndex) => (
-            <View key={`column-${columnIndex}`} style={styles.column}>
-              {column.map((btn) => (
-                <SecondaryButton
-                  isHapticFeedback
-                  key={btn.key}
-                  text={btn.title}
-                  isDisabled={!btn.condition}
-                  isOutline={!selectedCardMode.includes(btn.key)}
-                  onClick={() => toggle(btn.key)}
-                />
-              ))}
-            </View>
-          ))}
+          <ButtonCard<DifficultyLevelType>
+            isGray
+            setValue={toggleTimer}
+            currentValue={cards.includes(DifficultyLevelType.TimeTest)
+              ? DifficultyLevelType.TimeTest
+              : false}
+            value={DifficultyLevelType.TimeTest}
+            text={cards.includes(DifficultyLevelType.TimeTest)
+                ? `${t("difficultyLevel.timeTest")} ${getTimerSpeed()}`
+                : t("difficultyLevel.timeTest")}
+            icon={cards.includes(DifficultyLevelType.TimeTest)
+              ? "timer-outline"
+              : "timer-off-outline"}
+          />
+
+          <ButtonCard<DifficultyLevelType>
+            isGray
+            setValue={toggle}
+            currentValue={cards.includes(DifficultyLevelType.OneAttempt)
+              ? DifficultyLevelType.OneAttempt
+              : false}
+            value={DifficultyLevelType.OneAttempt}
+            text={t("difficultyLevel.oneAttempt")}
+            icon={"alert-circle-outline"}
+          />
         </View>
       </View>
-
-      {selectedCardMode.includes(DifficultyLevelType.TimeTest) && (
-        <Switcher
-          activeTab={timerDeration}
-          options={["fast", "medium", "slow"]}
-          translate={[
-            t("practice.timer.fast"),
-            t("practice.timer.medium"),
-            t("practice.timer.slow"),
-          ]}
-          setActiveTab={setTimer as () => void}
-        />
-      )}
     </>
   );
 };
@@ -116,7 +108,6 @@ export default TestModeSelect;
 const styles = StyleSheet.create({
   container: {
     marginTop: 32,
-    marginBottom: 16,
   },
   buttonsContainer: {
     flexDirection: "row",

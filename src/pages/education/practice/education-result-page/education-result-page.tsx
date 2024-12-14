@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import { RouteProp } from "@react-navigation/native";
+import { RouteProp, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { View, Text, ScrollView, StyleSheet, Platform } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import AdaptiveLayout from "@/app/layouts/adaptiveLayout";
@@ -20,22 +20,23 @@ import { Typography } from "@/shared/typography";
 import ResultItem from "@/entities/education/result-item/result-item";
 import { ROUTES } from "@/app/navigationTypes";
 import PageTitle from "@/shared/ui/page-title/page-title";
+import { isIOS } from "@/shared/constants/platformUtil";
 
-type LearnResultsNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  "Results"
->;
-type LearnScreenRouteProp = RouteProp<RootStackParamList, typeof ROUTES.RESULTS>;
-
+type LearnResultsNavigationProp = StackNavigationProp<RootStackParamList, typeof ROUTES.RESULTS>;
 interface EducationResultProps {
-  route: LearnScreenRouteProp;
-  navigation: LearnResultsNavigationProp;
+  route: RouteProp<RootStackParamList, typeof ROUTES.RESULTS>;
 }
 
-const EducationResultPage: React.FC<EducationResultProps> = ({
-  route,
-  navigation,
-}) => {
+const EducationResultPage: React.FC<EducationResultProps> = ({ route }) => {
+  const navigation = useNavigation<LearnResultsNavigationProp>();
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+      gestureEnabled: false,
+    })
+  }, [navigation])
+  
   const { result } = route.params;
 
   const { t } = useTranslation();
@@ -45,11 +46,12 @@ const EducationResultPage: React.FC<EducationResultProps> = ({
   const { colors } = useThemeContext();
 
   const home = () => {
-    navigation.navigate(ROUTES.ROOT);
+    navigation.popToTop();
+
     const chance = Math.random();
 
     try {
-      if (Platform.OS === "ios" && chance <= 0.1) {
+      if (isIOS() && chance <= 0.1) {
         StoreReview.requestReview();
       }
     } catch (error) {

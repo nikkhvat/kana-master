@@ -17,7 +17,6 @@ interface PickAnswerProps {
   correctAnswer: boolean
   kana: Kana
   question: ILetter
-  last?: boolean
   pickedAnswer?: ILetter
   mode: CardMode
 }
@@ -67,7 +66,6 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
     correctAnswer,
     kana,
     question,
-    last,
     pickedAnswer,
     mode,
   }: PickAnswerProps) => {
@@ -124,8 +122,6 @@ export const EducationStatisticContextProvider: FC<PropsWithChildren> = ({ child
 
     const totalQuestions = items.length;
     let correctQuestions = 0;
-
-    items.filter(item => item.correctAnswer).length;
 
     for (let i = 0; i < items.length; i++) {
       const item = items[i];

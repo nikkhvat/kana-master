@@ -2,13 +2,14 @@ import { AutoLesson, ManuallyLesson } from "../shared/constants/lessons";
 
 import { ResultInfoWordGame } from "@/pages/education/practice/education-quiz-word-game/lib/context/education-statistic-context";
 import { ResultInfo } from "@/pages/education/practice/education-quiz-testing/lib/context/education-statistic-context";
-import { CardMode, DifficultyLevelType, KanaAlphabet, TestMode } from "@/shared/constants/kana";
+import { CardMode, DifficultyLevelType, KanaAlphabet, QuestionMode, PracticeWordMode } from "@/shared/constants/kana";
 
 export const ROUTES = {
   ROOT: 'Root',
+  HOME: 'HOME',
 
   // Info kana and draw kana
-  KANA_INFO: 'KanaInfo',
+  KANA_INFO: 'KANA_INFO',
 
   // Select alphabet
   KANA_SELECT: 'KanaSelect',
@@ -32,6 +33,7 @@ export const ROUTES = {
 
 
 export type RootStackParamList = {
+  [ROUTES.HOME]: undefined;
   [ROUTES.ROOT]: undefined;
 
   // Info kana and draw kana
@@ -72,12 +74,13 @@ interface LessonPage {
 }
 
 interface PracticeWordGame {
-  keysModeState: TestMode[],
+  keysModeState: PracticeWordMode[],
 }
 
 interface PracticeTesting {
   keysCardModeState: CardMode[],
   keysDifficultyLevelState: DifficultyLevelType[]
+  questionMode: QuestionMode
   timerDeration ?: "fast" | "medium" | "slow"
 }
 

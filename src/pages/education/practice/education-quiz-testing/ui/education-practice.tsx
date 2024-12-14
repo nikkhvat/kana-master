@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useKeepAwake } from "expo-keep-awake";
-import { Dimensions, StyleSheet, View, Text } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 
 import { useEducationPracticeContext } from "../lib/context/education-practice-context";
 import { useEducationStatisticContext } from "../lib/context/education-statistic-context";
@@ -19,31 +19,41 @@ import {
   CardMode,
   DifficultyLevelType,
   KanaAlphabet,
+  QuestionMode,
 } from "@/shared/constants/kana";
 import { ILetter } from "@/shared/data/lettersTable";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import { RootStackParamList } from "@/app/navigationTypes";
 import LinearProgressBar from "@/shared/ui/progressbar/linear/linear-progress-bar";
 import { ROUTES } from "@/app/navigationTypes";
+import { useNavigation } from '@react-navigation/native';
+import PracticeDrawKana from "@/entities/education/practice/practice-draw-kana/practice-draw-kana";
+import PracticeTypeKana from "@/entities/education/practice/practice-type-kana/practice-type-kana";
+import { Typography } from "@/shared/typography";
 
-type HomeScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  typeof ROUTES.PRACTICE_TESTING
->;
+type ScreenNavigationProp = StackNavigationProp< RootStackParamList, typeof ROUTES.PRACTICE_TESTING >;
 type LearnScreenRouteProp = RouteProp<RootStackParamList, typeof ROUTES.PRACTICE_TESTING>;
 
 interface LearnScreenProps {
   route: LearnScreenRouteProp;
-  navigation: HomeScreenNavigationProp;
 }
 
 const screenHeight = Dimensions.get("window").height;
 
-function EducationPractice({ route, navigation }: LearnScreenProps) {
-  useKeepAwake();
+function EducationPractice({ route }: LearnScreenProps) {
+  const navigation = useNavigation<ScreenNavigationProp>();
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+      gestureEnabled: false,
+    })
+  }, [navigation])
+  
   const dispatch = useAppDispatch();
   const { colors } = useThemeContext();
+  
+  useKeepAwake();
 
   useEffect(() => {
     dispatch(countAvailableWords());
@@ -53,7 +63,7 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
     (state: RootState) => state.kana.selected,
   );
 
-  const { keysCardModeState, timerDeration, keysDifficultyLevelState } =
+  const { keysCardModeState, timerDeration, keysDifficultyLevelState, questionMode } =
     route.params;
 
   const IS_TIMER = keysDifficultyLevelState.includes(
@@ -62,6 +72,10 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
   const ONE_ATTEMPT = keysDifficultyLevelState.includes(
     DifficultyLevelType.OneAttempt,
   );
+
+  const IS_CARDS = questionMode === QuestionMode.Choose;
+  const IS_BRASH = questionMode === QuestionMode.Brash;
+  const IS_TYPE = questionMode === QuestionMode.Type;
 
   const TIMER_SPEED =
     timerDeration === "fast" ? 3 : timerDeration === "slow" ? 7 : 5;
@@ -79,6 +93,7 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
     const generateQuestion = generateQuestions({
       selectedLetters,
       keysCardModeState,
+      questionMode
     });
 
     init(generateQuestion);
@@ -149,7 +164,6 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
         correctAnswer: correctAnswer,
         kana: question.kana,
         question: question.symbol,
-        last: currentIndex === questions.length - 1,
         pickedAnswer,
         mode: question.mode,
       });
@@ -171,11 +185,11 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
       ]}
     >
       <View>
-        <LinearProgressBar
+        {questions.length !== 0 && currentIndex <= questions.length && <LinearProgressBar
           close={navigation.goBack}
           current={currentIndex}
           all={questions.length}
-        />
+        />}
 
         {IS_TIMER && (
           <EducationPracticeTimer
@@ -188,11 +202,25 @@ function EducationPractice({ route, navigation }: LearnScreenProps) {
         )}
       </View>
 
-      <EducationPracticeSelectAnswers
+      {IS_CARDS && <EducationPracticeSelectAnswers
         question={question}
         onCompleted={onSubmitTestQuestion}
         onError={onError}
-      />
+      />}
+
+      {IS_BRASH && question && <PracticeDrawKana
+        symbol={question?.symbol}
+        kana={question.mode}
+        onCompleted={onSubmitTestQuestion}
+        onError={onError}
+      />}
+      
+      {IS_TYPE && question && <PracticeTypeKana
+        symbol={question?.symbol}
+        kana={question?.kana}
+        onCompleted={onSubmitTestQuestion}
+        onError={onError}
+      />}
     </SafeLayout>
   );
 }

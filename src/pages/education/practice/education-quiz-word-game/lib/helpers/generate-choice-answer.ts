@@ -6,28 +6,28 @@ import { Maybe, QuestionChoice } from "@/shared/types/questions";
 
 interface GenerateChoiceAnswerProps {
   word: Word,
-  kanaWords: Word[],
-  hiraWords: Word[],
+  katakanaWords: Word[],
+  hiraganaWords: Word[],
 
-  lang: string
+  lang: "en" | "ru"
   
   kana: KanaAlphabet
 }
 
 const generateChoiceAnswer = ({ 
   word, 
-  kanaWords, 
-  hiraWords,
+  katakanaWords, 
+  hiraganaWords,
   kana,
   lang,
 }: GenerateChoiceAnswerProps): Maybe<QuestionChoice> => {
-  const words = kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords;
+  const words = kana === KanaAlphabet.Hiragana ? hiraganaWords : katakanaWords;
 
   if (words.length === 0) return null;
 
-  const word1 = getRandomWords([word.romanji], words);
-  const word2 = getRandomWords([word.romanji, word1.romanji], words);
-  const word3 = getRandomWords([word.romanji, word1.romanji, word2.romanji], words);
+  const wordSecond = getRandomWords([word.romanji], words);
+  const wordThird = getRandomWords([word.romanji, wordSecond.romanji], words);
+  const wordFourth = getRandomWords([word.romanji, wordSecond.romanji, wordThird.romanji], words);
 
   return {
     type: QuestionTypeChooseWord,
@@ -35,9 +35,9 @@ const generateChoiceAnswer = ({
     title: `${word.kana} (${word[lang as "en"]})`,
     questions: shuffleArray([
       { text: word.romanji, key: word.romanji },
-      { text: word1.romanji, key: word1.romanji },
-      { text: word2.romanji, key: word2.romanji },
-      { text: word3.romanji, key: word3.romanji },
+      { text: wordSecond.romanji, key: wordSecond.romanji },
+      { text: wordThird.romanji, key: wordThird.romanji },
+      { text: wordFourth.romanji, key: wordFourth.romanji },
     ]),
     trueKey: word.romanji,
   };

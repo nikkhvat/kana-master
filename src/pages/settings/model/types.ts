@@ -6,4 +6,5 @@ export interface InitialState {
     isShowLetter: boolean;
   };
   isEnabledHaptic: boolean;
+  isWelcomePage: boolean;
 }

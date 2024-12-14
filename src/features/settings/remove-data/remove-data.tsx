@@ -1,25 +1,28 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import SettingItem from "@/entities/profile/setting-item/setting-item";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Alert, Vibration } from "react-native";
+import { Alert } from "react-native";
 
-import * as Haptics from "expo-haptics";
-
-import { isIOS } from "@/shared/constants/platformUtil";
 import { clearStateProfile } from "@/pages/settings/model/slice";
 import { clearStateLessons } from "@/pages/education/learning/model/slice";
 import { clearStateKana } from "@/pages/kana/kana-table-choice-letters-page/model/slice";
 import { clearStateStatistics } from "@/pages/kana/kana-table-list-page/model/slice";
+import { useHaptic } from "@/shared/helpers/haptic";
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList, ROUTES } from "@/app/navigationTypes";
+import { StackNavigationProp } from "@react-navigation/stack";
+
+type ProfileNavigationProp = StackNavigationProp<RootStackParamList, typeof ROUTES.SETTINGS_ROOT>;
 
 const RemoveData: React.FC = () => {
   const { t, i18n: { language } } = useTranslation();
+  const { triggerHaptic } = useHaptic()
+
+  const navigation = useNavigation<ProfileNavigationProp>();
 
   const dispatch = useAppDispatch();
-
-  const isEnabledHaptic = useAppSelector(
-    (state) => state.profile.isEnabledHaptic,
-  );
 
   const kanaState = useAppSelector((state) => state.kana);
   const lessonsState = useAppSelector((state) => state.lessons);
@@ -32,16 +35,6 @@ const RemoveData: React.FC = () => {
     JSON.stringify(profileState),
     JSON.stringify(statisticsState),
   ]).size;
-
-  const haptic = () => {
-    if (isEnabledHaptic) {
-      if (isIOS()) {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-      } else {
-        Vibration.vibrate(1);
-      }
-    }
-  }
 
   const langSizes = {
     en: ["B", "KB", "MB", "GB"],
@@ -68,6 +61,15 @@ const RemoveData: React.FC = () => {
     dispatch(clearStateLessons());
     dispatch(clearStateStatistics());
     dispatch(clearStateKana());
+
+    // Clean LocalStorage
+    AsyncStorage.removeItem("isWelcome");
+    AsyncStorage.removeItem("lang");
+    AsyncStorage.removeItem("transliteration");
+    AsyncStorage.removeItem("app_theme");
+
+    // Go to kana table
+    navigation.navigate(ROUTES.KANA_TABLE_ROOT)
   }
 
   const confirmationCloseAlert = () =>
@@ -75,7 +77,7 @@ const RemoveData: React.FC = () => {
       { text: t('alert.cancel'), style: 'cancel' },
       {
         text: t('alert.confirm'), onPress: () => {
-          haptic();
+          triggerHaptic();
           eraseData();
         }
       },

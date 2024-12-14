@@ -6,7 +6,7 @@ export enum ShortLanguage {
   RU = "ru",
   IT = "it",
   PT = "pt",
-}
+};
 
 export type LanguageKeys = "en" | "es" | "fr" | "de" | "ru" | "it" | "pt"
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   createContext,
   FC,
@@ -13,10 +14,7 @@ import {
 } from "@/shared/constants/lessons";
 import { ILetter } from "@/shared/data/lettersTable";
 
-import * as Haptics from "expo-haptics";
-import { useAppSelector } from "@/shared/model/hooks";
-import { isIOS } from "@/shared/constants/platformUtil";
-import { Vibration } from "react-native";
+import { useHaptic } from "@/shared/helpers/haptic";
 
 interface EducationLessonContextValue {
   init: (
@@ -34,7 +32,7 @@ interface EducationLessonContextValue {
 export const EducationLessonContext =
   createContext<EducationLessonContextValue>({
     init: () => {},
-    next: (hasError?: boolean) => {},
+    next: () => {},
     retry: () => {},
     lessonScreens: [],
     currentScreen: null,
@@ -113,14 +111,12 @@ export const useEducationLessonContext = () =>
 export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
+  const { triggerHaptic } = useHaptic();
+  
   const [screens, setScreens] = useState(
     [] as (AnyLesson | InfoLessonScreen)[],
   );
   const [screen, setScreen] = useState(0);
-
-  const isEnabledHaptic = useAppSelector(
-    (state) => state.profile.isEnabledHaptic,
-  );
 
   const init = (
     letters: ILetter[],
@@ -160,13 +156,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
       setScreen((prev) => prev + 1);
     }
 
-    if (isEnabledHaptic) {
-      if (isIOS()) {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-      } else {
-        Vibration.vibrate(1);
-      }
-    }
+    triggerHaptic();
   };
 
   const retry = () => {
