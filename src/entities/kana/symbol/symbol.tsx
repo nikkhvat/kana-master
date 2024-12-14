@@ -2,7 +2,7 @@ import React from "react";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
-import getImage from "@/shared/resources/svgs";
+import { getImage } from "@/shared/resources/svgs";
 import { Dimensions, View } from "react-native";
 import { verticalScale } from "@/shared/helpers/metrics";
 import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";

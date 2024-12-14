@@ -21,7 +21,7 @@ const App = () => {
           <ActionSheetProvider> 
             <ThemeProvider>
               <TransliterationsProvider>
-                  <Layout />
+                <Layout />
               </TransliterationsProvider>
             </ThemeProvider>
           </ActionSheetProvider>

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 
-import { Dimensions, View, ScrollView, StyleSheet, Text } from "react-native";
+import { Dimensions, View, ScrollView, StyleSheet } from "react-native";
 
 import { RootState } from "@/app/store";
 import Cell from "@/entities/kana/cell/cell";
@@ -18,7 +18,6 @@ import {
   base,
   yoon,
 } from "@/shared/data/lettersTable";
-import { getLettersWithStatuses } from "@/shared/helpers/kana";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -58,6 +57,43 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
   const selectedLetters = selected[type][kana]
 
   const data = useMemo(() => getData(type), [getData, type]);
+
+  function getLettersWithStatuses(
+    letters: (ILetter)[][] | undefined,
+    selectedLetters: string[]
+  ) {
+    if (!letters) return [];
+
+    const selectedLettersSet = new Set(selectedLetters);
+
+    const isActiveColumn = (index: number): boolean => {
+      return letters.every(row => {
+        const item = row[index];
+
+        if (!item) return true;
+
+        return selectedLettersSet.has(item?.id);
+      });
+    };
+
+    const columns = letters[0]?.length || 0;
+    const columnsList = Array.from({ length: columns }, (_, i) => isActiveColumn(i));
+
+    const isActiveRow = (items: (ILetter)[]) => items.every(item => selectedLettersSet.has(item.id)
+    );
+
+    return letters.map(group => {
+      const items = group.map((item, index) => {
+        const commonFields = { data: item, column: columnsList[index], active: isActiveColumn(index) };
+        return {
+          ...commonFields,
+          active: selectedLettersSet.has(item.id)
+        };
+      });
+
+      return { activeInRow: isActiveRow(group), items };
+    });
+  }
 
   const onToggleLetter = useCallback(
     (letter: ILetter, alphabet: "base" | "dakuon" | "handakuon" | "yoon") => {

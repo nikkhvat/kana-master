@@ -3,7 +3,7 @@
     "name": "Kana master",
     "slug": "kana-master",
     "privacy": "public",
-    "version": "2.0.5",
+    "version": "2.1.0",
     "orientation": "portrait",
     "githubUrl": "https://github.com/nikkhvat/kana-master",
     "icon": "./src/shared/assets/icon.png",
@@ -12,39 +12,21 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "userInterfaceStyle": "automatic",
       "bundleIdentifier": "pro.khvat.kanamaster",
-      "splash": {
-        "image": "./src/shared/assets/splash.png",
-        "resizeMode": "cover",
-        "backgroundColor": "#FFFFFF",
-        "dark": {
-          "image": "./src/shared/assets/splash-dark.png",
-          "resizeMode": "cover",
-          "backgroundColor": "#1F1F1F"
-        }
-      }
+      "buildNumber": "0",
+      "newArchEnabled": true
     },
     "android": {
-      "icon": "./src/shared/assets/android-icon.png",
       "adaptiveIcon": {
         "foregroundImage": "./src/shared/assets/adaptive-icon.png",
         "backgroundColor": "#1F1F1F"
       },
-      "splash": {
-        "image": "./src/shared/assets/splash.png",
-        "resizeMode": "cover",
-        "backgroundColor": "#FFFFFF",
-        "dark": {
-          "image": "./src/shared/assets/splash-dark.png",
-          "resizeMode": "cover",
-          "backgroundColor": "#1F1F1F"
-        }
-      },
       "package": "pro.khvat.kanamaster",
-      "version": "2.0.5",
-      "versionCode": 1
+      "version": "2.1.0",
+      "versionCode": 1,
+      "newArchEnabled": true
     },
     "web": {
       "favicon": "./src/shared/assets/favicon.png"
@@ -57,7 +39,25 @@
     "owner": "nikkhvat",
     "plugins": [
       "expo-router",
-      "expo-font"
-    ]
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image":"./src/shared/assets/splash.png",
+          "backgroundColor": "#FFFFFF",
+          "dark": {
+            "image": "./src/shared/assets/splash-dark.png",
+            "backgroundColor": "#1F1F1F"
+          },
+          "imageWidth": 200
+        }
+      ]
+    ],
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/0c96ff0c-f16f-48ba-ac2f-b768df7666c3"
+    }
   }
 }

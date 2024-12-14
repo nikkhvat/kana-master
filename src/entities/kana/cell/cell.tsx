@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 
-import { Pressable, StyleSheet, Text, Vibration, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { KanaAlphabet } from "@/shared/constants/kana";
@@ -10,10 +10,6 @@ import useGetRomanji from "@/shared/lib/i18n/hooks/useKey";
 import { Typography } from "@/shared/typography";
 import { StatisticLevel } from "@/pages/kana/kana-table-list-page/model/types";
 import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
-import { useAppSelector } from "@/shared/model/hooks";
-
-import * as Haptics from "expo-haptics";
-import { isIOS } from "@/shared/constants/platformUtil";
 
 interface CellProps {
   isLong: boolean;
@@ -50,10 +46,6 @@ const Cell: React.FC<CellProps> = ({
   const { colors } = useThemeContext();
   const { getRomanji } = useGetRomanji();
 
-  const isEnabledHaptic = useAppSelector(
-    (state) => state.profile.isEnabledHaptic,
-  );
-
   const getIndicatorColor = (indicator?: StatisticLevel) => {
     switch (indicator) {
       case StatisticLevel.Green: return colors.BgSuccess
@@ -83,54 +75,57 @@ const Cell: React.FC<CellProps> = ({
     )
   }
 
-  return (
-    <Pressable
-      onPress={() => {
-        if (cell) {
-          if (isEnabledHaptic) {
-            if (isIOS()) {
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            } else {
-              Vibration.vibrate(1);
-            }
-          }
+  if (!cell) {
+    return (
+      <View style={[styles.cell, {
+        width: isLong ? widthLong : widthDefault,
+        height: widthDefault,
+        backgroundColor: "transparent",
+        borderColor: "transparent",
+      }]} >
+        <Text style={[Typography.regularLabel, { color: colors.TextSecondary }]}>
+          {isStartOfLine}
+        </Text>
+      </View>
+    )
+  }
 
-          onPress?.(cell.id)
-        } else {
-          onPress?.("")
-        }
+  return (
+    <PrimaryButton
+      onClick={() => {
+        onPress?.(cell.id)
       }}
-      style={[
+      containerStylesFunc={({ pressed }) => [
         styles.cell,
         {
           width: isLong ? widthLong : widthDefault,
           height: widthDefault,
-          backgroundColor: active ? colors.BgAccentSecondary : "transparent",
+          backgroundColor: active ? colors.BgAccentSecondary : pressed ? colors.BgPrimaryPressed : "transparent",
           borderColor:
             (!cell || active) ? "transparent" : colors.BorderDefault,
         },
       ]}
-    >
-      <View style={[styles.cellIndicator, { backgroundColor: getIndicatorColor(indicator) }]} ></View>
+      content={<>
+        {indicator && <View style={{
+          position: "absolute",
+          width: 6,
+          height: 6,
+          top: 5,
+          right: 5,
+          borderRadius: 100,
+          backgroundColor: getIndicatorColor(indicator)
+        }} />}
 
-      {cell && (
-        <>
-          <Text style={[Typography.regularH4, { color: colors.TextPrimary }]}>
-            {getKana(cell, kana)}
-          </Text>
-
-          <Text style={[Typography.regularLabel, { color: colors.TextPrimary }]}>
-            {getRomanji(cell).toUpperCase()}
-          </Text>
-        </>
-      )}
-
-      {!cell && !isPlus && (
-        <Text style={[Typography.regularLabel, { color: colors.TextSecondary }]}>
-          {isStartOfLine}
+        <Text style={[Typography.regularH4, { color: colors.TextPrimary }]}>
+          {getKana(cell, kana)}
         </Text>
-      )}
-    </Pressable>
+
+        <Text style={[Typography.regularLabel, { color: colors.TextPrimary }]}>
+          {getRomanji(cell).toUpperCase()}
+        </Text>
+      </>}
+    >
+    </PrimaryButton>
   );
 };
 
@@ -143,13 +138,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     position: "relative",
-  },
-  cellIndicator: {
-    position: "absolute",
-    width: 6,
-    height: 6,
-    top: 5,
-    right: 5,
-    borderRadius: 10,
   },
 });

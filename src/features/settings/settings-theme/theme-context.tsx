@@ -54,7 +54,7 @@ export const ThemeProvider: FunctionComponent<ThemeProviderProps> = ({
 }) => {
   const { t } = useTranslation();
   const [isAuto, setIsAuto] = useState(false);
-  let theme = useColorScheme() as Theme;
+  const theme = useColorScheme() as Theme;
 
   useEffect(() => {
     const loadThemeFromStorage = async () => {

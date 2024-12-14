@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useTranslation } from "react-i18next";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { LessonFinish } from "@/shared/constants/lessons";
@@ -10,6 +10,7 @@ import * as StoreReview from "expo-store-review";
 import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
 import { LearningTitle } from "../ui/title";
 import { Typography } from "@/shared/typography";
+import { isIOS } from "@/shared/constants/platformUtil";
 
 type FinishScreenProps = LessonFinish & {
   next: () => void;
@@ -25,7 +26,7 @@ const FinishScreen: React.FC<FinishScreenProps> = ({ next, retry }) => {
     const chance = Math.random();
 
     try {
-      if (Platform.OS === "ios" && chance <= 0.1) {
+      if (isIOS() && chance <= 0.1) {
         StoreReview.requestReview();
       }
     } catch (error) {

@@ -11,9 +11,10 @@ const initialState: InitialState = {
   },
 
   isEnabledHaptic: true,
+  isWelcomePage: true,
 };
 
-const check = (state: any) => {
+const check = (state: InitialState) => {
   if (!state.draw) {
     state.draw = {
       lineWidth: 14,
@@ -26,6 +27,10 @@ const check = (state: any) => {
   if (state.isEnabledHaptic === undefined) {
     state.isEnabledHaptic = true;
   }
+
+  if (state.isWelcomePage === undefined) {
+    state.isWelcomePage = true
+  }
 };
 
 export const profileSlice = createSlice({
@@ -37,12 +42,12 @@ export const profileSlice = createSlice({
 
       state.draw.lineWidth = action.payload;
     },
-    toggleShowBorder: (state, action) => {
+    toggleShowBorder: (state) => {
       check(state);
 
       state.draw.isShowBorder = !state.draw.isShowBorder;
     },
-    toggleShowLetter: (state, action) => {
+    toggleShowLetter: (state) => {
       check(state);
 
       state.draw.isShowLetter = !state.draw.isShowLetter;
@@ -58,6 +63,10 @@ export const profileSlice = createSlice({
     },
 
     clearStateProfile: () => initialState,
+    
+    toggleWelcomePage: (state) => {
+      state.isWelcomePage = !state.isWelcomePage
+    }
   },
 });
 
@@ -66,7 +75,8 @@ export const {
   toggleShowBorder,
   toggleShowLetter,
   toggleHaptic,
-  clearStateProfile
+  clearStateProfile,
+  toggleWelcomePage
 } = profileSlice.actions;
 
 export default profileSlice.reducer;

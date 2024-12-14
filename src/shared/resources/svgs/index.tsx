@@ -228,8 +228,8 @@ import Katakana_yoon_45435756_de47_4f76_89b7_17d27aee49c7 from "../kana/katakana
 
 import { CSSProperties } from "react";
 
-const getImage = (key: string | undefined, style?: CSSProperties | undefined) => (fill: string, color: string) => {
-
+// eslint-disable-next-line react/display-name
+export const getImage = (key: string | undefined, style?: CSSProperties | undefined) => (fill: string, color: string) => {
   if (key === undefined) return <Hiragana_basic_a151eeeb_2537_463c_ae23_d484d1bcb835 style={style} />;
 
   switch (key.trim()) {
@@ -465,5 +465,3 @@ const getImage = (key: string | undefined, style?: CSSProperties | undefined) =>
     default: return <Hiragana_basic_a151eeeb_2537_463c_ae23_d484d1bcb835 fill={fill} color={color} style={style} />;
   }
 };
-
-export default getImage;

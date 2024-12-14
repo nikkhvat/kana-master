@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 
 import { useTranslation } from "react-i18next";
-import { toggleStatistics } from "@/pages/kana/kana-table-list-page/model/slice";
 import { useAppDispatch, useAppSelector } from "@/shared/model/hooks";
 import SettingItem from "@/entities/profile/setting-item/setting-item";
 import { toggleHaptic } from "@/pages/settings/model/slice";

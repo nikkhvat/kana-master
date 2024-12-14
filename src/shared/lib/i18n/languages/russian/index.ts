@@ -22,7 +22,17 @@ const Russian = {
 	},
 
 	practice: {
+		mode: {
+			cards: "Карточки",
+			input: "Ввод",
+			drawing: "Рисование",
+			words: "Слова",
+		},
+
+		additionally: "Дополнительно",
+
 		start: "Начать обучение",
+		check: "Проверить",
 
 		question: "Вопрос",
 
@@ -138,6 +148,7 @@ const Russian = {
 		cardSelectAtLeastOne: "* Должен быть выбран хотя бы один тип карточки",
 		wordsSelectMoreThan10: "* Должно быть доступно больше 10 слов",
 		modeSelectAtLeastOne: "* Должен быть выбран хотя бы один режим",
+		leastTenLettersMustBeSelectedFromBasic: "* Должно быть выбрано больше 5 слогов из основой азбуки",
 	},
 
 	lessonsList: {

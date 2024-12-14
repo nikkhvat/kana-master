@@ -1,0 +1,38 @@
+name: Deploy Application
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  # Build Job
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v3
+
+      - name: 📦 Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: 🔨 Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 📦 Install Dependencies
+        run: |
+          npm install
+
+      - name: 🚀 Create update
+        run: eas update --auto --non-interactive
+
+      - name: 🚀 Build app for ios
+        run: eas build --platform ios --non-interactive
+      
+      - name: 🚀 Submit app in app store
+        run: eas submit --platform ios --non-interactive

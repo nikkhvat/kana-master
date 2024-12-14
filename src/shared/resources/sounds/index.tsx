@@ -1,4 +1,3 @@
-/* eslint-disable import/order */
 import sound_11017078_148a_4a44_b3f7_21d1df02d981 from "./mp3/11017078-148a-4a44-b3f7-21d1df02d981.mp3";
 import sound_a151eeeb_2537_463c_ae23_d484d1bcb835 from "./mp3/a151eeeb-2537-463c-ae23-d484d1bcb835.mp3";
 import sound_bcbd90e2_fabc_4dcc_8022_02e5b650c822 from "./mp3/bcbd90e2-fabc-4dcc-8022-02e5b650c822.mp3";

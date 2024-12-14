@@ -6,14 +6,11 @@ import React, {
   useState,
 } from "react";
 
-import { Vibration } from 'react-native';
-
-import * as Haptics from "expo-haptics";
-
 import { RootState } from "@/app/store";
 import {
   CardMode,
   Kana,
+  QuestionMode,
   QuestionTypeChooseLetter,
 } from "@/shared/constants/kana";
 import {
@@ -24,12 +21,13 @@ import {
 import { shuffleArray } from "@/shared/helpers/letters";
 import { getAnswersWithRandom } from "@/shared/helpers/words";
 import { Question } from "@/shared/types/questions";
-import { useAppSelector } from "@/shared/model/hooks";
-import { isAndroid, isIOS } from "@/shared/constants/platformUtil";
+import { useHaptic } from "@/shared/helpers/haptic";
+import { kanaTemplates } from "@/shared/helpers/hieroglyph-recognition/templates";
 
 interface generateQuestionsProps {
   selectedLetters: RootState["kana"]["selected"];
   keysCardModeState: CardMode[];
+  questionMode: QuestionMode
 }
 interface EducationPracticeContextValue {
   init: (questions: Question[]) => void;
@@ -57,47 +55,25 @@ export const useEducationPracticeContext = () =>
 export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
+  const { triggerSuccessNotification, triggerErrorNotification } = useHaptic();
+
   const [currentIndex, setQuestionIndex] = useState(0);
   const [questions, setQuestions] = useState<Question[]>([]);
-
-  const isEnabledHaptic = useAppSelector(
-    (state) => state.profile.isEnabledHaptic,
-  );
 
   const submit = (
     trueSelected: boolean,
     callback?: (onFinishPractice: boolean, trueAnswer: boolean) => void,
   ) => {
-    if (isEnabledHaptic) {
-      if (isIOS()) {
-        if (trueSelected) {
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-        } else {
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        }
-      }
-
-      if (isAndroid()) {
-        const successPattern = [0, 1];
-        const errorPattern = [0, 1, 100, 1];
-
-
-        if (trueSelected) {
-          Vibration.vibrate(successPattern);
-        } else {
-          Vibration.vibrate(errorPattern);
-        }
-      }
+    if (trueSelected) {
+      triggerSuccessNotification();
+    } else {
+      triggerErrorNotification();
     }
 
     if (currentIndex > questions.length - 1) return;
 
     setQuestionIndex((prev) => prev + 1);
-    if (currentIndex === questions.length - 1) {
-      callback?.(true, trueSelected);
-    } else {
-      callback?.(false, trueSelected);
-    }
+    callback?.(currentIndex === questions.length - 1, trueSelected);
   };
 
   const init = (questions: Question[]) => {
@@ -121,20 +97,25 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
   const generateQuestions = ({
     selectedLetters,
     keysCardModeState,
+    questionMode
   }: generateQuestionsProps): Question[] => {
+    const isDraw = questionMode === QuestionMode.Brash
+
     const katakanaLetters = [
       ...selectedLetters.base.katakana,
       ...selectedLetters.dakuon.katakana,
       ...selectedLetters.handakuon.katakana,
       ...selectedLetters.yoon.katakana,
-    ].map((item) => lettersTableById[item as LettersKeys]);
+    ].map((item) => lettersTableById[item as LettersKeys])
+    .filter(item => !isDraw ? true : Object.prototype.hasOwnProperty.call(kanaTemplates.katakana, item.ka));
 
     const hiraganaLetters = [
       ...selectedLetters.base.hiragana,
       ...selectedLetters.dakuon.hiragana,
       ...selectedLetters.handakuon.hiragana,
       ...selectedLetters.yoon.hiragana,
-    ].map((item) => lettersTableById[item as LettersKeys]);
+    ].map((item) => lettersTableById[item as LettersKeys])
+    .filter(item => !isDraw ? true : Object.prototype.hasOwnProperty.call(kanaTemplates.hiragana, item.hi));
 
     const questions: Question[] = [];
 
@@ -150,7 +131,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
 
       if (questionTypes.length > 0) {
         for (let i = 0; i < katakanaLetters.length; i++) {
-          const letter = katakanaLetters[i] as ILetter;
+          const letter = katakanaLetters[i] as never as ILetter;
           if (letter !== undefined) {
             const type =
               questionTypes[Math.floor(Math.random() * questionTypes.length)];
@@ -162,7 +143,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
               symbol: letter,
               kana: kanaType,
               answers: getAnswersWithRandom(
-                [katakanaLetters] as ILetter[][],
+                [katakanaLetters] as never as ILetter[][],
                 letter,
               ),
               trueAnswer: letter.id,
@@ -185,7 +166,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
 
       if (questionTypes.length > 0) {
         for (let i = 0; i < hiraganaLetters.length; i++) {
-          const letter = hiraganaLetters[i] as ILetter;
+          const letter = hiraganaLetters[i] as never as ILetter;
           if (letter !== undefined) {
             const type =
               questionTypes[Math.floor(Math.random() * questionTypes.length)];
@@ -197,7 +178,7 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
               symbol: letter,
               kana: kanaType,
               answers: getAnswersWithRandom(
-                [hiraganaLetters] as ILetter[][],
+                [hiraganaLetters] as never as ILetter[][],
                 letter,
               ),
               trueAnswer: letter.id,

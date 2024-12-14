@@ -6,8 +6,6 @@ import React, {
   useState,
 } from "react";
 
-import * as Haptics from "expo-haptics";
-
 import generateChoiceAnswer from "../helpers/generate-choice-answer";
 import generateFindThePair from "../helpers/generate-find-the-pair";
 import generateWordBuilding from "../helpers/generate-word-building";
@@ -16,8 +14,7 @@ import { RootState } from "@/app/store";
 import {
   CardMode,
   KanaAlphabet,
-  TestMode,
-  WordBuildingType,
+  PracticeWordMode,
 } from "@/shared/constants/kana";
 import {
   ILetter,
@@ -28,15 +25,13 @@ import { Word } from "@/shared/data/words";
 import { shuffleArray } from "@/shared/helpers/letters";
 import { getRandomWords } from "@/shared/helpers/words";
 import { AnyWordGameQuestion, Maybe } from "@/shared/types/questions";
-import { useAppSelector } from "@/shared/model/hooks";
-import { isAndroid, isIOS } from "@/shared/constants/platformUtil";
-import { Vibration } from "react-native";
+import { useHaptic } from "@/shared/helpers/haptic";
 
 interface generateQuestionsProps {
   selectedLetters: RootState["kana"]["selected"];
   selectedWords: RootState["kana"]["selectedWords"];
-  keysModeState: TestMode[];
-  lang: string;
+  keysModeState: PracticeWordMode[];
+  lang: "en" | "ru";
 }
 interface EducationPracticeContextValue {
   init: (questions: AnyWordGameQuestion[]) => void;
@@ -64,37 +59,19 @@ export const useEducationPracticeContext = () =>
 export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
+  const { triggerSuccessNotification, triggerErrorNotification } = useHaptic();
+
   const [currentIndex, setQuestionIndex] = useState(0);
   const [questions, setQuestions] = useState<AnyWordGameQuestion[]>([]);
-
-  const isEnabledHaptic = useAppSelector(
-    (state) => state.profile.isEnabledHaptic,
-  );
 
   const submit = (
     trueSelected: boolean,
     callback?: (onFinishPractice: boolean, trueAnswer: boolean) => void,
   ) => {
-    if (isEnabledHaptic) {
-      if (isIOS()) {
-        if (trueSelected) {
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-        } else {
-          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        }
-      }
-
-      if (isAndroid()) {
-        const successPattern = [0, 1];
-        const errorPattern = [0, 1, 100, 1];
-
-
-        if (trueSelected) {
-          Vibration.vibrate(successPattern);
-        } else {
-          Vibration.vibrate(errorPattern);
-        }
-      }
+    if (trueSelected) {
+      triggerSuccessNotification();
+    } else {
+      triggerErrorNotification();
     }
 
     if (currentIndex > questions.length - 1) return;
@@ -113,33 +90,32 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
 
   const generateWordQuestion = (
     word: Word,
-    questionTypes: TestMode[],
+    questionTypes: PracticeWordMode[],
     kana: KanaAlphabet,
-    mode: "romanji" | "kana",
-    kanaWords: Word[],
-    hiraWords: Word[],
-    lang: string,
-    kanaLetters: ILetter[],
-    hiraLetters: ILetter[],
+    katakanaWords: Word[],
+    hiraganaWords: Word[],
+    lang: "en" | "ru",
+    katakanaLetters: ILetter[],
+    hiraganaLetters: ILetter[],
   ): Maybe<AnyWordGameQuestion> => {
     const type =
       questionTypes[Math.floor(Math.random() * questionTypes.length)];
 
     switch (type) {
-      case TestMode.Choice: {
-        return generateChoiceAnswer({ word, kanaWords, hiraWords, kana, lang });
+      case PracticeWordMode.Choice: {
+        return generateChoiceAnswer({ word, katakanaWords, hiraganaWords, kana, lang });
       }
-      case TestMode.WordBuilding: {
+      case PracticeWordMode.WordBuilding: {
         return generateWordBuilding({
           word,
-          kanaLetters,
-          hiraLetters,
+          katakanaLetters,
+          hiraganaLetters,
           selectKanaType: kana,
           lang,
         });
       }
-      case TestMode.FindPair: {
-        return generateFindThePair({ word, kanaWords, hiraWords, kana, lang });
+      case PracticeWordMode.FindPair: {
+        return generateFindThePair({ word, katakanaWords, hiraganaWords, kana, lang });
       }
     }
   };
@@ -150,52 +126,52 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
     keysModeState,
     lang,
   }: generateQuestionsProps): AnyWordGameQuestion[] => {
-    const kanaLetters = [
+    const katakanaLetters = [
       ...selectedLetters.base.katakana,
       ...selectedLetters.dakuon.katakana,
       ...selectedLetters.handakuon.katakana,
       ...selectedLetters.yoon.katakana,
     ].map((item) => lettersTableById[item as LettersKeys]);
 
-    const hiraLetters = [
+    const hiraganaLetters = [
       ...selectedLetters.base.hiragana,
       ...selectedLetters.dakuon.hiragana,
       ...selectedLetters.handakuon.hiragana,
       ...selectedLetters.yoon.hiragana,
     ].map((item) => lettersTableById[item as LettersKeys]);
 
-    const kanaWords: Word[] = selectedWords.katakana;
-    const hiraWords: Word[] = selectedWords.hiragana;
+    const katakanaWords: Word[] = selectedWords.katakana;
+    const hiraganaWords: Word[] = selectedWords.hiragana;
 
     const questions: AnyWordGameQuestion[] = [];
 
-    const wordsCount: number = kanaWords.length + hiraWords.length;
+    const wordsCount: number = katakanaWords.length + hiraganaWords.length;
 
     const questionsCount: number = wordsCount > 10 ? 10 : wordsCount;
 
     const questionTypes: CardMode[] = [];
 
-    if (kanaWords.length >= 10) {
+    if (katakanaWords.length >= 10) {
       questionTypes.push(CardMode.katakanaToRomaji);
       questionTypes.push(CardMode.romajiToKatakana);
     }
 
-    if (hiraWords.length >= 10) {
+    if (hiraganaWords.length >= 10) {
       questionTypes.push(CardMode.hiraganaToRomaji);
       questionTypes.push(CardMode.romajiToHiragana);
     }
 
-    const cardTypes: TestMode[] = [];
+    const cardTypes: PracticeWordMode[] = [];
 
-    if (keysModeState.includes(TestMode.Choice))
-      cardTypes.push(TestMode.Choice);
-    if (keysModeState.includes(TestMode.WordBuilding))
-      cardTypes.push(TestMode.WordBuilding);
-    if (keysModeState.includes(TestMode.FindPair))
-      cardTypes.push(TestMode.FindPair);
+    if (keysModeState.includes(PracticeWordMode.Choice))
+      cardTypes.push(PracticeWordMode.Choice);
+    if (keysModeState.includes(PracticeWordMode.WordBuilding))
+      cardTypes.push(PracticeWordMode.WordBuilding);
+    if (keysModeState.includes(PracticeWordMode.FindPair))
+      cardTypes.push(PracticeWordMode.FindPair);
 
-    const addedQuestionKana: string[] = [];
-    const addedQuestionHira: string[] = [];
+    const addedQuestionKatakana: string[] = [];
+    const addedQuestionHiragana: string[] = [];
 
     for (let i = 0; i < questionsCount; i++) {
       const type =
@@ -205,14 +181,10 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
         type === CardMode.hiraganaToRomaji || type === CardMode.romajiToHiragana
           ? KanaAlphabet.Hiragana
           : KanaAlphabet.Katakana;
-      const mode =
-        type === CardMode.hiraganaToRomaji || type === CardMode.katakanaToRomaji
-          ? "kana"
-          : "romanji";
 
       const word = getRandomWords(
-        addedQuestionHira,
-        [hiraWords, kanaWords].flat(),
+        addedQuestionHiragana,
+        [hiraganaWords, katakanaWords].flat(),
       );
 
       if (word !== null && word !== undefined) {
@@ -220,21 +192,20 @@ export const EducationPracticeContextProvider: FC<PropsWithChildren> = ({
           type === CardMode.hiraganaToRomaji ||
           type === CardMode.romajiToHiragana
         ) {
-          addedQuestionHira.push(word?.romanji);
+          addedQuestionHiragana.push(word?.romanji);
         } else {
-          addedQuestionKana.push(word?.romanji);
+          addedQuestionKatakana.push(word?.romanji);
         }
 
         const question = generateWordQuestion(
           word,
           cardTypes,
           alphabet,
-          mode,
-          kanaWords,
-          hiraWords,
+          katakanaWords,
+          hiraganaWords,
           lang,
-          kanaLetters as ILetter[],
-          hiraLetters as ILetter[],
+          katakanaLetters as any as ILetter[],
+          hiraganaLetters as any as ILetter[],
         );
 
         if (question !== null) {

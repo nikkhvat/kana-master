@@ -8,6 +8,13 @@ const fontTextFamilyRegular = isAndroid() ? "NotoSansJP-Medium" : "SFProText-Reg
 const fontTextFamilySemibold = isAndroid() ? "NotoSansJP-SemiBold" : "SFProDisplay-Semibold";
 const fontTextFamilyBold = isAndroid() ? "NotoSansJP-SemiBold" : "SFProText-Bold";
 
+export const fonts = {
+  regular: { fontFamily: fontTextFamilyRegular, fontWeight: '400' },
+  medium: { fontFamily: fontTextFamilyRegular, fontWeight: '500' },
+  bold: { fontFamily: fontTextFamilySemibold, fontWeight: '600' },
+  heavy: { fontFamily: fontTextFamilyBold, fontWeight: '600' },
+} as const;
+
 // Regular Large
 export const TypographyRegularLarge: TextStyle = {
   fontFamily: fontTitleFamilyBold,

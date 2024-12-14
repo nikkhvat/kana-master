@@ -1,13 +1,10 @@
+import React from "react";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { Typography } from "@/shared/typography";
 import { FC, ReactNode } from "react";
 
-import * as Haptics from "expo-haptics";
-import { Vibration } from 'react-native';
-
-import { Text, StyleSheet, Pressable, StyleProp, ViewStyle, TextStyle } from "react-native";
-import { useAppSelector } from "@/shared/model/hooks";
-import { isIOS } from "@/shared/constants/platformUtil";
+import { Text, StyleSheet, Pressable, StyleProp, ViewStyle, TextStyle, DimensionValue } from "react-native";
+import { useHaptic } from "@/shared/helpers/haptic";
 
 interface PrimaryButtonProps {
   content?: ReactNode;
@@ -19,14 +16,16 @@ interface PrimaryButtonProps {
   isOutline?: boolean;
   isIcon?: boolean;
 
-  width?: number;
+  width?: DimensionValue;
   isFullWidth?: boolean;
 
   isHapticFeedback?: boolean;
 
-  containerStyles?: Record<string, string | number>;
+  containerStyles?: StyleProp<ViewStyle>;
   containerStylesFunc?: (option: { pressed: boolean }) => StyleProp<ViewStyle>;
   textStyles?: StyleProp<TextStyle>;
+
+  children?: React.ReactElement;
 
   onClick?: () => void;
 }
@@ -50,28 +49,18 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
   containerStylesFunc,
   textStyles,
 
+  children,
+
   onClick,
 }) => {
+  const { triggerHaptic } = useHaptic();
   const { colors } = useThemeContext();
-
-  const isEnabledHaptic = useAppSelector(
-    (state) => state.profile.isEnabledHaptic,
-  );
 
   const onPress = () => {
     if (isDisabled) return;
 
-    if (isHapticFeedback && isEnabledHaptic) {
-      if (isIOS()) {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-      } else {
-        Vibration.vibrate(1);
-      }
-    }
-
-    if (!isDisabled) {
-      onClick?.();
-    }
+    triggerHaptic(isHapticFeedback)
+    onClick?.();
   };
 
   const getButtonStyles = (pressed: boolean) => [
@@ -125,6 +114,8 @@ const PrimaryButton: FC<PrimaryButtonProps> = ({
       {content && !text && content}
 
       {icon && icon}
+
+      {children && children}
     </Pressable>
   );
 };

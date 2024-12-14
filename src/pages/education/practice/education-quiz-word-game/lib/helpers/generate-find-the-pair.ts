@@ -5,8 +5,8 @@ import { Maybe, QuestionFindPair } from "@/shared/types/questions";
 
 interface GenerateFindThePairProps {
   word: Word,
-  kanaWords: Word[],
-  hiraWords: Word[],
+  katakanaWords: Word[],
+  hiraganaWords: Word[],
 
   lang: string
   
@@ -15,12 +15,12 @@ interface GenerateFindThePairProps {
 
 const generateFindThePair = ({ 
   word, 
-  kanaWords, 
-  hiraWords,
+  katakanaWords, 
+  hiraganaWords,
   kana,
   lang,
 }: GenerateFindThePairProps): Maybe<QuestionFindPair> => {
-  const words = kana === KanaAlphabet.Hiragana ? hiraWords : kanaWords;
+  const words = kana === KanaAlphabet.Hiragana ? hiraganaWords : katakanaWords;
 
   if (words.length === 0) return null;
 

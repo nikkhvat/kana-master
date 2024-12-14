@@ -2,11 +2,11 @@ import { useThemeContext } from "@/features/settings/settings-theme/theme-contex
 import React, { ReactNode } from "react";
 import { View } from "react-native";
 
-interface SettingSectoinProps {
+interface SettingSectionProps {
   children: ReactNode;
 }
 
-const SettingsSection: React.FC<SettingSectoinProps> = ({ children }) => {
+const SettingsSection: React.FC<SettingSectionProps> = ({ children }) => {
   const { colors } = useThemeContext();
 
   return (

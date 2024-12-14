@@ -104,6 +104,5 @@ export type ManuallyLesson = {
   infoTitle: string;
   infoSubTitle: string;
   icon: string;
-  category: ("hiragana" | "katakana")[];
   screens: (InfoLessonScreen | AnyLesson)[];
 };

@@ -53,7 +53,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
 
   const { colors } = useThemeContext();
 
-  const { getRomanji, key } = useGetRomanji();
+  const { getRomanji } = useGetRomanji();
 
   const getStartOfRow = (letter: ILetter) => {
     const romanji = getRomanji(letter);
@@ -66,11 +66,7 @@ const EducationKanaTable: React.FC<EducationKanaTableProps> = ({
 
     return (
       "-" +
-      (romanji.length === 2
-        ? romanji[1]
-        : romanji.length === 1
-          ? romanji[0]
-          : romanji[2])
+      (romanji.length === 2 ? romanji[1] : romanji.length === 1 ? romanji[0] : romanji[2])
     );
   };
 

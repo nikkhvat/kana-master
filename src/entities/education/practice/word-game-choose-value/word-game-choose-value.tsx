@@ -1,17 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 
 import { useTranslation } from "react-i18next";
 import { View, Text, StyleSheet } from "react-native";
 
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
-import { RegistErrorProps } from "@/pages/education/practice/education-quiz-word-game/ui/education-practice";
-import { TEST_DELAY } from "@/shared/constants/kana";
+import { RegistrationErrorProps } from "@/pages/education/practice/education-quiz-word-game/ui/education-practice";
 import { Word } from "@/shared/data/words";
 import SelectAnswer from "@/entities/education/select-answer/select-answer";
 import { Typography } from "@/shared/typography";
-
-
-
 interface EducationPracticeChooseValueProps {
   title: string;
   answers: { text: string; key: string }[];
@@ -19,7 +15,7 @@ interface EducationPracticeChooseValueProps {
   word: Word;
   hideTitle?: boolean
   onCompleted?: (isError: boolean) => void;
-  onError?: (data: RegistErrorProps) => void;
+  onError?: (data: RegistrationErrorProps) => void;
 }
 
 const EducationPracticeChooseValue: React.FC<EducationPracticeChooseValueProps> = ({

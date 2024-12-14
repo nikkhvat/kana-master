@@ -1,7 +1,7 @@
 import { ILetter } from "../data/lettersTable";
 import { Word } from "../data/words";
 
-import { CardMode, Kana, KanaAlphabet, QuestionTypeBuildingWord, QuestionTypeChooseLetter, QuestionTypeChooseWord, QuestionTypeFindPairWord, WordBuildingType } from "@/shared/constants/kana";
+import { CardMode, Kana, KanaAlphabet, QuestionTypeBuildingWord, QuestionTypeChooseLetter, QuestionTypeChooseWord, QuestionTypeFindPairWord } from "@/shared/constants/kana";
 
 export type Maybe<T> = T | null;
 

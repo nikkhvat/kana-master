@@ -19,7 +19,7 @@ import { useActionSheet } from '@expo/react-native-action-sheet';
 const SettingsLanguage: React.FC = () => {
   const { showActionSheetWithOptions } = useActionSheet();
 
-  const { colors, themeString } = useThemeContext();
+  const { themeString } = useThemeContext();
 
   const dispatch = useAppDispatch();
 

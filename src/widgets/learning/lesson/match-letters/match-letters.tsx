@@ -16,7 +16,6 @@ type LessonDrawScreenProps = LessonMatchSymbols & {
 };
 
 const MatchLettersScreen: React.FC<LessonDrawScreenProps> = ({
-  name,
   symbols,
   kana,
   next,

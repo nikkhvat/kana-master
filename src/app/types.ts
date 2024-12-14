@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "@/app/navigationTypes";

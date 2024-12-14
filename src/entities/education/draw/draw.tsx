@@ -1,4 +1,4 @@
-import React, { useRef, useReducer } from "react";
+import React, { useRef, useReducer, useState, useEffect } from "react";
 import { View, StyleSheet, Dimensions } from "react-native";
 import { Svg, Path } from "react-native-svg";
 import {
@@ -9,8 +9,8 @@ import {
 import Symbol from "@/entities/kana/symbol/symbol";
 import { useThemeContext } from "@/features/settings/settings-theme/theme-context";
 import { TABLET_PADDING, TABLET_WIDTH } from "@/shared/constants/app";
-import { KanaAlphabet } from "@/shared/constants/kana";
-import { ILetter } from "@/shared/data/lettersTable";
+import { KanaAlphabet, TEST_DELAY } from "@/shared/constants/kana";
+import { dakuonFlatLettersId, handakuonFlatLettersId, ILetter, yoonFlatLettersId } from "@/shared/data/lettersTable";
 import { verticalScale } from "@/shared/helpers/metrics";
 import { useAppSelector } from "@/shared/model/hooks";
 import ToggleStrokeWidth from "./buttons/toggle-stroke-width";
@@ -18,18 +18,50 @@ import ToggleShowBorders from "./buttons/toggle-show-borders";
 import ToggleShowLetter from "./buttons/toggle-show-letter";
 import ClearButtons from "./buttons/clear-buttons";
 import CanvasBorder from "./canvas-border";
+import Recognizer from "@/shared/helpers/hieroglyph-recognition/recognizer";
+import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
+import { kanaTemplates } from "@/shared/helpers/hieroglyph-recognition/templates";
+import { useTranslation } from "react-i18next";
+import SecondaryButton from "@/shared/ui/buttons/Secondary/secondary-button";
+import { processDrawing } from "@/shared/helpers/hieroglyph-recognition/record";
+
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import { Typography } from "@/shared/typography";
+import { normalizeCoordinates } from "@/shared/helpers/hieroglyph-recognition/coordinates";
 
 const { width } = Dimensions.get("window");
 
+enum StateColor {
+  Green = "Green",
+  Red = "Red",
+  NotInitialized = "not_initialized",
+}
 interface DrawProps {
   letter: ILetter;
   kana: KanaAlphabet;
+
+  isCheck?: boolean;
+
+  isTextRecognition?: boolean;
+
+  onError?: (id: number | string) => void;
+  onCompleted?: (isErrors: boolean, pickedAnswer: ILetter) => void;
 }
 
 const screenWidth = Dimensions.get("window").width;
 
-const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getTypeById = (id: any) => {
+  if (yoonFlatLettersId.includes(id)) return "kana.yoon";
+  if (handakuonFlatLettersId.includes(id)) return "kana.handakuon";
+  if (dakuonFlatLettersId.includes(id)) return "kana.dakuon";
+
+  return "kana.basic";
+};
+
+const Draw: React.FC<DrawProps> = ({ isCheck, letter, kana, isTextRecognition, onError, onCompleted }) => {
   const { colors } = useThemeContext();
+  const { t } = useTranslation();
 
   const currentPathRef = useRef<{ x: number; y: number }[]>([]);
   const pathsRef = useRef<{ x: number; y: number }[][]>([]);
@@ -45,7 +77,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
   const isShowBorder = useAppSelector((state) => state.profile?.draw?.isShowBorder);
 
   const onGestureEvent = (event: GestureHandlerGestureEvent) => {
-    const { x, y } = event.nativeEvent as any;
+    const { x, y } = event.nativeEvent as unknown as { x: number, y: number };
 
     if (currentPathRef.current.length === 0) {
       currentPathRef.current = [{ x, y }];
@@ -111,6 +143,53 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
     return d;
   };
 
+  function shortenLines(data: number[][][]) {
+    return data.map(line => line.map(item => item.map(point => +point.toFixed(4))))
+  }
+
+  const [state, setState] = useState<StateColor>(StateColor.NotInitialized)
+
+  const detectSymbol = () => {
+    const recognizer = new Recognizer();
+
+    if (kana === KanaAlphabet.Hiragana) {
+      kanaTemplates.addHiragana(recognizer)
+    }
+    
+    if (kana === KanaAlphabet.Katakana) {
+      kanaTemplates.addKatakana(recognizer)
+    }
+
+    const strokes = normalizeCoordinates(pathsRef.current);
+
+    const result = recognizer.recognize(strokes);
+    const isSomeKana = result
+      ?.some(symbol => symbol.name === (kana === KanaAlphabet.Hiragana ? letter.hi : letter.ka));
+
+    if (isSomeKana) {
+      setState(StateColor.Green)
+      setTimeout(() => {
+        onCompleted?.(true, letter)
+        setState(StateColor.NotInitialized)
+        handleClearButtonClick()
+      }, TEST_DELAY)
+    } else {
+      setState(StateColor.Red)
+      setTimeout(() => {
+        onError?.(letter.id)
+        onCompleted?.(false, letter)
+        setState(StateColor.NotInitialized)
+        handleClearButtonClick()
+      }, TEST_DELAY)
+    }
+  }
+
+  const IS_SAVE = false;
+
+  useEffect(() => {
+    handleClearButtonClick();
+  }, [letter])
+
   return (
     <GestureHandlerRootView style={{ height: canvasSize + 165 }}>
       <View>
@@ -120,15 +199,26 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
         >
           <View
             style={{
-              borderWidth: 1,
               borderRadius: 24,
               position: "relative",
               height: canvasSize,
               width: canvasSize,
-              borderColor: colors.BgLightGray,
             }}
           >
-            {isShowLetter && (
+            <View style={{
+              borderRadius: 22,
+              position: "absolute",
+              top: 0,
+              left: 0,
+              bottom: 0,
+              right: 0,
+              width: "100%",
+              height: "100%",
+              borderWidth: state === StateColor.NotInitialized ? 1 : 2,
+              borderColor: state === StateColor.NotInitialized ? colors.BorderDefault
+                : state === StateColor.Green ? colors.BorderSuccess : colors.BorderDanger,
+            }} />
+            {isShowLetter && !isCheck && (
               <View
                 style={[
                   styles.drawContainerImage,
@@ -146,7 +236,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
                   d={generatePathDAttribute(path)}
                   stroke={colors.BgContrast}
                   fill="transparent"
-                  strokeWidth={strokeWidth}
+                  strokeWidth={isCheck ? 6 : strokeWidth}
                   strokeLinejoin="round"
                   strokeLinecap="round"
                 />
@@ -155,7 +245,7 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
                 d={generatePathDAttribute(currentPathRef.current)}
                 stroke={colors.BgContrast}
                 fill="transparent"
-                strokeWidth={strokeWidth}
+                strokeWidth={isCheck ? 6 : strokeWidth}
                 strokeLinejoin="round"
                 strokeLinecap="round"
               />
@@ -170,13 +260,44 @@ const Draw: React.FC<DrawProps> = ({ letter, kana }) => {
           />
           <View style={styles.buttonsContainer}>
             <View style={styles.actionButtons}>
-              <ToggleShowBorders />
-              <ToggleShowLetter />
+              {(getTypeById(letter.id) === "kana.basic" && isTextRecognition) &&
+                <SecondaryButton
+                  width={50}
+                  icon={
+                    <Icon
+                      name={"text-recognition"}
+                      size={24}
+                      color={isShowBorder ? colors.IconContrast : colors.IconPrimary} />}
+                  onClick={detectSymbol}
+                  textStyles={[Typography.boldH2, { marginLeft: 10 }]}
+                  containerStyles={{
+                    flexDirection: 'row-reverse',
+                    alignItems: 'center'
+                  }}
+                />}
+
+              {IS_SAVE && <SecondaryButton
+                width={50}
+                icon={
+                  <Icon
+                    name={"content-save-all-outline"}
+                    size={24}
+                    color={isShowBorder ? colors.IconContrast : colors.IconPrimary} />}
+                onClick={() => {
+                  const points = shortenLines(normalizeCoordinates(processDrawing(pathsRef.current)));
+                  console.log(JSON.stringify(points))
+                }}
+              />}
+                
+              {!isCheck && <ToggleShowBorders />}
+              {!isCheck && <ToggleShowLetter />}
             </View>
-            <ToggleStrokeWidth />
+            {!isCheck &&  <ToggleStrokeWidth />}
           </View>
         </View>
       </View>
+
+      {isCheck && <PrimaryButton onClick={detectSymbol} text={t("practice.check")} />}
     </GestureHandlerRootView>
   );
 };

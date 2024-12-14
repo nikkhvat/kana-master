@@ -22,7 +22,17 @@ const English = {
   },
 
   practice: {
+    mode: {
+      cards: "Cards",
+      input: "Input",
+      drawing: "Drawing",
+      words: "Words",
+    },
+
+    additionally: "Additionally",
+
     start: "Start",
+    check: "Check",
 
     question: "Question",
 
@@ -138,6 +148,7 @@ const English = {
     cardSelectAtLeastOne: "* At least one card type must be selected",
     wordsSelectMoreThan10: "* Should be available more than 10 words",
     modeSelectAtLeastOne: "* At least one mode must be selected",
+    leastTenLettersMustBeSelectedFromBasic: "* Should be selected more than 5 syllables from basic",
   },
 
   lessonsList: {

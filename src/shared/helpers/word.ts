@@ -16,7 +16,7 @@ export const findWordsFromArray = (words: Word[], characters: string[]): Word[] 
   
 
   return words.filter(word => {
-    let changedWord = word.kana.split("")
+    const changedWord = word.kana.split("")
 
     for (let i = 0; i < changedWord.length; i++) {
       if (changedWord[i + 1] && ["ャ", "ュ", "ョ", "ゃ", "ゅ", "ょ"].includes(changedWord[i + 1])) {

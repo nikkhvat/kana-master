@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { View, Text, SectionList, StyleSheet, TouchableOpacity, Platform } from "react-native";
+import { View, Text, SectionList, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import EducationKanaTableSelected from "@/features/education/education-kana-table-selected/education-kana-table";
@@ -15,12 +15,14 @@ import Switcher from "@/shared/ui/switcher/switcher";
 import { Typography } from "@/shared/typography";
 import { ROUTES } from "@/app/navigationTypes";
 import PrimaryButton from "@/shared/ui/buttons/Primary/primary-button";
+import { isAndroid, isIOS } from "@/shared/constants/platformUtil";
+import { useNavigation } from "@react-navigation/native";
 
-interface KanaInfoProps {
-  navigation: StackNavigationProp<RootStackParamList, typeof ROUTES.KANA_SELECT>;
-}
+type ScreenNavigationProps = StackNavigationProp<RootStackParamList, typeof ROUTES.KANA_SELECT>;
 
-const KanaTableChoiceLettersPage: React.FC<KanaInfoProps> = ({ navigation }) => {
+const KanaTableChoiceLettersPage: React.FC = () => {
+  const navigation = useNavigation<ScreenNavigationProps>();
+
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const { colors } = useThemeContext();
@@ -39,7 +41,11 @@ const KanaTableChoiceLettersPage: React.FC<KanaInfoProps> = ({ navigation }) => 
   );
 
   useEffect(() => {
-    navigation.setOptions({
+    navigation.setOptions(isAndroid() ?  {
+      title: activeTab === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana"),
+      headerTitleStyle: [Typography.semiBoldH4, { color: colors.TextPrimary }],
+      headerShadowVisible: false,
+    } : {
       header: () => <View style={{
         width: "100%",
         flexDirection: "row",
@@ -51,14 +57,14 @@ const KanaTableChoiceLettersPage: React.FC<KanaInfoProps> = ({ navigation }) => 
       }} >
         <PrimaryButton
           isOutline
-          containerStyles={{ borderWidth: 0 }}
+          containerStyles={{
+            borderWidth: 0,
+            backgroundColor: colors.BgPrimary
+          }}
           textStyles={{
             ...Typography.regularH4,
             color: colors.TextSecondary
           }}
-          containerStylesFunc={({ pressed }) => ({
-            backgroundColor: colors.BgPrimary,
-          })}
           isHapticFeedback
           onClick={navigation.goBack}
           text={t("common.close")}
@@ -66,28 +72,29 @@ const KanaTableChoiceLettersPage: React.FC<KanaInfoProps> = ({ navigation }) => 
         <Text style={[Typography.semiBoldH4, { color: colors.TextPrimary }]} >
           {activeTab === KanaAlphabet.Hiragana ? t("kana.hiragana") : t("kana.katakana")}
         </Text>
+
         <PrimaryButton
           isOutline
-          containerStyles={{ borderWidth: 0 }}
-          textStyles={{
-            ...Typography.regularH4,
-            color: colors.TextPrimary
+          containerStyles={{
+            borderWidth: 0,
+            backgroundColor: colors.BgPrimary
           }}
-          containerStylesFunc={({ pressed }) => ({
-            backgroundColor: colors.BgPrimary,
-          })}
-          isHapticFeedback
-          onClick={() => dispatch(resetKanaSelected())}
-          text={t("common.reset")}
+          textStyles={{
+            color: colors.BgPrimary
+          }}
+          text={t("common.close")}
         />
       </View>,
-    });
+      headerShadowVisible: false,
+      presentation: 'modal'
+      }
+    );
   }, [activeTab, dispatch, navigation, t]);
 
   return (
     <>
       <View style={{ flex: 1, backgroundColor: colors.BgPrimary, paddingBottom: 40 + insets.bottom }}>
-        {Platform.OS === "ios" && <View style={[styles.lineContainer, { top: 40, backgroundColor: colors.BorderDefault }]} />}
+        {isIOS() && <View style={[styles.lineContainer, { top: 44, backgroundColor: colors.BorderDefault }]} />}
         <SectionList
           sections={sections}
           keyExtractor={(item, index) => item + index}
@@ -115,6 +122,7 @@ const KanaTableChoiceLettersPage: React.FC<KanaInfoProps> = ({ navigation }) => 
           borderColor: colors.BorderDefault, 
         }]}>
         <Switcher<KanaAlphabet>
+          isFullWidth
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           options={[
@@ -122,9 +130,19 @@ const KanaTableChoiceLettersPage: React.FC<KanaInfoProps> = ({ navigation }) => 
             KanaAlphabet.Katakana
           ]}
           translate={[
-            t("kana.hiragana"),
-            t("kana.katakana"),
-          ]} />
+            "ひらがな",
+            "カタカナ"
+          ]}
+          customStyles={{
+            flex: 2
+          }}
+        />
+        <PrimaryButton
+          isFullWidth
+          isHapticFeedback
+          onClick={() => dispatch(resetKanaSelected())}
+          text={t("common.reset")}
+        />
       </View>
     </>
   );
@@ -162,7 +180,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     flexDirection: "row",
     alignItems: "flex-start",
-    justifyContent: "center",
+    justifyContent: "space-between",
+    gap: 16,
     paddingHorizontal: 20,
   }
 });
