@@ -110,6 +110,7 @@ const InfoScreen: React.FC<InfoScreenProps> = ({
       <ScrollView
         contentContainerStyle={{
           paddingTop: 22,
+          paddingBottom: 22,
         }}
         style={{
           paddingLeft: insets.left + 20,

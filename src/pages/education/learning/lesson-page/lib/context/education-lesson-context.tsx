@@ -81,18 +81,6 @@ function generateScreens(letters: ILetter[]): AnyLesson[] {
         name: LessonScreen.SelectSymbol,
         symbols: shuffleArray(letters).slice(0, 3),
       });
-      screens.push({
-        name: LessonScreen.SelectSymbol,
-        symbols: shuffleArray(letters).slice(0, 3),
-      });
-      screens.push({
-        name: LessonScreen.MatchSymbols,
-        symbols: shuffleArray(letters).slice(0, 3),
-      });
-      screens.push({
-        name: LessonScreen.MatchSymbols,
-        symbols: shuffleArray(letters).slice(0, 3),
-      });
     }
   }
 

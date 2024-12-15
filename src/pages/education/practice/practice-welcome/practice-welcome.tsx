@@ -140,15 +140,15 @@ const PracticeWelcomePage: React.FC = () => {
               condition: questionMode === QuestionMode.Brash ?
                 letters.base.hiragana.length >= 5 || letters.base.katakana.length >= 5
                 : true,
-              text: t("tooltip.leastTenLettersMustBeSelectedFromBasic"),
+              text: t("practice.tooltip.leastTenLettersMustBeSelectedFromBasic"),
             },
             {
               condition: selectedLetters >= 5,
-              text: t("tooltip.syllablesSelectMoreThan5"),
+              text: t("practice.tooltip.syllablesSelectMoreThan5"),
             },
             {
               condition: cardsMode.length > 0,
-              text: t("tooltip.cardSelectAtLeastOne"),
+              text: t("practice.tooltip.cardSelectAtLeastOne"),
             }
           ]}
           onPress={toPractice}
@@ -157,11 +157,11 @@ const PracticeWelcomePage: React.FC = () => {
           conditions={[
             {
               condition: wordsCount >= 10,
-              text: t("tooltip.wordsSelectMoreThan10"),
+              text: t("practice.tooltip.wordsSelectMoreThan10"),
             },
             {
               condition: mode.length > 0,
-              text: t("tooltip.modeSelectAtLeastOne"),
+              text: t("practice.tooltip.modeSelectAtLeastOne"),
             },
           ]}
           onPress={toPractice}

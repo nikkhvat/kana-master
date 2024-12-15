@@ -68,6 +68,16 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
 
     const isActiveColumn = (index: number): boolean => {
       return letters.every(row => {
+        if (row[0]?.hi === "や") {
+          row = [row[0], null, row[1], null, row[2]] as ILetter[];
+        }
+        if (row[0]?.hi === "わ") {
+          row = [row[0], null, null, null, row[1]] as ILetter[];
+        }
+        if (row[0]?.hi === "ん") {
+          row = [null, null, row[0], null, null] as ILetter[];
+        }
+
         const item = row[index];
 
         if (!item) return true;
@@ -156,11 +166,21 @@ const EducationKanaTableSelected: React.FC<EducationKanaTableProps> = ({
       const letters: ILetter[] =
         type === "row"
           ? (data[index].filter(isILetter) as ILetter[])
-          : (data.flatMap((row) =>
-              isILetter(row[index]) ? [row[index]] : [],
-            ) as ILetter[]);
+          : (data.flatMap((row) => {
+            if (row[0]?.hi === "や") {
+              row = [row[0], null, row[1], null, row[2]] as ILetter[];
+            }
+            if (row[0]?.hi === "わ") {
+              row = [row[0], null, null, null, row[1]] as ILetter[];
+            }
+            if (row[0]?.hi === "ん") {
+              row = [null, null, row[0], null, null] as ILetter[];
+            }
 
-      onToggleSome(letters, alphabet);
+            return (isILetter(row[index]) ? [row[index]] : []) as ILetter[]
+        }))
+
+      onToggleSome(letters.filter(letter => letter), alphabet);
     },
     [onToggleSome],
   );

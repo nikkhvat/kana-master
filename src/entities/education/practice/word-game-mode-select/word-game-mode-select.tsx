@@ -43,28 +43,6 @@ const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
     setMode(initial);
   }, [isHiraganaAvailable, isKatakanaAvailable, modeAvailable, setMode]);
 
-  const cards = [
-    [
-      {
-        title: t("wordGame.choice"),
-        key: PracticeWordMode.Choice,
-        condition: modeAvailable,
-      },
-      {
-        title: t("wordGame.wordBuilding"),
-        key: PracticeWordMode.WordBuilding,
-        condition: modeAvailable,
-      },
-    ],
-    [
-      {
-        title: t("wordGame.findThePair"),
-        key: PracticeWordMode.FindPair,
-        condition: modeAvailable,
-      },
-    ],
-  ];
-
   const toggle = (key: PracticeWordMode) => {
     if (selectedCardMode.includes(key)) {
       setSelectedCardMode((prev) => prev.filter((item) => item !== key));
@@ -78,7 +56,7 @@ const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
   return (
     <View style={styles.container}>
       <Text style={[Typography.boldH3, { color: colors.TextPrimary }]}>
-        {t("wordGame.mode")}
+        {t("practice.modeTitle")}
       </Text>
       <View style={styles.buttonsContainer}>
         <ButtonCard<PracticeWordMode>
@@ -86,7 +64,7 @@ const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
           setValue={toggle}
           currentValue={selectedCardMode.includes(PracticeWordMode.Choice) ? PracticeWordMode.Choice : false}
           value={PracticeWordMode.Choice}
-          text={t("wordGame.choice")}
+          text={t("practice.wordsMode.choice")}
           icon={"format-line-spacing"}
         />
         <ButtonCard<PracticeWordMode>
@@ -94,7 +72,7 @@ const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
           setValue={toggle}
           currentValue={selectedCardMode.includes(PracticeWordMode.FindPair) ? PracticeWordMode.FindPair : false}
           value={PracticeWordMode.FindPair}
-          text={t("wordGame.wordBuilding")}
+          text={t("practice.wordsMode.wordBuilding")}
           icon={"check-circle-outline"}
         />
       </View>
@@ -104,7 +82,7 @@ const WordGameModeSelect: React.FC<CardModeSelectProps> = ({
           setValue={toggle}
           currentValue={selectedCardMode.includes(PracticeWordMode.WordBuilding) ? PracticeWordMode.WordBuilding : false}
           value={PracticeWordMode.WordBuilding}
-          text={t("wordGame.wordBuilding")}
+          text={t("practice.wordsMode.findThePair")}
           icon={"puzzle-outline"}
         />
       </View>

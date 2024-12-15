@@ -233,7 +233,7 @@ const CardModeSelect: React.FC<CardModeSelectProps> = ({
   return (
     <View style={styles.container}>
       <Text style={[Typography.boldH3, { color: colors.TextPrimary }]}>
-        {t("testing.cardMode")}
+        {t("practice.mode.cards")}
       </Text>
 
       <View style={styles.buttonsContainer}>

@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   symbolContainer: {
     borderWidth: 1,
-    borderRadius: 24,
+    borderRadius: 24
   },
   buttonContainer: {
     width: "100%",

@@ -62,7 +62,12 @@ const TestModeSelect: React.FC<CardModeSelectProps> = ({
     }
   }
 
-  const getTimerSpeed = () => timerDeration === "fast" ? "3s" : timerDeration === "medium" ? "5s" : "7s"
+  const getTimerSpeed = () => {
+    if (timerDeration === "fast") return t("practice.timer.fast")
+    else if (timerDeration === "medium") return t("practice.timer.medium")
+      
+    return t("practice.timer.slow")
+  }
 
   return (
     <>
@@ -80,8 +85,8 @@ const TestModeSelect: React.FC<CardModeSelectProps> = ({
               : false}
             value={DifficultyLevelType.TimeTest}
             text={cards.includes(DifficultyLevelType.TimeTest)
-                ? `${t("difficultyLevel.timeTest")} ${getTimerSpeed()}`
-                : t("difficultyLevel.timeTest")}
+              ? `${t("practice.timeTest")} ${getTimerSpeed()}`
+              : t("practice.timeTest")}
             icon={cards.includes(DifficultyLevelType.TimeTest)
               ? "timer-outline"
               : "timer-off-outline"}
@@ -94,7 +99,7 @@ const TestModeSelect: React.FC<CardModeSelectProps> = ({
               ? DifficultyLevelType.OneAttempt
               : false}
             value={DifficultyLevelType.OneAttempt}
-            text={t("difficultyLevel.oneAttempt")}
+            text={t("practice.oneAttempt")}
             icon={"alert-circle-outline"}
           />
         </View>

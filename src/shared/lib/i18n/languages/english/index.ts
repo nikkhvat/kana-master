@@ -1,190 +1,171 @@
 const English = {
   common: {
-    close: "Close",
-    reset: "Reset",
-    next: "Next",
-    retry: "Retry",
-    complete: "Complete",
-    start: "Start",
-    auto: "Auto",
+    close: "Close",                 // For example, closing a modal window
+    reset: "Reset",                 // For example, resetting selected symbols
+    next: "Next",                   // For example, moving to the next screen of a lesson
+    retry: "Retry",                 // For example, retrying a lesson
+    complete: "Complete",           // For example, completing the last screen of a lesson
+    start: "Start",                 // For example, starting a new lesson
   },
 
   tabs: {
-    learning: "Learning",
-    practice: "Practice",
-    kana: "Kana",
-    profile: "Settings",
-  },
-
-  learning: {
-    testing: "Testing",
-    wordGame: "Word game",
+    learning: "Learning",           // Tab with lessons
+    practice: "Practice",           // Tab for practicing and revising knowledge
+    kana: "Kana",                   // Tab with the Hiragana and Katakana alphabets
+    profile: "Settings",            // Tab for settings where users can enable/disable features
   },
 
   practice: {
+    modeTitle: "Mode",              // For example, "Mode" of a game
     mode: {
-      cards: "Cards",
-      input: "Input",
-      drawing: "Drawing",
-      words: "Words",
+      cards: "Cards",             // "Cards" mode where you choose the answer from four options
+      input: "Input",             // "Input" mode where you manually type the answer
+      drawing: "Drawing",         // "Drawing" mode where you draw a character
+      words: "Words",             // "Words" mode where you select or build a word
     },
 
-    additionally: "Additionally",
+    wordsMode: {
+      choice: "Choice",                    // Game mode to select the word
+      wordBuilding: "Build a Word",        // Game mode to build a word from letters
+      findThePair: "Match the Pair",       // Game mode to match word pairs
+    },
 
-    start: "Start",
-    check: "Check",
+    additionally: "Additional",            // Additional practice settings
+    timeTest: "Timer",                     // Enable a "timer" to make the game timed
+    oneAttempt: "One Attempt",             // One attempt - if the answer is wrong, it moves to the next question
 
-    question: "Question",
+    check: "Check",                        // For example, checking if a character is written correctly
+    question: "Question",                  // For example, "Question" #10
 
     timer: {
-      fast: "3 sec",
-      medium: "5 sec",
-      slow: "7 sec",
+      fast: "3 sec",                      // Timer speed: 3 seconds, abbreviated
+      medium: "5 sec",                    // Timer speed: 5 seconds, abbreviated
+      slow: "7 sec",                      // Timer speed: 7 seconds, abbreviated
     },
 
-    selectCorrectTransliteration: "Select the Correct Transliteration.",
+    selectCorrectTransliteration: "Select the correct transliteration.",
 
-    selectHiraganaForWord: "Choose the hiragana in the correct order.",
-    selectKatakanaForWord: "Choose the katakana in the correct order.",
-  },
+    selectHiraganaForWord: "Select Hiragana in the correct order.",
+    selectKatakanaForWord: "Select Katakana in the correct order.",
 
-  testing: {
-    cardMode: "Cards",
-    testMode: "Mode",
-  },
-
-  difficultyLevel: {
-    timeTest: "Timer",
-    oneAttempt: "One attempt",
-  },
-
-  wordGame: {
-    mode: "Mode",
-
-    choice: "Choice",
-    wordBuilding: "Word Building",
-    findThePair: "Match The Pair",
+    tooltip: {
+      syllablesSelectMoreThan5: "* More than 5 syllables must be selected",
+      cardSelectAtLeastOne: "* At least one card type must be selected",
+      wordsSelectMoreThan10: "* More than 10 words must be available",
+      modeSelectAtLeastOne: "* At least one mode must be selected",
+      leastTenLettersMustBeSelectedFromBasic: "* More than 5 syllables from the basic alphabet must be selected",
+    },
   },
 
   kana: {
-    hiragana: "Hiragana",
-    katakana: "Katakana",
-    romanji: "Romanji",
+    hiragana: "Hiragana",           // Japanese syllabary
+    katakana: "Katakana",           // Japanese syllabary
+    romanji: "Romaji",              // Transcription systems for writing Japanese words in Latin characters
 
-    basic: "Basic",
-    dakuon: "Dakuon",
-    handakuon: "Handakuon",
-    yoon: "Yoon",
+    basic: "Basic",                 // Basic part of the Japanese syllabary
+    dakuon: "Dakuon",               // Syllables with a diacritical mark
+    handakuon: "Handakuon",         // Sounds in the 'h' row marked with a small circle
+    yoon: "Yoon",                   // Combined sounds formed by merging syllables
 
-    kana: "Kana",
+    kana: "Syllable"                // Japanese is a syllabary; for instance, the syllable KA is か
   },
 
   selectKana: {
-    words: "Words",
-    letters: "Syllables",
-    nothingSelected: "Nothing selected",
+    words: "Words",                 // For example, 100 words selected for learning
+    letters: "Syllables",           // For example, 5 syllables selected (か き く け こ)
+    nothingSelected: "Nothing selected" // When nothing is selected and this needs to be indicated
   },
 
   settings: {
-    displayStatistics: "Display Statistics",
-    hapticFeedback: "Haptic Feedback",
+    displayStatistics: "Display statistics",   // Toggle to show/hide statistics
+    hapticFeedback: "Haptic feedback",         // Toggle for haptic feedback (vibration on button presses)
     theme: {
-      title: "Theme",
-      light: "Light",
-      dark: "Dark",
-      auto: "Automatic"
+      title: "Theme",                        // Application theme
+      light: "Light",                        // Light theme
+      dark: "Dark",                          // Dark theme
+      auto: "Automatic",                     // Automatic/system theme
     },
-    language: "Language",
-    privacyPolicy: "Privacy Policy",
-    contactSupport: "Contact Support",
+    language: "Language",                      // Interface language
+    privacyPolicy: "Privacy Policy",          // Link to the privacy policy
+    contactSupport: "Contact Support",        // Contact support (email us)
 
     joinOurCommunity: {
-      title: "Join our community",
+      title: "Join our community",          // Button in settings leading to a Telegram channel
     },
 
     eraseData: {
-      button: "Clear App Data",
-      dataTakesUp: "Data takes up",
-      title: "Are you sure you want to erase data?",
-      subtitle: "All saved data, including settings and progress, will be deleted. This action is irreversible."
+      button: "Clear app data",             // Button to erase app data
+      dataTakesUp: "Data occupies",         // For example, "Data occupies 10KB"
+      title: "Are you sure you want to clear the data?", // Question asking if the user is sure about deleting data
+      subtitle: "All saved data, including settings and progress, will be deleted. This action is irreversible." // Warning
     },
 
     sourceCode: {
-      title: "Исходный код",
-      githubRepository: "Репозиторий GitHub",
+      title: "Source Code",                 // Button leading to GitHub
+      githubRepository: "GitHub Repository", // Subtitle of the button leading to GitHub
     },
-    version: "Версия",
+    version: "Version",                       // Application version, e.g., Version 2.24.3
   },
 
   result: {
-    title: "Practice complete",
-    score: "Score",
+    title: "Practice completed",             // Message on the last screen after practice
+    score: "Score",                          // Practice result, e.g., Score 7/10 (7 correct answers out of 10)
 
-    wellDoneNoErrors: "Well done, no errors!",
+    wellDoneNoErrors: "Excellent work, no errors!", // Message on the results screen
 
-    sec: "sec",
-    min: "min",
+    sec: "sec",                              // Abbreviation for seconds, e.g., 12 sec
+    min: "min",                              // Abbreviation for minutes, e.g., 12 min
 
-    question: "Question",
+    question: "question",                    // For example, question 10 out of 12
 
-    details: "Details",
+    details: "Details",                      // Header of the section with detailed test statistics
 
-    alphabet: "Alphabet",
+    alphabet: "Alphabet",                    // Japanese alphabet (Katakana or Hiragana)
 
-    fastestAnswer: "Fastest answer",
-    slowestAnswer: "Slowest answer",
+    fastestAnswer: "Fastest answer",         // In statistics, the answer with the shortest response time
+    slowestAnswer: "Slowest answer",         // In statistics, the answer with the longest response time
 
-    incorrectAnswers: "Incorrect answers",
+    incorrectAnswers: "Incorrect answers",   // Answers that were incorrect
 
-    incorrectWordBuilding: "Incorrect word building answers",
-    incorrectFindPair: "Incorrect find pair answers",
-    incorrectChoice: "Incorrect choice answers",
+    incorrectWordBuilding: "Incorrect answers in word building",  // Incorrect answers in the "Build a Word" sub-mode
+    incorrectFindPair: "Incorrect answers in pair matching",      // Incorrect answers in the "Match the Pair" sub-mode
+    incorrectChoice: "Incorrect answers in word choice",          // Incorrect answers in the "Word Choice" sub-mode
 
-    done: "Done",
-  },
-
-  tooltip: {
-    syllablesSelectMoreThan5: "* Should be selected more than 5 syllables",
-    cardSelectAtLeastOne: "* At least one card type must be selected",
-    wordsSelectMoreThan10: "* Should be available more than 10 words",
-    modeSelectAtLeastOne: "* At least one mode must be selected",
-    leastTenLettersMustBeSelectedFromBasic: "* Should be selected more than 5 syllables from basic",
+    done: "Done"
   },
 
   lessonsList: {
-    chapter: "Chapter",
-    completed: "completed",
-    lesson: "Lesson",
+    chapter: "Chapter",                     // Chapter with lessons, e.g., Chapter 1 - Hiragana
+    completed: "completed",                 // Indicates if the lesson is completed
+    lesson: "Lesson",                       // For example, Lesson 1
 
-    grammar: "Grammar",
-
-    firstLessonInSectionTitle: "Learn to write the first {{count}} syllables.",
-    continuingLessonsTitle: "Learn to write the next {{count}} syllables.",
-    finalLessonInSectionTitle: "Learn to write the last {{count}} syllables.",
+    firstLessonInSectionTitle: "Learn to write the first {{count}} syllables.",   // Description of what you'll learn in the lesson
+    continuingLessonsTitle: "Learn to write the next {{count}} syllables.",       // Description of what you'll learn in the lesson
+    finalLessonInSectionTitle: "Learn to write the last {{count}} syllables."     // Description of what you'll learn in the lesson
   },
 
   lesson: {
     rememberWritingAndSoundLetter:
-      "Memorize the stroke order and pronunciation of this syllable.",
-    drawSyllable: "Draw the syllable «{{syllable}}» in the correct sequence.",
-    matchHiraganaWithTransliteration: "Match Hiragana with Transliteration.",
-    matchKatakanaWithTransliteration: "Match Katakana with Transliteration.",
+      "Remember the stroke order and pronunciation of this syllable.",
+    drawSyllable: "Draw the syllable '{{syllable}}' in the correct order.",
+    matchHiraganaWithTransliteration: "Match Hiragana with its transliteration.",
+    matchKatakanaWithTransliteration: "Match Katakana with its transliteration.",
     selectCorrectTransliteration:
-      "Select the Correct Transliteration of the Syllable «{{syllable}}».",
+      "Select the correct transliteration for the syllable '{{syllable}}'.",
     chooseCorrectTransliterationSequence:
-      "Choose the Correct Transliteration Sequence.",
+      "Choose the correct transliteration sequence.",
     arrangeSyllablesInCorrectOrder:
-      "Arrange the Syllables in the Correct Order.",
-    practiceEveryDay: "Practice every day to consolidate your knowledge.",
-    learningComplete: "Learning complete!",
+      "Arrange the syllables in the correct order.",
+    practiceEveryDay: "Practice every day to reinforce your knowledge.",
+    learningComplete: "Lesson completed!",
   },
 
   transliterationSystems: {
-    transliterationSystems: "Transliteration Systems",
-    transliterationInCyrillic: "Transliteration in Cyrillic",
+    transliterationSystems: "Transliteration systems",
     romajiLatin: "Romaji (Latin)",
+    transliterationInCyrillic: "Transliteration in Cyrillic",
 
-    russianPhoneticTransliteration: "Russian Phonetic Transliteration",
+    russianPhoneticTransliteration: "Russian Phonetic",
 
     hepburn: "Hepburn",
     kunreiShiki: "Kunrei-shiki",
@@ -198,7 +179,7 @@ const English = {
     },
 
     cancel: "Cancel",
-    ok: "Ok",
+    ok: "OK",
     confirm: "Confirm",
   }
 };

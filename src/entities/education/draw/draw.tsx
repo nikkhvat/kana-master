@@ -267,7 +267,7 @@ const Draw: React.FC<DrawProps> = ({ isCheck, letter, kana, isTextRecognition, o
                     <Icon
                       name={"text-recognition"}
                       size={24}
-                      color={isShowBorder ? colors.IconContrast : colors.IconPrimary} />}
+                      color={colors.IconContrast} />}
                   onClick={detectSymbol}
                   textStyles={[Typography.boldH2, { marginLeft: 10 }]}
                   containerStyles={{
@@ -282,7 +282,7 @@ const Draw: React.FC<DrawProps> = ({ isCheck, letter, kana, isTextRecognition, o
                   <Icon
                     name={"content-save-all-outline"}
                     size={24}
-                    color={isShowBorder ? colors.IconContrast : colors.IconPrimary} />}
+                    color={colors.IconContrast} />}
                 onClick={() => {
                   const points = shortenLines(normalizeCoordinates(processDrawing(pathsRef.current)));
                   console.log(JSON.stringify(points))

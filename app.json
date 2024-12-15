@@ -3,7 +3,7 @@
     "name": "Kana master",
     "slug": "kana-master",
     "privacy": "public",
-    "version": "2.1.0",
+    "version": "2.1.2",
     "orientation": "portrait",
     "githubUrl": "https://github.com/nikkhvat/kana-master",
     "icon": "./src/shared/assets/icon.png",
@@ -14,7 +14,7 @@
     "ios": {
       "supportsTablet": false,
       "userInterfaceStyle": "automatic",
-      "bundleIdentifier": "pro.khvat.kanamaster",
+      "bundleIdentifier": "pro.khvat.learnjapanese",
       "buildNumber": "0",
       "newArchEnabled": true
     },
@@ -23,8 +23,8 @@
         "foregroundImage": "./src/shared/assets/adaptive-icon.png",
         "backgroundColor": "#1F1F1F"
       },
-      "package": "pro.khvat.kanamaster",
-      "version": "2.1.0",
+      "package": "pro.khvat.learnjapanese",
+      "version": "2.1.2",
       "versionCode": 1,
       "newArchEnabled": true
     },
@@ -43,7 +43,7 @@
       [
         "expo-splash-screen",
         {
-          "image":"./src/shared/assets/splash.png",
+          "image": "./src/shared/assets/splash.png",
           "backgroundColor": "#FFFFFF",
           "dark": {
             "image": "./src/shared/assets/splash-dark.png",

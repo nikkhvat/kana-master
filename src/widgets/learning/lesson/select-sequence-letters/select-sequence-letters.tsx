@@ -88,7 +88,7 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({
           justifyContent: "space-between",
           alignItems: "center",
           gap: 16,
-          rowGap: 0,
+          rowGap: 16,
           flexDirection: rowLength > 18 ? "column" : "row",
         }}
       >
@@ -98,11 +98,13 @@ const SelectSequenceLettersScreen: React.FC<SelectSequenceLettersProps> = ({
             containerStyles={{
               width: rowLength > 18 ? "100%" : (screenWidth - 55) / 2,
               height: 50,
-              fontSize: 17,
               backgroundColor: states?.[index] === true
                 ? colors.BgSuccess : states?.[index] === false
                   ? colors.BgDanger
                   : colors.BgPrimary
+            }}
+            textStyles={{
+              color: states?.[index] === true ? colors.TextContrastSecondary : states?.[index] === false ? colors.TextContrastSecondary : colors.TextPrimary
             }}
             isOutline
             key={button}

@@ -22,7 +22,7 @@ const PracticeQuestionModeSelect: React.FC<CardModeSelectProps> = ({ setMode, mo
   return (
     <View style={styles.container}>
       <Text style={[Typography.boldH3, { color: colors.TextPrimary }]}>
-        {t("testing.testMode")}
+        {t("practice.modeTitle")}
       </Text>
 
       <View style={styles.buttonsContainer}>

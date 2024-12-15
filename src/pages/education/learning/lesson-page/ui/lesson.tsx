@@ -95,7 +95,7 @@ const Lesson: React.FC<LessonProps> = ({ lesson }) => {
       >
         {(isManuallyLesson(lesson)
           ? true
-          : screen + 1 !== lessonScreens.length) &&
+          : screen !== lessonScreens.length) &&
           !(isAnyLessonScreen(currentScreen) && currentScreen?.name === LessonScreen.Finish) &&  (
           <LinearProgressBar
             close={navigation.goBack}
